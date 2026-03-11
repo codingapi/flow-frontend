@@ -1,46 +1,36 @@
 import React from "react";
 import {FormViewProps} from "@flow-engine/flow-types";
-import {Form} from "antd";
-import {ObjectUtils} from "@flow-engine/flow-core";
-import {FormItemFactory} from "@/components/factory/form-item-factory";
+import {FormView} from "@/components/form/view";
+import {FlowTable} from "@/components/table";
 
 export const FlowFormView: React.FC<FormViewProps> = (props) => {
 
-    const [values, setValues] = React.useState<any>({});
-
     const form = props.form;
 
-    const meta = props.meta;
+    const formList = props.formList || [];
 
-    const fields = meta.fields || [];
+    if(props.mergeable){
+        return (
+            <FlowTable
+                formList={formList}
+                meta={props.meta}
+                onValuesChange={props.onValuesChange}
+                review={props.review}
+                fieldPermissions={props.fieldPermissions}
+            />
+        )
+    }
 
-    const review = props.review;
-
-    return (
-        <Form
-            form={form as any}
-            layout={"vertical"}
-            onBlur={() => {
-                const latestValues = form.getFieldsValue();
-                if (ObjectUtils.isEqual(values, latestValues)) {
-                    return;
-                }
-                setValues(latestValues);
-                props.onValuesChange?.(latestValues);
-            }}
-        >
-            {fields.map((field, i) => {
-                const FormItem = FormItemFactory.getInstance().createFrom(field.type);
-                if (FormItem) {
-                    return (
-                        <FormItem
-                            key={field.id}
-                            {...field}
-                            readOnly={review}
-                        />
-                    );
-                }
-            })}
-        </Form>
-    )
+    if(form) {
+        return (
+            <FormView
+                form={form}
+                data={props.data}
+                meta={props.meta}
+                onValuesChange={props.onValuesChange}
+                review={props.review}
+                fieldPermissions={props.fieldPermissions}
+            />
+        )
+    }
 };

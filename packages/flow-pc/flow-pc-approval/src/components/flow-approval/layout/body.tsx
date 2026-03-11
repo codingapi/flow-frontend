@@ -35,7 +35,6 @@ export const Body = () => {
                     width: '100%',
             }}>
                 <Card
-                    title={<Title level={4} style={{margin: 0}}>流程表单</Title>}
                     style={{height: '100%', borderRadius: 8}}
                     styles={{body: {padding: 24}}}
                 >

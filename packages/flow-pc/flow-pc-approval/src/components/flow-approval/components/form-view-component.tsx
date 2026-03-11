@@ -19,22 +19,22 @@ export const FormViewComponent: React.FC<FormViewComponentProps> = (props) => {
     // 是否可合并审批
     const mergeable = state.flow?.mergeable || false;
     const todos = state.flow?.todos || [];
-    const viewForms= todos.length > 0 ? todos.map(item => {
+    const formList = todos.length > 0 ? todos.map(item => {
         return {
-            instance: AntdForm.useForm()[0],
-            data: item.data as any,
+            form: AntdForm.useForm()[0],
+            data: item,
         }
     }) : [
         {
-            instance: AntdForm.useForm()[0],
+            form: AntdForm.useForm()[0],
             data: undefined,
         }
     ]
 
     React.useEffect(() => {
-        viewForms.forEach(item => {
-            const formInstance = item.instance;
-            const data = item.data;
+        formList.forEach(item => {
+            const formInstance = item.form;
+            const formRecord = item.data?.data;
             context.getPresenter().getFormActionContext().addAction({
                 save: () => {
                     return formInstance.getFieldsValue();
@@ -43,34 +43,42 @@ export const FormViewComponent: React.FC<FormViewComponentProps> = (props) => {
                     return 'view-form'
                 },
                 validate: () => {
-                    return new Promise((resolve,reject) => {
+                    return new Promise((resolve, reject) => {
                         formInstance.validateFields()
                             .then(resolve)
                             .catch(reject)
                     })
                 }
             });
-            formInstance.setFieldsValue(data);
+            formInstance.resetFields();
+            formInstance.setFieldsValue(formRecord);
         });
     }, []);
 
     if (ViewComponent && flowForm) {
         if (mergeable) {
             return (
-                <div>
-                    <h3>合并审批</h3>
-                </div>
+                <ViewComponent
+                    mergeable={mergeable}
+                    fieldPermissions={fieldPermissions}
+                    review={review}
+                    meta={flowForm}
+                    formList={formList as any}
+                    onValuesChange={props.onValuesChange}
+                />
             )
         }
         return (
             <>
-                {viewForms.map((item, index) => (
+                {formList.map((item, index) => (
                     <ViewComponent
                         key={index}
+                        data={item.data}
+                        mergeable={mergeable}
                         fieldPermissions={fieldPermissions}
                         review={review}
                         meta={flowForm}
-                        form={item.instance}
+                        form={item.form}
                         onValuesChange={props.onValuesChange}
                     />
                 ))}
