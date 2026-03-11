@@ -15,7 +15,7 @@ Flow Engine PC 端基础 UI 组件库，提供原子化 UI 组件。
 
 ### 依赖关系
 
-- **依赖**: 无
+- **依赖**: `@flow-engine/flow-core`
 
 ## Setup
 
