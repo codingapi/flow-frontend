@@ -3,4 +3,5 @@
 cd ../
 
 pnpm i
+pnpm build
 pnpm test
