@@ -3,7 +3,7 @@ import {FlowActionProps} from "./type";
 import {Form, message, Modal} from "antd";
 import {useApprovalContext} from "@/components/flow-approval/hooks/use-approval-context";
 import {AddAuditView} from "@/plugins/view/add-audit-view";
-import {ActionButton} from "@/components/flow-approval/components/action-button";
+import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
 
 /**
  * 加签
@@ -31,7 +31,7 @@ export const AddAuditAction: React.FC<FlowActionProps> = (props) => {
     }
     return (
         <>
-            <ActionButton
+            <CustomStyleButton
                 display={props.action.display}
                 onClick={() => {
                     form.resetFields();

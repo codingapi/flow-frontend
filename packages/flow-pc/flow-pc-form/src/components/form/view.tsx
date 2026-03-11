@@ -1,10 +1,9 @@
 import React from "react";
 import {FormItemFactory} from "@/components/factory/form-item-factory";
 import {ObjectUtils} from "@flow-engine/flow-core";
-import { Form } from "antd";
+import { Form,Input } from "antd";
 import {FormInstance} from "@flow-engine/flow-types";
 import {FieldPermission,FlowForm,FlowTodo} from "@flow-engine/flow-types";
-
 
 interface FormViewProps{
     /** 流程数据 **/
@@ -42,6 +41,13 @@ export const FormView:React.FC<FormViewProps> = (props)=>{
                     props.onValuesChange?.(latestValues);
                 }}
             >
+                <Form.Item
+                    key={"recordId"}
+                    name={"recordId"}
+                    hidden={true}
+                >
+                    <Input/>
+                </Form.Item>
                 {fields.map((field, i) => {
                     const FormItem = FormItemFactory.getInstance().createFrom(field.type);
                     if (FormItem) {

@@ -11,4 +11,6 @@ export interface FlowTableProps {
     fieldPermissions: FieldPermission[];
     /** 是否预览模式 */
     review: boolean;
+    /** 当合并流程选中了流程记录的回掉 **/
+    onMergeRecordIdsSelected?: (recordIds: number[]) => void;
 }

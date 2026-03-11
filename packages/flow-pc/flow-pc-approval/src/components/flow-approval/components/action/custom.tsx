@@ -4,7 +4,7 @@ import {message} from "antd";
 import {useApprovalContext} from "@/components/flow-approval/hooks/use-approval-context";
 import {GroovyScriptConvertorUtil} from "@flow-engine/flow-core";
 import {ActionFactory} from "@/components/flow-approval/components/action/factory";
-import {ActionButton} from "@/components/flow-approval/components/action-button";
+import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
 import {ActionType} from "@flow-engine/flow-types";
 
 /**
@@ -33,7 +33,7 @@ export const CustomAction: React.FC<FlowActionProps> = (props) => {
     }
 
     return (
-        <ActionButton
+        <CustomStyleButton
             display={props.action.display}
             onClick={() => {
                 actionPresenter.action(action.id).then((res) => {

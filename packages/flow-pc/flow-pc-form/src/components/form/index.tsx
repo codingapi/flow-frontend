@@ -17,6 +17,7 @@ export const FlowFormView: React.FC<FormViewProps> = (props) => {
                 onValuesChange={props.onValuesChange}
                 review={props.review}
                 fieldPermissions={props.fieldPermissions}
+                onMergeRecordIdsSelected={props.onMergeRecordIdsSelected}
             />
         )
     }

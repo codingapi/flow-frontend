@@ -3,13 +3,13 @@ import React from "react";
 import {DisplayStyle, FlowActionDisplay} from "@flow-engine/flow-types";
 import {Icon} from "@flow-engine/flow-pc-ui";
 
-interface ActionButtonProps {
+interface CustomStyleButtonProps {
     onClick: () => void;
     title: string;
     display: FlowActionDisplay;
 }
 
-export const ActionButton: React.FC<ActionButtonProps> = (props) => {
+export const CustomStyleButton: React.FC<CustomStyleButtonProps> = (props) => {
 
     const display = props.display;
     const title = display.title || props.title;

@@ -4,15 +4,15 @@ import {useTableFormPresenter} from "@/components/table/hooks/use-table-form-pre
 import {Button, Flex, Table} from "antd";
 import {FormData} from "@flow-engine/flow-types";
 import {FormView} from "@/components/form/view";
-import { CaretLeftOutlined } from "@ant-design/icons";
+import {CaretLeftOutlined} from "@ant-design/icons";
 
 export const FlowTable: React.FC<FlowTableProps> = (props) => {
 
     const presenter = useTableFormPresenter(props);
 
-    const [recordIdList,setRecordIdList] = React.useState<any[]>([]);
+    const [recordIdList, setRecordIdList] = React.useState<any[]>([]);
 
-    const [currentForm,setCurrentForm] = React.useState<FormData>();
+    const [currentForm, setCurrentForm] = React.useState<FormData>();
 
     const columns = React.useMemo(() => {
         const columns = presenter.getColumns();
@@ -20,12 +20,12 @@ export const FlowTable: React.FC<FlowTableProps> = (props) => {
             key: 'option',
             valueType: 'option',
             title: '操作',
-            render: (_:any,record:any) => {
+            render: (_: any, record: any) => {
                 return (
                     <a
                         onClick={() => {
                             const formData = presenter.getFormDataByRecordId(record.recordId);
-                            if(formData){
+                            if (formData) {
                                 setCurrentForm(formData);
                             }
                         }}
@@ -38,9 +38,23 @@ export const FlowTable: React.FC<FlowTableProps> = (props) => {
         return [...columns, option];
     }, []);
 
+    // 回掉登记当前选中中的合并流程
+    React.useEffect(() => {
+        if (recordIdList.length > 0) {
+            props.onMergeRecordIdsSelected?.(recordIdList);
+        }
+    }, [recordIdList]);
+
+    // 切换是触发右侧节点列表的筛选
+    React.useEffect(() => {
+        if (currentForm) {
+            const data = currentForm.form.getFieldsValue();
+            props.onValuesChange?.(data);
+        }
+    }, [currentForm])
+
     return (
         <>
-
             {!currentForm && (
                 <Table
                     columns={columns}
@@ -70,8 +84,8 @@ export const FlowTable: React.FC<FlowTableProps> = (props) => {
                             }}
                         >
                             <Button
-                                icon={<CaretLeftOutlined />}
-                                onClick={()=>{
+                                icon={<CaretLeftOutlined/>}
+                                onClick={() => {
                                     setCurrentForm(undefined);
                                 }}
                             >返回</Button>

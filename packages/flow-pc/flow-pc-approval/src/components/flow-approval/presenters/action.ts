@@ -8,12 +8,25 @@ export class FlowActionPresenter {
     private readonly formActionContext: FormActionContext;
     private state: State;
 
+    private submitRecordIds: number[];
+
     constructor(state: State,
                 api: FlowApprovalApi,
                 formActionContext: FormActionContext) {
         this.state = state;
         this.api = api;
         this.formActionContext = formActionContext;
+        this.submitRecordIds = [];
+    }
+
+
+    public setSubmitRecordIds(submitRecordIds: number[]) {
+        this.submitRecordIds = [];
+        this.submitRecordIds = submitRecordIds;
+    }
+
+    private clearSubmitRecordIds(): void {
+        this.submitRecordIds = [];
     }
 
     public syncState(state: State) {
@@ -21,8 +34,14 @@ export class FlowActionPresenter {
     }
 
     public async processNodes() {
-        const formData = this.formActionContext.save();
-        const id = this.state.flow?.recordId || this.state.flow?.workId || '';
+        const formData = this.formActionContext.save() as any;
+
+        const recordId = formData.recordId || this.state.flow?.recordId;
+        if(formData.recordId){
+            delete formData.recordId;
+        }
+
+        const id = recordId || this.state.flow?.workId || '';
         return await this.api.processNodes({
             id,
             formData,
@@ -56,8 +75,13 @@ export class FlowActionPresenter {
 
 
     private async submitAction(actionId: string, formData: any, params?: any) {
-        const recordId = this.state.flow?.recordId;
+        const recordId = formData.recordId || this.state.flow?.recordId;
         const workId = this.state.flow?.workId;
+
+        if (formData.recordId) {
+            delete formData.recordId;
+        }
+
         if (recordId) {
             const request = {
                 formData,
@@ -87,8 +111,7 @@ export class FlowActionPresenter {
         }
     }
 
-
-    public async action(actionId: string, params?: any) {
+    private async executeAction(actionId: string, params?: any) {
         let formData;
         if (this.isPassAction(actionId)) {
             formData = await this.formActionContext.validate();
@@ -96,6 +119,42 @@ export class FlowActionPresenter {
             formData = this.formActionContext.save();
         }
         return await this.submitAction(actionId, formData, params);
+    }
+
+
+    private getFormDataByRecordId(recordId:number){
+        const todoList = this.state.flow?.todos || [];
+        for (const item of todoList) {
+            if (item.recordId === recordId) {
+                return {
+                    ...item.data,
+                    recordId
+                };
+            }
+        }
+        return null;
+    }
+
+
+    public async action(actionId: string, params?: any) {
+        // 流程合并审批
+        const mergeable = this.state.flow?.mergeable || false;
+        const submitRecordIds = this.submitRecordIds;
+        if (mergeable && submitRecordIds.length > 0) {
+            const submitRecordIds = this.submitRecordIds;
+            for(const recordId of submitRecordIds) {
+                const formData = this.getFormDataByRecordId(recordId);
+                await this.submitAction(actionId, formData, params);
+            }
+            this.clearSubmitRecordIds();
+            return new Promise((resolve) => {
+                resolve({
+                    success: true,
+                });
+            })
+        } else {
+            return await this.executeAction(actionId, params);
+        }
     }
 
 }

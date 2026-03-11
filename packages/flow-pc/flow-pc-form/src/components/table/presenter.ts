@@ -30,7 +30,7 @@ export class TableFormPresenter {
             title: '编号',
             dataIndex: 'recordId',
             key: 'recordId',
-            hidden: true
+            hidden: false
         });
 
         for (const field of fields) {

@@ -51,9 +51,17 @@ export const FormViewComponent: React.FC<FormViewComponentProps> = (props) => {
                 }
             });
             formInstance.resetFields();
-            formInstance.setFieldsValue(formRecord);
+            formInstance.setFieldsValue({
+                ...formRecord,
+                recordId: item.data?.recordId,
+            });
         });
     }, []);
+
+    const handleMergeRecordIdsSelected = (recordIds: number[]) => {
+        // 提交所选的流程记录Ids
+        context.getPresenter().getFlowActionPresenter().setSubmitRecordIds(recordIds);
+    }
 
     if (ViewComponent && flowForm) {
         if (mergeable) {
@@ -65,6 +73,7 @@ export const FormViewComponent: React.FC<FormViewComponentProps> = (props) => {
                     meta={flowForm}
                     formList={formList as any}
                     onValuesChange={props.onValuesChange}
+                    onMergeRecordIdsSelected={handleMergeRecordIdsSelected}
                 />
             )
         }
