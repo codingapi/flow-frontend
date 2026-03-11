@@ -15,3 +15,11 @@ export const create = (body:any) => {
 export const action = (body:any) => {
     return httpClient.post('/api/cmd/record/action',body);
 }
+
+export const revoke = (id:any) => {
+    return httpClient.post('/api/cmd/record/revoke',{id});
+}
+
+export const urge = (id:any) => {
+    return httpClient.post('/api/cmd/record/urge',{id});
+}

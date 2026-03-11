@@ -34,4 +34,8 @@ export interface FlowApprovalApi{
     processNodes(body:Record<string,any>):Promise<ProcessNode[]>;
 
     action(body:Record<string,any>):Promise<any>;
+
+    revoke(id:any):Promise<any>;
+
+    urge(id:any):Promise<any>;
 }

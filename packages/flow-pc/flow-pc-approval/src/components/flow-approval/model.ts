@@ -1,5 +1,5 @@
 import {FlowApprovalApi} from "@/components/flow-approval/typings";
-import {action as actionRecord, create as createRecord, processNodes as postProcessNodes} from "@/api/record";
+import {action as actionRecord, create as createRecord, processNodes as postProcessNodes,revoke as revokeRecord,urge as urgeRecord} from "@/api/record";
 
 export class FlowApprovalApiImpl implements FlowApprovalApi {
 
@@ -19,6 +19,14 @@ export class FlowApprovalApiImpl implements FlowApprovalApi {
         if(response.success){
             return response.data.list;
         }
+    }
+
+    revoke =async (id:any)=> {
+        return await revokeRecord(id);
+    }
+
+    urge =async (id:any)=> {
+        return await urgeRecord(id);
     }
 
 }

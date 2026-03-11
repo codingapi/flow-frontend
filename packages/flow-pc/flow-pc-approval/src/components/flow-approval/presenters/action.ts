@@ -37,7 +37,7 @@ export class FlowActionPresenter {
         const formData = this.formActionContext.save() as any;
 
         const recordId = formData.recordId || this.state.flow?.recordId;
-        if(formData.recordId){
+        if (formData.recordId) {
             delete formData.recordId;
         }
 
@@ -122,7 +122,7 @@ export class FlowActionPresenter {
     }
 
 
-    private getFormDataByRecordId(recordId:number){
+    private getFormDataByRecordId(recordId: number) {
         const todoList = this.state.flow?.todos || [];
         for (const item of todoList) {
             if (item.recordId === recordId) {
@@ -135,6 +135,19 @@ export class FlowActionPresenter {
         return null;
     }
 
+    public async revoke() {
+        const recordId = this.state.flow?.recordId;
+        if (recordId) {
+            await this.api.revoke(recordId);
+        }
+    }
+
+    public async urge() {
+        const recordId = this.state.flow?.recordId;
+        if (recordId) {
+            await this.api.urge(recordId);
+        }
+    }
 
     public async action(actionId: string, params?: any) {
         // 流程合并审批
@@ -142,7 +155,7 @@ export class FlowActionPresenter {
         const submitRecordIds = this.submitRecordIds;
         if (mergeable && submitRecordIds.length > 0) {
             const submitRecordIds = this.submitRecordIds;
-            for(const recordId of submitRecordIds) {
+            for (const recordId of submitRecordIds) {
                 const formData = this.getFormDataByRecordId(recordId);
                 await this.submitAction(actionId, formData, params);
             }

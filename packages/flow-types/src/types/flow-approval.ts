@@ -36,9 +36,9 @@ export type FieldPermissionType = 'READ' | 'WRITE' | 'HIDDEN';
  * 字段权限
  */
 export interface FieldPermission {
-    formCode:string;
-    fieldCode:string;
-    type:FieldPermissionType;
+    formCode: string;
+    fieldCode: string;
+    type: FieldPermissionType;
 }
 
 /**
@@ -54,7 +54,7 @@ export interface FormField {
     // 数据类型
     type: DataType;
     // 是否隐藏
-    hidden:boolean;
+    hidden: boolean;
     // 是否必填
     required: boolean;
     // 默认值
@@ -268,4 +268,8 @@ export interface FlowContent {
     histories: History[];
     // 所有节点
     nodes: NodeOption[];
+    // 支持撤销
+    revoke: boolean;
+    // 支持催办
+    urge: boolean;
 }

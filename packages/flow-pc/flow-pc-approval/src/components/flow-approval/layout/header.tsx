@@ -3,6 +3,8 @@ import {useApprovalContext} from "@/components/flow-approval/hooks/use-approval-
 import {Button, Flex, Space, Typography} from "antd";
 import {ApprovalLayoutHeight} from "@/components/flow-approval/typings";
 import {ActionFactory} from "@/components/flow-approval/components/action/factory";
+import {UrgeAction} from "@/components/flow-approval/components/action/urge";
+import {RevokeAction} from "@/components/flow-approval/components/action/revoke";
 
 const {Title} = Typography;
 
@@ -36,6 +38,8 @@ export const Header = () => {
                     {!review && actions.map((action) => {
                         return ActionFactory.getInstance().render(action);
                     })}
+                    <UrgeAction/>
+                    <RevokeAction/>
                     <Button
                         onClick={() => {
                             context.close();
