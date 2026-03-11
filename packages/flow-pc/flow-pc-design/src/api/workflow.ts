@@ -32,6 +32,11 @@ export const mock = () => {
     return httpClient.post('/api/cmd/workflow/mock',{});
 }
 
+export const cleanMock = (id:string) => {
+    return httpClient.post('/api/cmd/workflow/cleanMock',{id});
+}
+
+
 export const changeState = (id:string) => {
     return httpClient.post('/api/cmd/workflow/changeState',{id});
 }

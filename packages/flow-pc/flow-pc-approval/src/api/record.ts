@@ -29,3 +29,23 @@ export const urge = (id:any,mockKey?:string) => {
     const key = mockKey?mockKey:'';
     return httpClient.post('/api/cmd/record/urge?mockKey='+key,{id});
 }
+
+export const list = (request: any,mockKey?:string) => {
+    const key = mockKey?mockKey:'';
+    return httpClient.page('/api/query/record/list', request, {}, {}, []);
+}
+
+export const todo = (request: any,mockKey?:string) => {
+    const key = mockKey?mockKey:'';
+    return httpClient.page('/api/query/record/todo', request, {}, {}, []);
+}
+
+export const done = (request: any,mockKey?:string) => {
+    const key = mockKey?mockKey:'';
+    return httpClient.page('/api/query/record/done', request, {}, {}, []);
+}
+
+export const notify = (request: any,mockKey?:string) => {
+    const key = mockKey?mockKey:'';
+    return httpClient.page('/api/query/record/notify', request, {}, {}, []);
+}
