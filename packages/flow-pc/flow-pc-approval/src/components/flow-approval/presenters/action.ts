@@ -138,14 +138,14 @@ export class FlowActionPresenter {
     public async revoke() {
         const recordId = this.state.flow?.recordId;
         if (recordId) {
-            await this.api.revoke(recordId);
+            return await this.api.revoke(recordId);
         }
     }
 
     public async urge() {
         const recordId = this.state.flow?.recordId;
         if (recordId) {
-            await this.api.urge(recordId);
+            return await this.api.urge(recordId);
         }
     }
 

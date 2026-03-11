@@ -14,8 +14,10 @@ export const UrgeAction = () => {
                 <Popconfirm
                     title={"确认要催办审批用户吗？"}
                     onConfirm={() => {
-                        presenter.urge().then(() => {
-                            message.success("已发送催办提醒.");
+                        presenter.urge().then((res) => {
+                            if(res.success) {
+                                message.success("已发送催办提醒.");
+                            }
                         })
                     }}
                 >

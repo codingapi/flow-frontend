@@ -16,9 +16,11 @@ export const RevokeAction = () => {
                 <Popconfirm
                     title={"确认要撤销审批吗？"}
                     onConfirm={() => {
-                        presenter.revoke().then(() => {
-                            message.success("流程已撤回")
-                            context.close();
+                        presenter.revoke().then((res) => {
+                            if(res.success) {
+                                message.success("流程已撤回")
+                                context.close();
+                            }
                         });
                     }}
                 >
