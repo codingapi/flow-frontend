@@ -28,6 +28,10 @@ export const deleteVersion = (id:any) => {
     return httpClient.post('/api/cmd/workflow/deleteVersion',{id});
 }
 
+export const mock = () => {
+    return httpClient.post('/api/cmd/workflow/mock',{});
+}
+
 export const changeState = (id:string) => {
     return httpClient.post('/api/cmd/workflow/changeState',{id});
 }

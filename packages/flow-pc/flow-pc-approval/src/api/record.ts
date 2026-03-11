@@ -1,25 +1,31 @@
 import { httpClient } from ".";
 
-export const detail = (id:string) => {
-    return httpClient.get('/api/cmd/record/detail',{id});
+export const detail = (id:string,mockKey?:string) => {
+    const key = mockKey?mockKey:'';
+    return httpClient.get('/api/cmd/record/detail?mockKey='+key,{id});
 }
 
-export const processNodes = (body:any) => {
-    return httpClient.post('/api/cmd/record/processNodes',body);
+export const processNodes = (body:any,mockKey?:string) => {
+    const key = mockKey?mockKey:'';
+    return httpClient.post('/api/cmd/record/processNodes?mockKey='+key,body);
 }
 
-export const create = (body:any) => {
-    return httpClient.post('/api/cmd/record/create',body);
+export const create = (body:any,mockKey?:string) => {
+    const key = mockKey?mockKey:'';
+    return httpClient.post('/api/cmd/record/create?mockKey='+key,body);
 }
 
-export const action = (body:any) => {
-    return httpClient.post('/api/cmd/record/action',body);
+export const action = (body:any,mockKey?:string) => {
+    const key = mockKey?mockKey:'';
+    return httpClient.post('/api/cmd/record/action?mockKey='+key,body);
 }
 
-export const revoke = (id:any) => {
-    return httpClient.post('/api/cmd/record/revoke',{id});
+export const revoke = (id:any,mockKey?:string) => {
+    const key = mockKey?mockKey:'';
+    return httpClient.post('/api/cmd/record/revoke?mockKey='+key,{id});
 }
 
-export const urge = (id:any) => {
-    return httpClient.post('/api/cmd/record/urge',{id});
+export const urge = (id:any,mockKey?:string) => {
+    const key = mockKey?mockKey:'';
+    return httpClient.post('/api/cmd/record/urge?mockKey='+key,{id});
 }
