@@ -8,7 +8,7 @@ export const routers:any[] = [
     {
         path:'/login',
         element:<LoginPage/>,
-        name: '用户管理'
+        name: '登陆界面'
     },
     {
         path:'/todo',
