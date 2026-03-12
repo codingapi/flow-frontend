@@ -43,3 +43,13 @@ export const save = (body:any) => {
 export const load = (id:string) => {
     return httpClient.get('/api/cmd/workflow/load',{id});
 }
+
+export const exportWorkflow = (id:string) => {
+    const filename = `workflow_${id}.json`
+    return httpClient.download('/api/cmd/workflow/export?id='+id,filename);
+}
+
+export const importWorkflow = (file:string) => {
+    return httpClient.post('/api/cmd/workflow/import',file);
+}
+
