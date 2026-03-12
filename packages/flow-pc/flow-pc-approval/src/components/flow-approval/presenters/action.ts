@@ -7,16 +7,19 @@ export class FlowActionPresenter {
     private readonly api: FlowApprovalApi;
     private readonly formActionContext: FormActionContext;
     private state: State;
+    private readonly mockKey:string;
 
     private submitRecordIds: number[];
 
     constructor(state: State,
                 api: FlowApprovalApi,
-                formActionContext: FormActionContext) {
+                formActionContext: FormActionContext,
+                mockKey:string) {
         this.state = state;
         this.api = api;
         this.formActionContext = formActionContext;
         this.submitRecordIds = [];
+        this.mockKey = mockKey;
     }
 
 
@@ -45,7 +48,7 @@ export class FlowActionPresenter {
         return await this.api.processNodes({
             id,
             formData,
-        });
+        },this.mockKey);
     }
 
 
@@ -91,14 +94,14 @@ export class FlowActionPresenter {
                     ...params
                 }
             }
-            return await this.api.action(request);
+            return await this.api.action(request,this.mockKey);
         } else {
             const createRequest = {
                 workId,
                 formData,
                 actionId,
             }
-            const recordId = await this.api.create(createRequest);
+            const recordId = await this.api.create(createRequest,this.mockKey);
             const actionRequest = {
                 formData,
                 recordId,
@@ -107,7 +110,7 @@ export class FlowActionPresenter {
                     ...params
                 }
             }
-            return await this.api.action(actionRequest);
+            return await this.api.action(actionRequest,this.mockKey);
         }
     }
 
@@ -138,14 +141,14 @@ export class FlowActionPresenter {
     public async revoke() {
         const recordId = this.state.flow?.recordId;
         if (recordId) {
-            return await this.api.revoke(recordId);
+            return await this.api.revoke(recordId,this.mockKey);
         }
     }
 
     public async urge() {
         const recordId = this.state.flow?.recordId;
         if (recordId) {
-            return await this.api.urge(recordId);
+            return await this.api.urge(recordId,this.mockKey);
         }
     }
 

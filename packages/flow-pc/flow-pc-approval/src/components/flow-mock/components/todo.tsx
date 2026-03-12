@@ -1,12 +1,15 @@
 import React from "react";
-import {done, list, notify, todo} from "@/api/record.ts";
-import {ApprovalPanelDrawer, FlowTitle, WorkflowSelectModal} from "@flow-engine/flow-pc-approval";
+import {done, list, notify, todo} from "@/api/record";
+import {WorkflowSelectModal} from "@/components/workflow-select-modal";
 import {Table, type TableProps} from "@flow-engine/flow-pc-ui";
 import {Button, Space, Tabs, type TabsProps} from "antd";
 import dayjs from "dayjs";
-import type {ActionType} from "@flow-engine/flow-core";
+import {ApprovalPanelDrawer} from "@/components/flow-approval";
+import {FlowTitle} from "@/components/flow-title";
+import type { ActionType } from "@flow-engine/flow-core";
+import {useMockContext} from "@/components/flow-mock/hooks/use-mock-context";
 
-const TodoPage: React.FC = () => {
+export const MockTodoPage: React.FC = () => {
 
     const actionAll = React.useRef<ActionType>(null);
     const actionTodo = React.useRef<ActionType>(null);
@@ -20,6 +23,8 @@ const TodoPage: React.FC = () => {
     const [currentRecordId, setCurrentRecordId] = React.useState<string>('');
     const [currentTab, setCurrentTab] = React.useState<string>('todo');
 
+    const mockKey = useMockContext();
+
     const columns: TableProps<any>['columns'] = [
         {
             dataIndex: 'recordId',
@@ -32,7 +37,7 @@ const TodoPage: React.FC = () => {
         {
             dataIndex: 'title',
             title: '流程名称',
-            render: (value) => {
+            render:(value)=>{
                 return <FlowTitle title={value}/>
             }
         },
@@ -74,7 +79,7 @@ const TodoPage: React.FC = () => {
             dataIndex: 'option',
             title: '操作',
             render: (_, record) => {
-                if (currentTab === 'todo') {
+                if(currentTab==='todo'){
                     return (
                         <Space>
                             <a
@@ -86,7 +91,7 @@ const TodoPage: React.FC = () => {
                             >办理</a>
                         </Space>
                     )
-                } else {
+                }else {
                     return (
                         <Space>
                             <a
@@ -114,7 +119,7 @@ const TodoPage: React.FC = () => {
                     actionType={actionTodo}
                     columns={columns}
                     request={(request) => {
-                        return todo(request) as any;
+                        return todo(request,mockKey) as any;
                     }}
                 />
             )
@@ -128,7 +133,7 @@ const TodoPage: React.FC = () => {
                     actionType={actionDone}
                     columns={columns}
                     request={(request) => {
-                        return done(request) as any;
+                        return done(request,mockKey) as any;
                     }}
                 />
             )
@@ -142,7 +147,7 @@ const TodoPage: React.FC = () => {
                     actionType={actionNotify}
                     columns={columns}
                     request={(request) => {
-                        return notify(request) as any;
+                        return notify(request,mockKey) as any;
                     }}
                 />
             )
@@ -156,7 +161,7 @@ const TodoPage: React.FC = () => {
                     actionType={actionAll}
                     columns={columns}
                     request={(request) => {
-                        return list(request) as any;
+                        return list(request,mockKey) as any;
                     }}
                 />
             )
@@ -180,7 +185,7 @@ const TodoPage: React.FC = () => {
 
     React.useEffect(() => {
         reloadCurrentTab();
-    }, [currentTab]);
+    },[currentTab]);
 
     return (
         <div>
@@ -231,4 +236,3 @@ const TodoPage: React.FC = () => {
     )
 }
 
-export default TodoPage;

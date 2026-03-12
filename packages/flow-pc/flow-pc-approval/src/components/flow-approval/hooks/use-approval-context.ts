@@ -5,6 +5,7 @@ import {ApprovalReduxState, updateState} from "../store";
 import {Presenter} from "../presenters";
 import {FlowApprovalApiImpl} from "../model";
 import {ApprovalLayoutProps} from "../typings";
+import {useMockContext} from "@/components/flow-mock/hooks/use-mock-context";
 
 export const useApprovalContext = () => {
     const context = React.useContext(ApprovalContext);
@@ -25,6 +26,8 @@ export const createApprovalContext = (props: ApprovalLayoutProps) => {
 
     const state = useSelector((state: ApprovalReduxState) => state.approval);
 
+    const mockKey = useMockContext();
+
     if (!ref.current) {
         const presenter = new Presenter(
             state,
@@ -32,7 +35,8 @@ export const createApprovalContext = (props: ApprovalLayoutProps) => {
                 dispatch(updateState(prevState));
                 return prevState;
             },
-            new FlowApprovalApiImpl()
+            new FlowApprovalApiImpl(),
+            mockKey
         );
         ref.current = new ApprovalContextScope(presenter, props);
         ref.current.initialState();

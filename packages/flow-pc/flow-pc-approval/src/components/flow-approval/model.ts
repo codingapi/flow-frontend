@@ -3,30 +3,30 @@ import {action as actionRecord, create as createRecord, processNodes as postProc
 
 export class FlowApprovalApiImpl implements FlowApprovalApi {
 
-    create = async (body: Record<string, any>)=> {
-        const response = await createRecord(body);
+    create = async (body: Record<string, any>,mockKey:string)=> {
+        const response = await createRecord(body,mockKey);
         if(response.success){
             return response.data;
         }
     }
 
-    action =async (body: Record<string, any>)=> {
-        return await actionRecord(body);
+    action =async (body: Record<string, any>,mockKey:string)=> {
+        return await actionRecord(body,mockKey);
     }
 
-    processNodes =async (body: Record<string, any>)=> {
-        const response =  await postProcessNodes(body);
+    processNodes =async (body: Record<string, any>,mockKey:string)=> {
+        const response =  await postProcessNodes(body,mockKey);
         if(response.success){
             return response.data.list;
         }
     }
 
-    revoke =async (id:any)=> {
-        return await revokeRecord(id);
+    revoke =async (id:any,mockKey:string)=> {
+        return await revokeRecord(id,mockKey);
     }
 
-    urge =async (id:any)=> {
-        return await urgeRecord(id);
+    urge =async (id:any,mockKey:string)=> {
+        return await urgeRecord(id,mockKey);
     }
 
 }

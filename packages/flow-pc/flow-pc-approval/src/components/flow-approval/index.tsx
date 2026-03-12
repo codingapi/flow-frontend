@@ -3,6 +3,7 @@ import {Drawer} from "@flow-engine/flow-pc-ui";
 import {detail} from "@/api/record";
 import {FlowContent} from "@flow-engine/flow-types";
 import {ApprovalLayout} from "@/components/flow-approval/layout";
+import {useMockContext} from "@/components/flow-mock/hooks/use-mock-context";
 
 interface ApprovalPanelProps {
     // 流程设计编码
@@ -19,9 +20,11 @@ export const ApprovalPanel: React.FC<ApprovalPanelProps> = (props) => {
 
     const [content, dispatch] = React.useState<FlowContent | undefined>(undefined);
 
+    const mockKey = useMockContext();
+
     React.useEffect(() => {
         const id = props.recordId || props.workflowCode || '';
-        detail(id).then(res => {
+        detail(id,mockKey).then(res => {
             if (res.success) {
                 dispatch(res.data);
             }

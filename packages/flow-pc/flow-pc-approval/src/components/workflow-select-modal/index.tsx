@@ -18,7 +18,7 @@ export const WorkflowSelectModal: React.FC<WorkflowSelectModalProps> = (props) =
     const [option, setOption] = React.useState<Select[]>([]);
 
     React.useEffect(() => {
-        options().then(res => {
+        options().then((res) => {
             if (res.success) {
                 setOption(res.data.list);
             }

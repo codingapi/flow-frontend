@@ -4,10 +4,6 @@ export const list = (request: any) => {
     return httpClient.page('/api/query/workflow/list', request, {}, {}, []);
 }
 
-export const options = () => {
-    return httpClient.get('/api/query/workflow/options');
-}
-
 export const versions = (workId:string) => {
     return httpClient.get('/api/query/workflow/versions',{id:workId});
 }
@@ -27,15 +23,6 @@ export const changeVersion = (id:any) => {
 export const deleteVersion = (id:any) => {
     return httpClient.post('/api/cmd/workflow/deleteVersion',{id});
 }
-
-export const mock = () => {
-    return httpClient.post('/api/cmd/workflow/mock',{});
-}
-
-export const cleanMock = (id:string) => {
-    return httpClient.post('/api/cmd/workflow/cleanMock',{id});
-}
-
 
 export const changeState = (id:string) => {
     return httpClient.post('/api/cmd/workflow/changeState',{id});

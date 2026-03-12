@@ -29,13 +29,13 @@ export const initStateData = {
 
 export interface FlowApprovalApi{
 
-    create(body:Record<string,any>):Promise<number>;
+    create(body:Record<string,any>,mockKey:string):Promise<number>;
 
-    processNodes(body:Record<string,any>):Promise<ProcessNode[]>;
+    processNodes(body:Record<string,any>,mockKey:string):Promise<ProcessNode[]>;
 
-    action(body:Record<string,any>):Promise<any>;
+    action(body:Record<string,any>,mockKey:string):Promise<any>;
 
-    revoke(id:any):Promise<any>;
+    revoke(id:any,mockKey:string):Promise<any>;
 
-    urge(id:any):Promise<any>;
+    urge(id:any,mockKey:string):Promise<any>;
 }

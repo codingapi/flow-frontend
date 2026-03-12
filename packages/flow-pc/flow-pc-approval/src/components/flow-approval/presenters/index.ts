@@ -6,17 +6,19 @@ import {FlowActionPresenter} from "./action";
 export class Presenter {
 
     private state: State;
+    private readonly mockKey:string;
     private readonly dispatch: Dispatch<State>;
     private readonly api: FlowApprovalApi;
     private readonly formActionContext:FormActionContext;
     private readonly flowActionPresenter:FlowActionPresenter;
 
-    constructor(state: State, dispatch: Dispatch<State>, api: FlowApprovalApi) {
+    constructor(state: State, dispatch: Dispatch<State>, api: FlowApprovalApi,mockKey:string) {
         this.state = state;
         this.dispatch = dispatch;
         this.api = api;
         this.formActionContext = new FormActionContext();
-        this.flowActionPresenter = new FlowActionPresenter(state,api,this.formActionContext);
+        this.mockKey = mockKey;
+        this.flowActionPresenter = new FlowActionPresenter(state,api,this.formActionContext,mockKey);
     }
 
     public syncState(state: State) {

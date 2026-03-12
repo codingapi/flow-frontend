@@ -26,7 +26,6 @@
     "@ant-design/icons": "~6.1.0",
     "@flow-engine/flow-core": "workspace:*",
     "@flow-engine/flow-types": "workspace:*",
-    "@flow-engine/flow-pc-design": "workspace:*",
     "@flow-engine/flow-pc-ui": "workspace:*",
     "@flow-engine/flow-pc-form": "workspace:*",
     "@reduxjs/toolkit": "^2.11.2",
