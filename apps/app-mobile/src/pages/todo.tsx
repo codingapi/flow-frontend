@@ -2,7 +2,7 @@ import {Empty, List, Tabs} from "antd-mobile";
 import React from "react";
 import {done, list, notify, todo} from "@/api/record.ts";
 import dayjs from "dayjs";
-import {TextIcon} from "@/components/text-icon.tsx";
+import {TextIcon} from "@flow-engine/flow-mobile-ui";
 
 interface TodoListProps {
     type: 'todo' | 'done' | 'notify' | 'list';   // 固定类型，用于区分不同列表

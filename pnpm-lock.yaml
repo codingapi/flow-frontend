@@ -13,7 +13,7 @@ importers:
         version: 1.7.3
       '@rsbuild/plugin-less':
         specifier: ^1.6.0
-        version: 1.6.1(@rsbuild/core@1.7.3)(@rspack/core@1.7.8(@swc/helpers@0.5.19))
+        version: 1.6.2(@rsbuild/core@1.7.3)(@rspack/core@1.7.8(@swc/helpers@0.5.19))
       '@rsbuild/plugin-react':
         specifier: ^1.4.2
         version: 1.4.6(@rsbuild/core@1.7.3)
@@ -56,6 +56,12 @@ importers:
       '@flow-engine/flow-core':
         specifier: workspace:*
         version: link:../../packages/flow-core
+      '@flow-engine/flow-mobile-approval':
+        specifier: workspace:*
+        version: link:../../packages/flow-mobile/flow-mobile-approval
+      '@flow-engine/flow-mobile-ui':
+        specifier: workspace:*
+        version: link:../../packages/flow-mobile/flow-mobile-ui
       '@flow-engine/flow-types':
         specifier: workspace:*
         version: link:../../packages/flow-types
@@ -64,7 +70,7 @@ importers:
         version: 5.42.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       dayjs:
         specifier: ^1.11.19
-        version: 1.11.19
+        version: 1.11.20
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -100,7 +106,7 @@ importers:
         version: 6.3.2(date-fns@2.30.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       dayjs:
         specifier: ^1.11.19
-        version: 1.11.19
+        version: 1.11.20
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -124,6 +130,75 @@ importers:
         version: 18.3.1
       react-dom:
         specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+
+  packages/flow-mobile/flow-mobile-approval:
+    dependencies:
+      '@flow-engine/flow-core':
+        specifier: workspace:*
+        version: link:../../flow-core
+      '@flow-engine/flow-mobile-form':
+        specifier: workspace:*
+        version: link:../flow-mobile-form
+      '@flow-engine/flow-mobile-ui':
+        specifier: workspace:*
+        version: link:../flow-mobile-ui
+      '@flow-engine/flow-types':
+        specifier: workspace:*
+        version: link:../../flow-types
+      '@reduxjs/toolkit':
+        specifier: ^2.11.2
+        version: 2.11.2(react-redux@9.2.0(@types/react@18.3.28)(react@18.3.1)(redux@5.0.1))(react@18.3.1)
+      antd-mobile:
+        specifier: ^5.42.3
+        version: 5.42.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      dayjs:
+        specifier: ^1.11.19
+        version: 1.11.20
+      immer:
+        specifier: ^11.1.3
+        version: 11.1.4
+      react:
+        specifier: '>=18'
+        version: 18.3.1
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+      react-redux:
+        specifier: ^9.2.0
+        version: 9.2.0(@types/react@18.3.28)(react@18.3.1)(redux@5.0.1)
+
+  packages/flow-mobile/flow-mobile-form:
+    dependencies:
+      '@flow-engine/flow-core':
+        specifier: workspace:*
+        version: link:../../flow-core
+      '@flow-engine/flow-types':
+        specifier: workspace:*
+        version: link:../../flow-types
+      antd-mobile:
+        specifier: ^5.42.3
+        version: 5.42.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react:
+        specifier: '>=18'
+        version: 18.3.1
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+
+  packages/flow-mobile/flow-mobile-ui:
+    dependencies:
+      '@flow-engine/flow-core':
+        specifier: workspace:*
+        version: link:../../flow-core
+      antd-mobile:
+        specifier: ^5.42.3
+        version: 5.42.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react:
+        specifier: '>=18'
+        version: 18.3.1
+      react-dom:
+        specifier: '>=18'
         version: 18.3.1(react@18.3.1)
 
   packages/flow-pc/flow-pc-approval:
@@ -151,7 +226,7 @@ importers:
         version: 6.3.2(date-fns@2.30.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       dayjs:
         specifier: ^1.11.19
-        version: 1.11.19
+        version: 1.11.20
       immer:
         specifier: ^11.1.3
         version: 11.1.4
@@ -172,7 +247,7 @@ importers:
         version: 6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@codemirror/commands':
         specifier: ^6.10.2
-        version: 6.10.2
+        version: 6.10.3
       '@codemirror/lang-java':
         specifier: ^6.0.2
         version: 6.0.2
@@ -181,13 +256,13 @@ importers:
         version: 6.12.2
       '@codemirror/state':
         specifier: ^6.5.4
-        version: 6.5.4
+        version: 6.6.0
       '@codemirror/theme-one-dark':
         specifier: ^6.1.3
         version: 6.1.3
       '@codemirror/view':
         specifier: ^6.39.16
-        version: 6.39.17
+        version: 6.40.0
       '@flow-engine/flow-core':
         specifier: workspace:*
         version: link:../../flow-core
@@ -208,7 +283,7 @@ importers:
         version: 1.0.8(@floating-ui/dom@1.7.6)(@tiptap/suggestion@3.20.1(@tiptap/core@3.20.1(@tiptap/pm@3.20.1))(@tiptap/pm@3.20.1))(@types/react-dom@18.3.7(@types/react@18.3.28))(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@5.3.11(@babel/core@7.29.0)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1))
       '@flowgram.ai/form-materials':
         specifier: 1.0.8
-        version: 1.0.8(@babel/core@7.29.0)(@babel/template@7.28.6)(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/merge@6.12.1)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1))(@floating-ui/dom@1.7.6)(@lezer/common@1.5.1)(@tiptap/suggestion@3.20.1(@tiptap/core@3.20.1(@tiptap/pm@3.20.1))(@tiptap/pm@3.20.1))(@types/react-dom@18.3.7(@types/react@18.3.28))(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@5.3.11(@babel/core@7.29.0)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1))(vue@3.5.30(typescript@5.9.3))
+        version: 1.0.8(@babel/core@7.29.0)(@babel/template@7.28.6)(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/merge@6.12.1)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1))(@floating-ui/dom@1.7.6)(@lezer/common@1.5.1)(@tiptap/suggestion@3.20.1(@tiptap/core@3.20.1(@tiptap/pm@3.20.1))(@tiptap/pm@3.20.1))(@types/react-dom@18.3.7(@types/react@18.3.28))(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@5.3.11(@babel/core@7.29.0)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1))(vue@3.5.30(typescript@5.9.3))
       '@flowgram.ai/minimap-plugin':
         specifier: 1.0.8
         version: 1.0.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -226,7 +301,7 @@ importers:
         version: 6.3.2(date-fns@2.30.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       dayjs:
         specifier: ^1.11.19
-        version: 1.11.19
+        version: 1.11.20
       immer:
         specifier: ^11.1.3
         version: 11.1.4
@@ -272,7 +347,7 @@ importers:
         version: 6.3.2(date-fns@2.30.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       dayjs:
         specifier: ^1.11.19
-        version: 1.11.19
+        version: 1.11.20
       react:
         specifier: '>=18'
         version: 18.3.1
@@ -502,8 +577,8 @@ packages:
   '@codemirror/autocomplete@6.20.1':
     resolution: {integrity: sha512-1cvg3Vz1dSSToCNlJfRA2WSI4ht3K+WplO0UMOgmUYPivCyy2oueZY6Lx7M9wThm7SDUBViRmuT+OG/i8+ON9A==}
 
-  '@codemirror/commands@6.10.2':
-    resolution: {integrity: sha512-vvX1fsih9HledO1c9zdotZYUZnE4xV0m6i3m25s5DIfXofuprk6cRcLUZvSk3CASUbwjQX21tOGbkY2BH8TpnQ==}
+  '@codemirror/commands@6.10.3':
+    resolution: {integrity: sha512-JFRiqhKu+bvSkDLI+rUhJwSxQxYb759W5GBezE8Uc8mHLqC9aV/9aTC7yJSqCtB3F00pylrLCwnyS91Ap5ej4Q==}
 
   '@codemirror/lang-java@6.0.2':
     resolution: {integrity: sha512-m5Nt1mQ/cznJY7tMfQTJchmrjdjQ71IDs+55d1GAa8DGaB8JXWsVCkVT284C3RTASaY43YknrK2X3hPO/J3MOQ==}
@@ -532,14 +607,17 @@ packages:
   '@codemirror/state@6.5.4':
     resolution: {integrity: sha512-8y7xqG/hpB53l25CIoit9/ngxdfoG+fx+V3SHBrinnhOtLvKHRyAJJuHzkWrR4YXXLX8eXBsejgAAxHUOdW1yw==}
 
+  '@codemirror/state@6.6.0':
+    resolution: {integrity: sha512-4nbvra5R5EtiCzr9BTHiTLc+MLXK2QGiAVYMyi8PkQd3SR+6ixar/Q/01Fa21TBIDOZXgeWV4WppsQolSreAPQ==}
+
   '@codemirror/theme-one-dark@6.1.3':
     resolution: {integrity: sha512-NzBdIvEJmx6fjeremiGp3t/okrLPYT0d9orIc7AFun8oZcRk58aejkqhv6spnz4MLAevrKNPMQYXEWMg4s+sKA==}
 
   '@codemirror/view@6.38.8':
     resolution: {integrity: sha512-XcE9fcnkHCbWkjeKyi0lllwXmBLtyYb5dt89dJyx23I9+LSh5vZDIuk7OLG4VM1lgrXZQcY6cxyZyk5WVPRv/A==}
 
-  '@codemirror/view@6.39.17':
-    resolution: {integrity: sha512-Aim4lFqhbijnchl83RLfABWueSGs1oUCSv0mru91QdhpXQeNKprIdRO9LWA4cYkJvuYTKGJN7++9MXx8XW43ag==}
+  '@codemirror/view@6.40.0':
+    resolution: {integrity: sha512-WA0zdU7xfF10+5I3HhUUq3kqOx3KjqmtQ9lqZjfK7jtYk4G72YW9rezcSywpaUMCWOMlq+6E0pO1IWg1TNIhtg==}
 
   '@coze-editor/code-language-json@0.1.0-alpha.868621':
     resolution: {integrity: sha512-DiS8+k2fvuKqnbCAfIxJm3UNSVrve9GsAsSVmOMDBYPi+hjtIo2/cyfJIKocJTuUpzKNP+r3iIYr89TynSFHHw==}
@@ -877,14 +955,14 @@ packages:
       react: '>=16.0.0'
       react-dom: '>=16.0.0'
 
-  '@emnapi/core@1.8.1':
-    resolution: {integrity: sha512-AvT9QFpxK0Zd8J0jopedNm+w/2fIzvtPKPjqyw9jwvBaReTTqPBk9Hixaz7KbjimP+QNz605/XnjFcDAL2pqBg==}
+  '@emnapi/core@1.9.0':
+    resolution: {integrity: sha512-0DQ98G9ZQZOxfUcQn1waV2yS8aWdZ6kJMbYCJB3oUBecjWYO1fqJ+a1DRfPF3O5JEkwqwP1A9QEN/9mYm2Yd0w==}
 
-  '@emnapi/runtime@1.8.1':
-    resolution: {integrity: sha512-mehfKSMWjjNol8659Z8KxEMrdSJDDot5SXMq00dM8BN4o+CLNXQ0xH2V7EchNHV4RmbZLmmPdEaXZc5H2FXmDg==}
+  '@emnapi/runtime@1.9.0':
+    resolution: {integrity: sha512-QN75eB0IH2ywSpRpNddCRfQIhmJYBCJ1x5Lb3IscKAL8bMnVAKnRg8dCoXbHzVLLH7P38N2Z3mtulB7W0J0FKw==}
 
-  '@emnapi/wasi-threads@1.1.0':
-    resolution: {integrity: sha512-WI0DdZ8xFSbgMjR1sFsKABJ/C5OnRrjT06JXbZKexJGrDuPTzZdDYfFlsgcCXCyf+suG5QU2e/y1Wo2V/OapLQ==}
+  '@emnapi/wasi-threads@1.2.0':
+    resolution: {integrity: sha512-N10dEJNSsUx41Z6pZsXU8FjPjpBEplgH24sfkmITrBED1/U2Esum9F3lfLrMjKHHjmi557zQn7kR9R+XWXu5Rg==}
 
   '@emotion/hash@0.8.0':
     resolution: {integrity: sha512-kBJtf7PH6aWwZ6fka3zQ0p6SBYzx4fl1LoZXE2RrnYST9Xljm7WfKJrU4g/Xr3Beg72MLrp1AWNUmuYJTL7Cow==}
@@ -1350,8 +1428,8 @@ packages:
       react: '>=16.11.0'
       react-dom: '>=16.11.0'
 
-  '@rc-component/form@1.7.1':
-    resolution: {integrity: sha512-Uhw0FPvJ+Ko4xBxhvziqmqzIuO0YvVBzVyFGNAI9fMCz4r4DfrYK6PRIN6CkFqM0vdAX9sr4JGA1/h/VzpA1cA==}
+  '@rc-component/form@1.7.2':
+    resolution: {integrity: sha512-5C90rXH7aZvvvxB4M5ew+QxROvimdL/lqhSshR8NsyiR7HKOoGQYSitxdfENnH6/0KNFxEy2ranVe2LrTnHZIw==}
     engines: {node: '>=8.x'}
     peerDependencies:
       react: '>=16.9.0'
@@ -1627,8 +1705,8 @@ packages:
     engines: {node: '>=18.12.0'}
     hasBin: true
 
-  '@rsbuild/plugin-less@1.6.1':
-    resolution: {integrity: sha512-1YZ6GRxyYy7kbliyTszqNo4d9pCNe5I/sWNyrDDrXK6waEd9x0N4D3Elv77pIWrNsu2j7BSDVsKv4abh1thnxw==}
+  '@rsbuild/plugin-less@1.6.2':
+    resolution: {integrity: sha512-NgOUvglFT7bzVkNu3wrZcZQ4JnnlrMOk+JbQ1v03Fa+q2ks+2sccJYREnchFdAsGdOGq5x4rL4tpe+WuItKE0w==}
     peerDependencies:
       '@rsbuild/core': ^1.3.0 || ^2.0.0-0
     peerDependenciesMeta:
@@ -2376,8 +2454,8 @@ packages:
     resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
     engines: {node: '>=0.11'}
 
-  dayjs@1.11.19:
-    resolution: {integrity: sha512-t5EcLVS6QPBNqM2z8fakk/NKel+Xzshgt8FFKAn+qwlD1pzZWxh0nVCrvFK7ZDb6XucZeF9z8C7CBWTRIVApAw==}
+  dayjs@1.11.20:
+    resolution: {integrity: sha512-YbwwqR/uYpeoP4pu043q+LTDLFBLApUP6VxRihdfNTqu4ubqMlGDLd6ErXhEgsyvY0K6nCs7nggYumAN+9uEuQ==}
 
   debug@4.4.3:
     resolution: {integrity: sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==}
@@ -2423,8 +2501,8 @@ packages:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
     engines: {node: '>= 0.4'}
 
-  electron-to-chromium@1.5.307:
-    resolution: {integrity: sha512-5z3uFKBWjiNR44nFcYdkcXjKMbg5KXNdciu7mhTPo9tB7NbqSNP2sSnGR+fqknZSCwKkBN+oxiiajWs4dT6ORg==}
+  electron-to-chromium@1.5.313:
+    resolution: {integrity: sha512-QBMrTWEf00GXZmJyx2lbYD45jpI3TUFnNIzJ5BBc8piGUDwMPa1GV6HJWTZVvY/eiN3fSopl7NRbgGp9sZ9LTA==}
 
   emojis-list@3.0.0:
     resolution: {integrity: sha512-/kyM18EfinwXZbno9FyUGeFh87KC8HRQBQGildHZbEuRyWFOmv1U10o9BBp8XVZDVNNuQKyIGIu5ZYAAXJ0V2Q==}
@@ -4106,15 +4184,15 @@ snapshots:
   '@codemirror/autocomplete@6.20.1':
     dependencies:
       '@codemirror/language': 6.12.2
-      '@codemirror/state': 6.5.4
-      '@codemirror/view': 6.39.17
+      '@codemirror/state': 6.6.0
+      '@codemirror/view': 6.40.0
       '@lezer/common': 1.5.1
 
-  '@codemirror/commands@6.10.2':
+  '@codemirror/commands@6.10.3':
     dependencies:
       '@codemirror/language': 6.12.2
-      '@codemirror/state': 6.5.4
-      '@codemirror/view': 6.39.17
+      '@codemirror/state': 6.6.0
+      '@codemirror/view': 6.40.0
       '@lezer/common': 1.5.1
 
   '@codemirror/lang-java@6.0.2':
@@ -4127,8 +4205,8 @@ snapshots:
       '@codemirror/autocomplete': 6.20.1
       '@codemirror/language': 6.12.2
       '@codemirror/lint': 6.9.5
-      '@codemirror/state': 6.5.4
-      '@codemirror/view': 6.39.17
+      '@codemirror/state': 6.6.0
+      '@codemirror/view': 6.40.0
       '@lezer/common': 1.5.1
       '@lezer/javascript': 1.5.4
 
@@ -4136,7 +4214,7 @@ snapshots:
     dependencies:
       '@codemirror/autocomplete': 6.20.1
       '@codemirror/language': 6.12.2
-      '@codemirror/state': 6.5.4
+      '@codemirror/state': 6.6.0
       '@lezer/common': 1.5.1
       '@lezer/python': 1.1.18
 
@@ -4144,15 +4222,15 @@ snapshots:
     dependencies:
       '@codemirror/autocomplete': 6.20.1
       '@codemirror/language': 6.12.2
-      '@codemirror/state': 6.5.4
+      '@codemirror/state': 6.6.0
       '@lezer/common': 1.5.1
       '@lezer/highlight': 1.2.3
       '@lezer/lr': 1.4.8
 
   '@codemirror/language@6.12.2':
     dependencies:
-      '@codemirror/state': 6.5.4
-      '@codemirror/view': 6.39.17
+      '@codemirror/state': 6.6.0
+      '@codemirror/view': 6.40.0
       '@lezer/common': 1.5.1
       '@lezer/highlight': 1.2.3
       '@lezer/lr': 1.4.8
@@ -4160,56 +4238,60 @@ snapshots:
 
   '@codemirror/lint@6.9.5':
     dependencies:
-      '@codemirror/state': 6.5.4
-      '@codemirror/view': 6.39.17
+      '@codemirror/state': 6.6.0
+      '@codemirror/view': 6.40.0
       crelt: 1.0.6
 
   '@codemirror/merge@6.12.1':
     dependencies:
       '@codemirror/language': 6.12.2
-      '@codemirror/state': 6.5.4
-      '@codemirror/view': 6.39.17
+      '@codemirror/state': 6.6.0
+      '@codemirror/view': 6.40.0
       '@lezer/highlight': 1.2.3
       style-mod: 4.1.3
 
   '@codemirror/search@6.6.0':
     dependencies:
-      '@codemirror/state': 6.5.4
-      '@codemirror/view': 6.39.17
+      '@codemirror/state': 6.6.0
+      '@codemirror/view': 6.40.0
       crelt: 1.0.6
 
   '@codemirror/state@6.5.4':
     dependencies:
       '@marijn/find-cluster-break': 1.0.2
 
+  '@codemirror/state@6.6.0':
+    dependencies:
+      '@marijn/find-cluster-break': 1.0.2
+
   '@codemirror/theme-one-dark@6.1.3':
     dependencies:
       '@codemirror/language': 6.12.2
-      '@codemirror/state': 6.5.4
-      '@codemirror/view': 6.39.17
+      '@codemirror/state': 6.6.0
+      '@codemirror/view': 6.40.0
       '@lezer/highlight': 1.2.3
 
   '@codemirror/view@6.38.8':
     dependencies:
-      '@codemirror/state': 6.5.4
+      '@codemirror/state': 6.6.0
       crelt: 1.0.6
       style-mod: 4.1.3
       w3c-keyname: 2.2.8
 
-  '@codemirror/view@6.39.17':
+  '@codemirror/view@6.40.0':
     dependencies:
-      '@codemirror/state': 6.5.4
+      '@codemirror/state': 6.6.0
       crelt: 1.0.6
       style-mod: 4.1.3
       w3c-keyname: 2.2.8
 
-  '@coze-editor/code-language-json@0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1))':
+  '@coze-editor/code-language-json@0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1))':
     dependencies:
       '@codemirror/autocomplete': 6.20.1
       '@codemirror/language': 6.12.2
       '@codemirror/state': 6.5.4
       '@codemirror/view': 6.38.8
-      '@coze-editor/code-language-shared': 0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1)
+      '@coze-editor/code-language-shared': 0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1)
       '@coze-editor/extension-lint': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
       '@coze-editor/lezer-parser-json': 0.1.0-alpha.868621
       '@coze-editor/parser-json': 0.1.0-alpha.868621
@@ -4219,12 +4301,12 @@ snapshots:
       vscode-json-languageservice: 5.7.2
       vscode-uri: 3.1.0
 
-  '@coze-editor/code-language-python@0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1))':
+  '@coze-editor/code-language-python@0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1))':
     dependencies:
       '@codemirror/lang-python': 6.2.1
       '@codemirror/state': 6.5.4
       '@codemirror/view': 6.38.8
-      '@coze-editor/code-language-shared': 0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1)
+      '@coze-editor/code-language-shared': 0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1)
 
   '@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)':
     dependencies:
@@ -4240,41 +4322,41 @@ snapshots:
     transitivePeerDependencies:
       - '@lezer/common'
 
-  '@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1)':
+  '@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1)':
     dependencies:
       '@codemirror/autocomplete': 6.20.1
       '@codemirror/language': 6.12.2
-      '@codemirror/state': 6.5.4
-      '@codemirror/view': 6.39.17
-      '@coze-editor/extension-lint': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)
-      '@coze-editor/utils': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1)
+      '@codemirror/state': 6.6.0
+      '@codemirror/view': 6.40.0
+      '@coze-editor/extension-lint': 0.1.0-alpha.868621(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)
+      '@coze-editor/utils': 0.1.0-alpha.868621(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1)
       mitt: 3.0.1
       vscode-languageserver-textdocument: 1.0.12
       vscode-languageserver-types: 3.17.5
     transitivePeerDependencies:
       - '@lezer/common'
 
-  '@coze-editor/code-language-shell@0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1))':
+  '@coze-editor/code-language-shell@0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1))':
     dependencies:
       '@codemirror/language': 6.12.2
       '@codemirror/state': 6.5.4
       '@codemirror/view': 6.38.8
-      '@coze-editor/code-language-shared': 0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1)
+      '@coze-editor/code-language-shared': 0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1)
 
-  '@coze-editor/code-language-sql@0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1))':
+  '@coze-editor/code-language-sql@0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1))':
     dependencies:
       '@codemirror/lang-sql': 6.10.0
       '@codemirror/state': 6.5.4
       '@codemirror/view': 6.38.8
-      '@coze-editor/code-language-shared': 0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1)
+      '@coze-editor/code-language-shared': 0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1)
 
-  '@coze-editor/code-language-typescript@0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1))(typescript@5.9.3)':
+  '@coze-editor/code-language-typescript@0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1))(typescript@5.9.3)':
     dependencies:
       '@codemirror/lang-javascript': 6.2.5
       '@codemirror/language': 6.12.2
       '@codemirror/state': 6.5.4
       '@codemirror/view': 6.38.8
-      '@coze-editor/code-language-shared': 0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1)
+      '@coze-editor/code-language-shared': 0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1)
       '@lukeed/uuid': 2.0.1
       '@typescript/vfs': 1.6.4(typescript@5.9.3)
       comlink: 4.4.2
@@ -4287,9 +4369,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@coze-editor/core-plugins@0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)':
+  '@coze-editor/core-plugins@0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)':
     dependencies:
-      '@codemirror/commands': 6.10.2
+      '@codemirror/commands': 6.10.3
       '@codemirror/state': 6.5.4
       '@codemirror/view': 6.38.8
       '@coze-editor/core': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
@@ -4306,15 +4388,15 @@ snapshots:
 
   '@coze-editor/editor@0.1.0-alpha.868621(@babel/core@7.29.0)(@babel/template@7.28.6)(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/merge@6.12.1)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)(vue@3.5.30(typescript@5.9.3))':
     dependencies:
-      '@codemirror/commands': 6.10.2
+      '@codemirror/commands': 6.10.3
       '@codemirror/state': 6.5.4
       '@codemirror/view': 6.38.8
-      '@coze-editor/code-language-json': 0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1))
-      '@coze-editor/code-language-python': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1))
+      '@coze-editor/code-language-json': 0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1))
+      '@coze-editor/code-language-python': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1))
       '@coze-editor/code-language-shared': 0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
-      '@coze-editor/code-language-shell': 0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1))
-      '@coze-editor/code-language-sql': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1))
-      '@coze-editor/code-language-typescript': 0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1))(typescript@5.9.3)
+      '@coze-editor/code-language-shell': 0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1))
+      '@coze-editor/code-language-sql': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1))
+      '@coze-editor/code-language-typescript': 0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1))(typescript@5.9.3)
       '@coze-editor/core': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
       '@coze-editor/extension-json-ast': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
       '@coze-editor/extension-json-empty-string-value-completion': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
@@ -4322,20 +4404,20 @@ snapshots:
       '@coze-editor/extension-json-unnecessary-properties': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
       '@coze-editor/extension-regexp-decorator': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
       '@coze-editor/extensions': 0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
-      '@coze-editor/preset-code': 0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1))(@lezer/common@1.5.1)
-      '@coze-editor/preset-expression': 0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
+      '@coze-editor/preset-code': 0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1))(@lezer/common@1.5.1)
+      '@coze-editor/preset-expression': 0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
       '@coze-editor/preset-none': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
-      '@coze-editor/preset-prompt': 0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
-      '@coze-editor/preset-universal': 0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
-      '@coze-editor/preset-variable': 0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
+      '@coze-editor/preset-prompt': 0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
+      '@coze-editor/preset-universal': 0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
+      '@coze-editor/preset-variable': 0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
       '@coze-editor/react': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@coze-editor/react-components': 0.1.0-alpha.868621(@babel/core@7.29.0)(@babel/template@7.28.6)(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/react@0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@lezer/common@1.5.1)(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@coze-editor/react-hooks': 0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/react@0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@coze-editor/react-components': 0.1.0-alpha.868621(@babel/core@7.29.0)(@babel/template@7.28.6)(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/react@0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@lezer/common@1.5.1)(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@coze-editor/react-hooks': 0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/react@0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@coze-editor/react-merge': 0.1.0-alpha.868621(@codemirror/merge@6.12.1)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/react@0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@coze-editor/utils': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
       '@coze-editor/vscode': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
-      '@coze-editor/vue': 0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1)(vue@3.5.30(typescript@5.9.3))
-      '@coze-editor/vue-components': 0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/vue@0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)(vue@3.5.30(typescript@5.9.3)))(@lezer/common@1.5.1)(vue@3.5.30(typescript@5.9.3))
+      '@coze-editor/vue': 0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1)(vue@3.5.30(typescript@5.9.3))
+      '@coze-editor/vue-components': 0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/vue@0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)(vue@3.5.30(typescript@5.9.3)))(@lezer/common@1.5.1)(vue@3.5.30(typescript@5.9.3))
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
     transitivePeerDependencies:
@@ -4403,10 +4485,10 @@ snapshots:
       '@codemirror/view': 6.38.8
       crelt: 1.0.6
 
-  '@coze-editor/extension-lint@0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)':
+  '@coze-editor/extension-lint@0.1.0-alpha.868621(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)':
     dependencies:
-      '@codemirror/state': 6.5.4
-      '@codemirror/view': 6.39.17
+      '@codemirror/state': 6.6.0
+      '@codemirror/view': 6.40.0
       crelt: 1.0.6
 
   '@coze-editor/extension-placeholder@0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)':
@@ -4461,22 +4543,22 @@ snapshots:
       vscode-languageserver-textdocument: 1.0.12
       vscode-languageserver-types: 3.17.5
 
-  '@coze-editor/preset-code@0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1))(@lezer/common@1.5.1)':
+  '@coze-editor/preset-code@0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1))(@lezer/common@1.5.1)':
     dependencies:
       '@codemirror/autocomplete': 6.20.1
-      '@codemirror/commands': 6.10.2
+      '@codemirror/commands': 6.10.3
       '@codemirror/language': 6.12.2
       '@codemirror/state': 6.5.4
       '@codemirror/view': 6.38.8
-      '@coze-editor/code-language-shared': 0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1)
+      '@coze-editor/code-language-shared': 0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1)
       '@coze-editor/core': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
-      '@coze-editor/core-plugins': 0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
+      '@coze-editor/core-plugins': 0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
       '@coze-editor/extension-completion-icons': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
       '@coze-editor/extension-links': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
       '@coze-editor/extension-lint': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
       '@coze-editor/extension-scrollbar': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
       '@coze-editor/extensions': 0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
-      '@coze-editor/preset-universal': 0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
+      '@coze-editor/preset-universal': 0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
       '@coze-editor/utils': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
       '@coze-editor/vscode': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
       '@lezer/highlight': 1.2.3
@@ -4493,15 +4575,15 @@ snapshots:
     transitivePeerDependencies:
       - '@lezer/common'
 
-  '@coze-editor/preset-expression@0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)':
+  '@coze-editor/preset-expression@0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)':
     dependencies:
       '@codemirror/autocomplete': 6.20.1
-      '@codemirror/commands': 6.10.2
+      '@codemirror/commands': 6.10.3
       '@codemirror/language': 6.12.2
       '@codemirror/state': 6.5.4
       '@codemirror/view': 6.38.8
       '@coze-editor/core': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
-      '@coze-editor/core-plugins': 0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
+      '@coze-editor/core-plugins': 0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
       '@coze-editor/extensions': 0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
     transitivePeerDependencies:
       - '@lezer/common'
@@ -4512,52 +4594,52 @@ snapshots:
       '@codemirror/view': 6.38.8
       '@coze-editor/core': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
 
-  '@coze-editor/preset-prompt@0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)':
+  '@coze-editor/preset-prompt@0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)':
     dependencies:
       '@codemirror/autocomplete': 6.20.1
       '@codemirror/language': 6.12.2
       '@codemirror/state': 6.5.4
       '@codemirror/view': 6.38.8
       '@coze-editor/core': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
-      '@coze-editor/core-plugins': 0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
+      '@coze-editor/core-plugins': 0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
       '@coze-editor/extensions': 0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
       '@coze-editor/lezer-parser-jinja2': 0.1.0-alpha.868621
-      '@coze-editor/preset-expression': 0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
+      '@coze-editor/preset-expression': 0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
       '@lezer/common': 1.5.1
       '@lezer/html': 1.3.13
       '@lezer/markdown': 1.6.3
     transitivePeerDependencies:
       - '@codemirror/commands'
 
-  '@coze-editor/preset-universal@0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)':
+  '@coze-editor/preset-universal@0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)':
     dependencies:
       '@codemirror/state': 6.5.4
       '@codemirror/view': 6.38.8
       '@coze-editor/core': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
-      '@coze-editor/core-plugins': 0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
+      '@coze-editor/core-plugins': 0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
       '@coze-editor/extensions': 0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
     transitivePeerDependencies:
       - '@codemirror/commands'
       - '@codemirror/language'
       - '@lezer/common'
 
-  '@coze-editor/preset-variable@0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)':
+  '@coze-editor/preset-variable@0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)':
     dependencies:
       '@codemirror/autocomplete': 6.20.1
-      '@codemirror/commands': 6.10.2
+      '@codemirror/commands': 6.10.3
       '@codemirror/language': 6.12.2
       '@codemirror/state': 6.5.4
       '@codemirror/view': 6.38.8
       '@coze-editor/core': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
-      '@coze-editor/core-plugins': 0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
+      '@coze-editor/core-plugins': 0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
       '@coze-editor/extensions': 0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
-      '@coze-editor/preset-expression': 0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
+      '@coze-editor/preset-expression': 0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
       '@coze-editor/utils': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
       '@lezer/common': 1.5.1
       '@lezer/javascript': 1.5.4
       '@lezer/python': 1.1.18
 
-  '@coze-editor/react-components@0.1.0-alpha.868621(@babel/core@7.29.0)(@babel/template@7.28.6)(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/react@0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@lezer/common@1.5.1)(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@coze-editor/react-components@0.1.0-alpha.868621(@babel/core@7.29.0)(@babel/template@7.28.6)(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/react@0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@lezer/common@1.5.1)(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@codemirror/language': 6.12.2
       '@codemirror/merge': 6.12.1
@@ -4566,7 +4648,7 @@ snapshots:
       '@coze-editor/extension-placeholder': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
       '@coze-editor/extensions': 0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
       '@coze-editor/react': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@coze-editor/react-hooks': 0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/react@0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@coze-editor/react-hooks': 0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/react@0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@coze-editor/utils': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
       '@coze-editor/vscode': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
       '@floating-ui/dom': 1.7.6
@@ -4584,9 +4666,9 @@ snapshots:
       - '@lezer/common'
       - '@types/react'
 
-  '@coze-editor/react-hooks@0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/react@0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@coze-editor/react-hooks@0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/react@0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@codemirror/commands': 6.10.2
+      '@codemirror/commands': 6.10.3
       '@codemirror/state': 6.5.4
       '@codemirror/view': 6.38.8
       '@coze-editor/react': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -4616,10 +4698,10 @@ snapshots:
       '@codemirror/view': 6.38.8
       '@lezer/common': 1.5.1
 
-  '@coze-editor/utils@0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1)':
+  '@coze-editor/utils@0.1.0-alpha.868621(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1)':
     dependencies:
-      '@codemirror/state': 6.5.4
-      '@codemirror/view': 6.39.17
+      '@codemirror/state': 6.6.0
+      '@codemirror/view': 6.40.0
       '@lezer/common': 1.5.1
 
   '@coze-editor/vscode@0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)':
@@ -4630,26 +4712,26 @@ snapshots:
       '@lezer/highlight': 1.2.3
       crelt: 1.0.6
 
-  '@coze-editor/vue-components@0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/vue@0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)(vue@3.5.30(typescript@5.9.3)))(@lezer/common@1.5.1)(vue@3.5.30(typescript@5.9.3))':
+  '@coze-editor/vue-components@0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/vue@0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)(vue@3.5.30(typescript@5.9.3)))(@lezer/common@1.5.1)(vue@3.5.30(typescript@5.9.3))':
     dependencies:
       '@codemirror/state': 6.5.4
       '@codemirror/view': 6.38.8
       '@coze-editor/extension-placeholder': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
       '@coze-editor/extensions': 0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
       '@coze-editor/utils': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
-      '@coze-editor/vue': 0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1)(vue@3.5.30(typescript@5.9.3))
+      '@coze-editor/vue': 0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1)(vue@3.5.30(typescript@5.9.3))
       '@floating-ui/dom': 1.7.6
       vue: 3.5.30(typescript@5.9.3)
     transitivePeerDependencies:
       - '@codemirror/language'
       - '@lezer/common'
 
-  '@coze-editor/vue@0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1)(vue@3.5.30(typescript@5.9.3))':
+  '@coze-editor/vue@0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1)(vue@3.5.30(typescript@5.9.3))':
     dependencies:
-      '@codemirror/state': 6.5.4
-      '@codemirror/view': 6.39.17
+      '@codemirror/state': 6.6.0
+      '@codemirror/view': 6.40.0
       '@coze-editor/core': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)
-      '@coze-editor/core-plugins': 0.1.0-alpha.868621(@codemirror/commands@6.10.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
+      '@coze-editor/core-plugins': 0.1.0-alpha.868621(@codemirror/commands@6.10.3)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
       '@coze-editor/extension-placeholder': 0.1.0-alpha.868621(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)
       vue: 3.5.30(typescript@5.9.3)
     transitivePeerDependencies:
@@ -4794,18 +4876,18 @@ snapshots:
       - '@types/react-dom'
       - supports-color
 
-  '@emnapi/core@1.8.1':
+  '@emnapi/core@1.9.0':
     dependencies:
-      '@emnapi/wasi-threads': 1.1.0
+      '@emnapi/wasi-threads': 1.2.0
       tslib: 2.8.1
     optional: true
 
-  '@emnapi/runtime@1.8.1':
+  '@emnapi/runtime@1.9.0':
     dependencies:
       tslib: 2.8.1
     optional: true
 
-  '@emnapi/wasi-threads@1.1.0':
+  '@emnapi/wasi-threads@1.2.0':
     dependencies:
       tslib: 2.8.1
     optional: true
@@ -4863,9 +4945,9 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       reflect-metadata: 0.2.2
 
-  '@flowgram.ai/coze-editor@1.0.8(@babel/core@7.29.0)(@babel/template@7.28.6)(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/merge@6.12.1)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1))(@lezer/common@1.5.1)(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@5.3.11(@babel/core@7.29.0)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1))(vue@3.5.30(typescript@5.9.3))':
+  '@flowgram.ai/coze-editor@1.0.8(@babel/core@7.29.0)(@babel/template@7.28.6)(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/merge@6.12.1)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1))(@lezer/common@1.5.1)(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@5.3.11(@babel/core@7.29.0)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1))(vue@3.5.30(typescript@5.9.3))':
     dependencies:
-      '@coze-editor/code-language-typescript': 0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1))(typescript@5.9.3)
+      '@coze-editor/code-language-typescript': 0.1.0-alpha.868621(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1))(typescript@5.9.3)
       '@coze-editor/editor': 0.1.0-alpha.868621(@babel/core@7.29.0)(@babel/template@7.28.6)(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/merge@6.12.1)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@lezer/common@1.5.1)(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)(vue@3.5.30(typescript@5.9.3))
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -5017,13 +5099,13 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       reflect-metadata: 0.2.2
 
-  '@flowgram.ai/form-materials@1.0.8(@babel/core@7.29.0)(@babel/template@7.28.6)(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/merge@6.12.1)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1))(@floating-ui/dom@1.7.6)(@lezer/common@1.5.1)(@tiptap/suggestion@3.20.1(@tiptap/core@3.20.1(@tiptap/pm@3.20.1))(@tiptap/pm@3.20.1))(@types/react-dom@18.3.7(@types/react@18.3.28))(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@5.3.11(@babel/core@7.29.0)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1))(vue@3.5.30(typescript@5.9.3))':
+  '@flowgram.ai/form-materials@1.0.8(@babel/core@7.29.0)(@babel/template@7.28.6)(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/merge@6.12.1)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1))(@floating-ui/dom@1.7.6)(@lezer/common@1.5.1)(@tiptap/suggestion@3.20.1(@tiptap/core@3.20.1(@tiptap/pm@3.20.1))(@tiptap/pm@3.20.1))(@types/react-dom@18.3.7(@types/react@18.3.28))(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@5.3.11(@babel/core@7.29.0)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1))(vue@3.5.30(typescript@5.9.3))':
     dependencies:
       '@codemirror/state': 6.5.4
       '@codemirror/view': 6.38.8
       '@douyinfe/semi-icons': 2.92.2(react@18.3.1)
       '@douyinfe/semi-ui': 2.92.2(@floating-ui/dom@1.7.6)(@tiptap/suggestion@3.20.1(@tiptap/core@3.20.1(@tiptap/pm@3.20.1))(@tiptap/pm@3.20.1))(@types/react-dom@18.3.7(@types/react@18.3.28))(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@flowgram.ai/coze-editor': 1.0.8(@babel/core@7.29.0)(@babel/template@7.28.6)(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/merge@6.12.1)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.5.4)(@codemirror/view@6.39.17)(@lezer/common@1.5.1))(@lezer/common@1.5.1)(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@5.3.11(@babel/core@7.29.0)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1))(vue@3.5.30(typescript@5.9.3))
+      '@flowgram.ai/coze-editor': 1.0.8(@babel/core@7.29.0)(@babel/template@7.28.6)(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/merge@6.12.1)(@codemirror/state@6.5.4)(@codemirror/view@6.38.8)(@coze-editor/code-language-shared@0.1.0-alpha.868621(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/state@6.6.0)(@codemirror/view@6.40.0)(@lezer/common@1.5.1))(@lezer/common@1.5.1)(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@5.3.11(@babel/core@7.29.0)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1))(vue@3.5.30(typescript@5.9.3))
       '@flowgram.ai/editor': 1.0.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@flowgram.ai/json-schema': 1.0.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       immer: 10.1.3
@@ -5448,8 +5530,8 @@ snapshots:
 
   '@napi-rs/wasm-runtime@1.0.7':
     dependencies:
-      '@emnapi/core': 1.8.1
-      '@emnapi/runtime': 1.8.1
+      '@emnapi/core': 1.9.0
+      '@emnapi/runtime': 1.9.0
       '@tybys/wasm-util': 0.10.1
     optional: true
 
@@ -5596,7 +5678,7 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@rc-component/form@1.7.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@rc-component/form@1.7.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@rc-component/async-validator': 5.1.0
       '@rc-component/util': 1.9.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -5690,7 +5772,7 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@rc-component/picker@1.9.1(date-fns@2.30.0)(dayjs@1.11.19)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@rc-component/picker@1.9.1(date-fns@2.30.0)(dayjs@1.11.20)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@rc-component/overflow': 1.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@rc-component/resize-observer': 1.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -5701,7 +5783,7 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
     optionalDependencies:
       date-fns: 2.30.0
-      dayjs: 1.11.19
+      dayjs: 1.11.20
 
   '@rc-component/portal@2.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
@@ -5929,7 +6011,7 @@ snapshots:
       core-js: 3.47.0
       jiti: 2.6.1
 
-  '@rsbuild/plugin-less@1.6.1(@rsbuild/core@1.7.3)(@rspack/core@1.7.8(@swc/helpers@0.5.19))':
+  '@rsbuild/plugin-less@1.6.2(@rsbuild/core@1.7.3)(@rspack/core@1.7.8(@swc/helpers@0.5.19))':
     dependencies:
       deepmerge: 4.3.1
       less: 4.6.3
@@ -6499,7 +6581,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.28.6
       '@types/js-cookie': 3.0.6
-      dayjs: 1.11.19
+      dayjs: 1.11.20
       intersection-observer: 0.12.2
       js-cookie: 3.0.5
       lodash: 4.17.23
@@ -6528,7 +6610,7 @@ snapshots:
       antd-mobile-icons: 0.3.0
       antd-mobile-v5-count: 1.0.1
       classnames: 2.5.1
-      dayjs: 1.11.19
+      dayjs: 1.11.20
       deepmerge: 4.3.1
       nano-memoize: 3.0.16
       rc-field-form: 1.44.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -6559,7 +6641,7 @@ snapshots:
       '@rc-component/dialog': 1.8.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@rc-component/drawer': 1.4.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@rc-component/dropdown': 1.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@rc-component/form': 1.7.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@rc-component/form': 1.7.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@rc-component/image': 1.6.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@rc-component/input': 1.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@rc-component/input-number': 1.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -6569,7 +6651,7 @@ snapshots:
       '@rc-component/mutate-observer': 2.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@rc-component/notification': 1.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@rc-component/pagination': 1.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@rc-component/picker': 1.9.1(date-fns@2.30.0)(dayjs@1.11.19)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@rc-component/picker': 1.9.1(date-fns@2.30.0)(dayjs@1.11.20)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@rc-component/progress': 1.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@rc-component/qrcode': 1.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@rc-component/rate': 1.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -6590,7 +6672,7 @@ snapshots:
       '@rc-component/upload': 1.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@rc-component/util': 1.9.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       clsx: 2.1.1
-      dayjs: 1.11.19
+      dayjs: 1.11.20
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       scroll-into-view-if-needed: 3.1.0
@@ -6658,7 +6740,7 @@ snapshots:
     dependencies:
       baseline-browser-mapping: 2.10.0
       caniuse-lite: 1.0.30001778
-      electron-to-chromium: 1.5.307
+      electron-to-chromium: 1.5.313
       node-releases: 2.0.36
       update-browserslist-db: 1.2.3(browserslist@4.28.1)
 
@@ -6773,7 +6855,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.28.6
 
-  dayjs@1.11.19: {}
+  dayjs@1.11.20: {}
 
   debug@4.4.3(supports-color@5.5.0):
     dependencies:
@@ -6810,7 +6892,7 @@ snapshots:
       es-errors: 1.3.0
       gopd: 1.2.0
 
-  electron-to-chromium@1.5.307: {}
+  electron-to-chromium@1.5.313: {}
 
   emojis-list@3.0.0: {}
 
