@@ -1,7 +1,7 @@
 import React from "react";
-import { Button } from "antd-mobile";
+import { Button, Space } from "antd-mobile";
 import {DisplayStyle, FlowActionDisplay} from "@flow-engine/flow-types";
-
+import {Icon} from "@flow-engine/flow-icons";
 
 interface CustomStyleButtonProps {
     onClick: () => void;
@@ -48,7 +48,10 @@ export const CustomStyleButton: React.FC<CustomStyleButtonProps> = (props) => {
                 margin: '5px',
             }}
         >
-            {title}
+           <Space>
+               <Icon type={props.display.icon}/>
+               <span>{title}</span>
+           </Space>
         </Button>
     )
 }

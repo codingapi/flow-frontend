@@ -182,6 +182,9 @@ importers:
       '@flow-engine/flow-core':
         specifier: workspace:*
         version: link:../../flow-core
+      '@flow-engine/flow-icons':
+        specifier: workspace:*
+        version: link:../../flow-icons
       '@flow-engine/flow-mobile-form':
         specifier: workspace:*
         version: link:../flow-mobile-form
