@@ -14,7 +14,7 @@ export const useMockPresenter = () => {
     }
 
     React.useEffect(() => {
-        if (ref.current) {
+        if (ref.current && state) {
             ref.current.syncState(state);
         }
     }, [state]);
@@ -22,7 +22,9 @@ export const useMockPresenter = () => {
 
     React.useEffect(()=>{
         return ()=>{
-            ref.current?.cleanMock();
+            if(state) {
+                ref.current?.cleanMock();
+            }
         }
     },[]);
 

@@ -15,11 +15,13 @@ export class FlowMockPresenter {
 
     public syncState(state:string):void {
         this.state = state;
+        console.log('syncState', state);
     }
 
     public initState():void {
         this.api.mock().then(mock => {
             if (mock) {
+                console.log('mock initState', mock);
                 this.dispatch(mock);
             }
         });

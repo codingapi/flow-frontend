@@ -3,7 +3,8 @@ import LoginPage from "@/pages/login";
 import HomePage from "@/pages/home";
 import DesignPage from "@/pages/desgin";
 import TodoPage from "@/pages/todo";
-import UserPage from "@/pages/user.tsx";
+import UserPage from "@/pages/user";
+import MockPage from "@/pages/mock";
 
 
 export const routers = [
@@ -26,6 +27,12 @@ export const routers = [
         path:'/todo',
         element:<TodoPage/>,
         name: '待办中心'
+    },
+    {
+        path:'/mock',
+        element:<MockPage/>,
+        name: '流程模拟',
+        hidden:true
     },
     {
         path:'/',

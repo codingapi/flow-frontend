@@ -1,12 +1,12 @@
 import React from "react";
-import {DesignList} from '@flow-engine/flow-pc-design';
+import {WorkflowList} from "@/components/workflow-list.tsx";
 
 
 const DesignPage = () => {
 
     return (
         <div>
-            <DesignList />
+            <WorkflowList />
         </div>
     )
 }

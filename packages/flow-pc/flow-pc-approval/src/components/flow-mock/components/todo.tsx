@@ -9,7 +9,11 @@ import {FlowTitle} from "@/components/flow-title";
 import type { ActionType } from "@flow-engine/flow-core";
 import {useMockContext} from "@/components/flow-mock/hooks/use-mock-context";
 
-export const MockTodoPage: React.FC = () => {
+interface MockTodoPageProps{
+    onCleanMock:()=>void;
+}
+
+export const MockTodoPage: React.FC<MockTodoPageProps> = (props) => {
 
     const actionAll = React.useRef<ActionType>(null);
     const actionTodo = React.useRef<ActionType>(null);
@@ -197,15 +201,31 @@ export const MockTodoPage: React.FC = () => {
                     setCurrentTab(currentKey);
                 }}
                 tabBarExtraContent={{
+                    left:(
+                        <h3>模拟流程测试</h3>
+                    ),
                     right: (
-                        <Button
-                            key={"create"}
-                            type={'primary'}
-                            onClick={() => {
-                                setCurrentRecordId('');
-                                setReviewVisible(false);
-                                setSelectVisible(true);
-                            }}>发起流程</Button>
+                        <Space>
+                            <Button
+                                key={"create"}
+                                type={'primary'}
+                                onClick={() => {
+                                    setCurrentRecordId('');
+                                    setReviewVisible(false);
+                                    setSelectVisible(true);
+                                }}
+                            >
+                                发起流程
+                            </Button>
+                            <Button
+                                key={"clean"}
+                                onClick={() => {
+                                    props.onCleanMock();
+                                }}
+                            >
+                                关闭模拟
+                            </Button>
+                        </Space>
                     )
                 }}
             />

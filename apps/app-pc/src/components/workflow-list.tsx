@@ -1,17 +1,39 @@
-import {Table, TableProps} from "@flow-engine/flow-pc-ui";
-import {ActionType} from "@flow-engine/flow-core";
+import {Table, type TableProps} from "@flow-engine/flow-pc-ui";
+import {type ActionType} from "@flow-engine/flow-core";
 import React from "react";
-import {DataType, DesignListProps} from "./types";
-import {usePresenter} from "./hooks/use-presenter";
-import {Button, Space, Popconfirm, message} from "antd";
-import {DesignPanel} from "@/components/design-panel";
+import {Button, message, Popconfirm, Space} from "antd";
+import {DesignPanel} from "@flow-engine/flow-pc-design";
+import {changeState, list, remove} from "@/api/workflow.ts";
 import dayjs from "dayjs";
+import { useNavigate } from "react-router";
 
-export const DesignList: React.FC<DesignListProps> = (props) => {
+export const WorkflowList = () => {
 
     const actionType = React.useRef<ActionType>(null);
-    const {state, presenter} = usePresenter(actionType);
-    const columns: TableProps<DataType>['columns'] = [
+    const [currentId, setCurrentId] = React.useState<string>('');
+    const [editable, setEditable] = React.useState<boolean>(false);
+
+    const navigate = useNavigate();
+
+    const handleChangeState = (id: any) => {
+        changeState(id).then(res => {
+            if (res.success) {
+                message.success('状态已变更');
+                actionType.current?.reload();
+            }
+        })
+    }
+
+    const handleRemove = (id: any) => {
+        remove(id).then(res => {
+            if (res.success) {
+                message.success('流程已删除');
+                actionType.current?.reload();
+            }
+        })
+    }
+
+    const columns: TableProps<any>['columns'] = [
         {
             dataIndex: 'id',
             title: '编号',
@@ -28,14 +50,14 @@ export const DesignList: React.FC<DesignListProps> = (props) => {
         {
             dataIndex: 'createdTime',
             title: '创建时间',
-            render: (value, record) => {
+            render: (value) => {
                 return dayjs(value).format("YYYY-MM-DD HH:mm:ss");
             }
         },
         {
             dataIndex: 'updatedTime',
             title: '更新时间',
-            render: (value, record) => {
+            render: (value) => {
                 return dayjs(value).format("YYYY-MM-DD HH:mm:ss");
             }
         },
@@ -43,27 +65,23 @@ export const DesignList: React.FC<DesignListProps> = (props) => {
             dataIndex: 'enable',
             title: '状态',
             render: (value, record) => {
-                if(value){
-                    return  (
+                if (value) {
+                    return (
                         <Popconfirm
                             title={"确认要禁用吗？"}
-                            onConfirm={()=>{
-                                presenter.changeState(record.id).then(()=>{
-                                    message.success('流程已禁用.')
-                                });
+                            onConfirm={() => {
+                                handleChangeState(record.id);
                             }}
                         >
                             <a>启用</a>
                         </Popconfirm>
                     )
-                }else {
-                    return  (
+                } else {
+                    return (
                         <Popconfirm
                             title={"确认要启用吗？"}
-                            onConfirm={()=>{
-                                presenter.changeState(record.id).then(()=>{
-                                    message.success('流程已启用.')
-                                });
+                            onConfirm={() => {
+                                handleChangeState(record.id);
                             }}
                         >
                             <a>禁用</a>
@@ -75,18 +93,17 @@ export const DesignList: React.FC<DesignListProps> = (props) => {
         {
             dataIndex: 'option',
             title: '操作',
-            render: (value, record) => {
+            render: (_: any, record) => {
                 return (
                     <Space>
                         <a onClick={() => {
-                            presenter.editCurrent(record.id);
+                            setCurrentId(record.id);
+                            setEditable(true);
                         }}>编辑</a>
                         <Popconfirm
                             title={"确认要删除该流程吗？"}
                             onConfirm={() => {
-                                presenter.deleteRecord(record.id).then(() => {
-                                    message.success('流程已删除.')
-                                });
+                                handleRemove(record.id);
                             }}
                         >
                             <a>删除</a>
@@ -99,33 +116,44 @@ export const DesignList: React.FC<DesignListProps> = (props) => {
 
     return (
         <div>
-            <Table<DataType>
+            <Table
                 rowKey={"id"}
                 actionType={actionType}
                 toolBarRender={() => {
                     return [
                         <Button
+                            key={"mock"}
+                            onClick={() => {
+                                window.open('/#/mock', '_blank')
+                            }}>
+                            流程模拟
+                        </Button>,
+                        <Button
                             key={"create"}
                             type={'primary'}
                             onClick={() => {
-                                presenter.clearCurrent();
-                                presenter.showEditable();
-                            }}>创建流程</Button>
+                                setCurrentId('');
+                                setEditable(true);
+                            }}>
+                            创建流程
+                        </Button>
                     ]
                 }}
                 columns={columns}
                 request={(request) => {
-                    return presenter.request(request);
+                    return list(request) as any;
                 }}
             />
 
             <DesignPanel
-                id={state.currentId}
-                open={state.editable}
+                id={currentId}
+                open={editable}
                 onClose={() => {
-                    presenter.hideEditable();
-                    presenter.reload();
-                }}/>
+                    setCurrentId('')
+                    setEditable(false);
+                    actionType.current?.reload();
+                }}
+            />
         </div>
     )
 }

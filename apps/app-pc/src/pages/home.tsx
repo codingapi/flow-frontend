@@ -7,7 +7,7 @@ const HomePage: React.FC = () => {
 
     const navigate = useNavigate();
 
-    const routerButtons = routers.filter(item=>item.path!=='/');
+    const routerButtons = routers.filter(item=>item.path!=='/' && !item.hidden);
 
     return (
         <div>

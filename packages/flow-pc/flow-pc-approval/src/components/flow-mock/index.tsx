@@ -6,11 +6,18 @@ import {MockTodoPage} from "@/components/flow-mock/components/todo";
 
 export const FlowMock = () => {
 
-    const {state} = useMockPresenter();
+    const {state, presenter} = useMockPresenter();
 
-    return (
-        <FlowMockContext.Provider value={state}>
-            <MockTodoPage/>
-        </FlowMockContext.Provider>
-    )
+    if (state) {
+        return (
+            <FlowMockContext.Provider value={state}>
+                <MockTodoPage
+                    onCleanMock={() => {
+                        presenter.cleanMock();
+                        window.close();
+                    }}
+                />
+            </FlowMockContext.Provider>
+        )
+    }
 }

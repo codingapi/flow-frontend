@@ -32,20 +32,20 @@ export const urge = (id:any,mockKey?:string) => {
 
 export const list = (request: any,mockKey?:string) => {
     const key = mockKey?mockKey:'';
-    return httpClient.page('/api/query/record/list', request, {}, {}, []);
+    return httpClient.page('/api/query/record/list?mockKey='+key, request, {}, {}, []);
 }
 
 export const todo = (request: any,mockKey?:string) => {
     const key = mockKey?mockKey:'';
-    return httpClient.page('/api/query/record/todo', request, {}, {}, []);
+    return httpClient.page('/api/query/record/todo?mockKey='+key, request, {}, {}, []);
 }
 
 export const done = (request: any,mockKey?:string) => {
     const key = mockKey?mockKey:'';
-    return httpClient.page('/api/query/record/done', request, {}, {}, []);
+    return httpClient.page('/api/query/record/done?mockKey='+key, request, {}, {}, []);
 }
 
 export const notify = (request: any,mockKey?:string) => {
     const key = mockKey?mockKey:'';
-    return httpClient.page('/api/query/record/notify', request, {}, {}, []);
+    return httpClient.page('/api/query/record/notify?mockKey='+key, request, {}, {}, []);
 }
