@@ -2,18 +2,17 @@ import {Table, type TableProps} from "@flow-engine/flow-pc-ui";
 import {type ActionType} from "@flow-engine/flow-core";
 import React from "react";
 import {Button, message, Popconfirm, Space} from "antd";
-import {DesignPanel} from "@flow-engine/flow-pc-design";
+import {DesignImport, DesignPanel} from "@flow-engine/flow-pc-design";
 import {changeState, list, remove} from "@/api/workflow.ts";
 import dayjs from "dayjs";
-import { useNavigate } from "react-router";
 
 export const WorkflowList = () => {
 
     const actionType = React.useRef<ActionType>(null);
     const [currentId, setCurrentId] = React.useState<string>('');
     const [editable, setEditable] = React.useState<boolean>(false);
+    const [importVisible, setImportVisible] = React.useState<boolean>(false);
 
-    const navigate = useNavigate();
 
     const handleChangeState = (id: any) => {
         changeState(id).then(res => {
@@ -129,6 +128,13 @@ export const WorkflowList = () => {
                             流程模拟
                         </Button>,
                         <Button
+                            key={"import"}
+                            onClick={() => {
+                                setImportVisible(true);
+                            }}>
+                            导入流程
+                        </Button>,
+                        <Button
                             key={"create"}
                             type={'primary'}
                             onClick={() => {
@@ -151,6 +157,14 @@ export const WorkflowList = () => {
                 onClose={() => {
                     setCurrentId('')
                     setEditable(false);
+                    actionType.current?.reload();
+                }}
+            />
+
+            <DesignImport
+                open={importVisible}
+                onClose={()=>{
+                    setImportVisible(false);
                     actionType.current?.reload();
                 }}
             />

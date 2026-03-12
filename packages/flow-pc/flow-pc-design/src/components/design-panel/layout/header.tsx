@@ -2,8 +2,9 @@ import React from "react";
 import {Button, Form, Input, message, Popover, Space, Tabs} from "antd";
 import {LayoutHeaderHeight, TabPanelType} from "../types";
 import {useDesignContext} from "../hooks/use-design-context";
-import {CloseOutlined, SaveOutlined} from "@ant-design/icons";
+import {CloseOutlined, DownloadOutlined, SaveOutlined} from "@ant-design/icons";
 import {EventBus} from "@flow-engine/flow-core";
+import {exportWorkflow} from "@/api/workflow";
 
 const Left = () => {
     return (
@@ -96,7 +97,7 @@ const SaveAsButton = () => {
 }
 
 const Right = () => {
-    const {context} = useDesignContext();
+    const {state,context} = useDesignContext();
 
     return (
         <Space style={{
@@ -113,6 +114,12 @@ const Right = () => {
                 }}
             >保存</Button>
             <SaveAsButton/>
+            <Button
+                icon={<DownloadOutlined />}
+                onClick={() => {
+                     exportWorkflow(state.workflow.id);
+                }}
+            >导出</Button>
             <Button
                 icon={<CloseOutlined/>}
                 onClick={() => {
