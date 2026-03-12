@@ -1,1 +1,1 @@
-export * from '@/components/text-icon';
+export * from '@/components/flow-approval';

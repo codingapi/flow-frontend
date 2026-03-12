@@ -1,0 +1,46 @@
+import {FlowContent,ProcessNode} from "@flow-engine/flow-types";
+
+/**
+ * 流程审批布局组件属性
+ */
+export interface ApprovalLayoutProps {
+    content:FlowContent;
+    review?:boolean;
+    onClose?:() => void;
+}
+
+
+/** 流程审批面板 */
+interface ApprovalPanelProps {
+    // 流程设计编码
+    workflowCode?: string;
+    // 流程记录Id
+    recordId?: string;
+    // 关闭回掉
+    onClose?: () => void;
+    // 是否预览（当查看详情非审批时，设置为true）
+    review?:boolean;
+}
+
+export type State  = {
+    flow?:FlowContent;
+    review?:boolean;
+};
+
+
+export const initStateData = {
+
+}
+
+export interface FlowApprovalApi{
+
+    create(body:Record<string,any>,mockKey:string):Promise<number>;
+
+    processNodes(body:Record<string,any>,mockKey:string):Promise<ProcessNode[]>;
+
+    action(body:Record<string,any>,mockKey:string):Promise<any>;
+
+    revoke(id:any,mockKey:string):Promise<any>;
+
+    urge(id:any,mockKey:string):Promise<any>;
+}

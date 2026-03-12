@@ -17,7 +17,7 @@ const HomePage:React.FC = ()=>{
                 alignItems:'center'
             }}><h1>Flow-Engine Home Page</h1></div>
             <Space>
-                {routers.filter(item=>item.path!=='/').map(item => {
+                {routers.filter(item=>item.path!=='/' && !item.hidden).map(item => {
                     return (
                         <Button
                             onClick={()=>navigate(item.path)}

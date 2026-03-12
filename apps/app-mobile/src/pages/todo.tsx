@@ -3,6 +3,7 @@ import React from "react";
 import {done, list, notify, todo} from "@/api/record.ts";
 import dayjs from "dayjs";
 import {TextIcon} from "@flow-engine/flow-mobile-ui";
+import { useNavigate } from "react-router";
 
 interface TodoListProps {
     type: 'todo' | 'done' | 'notify' | 'list';   // 固定类型，用于区分不同列表
@@ -10,6 +11,8 @@ interface TodoListProps {
 
 const TodoList: React.FC<TodoListProps> = ({ type }) => {
     const [records, setRecords] = React.useState<any[]>([]);
+
+    const navigate = useNavigate();
 
     // 获取数据
     const fetchData = React.useCallback(() => {
@@ -36,6 +39,14 @@ const TodoList: React.FC<TodoListProps> = ({ type }) => {
         )
     }
 
+    const handleApproval = (recordId:string) => {
+        navigate('/approval', {
+            state: {
+                recordId: recordId,
+            }
+        });
+    }
+
     return (
         <List
             style={{ '--border-top': 'none'}}
@@ -44,6 +55,9 @@ const TodoList: React.FC<TodoListProps> = ({ type }) => {
                 <List.Item
                     style={{
                         padding: 8,
+                    }}
+                    onClick={()=>{
+                        handleApproval(record.recordId);
                     }}
                     key={record.recordId}
                     prefix={(

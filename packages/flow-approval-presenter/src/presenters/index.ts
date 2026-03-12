@@ -1,0 +1,46 @@
+import {FlowApprovalApi, State} from "@/typings";
+import {Dispatch} from "@flow-engine/flow-core";
+import {FormActionContext} from "@flow-engine/flow-types";
+import {FlowActionPresenter} from "./action";
+
+export class ApprovalPresenter {
+
+    private state: State;
+    private readonly mockKey:string;
+    private readonly dispatch: Dispatch<State>;
+    private readonly api: FlowApprovalApi;
+    private readonly formActionContext:FormActionContext;
+    private readonly flowActionPresenter:FlowActionPresenter;
+
+    constructor(state: State, dispatch: Dispatch<State>, api: FlowApprovalApi,mockKey:string) {
+        this.state = state;
+        this.dispatch = dispatch;
+        this.api = api;
+        this.formActionContext = new FormActionContext();
+        this.mockKey = mockKey;
+        this.flowActionPresenter = new FlowActionPresenter(state,api,this.formActionContext,mockKey);
+    }
+
+    public syncState(state: State) {
+        this.state = state;
+        this.flowActionPresenter.syncState(state);
+    }
+
+
+    public getFormActionContext() {
+        return this.formActionContext;
+    }
+
+    public getFlowActionPresenter() {
+        return this.flowActionPresenter;
+    }
+
+    public initialState(state: State) {
+        this.dispatch(state);
+    }
+
+    public processNodes(){
+        return this.flowActionPresenter.processNodes();
+    }
+
+}
