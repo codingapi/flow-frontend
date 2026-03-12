@@ -1,6 +1,6 @@
 import React from "react";
 import {Button, Col, Popover, Row} from "antd";
-import {Icon} from "@flow-engine/flow-pc-ui";
+import {Icon} from "@flow-engine/flow-icons";
 import {icons} from "@flow-engine/flow-types";
 
 interface ActionIconProps {

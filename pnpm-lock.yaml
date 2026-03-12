@@ -159,6 +159,21 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
 
+  packages/flow-icons:
+    dependencies:
+      '@ant-design/icons':
+        specifier: ~6.1.0
+        version: 6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@flow-engine/flow-core':
+        specifier: workspace:*
+        version: link:../flow-core
+      react:
+        specifier: '>=18'
+        version: 18.3.1
+      react-dom:
+        specifier: '>=18'
+        version: 18.3.1(react@18.3.1)
+
   packages/flow-mobile/flow-mobile-approval:
     dependencies:
       '@flow-engine/flow-approval-presenter':
@@ -242,6 +257,9 @@ importers:
       '@flow-engine/flow-core':
         specifier: workspace:*
         version: link:../../flow-core
+      '@flow-engine/flow-icons':
+        specifier: workspace:*
+        version: link:../../flow-icons
       '@flow-engine/flow-pc-form':
         specifier: workspace:*
         version: link:../flow-pc-form
@@ -299,6 +317,9 @@ importers:
       '@flow-engine/flow-core':
         specifier: workspace:*
         version: link:../../flow-core
+      '@flow-engine/flow-icons':
+        specifier: workspace:*
+        version: link:../../flow-icons
       '@flow-engine/flow-pc-ui':
         specifier: workspace:*
         version: link:../flow-pc-ui

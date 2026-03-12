@@ -1,7 +1,7 @@
-import {Button} from "antd";
 import React from "react";
+import { Button } from "antd-mobile";
 import {DisplayStyle, FlowActionDisplay} from "@flow-engine/flow-types";
-import {Icon} from "@flow-engine/flow-icons";
+
 
 interface CustomStyleButtonProps {
     onClick: () => void;
@@ -41,8 +41,12 @@ export const CustomStyleButton: React.FC<CustomStyleButtonProps> = (props) => {
     return (
         <Button
             onClick={props.onClick}
-            style={style}
-            icon={<Icon type={display.icon} />}
+            style={{
+                ...style,
+                width: '100%',
+                padding: '10px',
+                margin: '5px',
+            }}
         >
             {title}
         </Button>
