@@ -1,9 +1,9 @@
 import React from "react";
-import {ApprovalLayoutProps} from "../typings";
+import {ApprovalLayoutProps} from "@flow-engine/flow-approval-presenter";
 import {Provider} from "react-redux";
-import {approvalStore} from "@/components/flow-approval/store";
-import {ApprovalContext} from "@/components/flow-approval/context";
-import {createApprovalContext} from "@/components/flow-approval/hooks/use-approval-context";
+import {approvalStore} from "@flow-engine/flow-approval-presenter";
+import {ApprovalContext} from "@flow-engine/flow-approval-presenter";
+import {createApprovalContext} from "@flow-engine/flow-approval-presenter";
 import {Header} from "@/components/flow-approval/layout/header";
 import {Body} from "@/components/flow-approval/layout/body";
 

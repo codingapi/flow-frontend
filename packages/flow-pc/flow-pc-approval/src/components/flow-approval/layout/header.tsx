@@ -1,5 +1,5 @@
 import React from "react";
-import {useApprovalContext} from "@/components/flow-approval/hooks/use-approval-context";
+import {useApprovalContext} from "@flow-engine/flow-approval-presenter";
 import {Button, Flex, Space, Typography} from "antd";
 import {ApprovalLayoutHeight} from "@/components/flow-approval/typings";
 import {ActionFactory} from "@/components/flow-approval/components/action/factory";

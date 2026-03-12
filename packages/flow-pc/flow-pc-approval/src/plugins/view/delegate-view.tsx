@@ -1,11 +1,11 @@
 import React from "react";
-import {DelegateViewPlugin, VIEW_KEY} from "../delegate-type";
+import {DelegateViewPlugin, DelegateViewPluginKey} from "@flow-engine/flow-approval-presenter";
 import {ViewBindPlugin} from "@flow-engine/flow-core";
 import {Select} from "antd";
-import {useApprovalContext} from "@/components/flow-approval/hooks/use-approval-context";
+import {useApprovalContext} from "@flow-engine/flow-approval-presenter";
 
 export const DelegateView: React.FC<DelegateViewPlugin> = (props) => {
-    const DelegateViewComponent = ViewBindPlugin.getInstance().get(VIEW_KEY);
+    const DelegateViewComponent = ViewBindPlugin.getInstance().get(DelegateViewPluginKey);
 
     const {state} = useApprovalContext();
 

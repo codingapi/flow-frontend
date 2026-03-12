@@ -1,11 +1,11 @@
 import React from "react";
-import {ReturnViewPlugin, VIEW_KEY} from "../return-type";
+import {ReturnViewPlugin, ReturnViewPluginKey} from "@flow-engine/flow-approval-presenter";
 import {ViewBindPlugin} from "@flow-engine/flow-core";
 import {Select} from "antd";
-import {useApprovalContext} from "@/components/flow-approval/hooks/use-approval-context";
+import {useApprovalContext} from "@flow-engine/flow-approval-presenter";
 
 export const ReturnView: React.FC<ReturnViewPlugin> = (props) => {
-    const ReturnViewComponent = ViewBindPlugin.getInstance().get(VIEW_KEY);
+    const ReturnViewComponent = ViewBindPlugin.getInstance().get(ReturnViewPluginKey);
 
     const {state} = useApprovalContext();
 

@@ -1,11 +1,11 @@
 import React from "react";
-import {AddAuditViewPlugin, VIEW_KEY} from "../add-audit-type";
+import {AddAuditViewPlugin, AddAuditViewPluginKey} from "@flow-engine/flow-approval-presenter";
 import {ViewBindPlugin} from "@flow-engine/flow-core";
 import {Select} from "antd";
-import {useApprovalContext} from "@/components/flow-approval/hooks/use-approval-context";
+import {useApprovalContext} from "@flow-engine/flow-approval-presenter";
 
 export const AddAuditView: React.FC<AddAuditViewPlugin> = (props) => {
-    const AddAuditViewComponent = ViewBindPlugin.getInstance().get(VIEW_KEY);
+    const AddAuditViewComponent = ViewBindPlugin.getInstance().get(AddAuditViewPluginKey);
 
     const {state} = useApprovalContext();
 

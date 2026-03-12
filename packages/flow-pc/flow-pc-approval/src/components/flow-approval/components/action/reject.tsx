@@ -1,7 +1,7 @@
 import React from "react";
 import {FlowActionProps} from "./type";
 import {Form, Input, message, Modal} from "antd";
-import {useApprovalContext} from "@/components/flow-approval/hooks/use-approval-context";
+import {useApprovalContext} from "@flow-engine/flow-approval-presenter";
 import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
 
 const {TextArea} = Input;

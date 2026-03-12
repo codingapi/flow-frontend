@@ -1,5 +1,5 @@
 import React from "react";
-import {useApprovalContext} from "@/components/flow-approval/hooks/use-approval-context";
+import {useApprovalContext} from "@flow-engine/flow-approval-presenter";
 import {ProcessNode} from "@flow-engine/flow-types";
 import {Empty, Timeline} from "antd";
 import {FlowTimeNode, getNodeStatus, getStatusConfig} from "@/components/flow-approval/components/flow-time-node";

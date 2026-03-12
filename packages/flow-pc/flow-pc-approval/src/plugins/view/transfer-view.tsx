@@ -1,11 +1,11 @@
 import React from "react";
-import {TransferViewPlugin, VIEW_KEY} from "../transfer-type";
+import {TransferViewPlugin, TransferViewPluginKey} from "@flow-engine/flow-approval-presenter"
 import {ViewBindPlugin} from "@flow-engine/flow-core";
 import {Select} from "antd";
-import {useApprovalContext} from "@/components/flow-approval/hooks/use-approval-context";
+import {useApprovalContext} from "@flow-engine/flow-approval-presenter";
 
 export const TransferView: React.FC<TransferViewPlugin> = (props) => {
-    const TransferViewComponent = ViewBindPlugin.getInstance().get(VIEW_KEY);
+    const TransferViewComponent = ViewBindPlugin.getInstance().get(TransferViewPluginKey);
 
     const {state} = useApprovalContext();
 

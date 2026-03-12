@@ -3,7 +3,7 @@ import {Drawer} from "@flow-engine/flow-pc-ui";
 import {detail} from "@/api/record";
 import {FlowContent} from "@flow-engine/flow-types";
 import {ApprovalLayout} from "@/components/flow-approval/layout";
-import {useMockContext} from "@/components/flow-mock/hooks/use-mock-context";
+import {useMockContext} from "@flow-engine/flow-approval-presenter";
 
 interface ApprovalPanelProps {
     // 流程设计编码
