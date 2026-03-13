@@ -38,7 +38,6 @@ export class FlowActionPresenter {
 
     public async processNodes() {
         const formData = this.formActionContext.save() as any;
-
         const recordId = formData.recordId || this.state.flow?.recordId;
         if (formData.recordId) {
             delete formData.recordId;

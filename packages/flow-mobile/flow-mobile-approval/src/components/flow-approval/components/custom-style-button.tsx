@@ -6,13 +6,13 @@ import {Icon} from "@flow-engine/flow-icons";
 interface CustomStyleButtonProps {
     onClick: () => void;
     title: string;
-    display: FlowActionDisplay;
+    display?: FlowActionDisplay;
 }
 
 export const CustomStyleButton: React.FC<CustomStyleButtonProps> = (props) => {
 
     const display = props.display;
-    const title = display.title || props.title;
+    const title = display?.title || props.title;
 
     const style = React.useMemo(() => {
         if (display) {
@@ -49,7 +49,7 @@ export const CustomStyleButton: React.FC<CustomStyleButtonProps> = (props) => {
             }}
         >
            <Space>
-               {props.display.icon && (<Icon type={props.display.icon}/>)}
+               {props.display?.icon && (<Icon type={props.display.icon}/>)}
                <span>{title}</span>
            </Space>
         </Button>

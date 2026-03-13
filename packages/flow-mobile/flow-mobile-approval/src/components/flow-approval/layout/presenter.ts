@@ -23,6 +23,7 @@ export class LayoutPresenter {
             if (this.state.flow?.urge) {
                 return true;
             }
+            return false;
         }
         return true;
     }
@@ -31,6 +32,10 @@ export class LayoutPresenter {
         return this.review;
     }
 
+
+    public getActions(): FlowAction[] {
+        return this.actions;
+    }
 
     public getFooterOptions() {
         const options: FlowAction[] = [];

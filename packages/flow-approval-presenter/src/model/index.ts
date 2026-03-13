@@ -19,6 +19,7 @@ export class FlowApprovalApiImpl implements FlowApprovalApi {
         if(response.success){
             return response.data.list;
         }
+        return []
     }
 
     revoke =async (id:any,mockKey:string)=> {

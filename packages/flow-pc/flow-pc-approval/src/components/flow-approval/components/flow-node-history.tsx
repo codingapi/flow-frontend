@@ -25,7 +25,9 @@ export const FlowNodeHistory: React.FC<FlowNodeHistoryProps> = (props) => {
     }
 
     React.useEffect(() => {
-        triggerProcessNodes();
+        setTimeout(() => {
+            triggerProcessNodes();
+        }, 100);
     }, []);
 
     React.useImperativeHandle(props.actionRef, () => {
