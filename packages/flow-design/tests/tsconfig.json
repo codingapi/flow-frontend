@@ -1,8 +1,9 @@
 {
   "extends": "../tsconfig.json",
-  "include": [".", "../rstest.setup.ts"],
+  "include": [
+    "./", "../rstest.setup.ts"],
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "@/*": ["../src/*"]
     }

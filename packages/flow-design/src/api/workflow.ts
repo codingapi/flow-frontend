@@ -1,4 +1,4 @@
-import { httpClient } from ".";
+import { httpClient } from "./index";
 
 export const list = (request: any) => {
     return httpClient.page('/api/query/workflow/list', request, {}, {}, []);

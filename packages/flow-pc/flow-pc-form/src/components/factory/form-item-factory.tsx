@@ -1,4 +1,3 @@
-import {DataType} from "@flow-engine/flow-types";
 import React from "react";
 
 import {FormItemString} from "@/components/item/string";

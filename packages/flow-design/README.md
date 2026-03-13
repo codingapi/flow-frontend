@@ -211,4 +211,4 @@ const MyScriptEditor = () => {
 
 - [Rslib documentation](https://lib.rsbuild.io/) - Rslib 特性和 API
 - [Flow Engine Docs](https://github.com/codingapi/flow-engine) - 完整文档
-- [CLAUDE.md](../../../CLAUDE.md) - 开发指南
+- [CLAUDE.md](../../CLAUDE.md) - 开发指南

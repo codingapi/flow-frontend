@@ -2,7 +2,7 @@ import {Table, type TableProps} from "@flow-engine/flow-pc-ui";
 import {type ActionType} from "@flow-engine/flow-core";
 import React from "react";
 import {Button, message, Popconfirm, Space} from "antd";
-import {DesignImport, DesignPanel} from "@flow-engine/flow-pc-design";
+import {DesignImport, DesignPanel} from "@flow-engine/flow-design";
 import {changeState, list, remove} from "@/api/workflow.ts";
 import dayjs from "dayjs";
 
