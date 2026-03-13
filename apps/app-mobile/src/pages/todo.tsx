@@ -3,21 +3,21 @@ import React from "react";
 import {done, list, notify, todo} from "@/api/record.ts";
 import dayjs from "dayjs";
 import {TextIcon} from "@flow-engine/flow-mobile-ui";
-import { useNavigate } from "react-router";
+import {useNavigate} from "react-router";
 
 interface TodoListProps {
     type: 'todo' | 'done' | 'notify' | 'list';   // 固定类型，用于区分不同列表
 }
 
-const TodoList: React.FC<TodoListProps> = ({ type }) => {
+const TodoList: React.FC<TodoListProps> = ({type}) => {
     const [records, setRecords] = React.useState<any[]>([]);
 
     const navigate = useNavigate();
 
     // 获取数据
     const fetchData = React.useCallback(() => {
-        const request = { current: 1, pageSize: 100 };
-        const apiMap = { todo, done, notify, list };
+        const request = {current: 1, pageSize: 100};
+        const apiMap = {todo, done, notify, list};
         const api = apiMap[type];
 
         if (api) {
@@ -33,42 +33,46 @@ const TodoList: React.FC<TodoListProps> = ({ type }) => {
         fetchData();
     }, [fetchData]);
 
-    if(records.length === 0) {
+    if (records.length === 0) {
         return (
             <Empty description={"暂无数据"}/>
         )
     }
 
-    const handleApproval = (recordId:string) => {
+    const handleApproval = (recordId: string) => {
         navigate('/approval', {
             state: {
                 recordId: recordId,
-                review: type!=='todo'
+                review: type !== 'todo'
             }
         });
     }
 
     return (
         <List
-            style={{ '--border-top': 'none'}}
+            style={{'--border-top': 'none'}}
         >
             {records.map((record) => (
                 <List.Item
                     style={{
                         padding: 8,
                     }}
-                    onClick={()=>{
+                    onClick={() => {
                         handleApproval(record.recordId);
                     }}
                     key={record.recordId}
                     prefix={(
                         <TextIcon text={record.workTitle}/>
                     )}
-                    description={record.workTitle}
+                    description={(
+                        <>
+                            {record.nodeName} {record.workTitle}
+                        </>
+                    )}
                     extra={
-                        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
-                            <span>{dayjs(record.createTime).format("YYYY-MM-DD HH:mm")}</span>
-                            <span style={{ marginTop: 4 }}>{record.currentOperatorName}</span>
+                        <div style={{display: "flex", flexDirection: "column", alignItems: "flex-end"}}>
+                            <span>{dayjs(record.createTime).format("YYYY-MM-DD HH:mm:ss")}</span>
+                            <span style={{marginTop: 4}}>{record.currentOperatorName}</span>
                         </div>
                     }
                 >
@@ -85,16 +89,16 @@ const TodoPage: React.FC = () => {
     return (
         <Tabs activeKey={currentKey} onChange={setCurrentKey}>
             <Tabs.Tab title="待办" key="todo">
-                <TodoList type="todo" />
+                <TodoList type="todo"/>
             </Tabs.Tab>
             <Tabs.Tab title="已办" key="done">
-                <TodoList type="done" />
+                <TodoList type="done"/>
             </Tabs.Tab>
             <Tabs.Tab title="抄送" key="notify">
-                <TodoList type="notify" />
+                <TodoList type="notify"/>
             </Tabs.Tab>
             <Tabs.Tab title="全部" key="list">
-                <TodoList type="list" />
+                <TodoList type="list"/>
             </Tabs.Tab>
         </Tabs>
     );

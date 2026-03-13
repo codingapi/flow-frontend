@@ -1,6 +1,7 @@
 import React from "react";
 import {Tabs} from "antd-mobile";
 import {FormViewComponent} from "@/components/flow-approval/components/form-view-component";
+import {FlowNodeHistory, FlowNodeHistoryAction} from "@/components/flow-approval/components/flow-node-history";
 
 interface BodyProps {
     height: string
@@ -8,9 +9,7 @@ interface BodyProps {
 
 export const Body:React.FC<BodyProps> = (props) => {
 
-    const handleValuesChange = (values:any) => {
-
-    }
+    const flowNodeHistoryAction = React.useRef<FlowNodeHistoryAction>(null);
 
     return (
         <div
@@ -23,12 +22,17 @@ export const Body:React.FC<BodyProps> = (props) => {
                 style={{
                     width: '100%',
                 }}
+                onChange={(key)=>{
+                    if (key === "history") {
+                        flowNodeHistoryAction.current?.refresh();
+                    }
+                }}
             >
                 <Tabs.Tab title="流程详情" key="detail">
-                    <FormViewComponent onValuesChange={handleValuesChange}/>
+                    <FormViewComponent/>
                 </Tabs.Tab>
                 <Tabs.Tab title="流程记录" key="history">
-                    流程记录
+                    <FlowNodeHistory actionRef={flowNodeHistoryAction}/>
                 </Tabs.Tab>
             </Tabs>
         </div>
