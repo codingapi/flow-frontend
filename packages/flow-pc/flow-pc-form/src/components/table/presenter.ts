@@ -39,6 +39,18 @@ export class TableFormPresenter {
             key: 'title',
         });
 
+        columns.push({
+            title: '流程提交人',
+            dataIndex: 'submitOperatorName',
+            key: 'submitOperatorName',
+        });
+
+        columns.push({
+            title: '流程发起人',
+            dataIndex: 'createdOperatorName',
+            key: 'createdOperatorName',
+        });
+
         for (const field of fields) {
             columns.push({
                 title: field.name,
@@ -64,9 +76,19 @@ export class TableFormPresenter {
         const datasource = [];
         for (const form of this.formList) {
             const data = form.data;
+            const submitOperator = {
+                submitOperatorName:data.submitOperator?.name,
+                submitOperatorId:data.submitOperator?.id,
+            }
+            const createdOperator = {
+                createdOperatorName:data.createdOperator.name,
+                createdOperatorId:data.createdOperator.id,
+            }
             datasource.push({
                 ...this.getFormData(form),
                 ...data,
+                ...submitOperator,
+                ...createdOperator
             });
         }
         return datasource;
