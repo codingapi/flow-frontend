@@ -1,12 +1,26 @@
 import React from "react";
 import {FormViewProps} from "@flow-engine/flow-types";
 import {FormView} from "./view";
+import {FlowList} from "@/components/list";
 
 export const FlowFormView: React.FC<FormViewProps> = (props) => {
 
     const form = props.form;
 
     const formList = props.formList || [];
+
+    if(props.mergeable){
+        return (
+            <FlowList
+                formList={formList}
+                meta={props.meta}
+                onValuesChange={props.onValuesChange}
+                review={props.review}
+                fieldPermissions={props.fieldPermissions}
+                onMergeRecordIdsSelected={props.onMergeRecordIdsSelected}
+            />
+        )
+    }
 
     if(form) {
         return (

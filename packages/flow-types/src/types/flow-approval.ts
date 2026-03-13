@@ -153,6 +153,8 @@ export interface History {
 export interface FlowTodo {
     // 记录id
     recordId: number;
+    // 审批提交人
+    submitOperator: FlowOperator;
     // 流程标题
     title: string;
     // 流程数据

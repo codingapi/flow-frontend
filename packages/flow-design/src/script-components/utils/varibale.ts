@@ -7,36 +7,60 @@ export class GroovyVariableUtil {
         return [
             // ========== 操作人相关 ==========
             {
-                label: '当前操作人',
-                value: 'request.getOperatorName()',
-                expression: "${当前操作人}",
+                label: '当前审批人',
+                value: 'request.getCurrentOperatorName()',
+                expression: "${当前审批人}",
                 tag: VariableTag.OPERATOR,
                 type:'STRING',
                 order: 1,
             },
             {
-                label: '当前操作人ID',
-                value: 'request.getOperatorId()',
-                expression: '${当前操作人ID}',
+                label: '当前审批人ID',
+                value: 'request.getCurrentOperatorId()',
+                expression: '${当前审批人ID}',
                 tag: VariableTag.OPERATOR,
                 type:'NUMBER',
                 order: 2,
             },
             {
-                label: '是否管理员',
-                value: 'request.getIsFlowManager()',
-                expression: '${是否管理员}',
-                type:'BOOLEAN',
-                tag: VariableTag.OPERATOR,
-                order: 3,
-            },
-            {
                 label: '流程创建人',
-                value: 'request.getCreatorName()',
+                value: 'request.getCreatedOperatorName()',
                 expression: '${流程创建人}',
                 tag: VariableTag.OPERATOR,
                 type:'STRING',
+                order: 3,
+            },
+            {
+                label: '流程创建人ID',
+                value: 'request.getCreatedOperatorId()',
+                expression: '${流程创建人ID}',
+                tag: VariableTag.OPERATOR,
+                type:'NUMBER',
                 order: 4,
+            },
+            {
+                label: '流程提交人',
+                value: 'request.getSubmitOperatorName()',
+                expression: '${流程创建人}',
+                tag: VariableTag.OPERATOR,
+                type:'STRING',
+                order: 5,
+            },
+            {
+                label: '流程提交人ID',
+                value: 'request.getSubmitOperatorId()',
+                expression: '${流程提交人ID}',
+                tag: VariableTag.OPERATOR,
+                type:'NUMBER',
+                order: 6,
+            },
+            {
+                label: '是否管理员',
+                value: 'request.isFlowManager()',
+                expression: '${是否管理员}',
+                type:'BOOLEAN',
+                tag: VariableTag.OPERATOR,
+                order: 7,
             },
 
             // ========== 流程相关 ==========
@@ -72,15 +96,13 @@ export class GroovyVariableUtil {
                 type:'STRING',
                 order: 13,
             },
-
-            // ========== 流程编号 ==========
             {
-                label: '流程编号',
-                value: 'request.getWorkCode()',
-                expression: '${流程编号}',
-                tag: VariableTag.WORK_CODE,
-                type:'STRING',
-                order: 20,
+                label: '是否模拟测试',
+                value: 'request.isMock()',
+                expression: '${是否模拟测试}',
+                type:'BOOLEAN',
+                tag: VariableTag.WORKFLOW,
+                order: 14,
             }
         ];
     }

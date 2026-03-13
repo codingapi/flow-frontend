@@ -33,6 +33,12 @@ export class TableFormPresenter {
             hidden: false
         });
 
+        columns.push({
+            title: '流程标题',
+            dataIndex: 'title',
+            key: 'title',
+        });
+
         for (const field of fields) {
             columns.push({
                 title: field.name,

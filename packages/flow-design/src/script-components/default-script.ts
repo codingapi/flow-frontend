@@ -14,7 +14,7 @@ export const SCRIPT_DEFAULT_OPERATOR_LOAD =
 `// @SCRIPT_TITLE 流程创建者  
 // @SCRIPT_META {"type":"creator"}
 def run(request){
-    return [request.getCreatedOperator()]
+    return [request.getCreatedOperatorId()]
 }
 `;
 
@@ -32,7 +32,7 @@ export const SCRIPT_DEFAULT_ERROR_TRIGGER =
 `// @SCRIPT_TITLE 回退至开始节点
 // @SCRIPT_META {"type":"node","node":"START"} 
 def run(request){ 
-    return $bind.createErrorThrow(request.getStartNode());
+    return request.getStartNode().getId();
 }
 `
 
