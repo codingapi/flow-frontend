@@ -1,7 +1,7 @@
 import React from "react";
-import {Col, Form, FormInstance, Input, Modal, Row, Select, Switch} from "antd";
-import {dataTypeOptions} from "@flow-engine/flow-types";
+import {Col, Form, FormInstance, Input, Modal, Row, Switch} from "antd";
 import {FieldAttributeForm} from "./attrubute";
+import {FormTypeItem} from "@/components/design-panel/tabs/form/form-type";
 
 interface FormFieldModalProps {
     open: boolean;
@@ -47,6 +47,12 @@ export const FormFieldModal: React.FC<FormFieldModalProps> = (props) => {
                 >
                     <Input/>
                 </Form.Item>
+                <Form.Item
+                    name={"dataType"}
+                    hidden={true}
+                >
+                    <Input/>
+                </Form.Item>
                 <Row gutter={[8, 8]}>
                     <Col span={12}>
                         <Form.Item
@@ -79,39 +85,10 @@ export const FormFieldModal: React.FC<FormFieldModalProps> = (props) => {
                         </Form.Item>
                     </Col>
                     <Col span={12}>
-                        <Form.Item
-                            name={"type"}
-                            label={"字段类型"}
-                            labelCol={labelCol}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: '字段类型不能为空'
-                                }
-                            ]}
-                        >
-                            <Input placeholder={"请输入字段类型"}/>
-                        </Form.Item>
+                        <FormTypeItem form={form}/>
                     </Col>
-                    <Col span={12}>
-                        <Form.Item
-                            name={"dataType"}
-                            label={"数据类型"}
-                            labelCol={labelCol}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: '数据类型不能为空'
-                                }
-                            ]}
-                        >
-                            <Select
-                                placeholder={"请输入数据类型"}
-                                options={dataTypeOptions}
-                            />
-                        </Form.Item>
-                    </Col>
-                    <Col span={12}>
+
+                    <Col span={6}>
                         <Form.Item
                             name={"required"}
                             label={"是否必填"}
@@ -120,7 +97,7 @@ export const FormFieldModal: React.FC<FormFieldModalProps> = (props) => {
                             <Switch/>
                         </Form.Item>
                     </Col>
-                    <Col span={12}>
+                    <Col span={6}>
                         <Form.Item
                             name={"hidden"}
                             label={"是否隐藏"}

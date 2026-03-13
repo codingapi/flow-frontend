@@ -1,26 +1,5 @@
 import {ActionType} from "@/types/flow-design";
-
-/**
- *  数据类型
- */
-export type DataType = 'STRING' | 'NUMBER' | 'BOOLEAN';
-
-
-// FormField字段类型
-export const dataTypeOptions = [
-    {
-        label: '数字',
-        value: 'NUMBER'
-    },
-    {
-        label: '字符串',
-        value: 'STRING'
-    },
-    {
-        label: '布尔类型',
-        value: 'BOOLEAN'
-    },
-]
+import {DataType} from "@/types/form-type";
 
 /**
  * 字段权限类型
