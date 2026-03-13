@@ -20,12 +20,12 @@ export const registerFormTypes = ()=>{
                 type:'string'
             },
             {
-                name: "波尔类型",
+                name: "布尔值",
                 dataType:'BOOLEAN',
                 type:'boolean'
             },
             {
-                name: "数字",
+                name: "数字类型",
                 dataType:'NUMBER',
                 type:'number'
             }
