@@ -1,9 +1,9 @@
 import {Field, FieldRenderProps} from "@flowgram.ai/fixed-layout-editor";
 import {Button, Form, Space} from "antd";
 import React from "react";
-import {GroovyScriptPreview} from "@/components/script/components/groovy-script-preview";
+import {GroovyScriptPreview} from "@/script-components/components/groovy-script-preview";
 import {EditOutlined} from "@ant-design/icons";
-import {ConditionConfigModal} from "@/components/script/modal/condition-config-modal";
+import {ConditionConfigModal} from "@/script-components/modal/condition-config-modal";
 import {useScriptVariables} from "@/components/design-editor/hooks/use-script-variables";
 
 /**

@@ -1,9 +1,9 @@
 import React from "react";
 import {Button, Form, Space, Switch} from "antd";
 import {Field, FieldRenderProps} from "@flowgram.ai/fixed-layout-editor";
-import {GroovyScriptPreview} from "@/components/script/components/groovy-script-preview";
+import {GroovyScriptPreview} from "@/script-components/components/groovy-script-preview";
 import {EditOutlined} from "@ant-design/icons";
-import {SubProcessConfigModal} from "@/components/script/modal/sub-process-config-modal";
+import {SubProcessConfigModal} from "@/script-components/modal/sub-process-config-modal";
 
 /**
  * 子流程任务策略

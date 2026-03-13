@@ -1,9 +1,9 @@
 import React from "react";
 import {Button, Form, Space} from "antd";
 import {Field, FieldRenderProps} from "@flowgram.ai/fixed-layout-editor";
-import {GroovyScriptPreview} from "@/components/script/components/groovy-script-preview";
+import {GroovyScriptPreview} from "@/script-components/components/groovy-script-preview";
 import {EditOutlined} from "@ant-design/icons";
-import {RouterConfigModal} from "@/components/script/modal/router-config-modal";
+import {RouterConfigModal} from "@/script-components/modal/router-config-modal";
 
 /**
  * 路由策略配置

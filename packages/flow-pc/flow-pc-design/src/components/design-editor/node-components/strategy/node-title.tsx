@@ -2,8 +2,8 @@ import React from 'react';
 import {Button, Form, Space} from 'antd';
 import {EditOutlined} from '@ant-design/icons';
 import {Field, FieldRenderProps} from '@flowgram.ai/fixed-layout-editor';
-import {GroovyScriptPreview} from "@/components/script/components/groovy-script-preview";
-import {NodeTitleConfigModal} from "@/components/script/modal/node-title-config-modal";
+import {GroovyScriptPreview} from "@/script-components/components/groovy-script-preview";
+import {NodeTitleConfigModal} from "@/script-components/modal/node-title-config-modal";
 import {useScriptVariables} from "@/components/design-editor/hooks/use-script-variables";
 
 /**

@@ -1,9 +1,9 @@
 import React from "react";
 import {Button, Form, Space} from "antd";
 import {Field, FieldRenderProps} from "@flowgram.ai/fixed-layout-editor";
-import {GroovyScriptPreview} from "@/components/script/components/groovy-script-preview";
+import {GroovyScriptPreview} from "@/script-components/components/groovy-script-preview";
 import {EditOutlined} from "@ant-design/icons";
-import {TriggerConfigModal} from "@/components/script/modal/trigger-config-modal";
+import {TriggerConfigModal} from "@/script-components/modal/trigger-config-modal";
 
 /**
  * 触发策略配置

@@ -2,8 +2,8 @@ import React from "react";
 import {Button, Form, Space} from "antd";
 import {Field, FieldRenderProps} from "@flowgram.ai/fixed-layout-editor";
 import {EditOutlined} from "@ant-design/icons";
-import {GroovyScriptPreview} from "@/components/script/components/groovy-script-preview";
-import {OperatorLoadConfigModal} from "@/components/script/modal/operator-load-config-modal";
+import {GroovyScriptPreview} from "@/script-components/components/groovy-script-preview";
+import {OperatorLoadConfigModal} from "@/script-components/modal/operator-load-config-modal";
 
 /**
  * 操作人配置策略

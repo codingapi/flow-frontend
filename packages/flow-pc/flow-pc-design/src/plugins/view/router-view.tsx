@@ -1,13 +1,13 @@
 import React from "react";
 import {RouterViewPlugin, VIEW_KEY} from "@/plugins/router-view-type";
 import {ViewBindPlugin} from "@flow-engine/flow-core";
-import {SCRIPT_DEFAULT_ROUTER} from "@/components/script/default-script";
+import {SCRIPT_DEFAULT_ROUTER} from "@/script-components/default-script";
 import {GroovyScriptConvertorUtil} from "@flow-engine/flow-core";
 import {Button, Form, Select, Space} from "antd";
 import {CodeOutlined, ReloadOutlined} from "@ant-design/icons";
 import {useNodeRouterManager} from "@/components/design-panel/hooks/use-node-router-manager";
-import {RouterScriptUtils} from "@/components/script/services/node-router";
-import {useScriptMetaData} from "@/components/script/hooks/use-script-meta-data";
+import {RouterScriptUtils} from "@/script-components/services/node-router";
+import {useScriptMetaData} from "@/script-components/hooks/use-script-meta-data";
 
 /**
  * @param props

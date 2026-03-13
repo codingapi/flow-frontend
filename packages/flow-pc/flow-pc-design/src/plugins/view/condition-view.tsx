@@ -1,7 +1,7 @@
 import React from "react";
 import {ConditionViewPlugin, VIEW_KEY} from "@/plugins/condition-view-type";
 import {ViewBindPlugin} from "@flow-engine/flow-core";
-import {ConditionView} from "@/components/script/components/condition";
+import {ConditionView} from "@/script-components/components/condition";
 
 /**
  * @param props

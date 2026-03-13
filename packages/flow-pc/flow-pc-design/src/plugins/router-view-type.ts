@@ -1,4 +1,4 @@
-import {GroovyVariableMapping, ScriptType} from "@/components/script/typings";
+import {GroovyVariableMapping, ScriptType} from "@/script-components/typings";
 
 export const VIEW_KEY = 'RouterViewPlugin';
 

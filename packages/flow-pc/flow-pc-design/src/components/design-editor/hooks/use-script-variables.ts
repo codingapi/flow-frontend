@@ -1,5 +1,5 @@
 import React from "react";
-import {GroovyVariableUtil} from "@/components/script/utils/varibale";
+import {GroovyVariableUtil} from "@/script-components/utils/varibale";
 import {useDesignContext} from "@/components/design-panel/hooks/use-design-context";
 
 export const useScriptVariables = () => {

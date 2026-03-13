@@ -1,5 +1,5 @@
 import React from "react";
-import {ActionCustomScriptUtils} from "@/components/script/services/action-custom";
+import {ActionCustomScriptUtils} from "@/script-components/services/action-custom";
 import {GroovyCodeEditor} from "@/components/groovy-code";
 import {Select} from "antd";
 import {ActionCustomViewPlugin, VIEW_KEY} from "@/plugins/action-custom-view-type";

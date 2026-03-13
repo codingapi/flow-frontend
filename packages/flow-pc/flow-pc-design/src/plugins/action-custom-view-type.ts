@@ -1,4 +1,4 @@
-import {ActionSelectOption} from "@/components/script/typings";
+import {ActionSelectOption} from "@/script-components/typings";
 
 export const VIEW_KEY = 'ActionCustomViewPlugin';
 

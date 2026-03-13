@@ -1,8 +1,8 @@
 import React from "react";
 import {Button, Space} from "antd";
-import {GroovyScriptPreview} from "@/components/script/components/groovy-script-preview";
+import {GroovyScriptPreview} from "@/script-components/components/groovy-script-preview";
 import {EditOutlined} from "@ant-design/icons";
-import {OperatorCreateConfigModal} from "@/components/script/modal/operator-create-config-modal";
+import {OperatorCreateConfigModal} from "@/script-components/modal/operator-create-config-modal";
 
 interface FlowCreateOperatorEditorProps {
     value?: string;

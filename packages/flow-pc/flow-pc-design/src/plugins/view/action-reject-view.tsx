@@ -2,7 +2,7 @@ import React from "react";
 import {ActionRejectViewPlugin, VIEW_KEY} from "@/plugins/action-reject-view-type";
 import {ViewBindPlugin} from "@flow-engine/flow-core";
 import {useDesignContext} from "@/components/design-panel/hooks/use-design-context";
-import {ActionRejectService} from "@/components/script/services/action-reject";
+import {ActionRejectService} from "@/script-components/services/action-reject";
 import {Select} from "antd";
 
 

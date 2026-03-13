@@ -4,7 +4,7 @@ import {Table} from "@flow-engine/flow-pc-ui";
 import {useNodeRenderContext} from "@/components/design-editor/hooks/use-node-render-context";
 import {PlusOutlined} from "@ant-design/icons";
 import {actionOptions} from "@flow-engine/flow-types";
-import {ActionConfigModal} from "@/components/script/modal/action-config-modal";
+import {ActionConfigModal} from "@/script-components/modal/action-config-modal";
 import {FlowActionListPresenter} from "./presenter";
 
 interface ActionTableProps {
