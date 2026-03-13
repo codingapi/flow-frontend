@@ -41,10 +41,12 @@ export interface FieldPermission {
  *  附加属性
  */
 export interface FieldAttribute{
+    // 属性key
+    key: string;
     // 属性名称
-    name: string;
+    label?: string;
     // 属性值
-    value: string;
+    value?: string;
 }
 /**
  *  流程表单字段元数据

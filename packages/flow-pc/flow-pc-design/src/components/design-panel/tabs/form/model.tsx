@@ -1,6 +1,7 @@
 import React from "react";
 import {Col, Form, FormInstance, Input, Modal, Row, Select, Switch} from "antd";
 import {dataTypeOptions} from "@flow-engine/flow-types";
+import {FieldAttributeForm} from "./attrubute";
 
 interface FormFieldModalProps {
     open: boolean;
@@ -12,6 +13,7 @@ interface FormFieldModalProps {
 export const FormFieldModal: React.FC<FormFieldModalProps> = (props) => {
 
     const form = props.form;
+
 
     const labelCol = {
         style: {
@@ -34,6 +36,7 @@ export const FormFieldModal: React.FC<FormFieldModalProps> = (props) => {
                 title={"编辑字段"}
                 layout="vertical"
                 onFinish={(values: any) => {
+                    delete values.enable;
                     props.onFinish?.(values);
                     props.onClose?.();
                 }}
@@ -162,15 +165,7 @@ export const FormFieldModal: React.FC<FormFieldModalProps> = (props) => {
                             <Input placeholder={"请输入帮助提示"}/>
                         </Form.Item>
                     </Col>
-                    <Col span={12}>
-                        <Form.Item
-                            name={"enable"}
-                            label={"附加属性"}
-                            labelCol={labelCol}
-                        >
-                            <Switch/>
-                        </Form.Item>
-                    </Col>
+                    <FieldAttributeForm/>
                 </Row>
             </Form>
         </Modal>

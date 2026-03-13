@@ -75,16 +75,11 @@ export const FormTable: React.FC<FormTableProps> = (props) => {
             title: '输入提示'
         },
         {
-            dataIndex: 'defaultValue',
-            title: '默认值'
-        },
-        {
-            dataIndex: 'tooltip',
-            title: '提示信息'
-        },
-        {
-            dataIndex: 'help',
-            title: '帮助提示'
+            dataIndex: 'attributes',
+            title: '属性数量',
+            render: (value) => {
+                return value?value.length:0
+            }
         },
         {
             dataIndex: 'option',
