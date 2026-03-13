@@ -1,5 +1,5 @@
 import React from "react";
-import {Form, Input} from "antd";
+import {Form, Input} from "antd-mobile";
 import {FormItemInputProps, FormItemProps} from "@/type";
 
 
@@ -13,14 +13,14 @@ const $Input:React.FC<FormItemInputProps> = (props)=>{
             disabled={props.readOnly}
             placeholder={props.placeholder}
             defaultValue={props.defaultValue}
-            onChange={(event) => {
-                props.onChange?.(event.target.value);
+            onChange={(value) => {
+                props.onChange?.(value);
             }}
         />
     )
 }
 
-export const FormItemNumber:React.FC<FormItemProps> = (props)=>{
+export const FormItemDouble:React.FC<FormItemProps> = (props)=>{
 
     const rules = props.required?[
         {
@@ -35,9 +35,9 @@ export const FormItemNumber:React.FC<FormItemProps> = (props)=>{
             label={props.name}
             required={props.required}
             rules={rules}
-            tooltip={props.tooltip}
             help={props.help}
             hidden={props.hidden}
+            disabled={props.readOnly}
         >
             <$Input
                 defaultValue={props.defaultValue}

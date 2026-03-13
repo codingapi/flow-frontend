@@ -20,7 +20,7 @@ const $Input:React.FC<FormItemInputProps> = (props)=>{
     )
 }
 
-export const FormItemNumber:React.FC<FormItemProps> = (props)=>{
+export const FormItemInteger:React.FC<FormItemProps> = (props)=>{
 
     const rules = props.required?[
         {

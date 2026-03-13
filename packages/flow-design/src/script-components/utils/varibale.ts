@@ -19,7 +19,7 @@ export class GroovyVariableUtil {
                 value: 'request.getCurrentOperatorId()',
                 expression: '${当前审批人ID}',
                 tag: VariableTag.OPERATOR,
-                type:'NUMBER',
+                type:'LONG',
                 order: 2,
             },
             {
@@ -35,7 +35,7 @@ export class GroovyVariableUtil {
                 value: 'request.getCreatedOperatorId()',
                 expression: '${流程创建人ID}',
                 tag: VariableTag.OPERATOR,
-                type:'NUMBER',
+                type:'LONG',
                 order: 4,
             },
             {
@@ -51,7 +51,7 @@ export class GroovyVariableUtil {
                 value: 'request.getSubmitOperatorId()',
                 expression: '${流程提交人ID}',
                 tag: VariableTag.OPERATOR,
-                type:'NUMBER',
+                type:'LONG',
                 order: 6,
             },
             {

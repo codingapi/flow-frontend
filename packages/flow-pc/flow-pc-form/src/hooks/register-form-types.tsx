@@ -25,9 +25,19 @@ export const registerFormTypes = ()=>{
                 type:'boolean'
             },
             {
-                name: "数字类型",
-                dataType:'NUMBER',
-                type:'number'
+                name: "整数",
+                dataType:'INTEGER',
+                type:'integer'
+            },
+            {
+                name: "长整数",
+                dataType:'LONG',
+                type:'long'
+            },
+            {
+                name: "小数",
+                dataType:'DOUBLE',
+                type:'double'
             },
             {
                 name: "日期格式",

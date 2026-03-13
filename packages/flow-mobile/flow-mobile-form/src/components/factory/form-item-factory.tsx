@@ -1,10 +1,12 @@
 import React from "react";
 
 import {FormItemString} from "@/components/item/string";
-import {FormItemNumber} from "@/components/item/number";
 import {FormItemBoolean} from "@/components/item/boolean";
 import {FormItemDate} from "@/components/item/date";
 import {FormItemProps} from "@/type";
+import {FormItemDouble} from "@/components/item/double";
+import {FormItemLong} from "@/components/item/long";
+import {FormItemInteger} from "@/components/item/integer";
 
 
 export class FormItemFactory {
@@ -15,7 +17,9 @@ export class FormItemFactory {
 
     private constructor() {
         this.cache = new Map();
-        this.cache.set('number',FormItemNumber);
+        this.cache.set('integer',FormItemInteger);
+        this.cache.set('long',FormItemLong);
+        this.cache.set('double',FormItemDouble);
         this.cache.set('string',FormItemString);
         this.cache.set('date',FormItemDate);
         this.cache.set('boolean',FormItemBoolean);
