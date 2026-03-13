@@ -98,7 +98,7 @@ export class GroovyVariableUtil {
             label: `${field.name}`,
             value: `request.getFormData('${field.code}')`,
             expression: "${" + `${field.name}` + "}",
-            type:field.type,
+            type:field.dateType,
             tag: VariableTag.FORM_FIELD,
             order: 100 + index,
         }));

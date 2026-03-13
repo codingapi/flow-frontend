@@ -10,24 +10,24 @@ import {FormItemProps} from "@/type";
 
 export class FormItemFactory {
 
-    private readonly cache:Map<DataType,React.ComponentType<FormItemProps>>;
+    private readonly cache:Map<string,React.ComponentType<FormItemProps>>;
 
     private static instance:FormItemFactory = new FormItemFactory();
 
     private constructor() {
         this.cache = new Map();
-        this.cache.set('NUMBER',FormItemNumber);
-        this.cache.set('STRING',FormItemString);
-        this.cache.set('DATE',FormItemDate);
-        this.cache.set('BOOLEAN',FormItemBoolean);
+        this.cache.set('number',FormItemNumber);
+        this.cache.set('string',FormItemString);
+        this.cache.set('date',FormItemDate);
+        this.cache.set('boolean',FormItemBoolean);
     }
 
     public static getInstance():FormItemFactory {
         return FormItemFactory.instance;
     }
 
-    public createFrom(formType:DataType){
-        return this.cache.get(formType);
+    public createFrom(filedType:string){
+        return this.cache.get(filedType);
     }
 
 }
