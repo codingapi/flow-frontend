@@ -1,10 +1,10 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {ApprovalContext, ApprovalContextScope} from "../context";
-import {ApprovalReduxState, updateState} from "../store";
-import {ApprovalPresenter} from "../presenters";
-import {FlowApprovalApiImpl} from "../model";
-import {ApprovalLayoutProps} from "../typings";
+import {ApprovalContext, ApprovalContextScope} from "@/context";
+import {ApprovalReduxState, updateState} from "@/store";
+import {ApprovalPresenter} from "@/presenters";
+import {FlowApprovalApiImpl} from "@/model";
+import {ApprovalLayoutProps} from "@/typings";
 import {useMockContext} from "@/hooks/use-mock-context";
 
 export const useApprovalContext = () => {

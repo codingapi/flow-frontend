@@ -43,6 +43,7 @@ const TodoList: React.FC<TodoListProps> = ({ type }) => {
         navigate('/approval', {
             state: {
                 recordId: recordId,
+                review: type!=='todo'
             }
         });
     }

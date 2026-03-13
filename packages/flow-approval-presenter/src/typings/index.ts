@@ -22,7 +22,7 @@ interface ApprovalPanelProps {
     review?:boolean;
 }
 
-export type State  = {
+export type ApprovalState  = {
     flow?:FlowContent;
     review?:boolean;
 };

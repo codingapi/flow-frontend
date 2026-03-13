@@ -1,27 +1,24 @@
 import React from "react";
-import {Form, Input} from "antd";
+import {Form, Switch} from "antd-mobile";
 import {FormItemInputProps, FormItemProps} from "@/type";
 
 
-const $Input: React.FC<FormItemInputProps> = (props) => {
+const $Switch: React.FC<FormItemInputProps> = (props) => {
 
-    const value = props.value || undefined;
+    const value = props.value ? props.value === 'true' : undefined;
 
     return (
-        <Input
-            value={value}
+        <Switch
+            checked={value}
             disabled={props.readOnly}
-            placeholder={props.placeholder}
-            defaultValue={props.defaultValue}
-            onChange={(event) => {
-                props.onChange?.(event.target.value);
+            onChange={(value) => {
+                props.onChange?.(value ? 'true' : 'false');
             }}
         />
     )
 }
 
-
-export const FormItemString: React.FC<FormItemProps> = (props) => {
+export const FormItemBoolean: React.FC<FormItemProps> = (props) => {
 
     const rules = props.required ? [
         {
@@ -30,17 +27,18 @@ export const FormItemString: React.FC<FormItemProps> = (props) => {
         }
     ] : [];
 
+
     return (
         <Form.Item
             name={props.code}
             label={props.name}
             required={props.required}
             rules={rules}
-            tooltip={props.tooltip}
             help={props.help}
             hidden={props.hidden}
+            disabled={props.readOnly}
         >
-            <$Input
+            <$Switch
                 defaultValue={props.defaultValue}
                 placeholder={props.placeholder}
                 readOnly={props.readOnly}

@@ -49,7 +49,7 @@ export const CustomStyleButton: React.FC<CustomStyleButtonProps> = (props) => {
             }}
         >
            <Space>
-               <Icon type={props.display.icon}/>
+               {props.display.icon && (<Icon type={props.display.icon}/>)}
                <span>{title}</span>
            </Space>
         </Button>

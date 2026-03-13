@@ -1,13 +1,21 @@
 import React from "react";
-import {BODY_HEIGHT} from "@/components/flow-approval/typings";
 import {Tabs} from "antd-mobile";
+import {FormViewComponent} from "@/components/flow-approval/components/form-view-component";
 
-export const Body = () => {
+interface BodyProps {
+    height: string
+}
+
+export const Body:React.FC<BodyProps> = (props) => {
+
+    const handleValuesChange = (values:any) => {
+
+    }
 
     return (
         <div
             style={{
-                height: BODY_HEIGHT,
+                height: props.height,
                 overflowY: "auto",
             }}
         >
@@ -17,7 +25,7 @@ export const Body = () => {
                 }}
             >
                 <Tabs.Tab title="流程详情" key="detail">
-                    流程详情
+                    <FormViewComponent onValuesChange={handleValuesChange}/>
                 </Tabs.Tab>
                 <Tabs.Tab title="流程记录" key="history">
                     流程记录

@@ -1,12 +1,12 @@
 import {configureStore, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {initStateData, State} from "@/typings";
+import {initStateData, ApprovalState} from "@/typings";
 import { original } from 'immer';
 
 export type ApprovalStoreAction = {
-    updateState: (state: State, action: PayloadAction<Partial<State> | ((prev: State) => Partial<State>)>) => void;
+    updateState: (state: ApprovalState, action: PayloadAction<Partial<ApprovalState> | ((prev: ApprovalState) => Partial<ApprovalState>)>) => void;
 }
 
-export const approvalSlice = createSlice<State, ApprovalStoreAction, "approval", {}>({
+export const approvalSlice = createSlice<ApprovalState, ApprovalStoreAction, "approval", {}>({
     name: 'approval',
     initialState: {
         ...initStateData
@@ -14,7 +14,7 @@ export const approvalSlice = createSlice<State, ApprovalStoreAction, "approval",
     reducers: {
         updateState: (state, action) => {
             if(typeof action.payload === 'function') {
-                const currentState = original(state) as State;
+                const currentState = original(state) as ApprovalState;
                 Object.assign(state, action.payload(currentState));
             }else {
                 Object.assign(state, action.payload);

@@ -1,15 +1,34 @@
 import React from "react";
-import {ApprovalLayoutProps} from "@flow-engine/flow-approval-presenter";
+import {
+    ApprovalContext,
+    ApprovalLayoutProps,
+    approvalStore,
+    createApprovalContext
+} from "@flow-engine/flow-approval-presenter";
 import {Provider} from "react-redux";
-import {approvalStore} from "@flow-engine/flow-approval-presenter";
-import {ApprovalContext} from "@flow-engine/flow-approval-presenter";
-import {createApprovalContext} from "@flow-engine/flow-approval-presenter";
+import {BODY_HEIGHT, BODY_MAX_HEIGHT} from "@/components/flow-approval/typings";
 import {Header} from "./header";
 import {Body} from "./body";
-import {Footer} from "@/components/flow-approval/layout/footer";
+import {Footer} from "./footer";
+import {useLayoutPresenter} from "@/components/flow-approval/layout/hooks/use-layout-presenter";
+
+const ApprovalContent = ()=>{
+
+    const presenter = useLayoutPresenter();
+
+    const hasFooter = presenter.hasFooter();
+
+    return (
+        <>
+            <Body height={hasFooter?BODY_HEIGHT:BODY_MAX_HEIGHT}/>
+            {hasFooter && <Footer/>}
+        </>
+    )
+}
 
 const ApprovalLayoutScope: React.FC<ApprovalLayoutProps> = (props) => {
     const {context} = createApprovalContext(props);
+
     return (
         <ApprovalContext.Provider value={context}>
             <div
@@ -19,8 +38,7 @@ const ApprovalLayoutScope: React.FC<ApprovalLayoutProps> = (props) => {
                 }}
             >
                 <Header/>
-                <Body/>
-                <Footer/>
+                <ApprovalContent/>
             </div>
         </ApprovalContext.Provider>
     )

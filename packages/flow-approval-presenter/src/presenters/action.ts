@@ -1,4 +1,4 @@
-import {FlowApprovalApi, State} from "@/typings";
+import {FlowApprovalApi, ApprovalState} from "@/typings";
 import {FormActionContext} from "@flow-engine/flow-types";
 import {GroovyScriptConvertorUtil} from "@flow-engine/flow-core";
 
@@ -6,12 +6,12 @@ export class FlowActionPresenter {
 
     private readonly api: FlowApprovalApi;
     private readonly formActionContext: FormActionContext;
-    private state: State;
+    private state: ApprovalState;
     private readonly mockKey:string;
 
     private submitRecordIds: number[];
 
-    constructor(state: State,
+    constructor(state: ApprovalState,
                 api: FlowApprovalApi,
                 formActionContext: FormActionContext,
                 mockKey:string) {
@@ -32,7 +32,7 @@ export class FlowActionPresenter {
         this.submitRecordIds = [];
     }
 
-    public syncState(state: State) {
+    public syncState(state: ApprovalState) {
         this.state = state;
     }
 

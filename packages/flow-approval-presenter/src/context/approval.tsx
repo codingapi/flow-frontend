@@ -1,5 +1,5 @@
 import React from "react";
-import {State,ApprovalLayoutProps} from "@/typings";
+import {ApprovalState,ApprovalLayoutProps} from "@/typings";
 import {ApprovalPresenter} from "@/presenters";
 
 export class ApprovalContextScope {
@@ -12,7 +12,7 @@ export class ApprovalContextScope {
         this.props = props;
     }
 
-    public syncState(state: State) {
+    public syncState(state: ApprovalState) {
         this.presenter.syncState(state);
     }
 
