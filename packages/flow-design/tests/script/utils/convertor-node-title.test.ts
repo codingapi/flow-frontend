@@ -14,17 +14,21 @@ describe('NodeTitleScriptUtils', () => {
                 id: '1',
                 name: '天数',
                 code: 'days',
-                type: 'NUMBER',
+                type: 'number',
                 required: true,
-                defaultValue: ''
+                defaultValue: '',
+                dateType:'NUMBER',
+                hidden:false,
             },
             {
                 id: '2',
                 name: '理由',
                 code: 'desc',
-                type: 'STRING',
+                type: 'string',
                 required: true,
-                defaultValue: ''
+                defaultValue: '',
+                dateType:'STRING',
+                hidden:false,
             },
         ],
         subForms: []
