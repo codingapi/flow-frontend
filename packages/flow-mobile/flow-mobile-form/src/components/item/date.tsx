@@ -5,6 +5,8 @@ import {FormItemInputProps, FormItemProps} from "@/type";
 
 const $Date: React.FC<FormItemInputProps> = (props) => {
 
+    const [visible,setVisible] = React.useState(false);
+
     const handlerChange = (value: any) => {
         if (value) {
             props.onChange?.(dayjs(value).format('YYYY-MM-DD'));
@@ -16,10 +18,18 @@ const $Date: React.FC<FormItemInputProps> = (props) => {
     const value = props.value ? dayjs(props.value) : undefined;
 
     return (
-        <DatePicker
-            value={value as any}
-            onSelect={handlerChange}
-        />
+        <>
+            {value && (<a onClick={()=>{setVisible(true)}}>{value.format('YYYY-MM-DD')}</a>)}
+            <DatePicker
+                visible={visible}
+                onClose={()=>{setVisible(false)}}
+                onConfirm={(value) => {
+                    handlerChange(value);
+                    setVisible(false);
+                }}
+                value={value?value.toDate():undefined}
+            />
+        </>
     )
 }
 
