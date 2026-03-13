@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Table, TableProps} from "@flow-engine/flow-pc-ui";
 import {Button, Flex, Form, Popconfirm, Space} from "antd";
-import {dataTypeOptions} from "@flow-engine/flow-types";
+import {dataTypeOptions,FormTypeContext} from "@flow-engine/flow-types";
 import {useDesignContext} from "@/components/design-panel/hooks/use-design-context";
 import {WorkflowFormManager} from "@/components/design-panel/manager/form";
 import {DeleteOutlined, FolderAddOutlined, PlusOutlined} from "@ant-design/icons";
@@ -42,6 +42,13 @@ export const FormTable: React.FC<FormTableProps> = (props) => {
         {
             dataIndex: 'type',
             title: '字段类型',
+            render: (value, record) => {
+                const type = FormTypeContext.getInstance().getType(value);
+                if(type){
+                    return type.name;
+                }
+                return value
+            }
         },
         {
             dataIndex: 'dataType',

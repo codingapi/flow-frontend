@@ -8,6 +8,9 @@ const $Input:React.FC<FormItemInputProps> = (props)=>{
 
     return (
         <InputNumber
+            style={{
+                width: "100%",
+            }}
             precision={0}
             value={value}
             disabled={props.readOnly}
