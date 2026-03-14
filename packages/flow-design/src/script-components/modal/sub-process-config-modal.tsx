@@ -50,7 +50,7 @@ export const SubProcessConfigModal:React.FC<SubProcessConfigModalProps> = (props
             variables={props.variables || []}
             onConfirm={props.onConfirm}
             onCancel={props.onCancel}
-            title="异常配置"
+            title="子流程配置"
             content={SubProcessConfigContent}
         />
     );

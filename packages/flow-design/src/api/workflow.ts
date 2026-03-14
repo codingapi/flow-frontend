@@ -8,6 +8,14 @@ export const versions = (workId:string) => {
     return httpClient.get('/api/query/workflow/versions',{id:workId});
 }
 
+export const options = () => {
+    return httpClient.get('/api/query/workflow/options');
+}
+
+export const meta = (workId:string) => {
+    return httpClient.get('/api/cmd/workflow/meta',{id:workId});
+}
+
 export const remove = (id:string) => {
     return httpClient.post('/api/cmd/workflow/remove',{id});
 }
