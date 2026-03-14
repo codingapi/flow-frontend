@@ -27,7 +27,7 @@ export const createFormDataContext = (form:FlowForm) => {
     const ref = React.useRef<FormDataContextScope>(undefined);
 
     if (!ref.current) {
-        const presenter = new FormDataPresenter(state, (prevState) => {
+        const presenter = new FormDataPresenter(form,state, (prevState) => {
             dispatch(updateState(prevState));
             return prevState;
         });

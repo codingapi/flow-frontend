@@ -1,6 +1,6 @@
 import {FlowForm} from "@flow-engine/flow-types";
 import {FormDataList} from "../components/list";
-import {FormDataItem} from "../types";
+import {FormDataFiled} from "../types";
 import {FormValue} from "@/script-components/components/form-data/components/value";
 
 export class FlowFormPresenter {
@@ -33,7 +33,7 @@ export class FlowFormPresenter {
     }
 
     public getDatasource() {
-        const columns: FormDataItem[] = [];
+        const columns: FormDataFiled[] = [];
 
         for (const field of this.form.fields) {
             columns.push({

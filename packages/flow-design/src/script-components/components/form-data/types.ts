@@ -1,7 +1,7 @@
 import {FlowForm, FormField} from "@flow-engine/flow-types";
 
 
-export interface FormDataItem {
+export interface FormDataFiled {
     code: string;
     title: string;
     required: boolean;

@@ -1,15 +1,23 @@
-import {FormDataItem} from "@/script-components/components/form-data/types";
+import {FormDataFiled} from "@/script-components/components/form-data/types";
 import React from "react";
+import {Input} from "antd";
+import {useFormDataContext} from "@/script-components/components/form-data/hooks/use-form-data-context";
 
 interface FormValueProps{
-    item:FormDataItem;
+    item:FormDataFiled;
 }
 
 export const FormValue:React.FC<FormValueProps> = (props) => {
 
+    const {context} = useFormDataContext();
+    const presenter = context.getPresenter();
+
     return (
-        <>
-            请输入信息
-        </>
+        <Input
+            placeholder={"请输入内容"}
+            onChange={event => {
+                presenter.updateFieldValue(props.item,event.target.value);
+            }}
+        />
     )
 }

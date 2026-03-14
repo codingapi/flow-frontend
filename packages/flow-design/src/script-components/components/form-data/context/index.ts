@@ -21,7 +21,7 @@ export class FormDataContextScope {
     }
 
     public initState() {
-        this.presenter.initState(this.form);
+        this.presenter.initState();
     }
 
 }

@@ -1,25 +1,26 @@
 import React from "react";
 import {FlowForm} from "@flow-engine/flow-types";
 import {Table} from "@flow-engine/flow-pc-ui";
-import {useFlowFormPresenter} from "../hooks/use-flow-form-presenter";
+import {useFormDataContext} from "@/script-components/components/form-data/hooks/use-form-data-context";
 
-interface FormDataListProps{
+interface FormDataListProps {
     form: FlowForm;
 }
 
-export const FormDataList:React.FC<FormDataListProps> = (props) => {
+export const FormDataList: React.FC<FormDataListProps> = (props) => {
 
-    const presenter = useFlowFormPresenter(props.form);
+    const {context} = useFormDataContext();
+    const presenter = context.getPresenter();
 
     return (
         <Table
-            title={()=>{
+            title={() => {
                 return (
-                    <>{presenter.getFormTitle()}</>
+                    <>{presenter.getFormTitle(props.form)}</>
                 )
             }}
-            columns={presenter.getColumns()}
-            dataSource={presenter.getDatasource()}
+            columns={presenter.getColumns(props.form)}
+            dataSource={presenter.getDatasource(props.form)}
             pagination={false}
         />
     )
