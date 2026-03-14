@@ -1,7 +1,7 @@
 import React from "react";
 import {FlowForm} from "@flow-engine/flow-types";
 import {Table} from "@flow-engine/flow-pc-ui";
-import {usePresenter} from "./hooks/use-presenter";
+import {useFlowFormPresenter} from "../hooks/use-flow-form-presenter";
 
 interface FormDataListProps{
     form: FlowForm;
@@ -9,7 +9,7 @@ interface FormDataListProps{
 
 export const FormDataList:React.FC<FormDataListProps> = (props) => {
 
-    const presenter = usePresenter(props.form);
+    const presenter = useFlowFormPresenter(props.form);
 
     return (
         <Table

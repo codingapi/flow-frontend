@@ -1,6 +1,5 @@
-import {FormDataItem} from "@/script-components/components/sub-process/components/form-data/types";
+import {FormDataItem} from "@/script-components/components/form-data/types";
 import React from "react";
-
 
 interface FormValueProps{
     item:FormDataItem;

@@ -3,7 +3,7 @@ import {SubProcessViewProps} from "./typings";
 import {Form, Select} from "antd";
 import {useTargetWorkflowPresenter} from "./hooks/use-target-workflow-presenter";
 import {SubProcessOperatorPluginView} from "@/plugins/view/sub-process-opreator-view";
-import {FormDataView} from "./components/form-data";
+import {FormDataView} from "../form-data";
 
 export const SubProcessView: React.FC<SubProcessViewProps> = (props) => {
 

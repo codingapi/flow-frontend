@@ -1,9 +1,9 @@
 import {FlowForm} from "@flow-engine/flow-types";
-import {FormDataList} from "./list";
-import {FormDataItem} from "./types";
-import {FormValue} from "@/script-components/components/sub-process/components/form-data/value";
+import {FormDataList} from "../components/list";
+import {FormDataItem} from "../types";
+import {FormValue} from "@/script-components/components/form-data/components/value";
 
-export class FormDataPresenter {
+export class FlowFormPresenter {
 
     private readonly form: FlowForm;
 
