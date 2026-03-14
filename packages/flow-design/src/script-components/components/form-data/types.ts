@@ -1,6 +1,12 @@
 import {FlowForm, FormField} from "@flow-engine/flow-types";
 
 
+export interface FormDataContentProps {
+    form: FlowForm;
+    value?: string;
+    onChange?: (value: string) => void;
+}
+
 export interface FormDataFiled {
     code: string;
     title: string;

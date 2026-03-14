@@ -1,22 +1,36 @@
 import {Dispatch} from "@flow-engine/flow-core";
-import {FormDataFiled, FormDataState} from "../types";
+import {FormDataContentProps, FormDataFiled, FormDataState} from "../types";
 import {FlowForm} from "@flow-engine/flow-types";
 import {FlowFormPresenter} from "./flow-form-presenter";
 
 export class FormDataPresenter {
 
     private state: FormDataState;
-    private readonly form: FlowForm;
+    private readonly props: FormDataContentProps;
     private readonly dispatch: Dispatch<FormDataState>;
+    private readonly flowFormPresenter:FlowFormPresenter;
 
-    constructor(form: FlowForm, state: FormDataState, dispatch: Dispatch<FormDataState>) {
-        this.form = form;
+    constructor(props: FormDataContentProps, state: FormDataState, dispatch: Dispatch<FormDataState>) {
+        this.props = props;
         this.state = state;
         this.dispatch = dispatch;
+        this.flowFormPresenter = new FlowFormPresenter(props.form);
+    }
+
+    public hasSubForms(){
+        return this.flowFormPresenter.hasSubForms();
+    }
+
+    public getTabs(){
+        return this.flowFormPresenter.getTabs();
     }
 
     public initState(): void {
-        // todo init data
+        // todo init formData
+        const value = this.props.value || '';
+        if(value){
+
+        }
     }
 
     public syncState(state: FormDataState): void {
@@ -41,6 +55,13 @@ export class FormDataPresenter {
     public getDatasource(form: FlowForm) {
         const flowFormPresenter = new FlowFormPresenter(form);
         return flowFormPresenter.getDatasource();
+    }
+
+
+    public updateFormData(){
+        // todo update form data
+        const data = '';
+        this.props.onChange?.(data);
     }
 
 }

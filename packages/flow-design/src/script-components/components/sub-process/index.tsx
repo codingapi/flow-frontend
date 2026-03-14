@@ -4,6 +4,7 @@ import {Form, Select} from "antd";
 import {useTargetWorkflowPresenter} from "./hooks/use-target-workflow-presenter";
 import {SubProcessOperatorPluginView} from "@/plugins/view/sub-process-opreator-view";
 import {FormDataView} from "../form-data";
+import {useSubProcessPresenter} from "@/script-components/components/sub-process/hooks/use-sub-process-presenter";
 
 export const SubProcessView: React.FC<SubProcessViewProps> = (props) => {
 
@@ -11,11 +12,25 @@ export const SubProcessView: React.FC<SubProcessViewProps> = (props) => {
 
     const {state, presenter} = useTargetWorkflowPresenter();
 
+    const subProcessPresenter = useSubProcessPresenter(props);
+
+    React.useEffect(() => {
+        if (props.value) {
+            const data = subProcessPresenter.parserFormData(props.value);
+            form.resetFields();
+            form.setFieldsValue(data);
+        }
+    }, [props.value]);
+
     return (
         <>
             <Form
                 form={form}
                 layout="vertical"
+                onValuesChange={()=>{
+                    const values = form.getFieldsValue();
+                    subProcessPresenter.updateFormData(values);
+                }}
             >
                 <Form.Item
                     name={"workId"}

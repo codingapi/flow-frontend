@@ -1,15 +1,14 @@
 import React from "react";
 import {FormDataPresenter} from "../presenters";
-import {FlowForm} from "@flow-engine/flow-types";
-import {FormDataState} from "../types";
+import {FormDataContentProps, FormDataState} from "../types";
 
 export class FormDataContextScope {
     private readonly presenter: FormDataPresenter;
-    private readonly form: FlowForm;
+    private readonly props: FormDataContentProps;
 
-    constructor(presenter: FormDataPresenter, form: FlowForm) {
+    constructor(presenter: FormDataPresenter, props: FormDataContentProps) {
         this.presenter = presenter;
-        this.form = form;
+        this.props = props;
     }
 
     public syncState(state: FormDataState) {
@@ -23,6 +22,7 @@ export class FormDataContextScope {
     public initState() {
         this.presenter.initState();
     }
+
 
 }
 

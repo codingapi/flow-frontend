@@ -25,6 +25,8 @@ export const SubProcessOperatorPluginView: React.FC<SubProcessOperatorViewPlugin
         <Select
             placeholder={"请选择流程发起人"}
             options={presenter.getOperatorOptions()}
+            onChange={props.onChange}
+            value={props.value}
         />
     );
 }
