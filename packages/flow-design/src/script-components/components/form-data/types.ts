@@ -29,7 +29,7 @@ export interface FormData{
     // 主表数据
     dataBody: DataBody;
     // 子表数据
-    subDataList: Record<string, DataBody[]>;
+    subDataMap: Record<string, DataBody[]>;
 }
 
 

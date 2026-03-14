@@ -1,6 +1,6 @@
 import {FlowForm} from "@flow-engine/flow-types";
 import {FormDataList} from "../components/list";
-import {FormDataFiled} from "../types";
+import {FormData, FormDataFiled} from "../types";
 import {FormValue} from "@/script-components/components/form-data/components/value";
 
 export class FlowFormPresenter {
@@ -9,10 +9,6 @@ export class FlowFormPresenter {
 
     constructor(form: FlowForm) {
         this.form = form;
-    }
-
-    public getFormTitle() {
-        return this.form.name;
     }
 
 
@@ -31,6 +27,7 @@ export class FlowFormPresenter {
         }
         return tabs;
     }
+
 
     public getDatasource() {
         const columns: FormDataFiled[] = [];
