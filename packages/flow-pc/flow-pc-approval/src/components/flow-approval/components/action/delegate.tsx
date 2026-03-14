@@ -34,8 +34,10 @@ export const DelegateAction: React.FC<FlowActionProps> = (props) => {
             <CustomStyleButton
                 display={props.action.display}
                 onClick={() => {
-                    form.resetFields();
-                    setModalVisible(true);
+                    if(props.onClickCheck?.(action.id)) {
+                        form.resetFields();
+                        setModalVisible(true);
+                    }
                 }}
                 title={action.title}
             />

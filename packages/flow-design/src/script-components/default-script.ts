@@ -61,6 +61,15 @@ def run(request){
 }
 `
 
+// 自定义脚本，默认返回通过
+export const SCRIPT_DEFAULT_CUSTOM =
+`// @SCRIPT_TITLE 默认条件 触发通过
+// @SCRIPT_META {"trigger":"PASS"}
+def run(request){ 
+    return 'PASS'; 
+}
+`
+
 // 子流程脚本，创建当前流程
 export const SCRIPT_DEFAULT_SUB_PROCESS =
 `// @SCRIPT_TITLE 创建当前流程  

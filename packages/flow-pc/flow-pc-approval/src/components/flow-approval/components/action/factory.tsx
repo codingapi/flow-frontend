@@ -38,13 +38,10 @@ export class ActionFactory {
 
     }
 
-    public render(action: FlowAction) {
-        const FlowActionComponent = this.cache.get(action.type);
-        if (FlowActionComponent) {
-            return (
-                <FlowActionComponent action={action}/>
-            )
-        }
+    public getFlowActionComponent(action: FlowAction): React.ComponentType<FlowActionProps> | undefined {
+        return this.cache.get(action.type);
     }
+
+
 
 }

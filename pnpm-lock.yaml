@@ -330,6 +330,9 @@ importers:
       antd-mobile:
         specifier: ^5.42.3
         version: 5.42.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      dayjs:
+        specifier: ^1.11.19
+        version: 1.11.20
       react:
         specifier: '>=18'
         version: 18.3.1

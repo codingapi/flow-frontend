@@ -19,11 +19,13 @@ export const SaveAction: React.FC<FlowActionProps> = (props) => {
         <CustomStyleButton
             display={props.action.display}
             onClick={() => {
-                actionPresenter.action(action.id).then((res) => {
-                    if (res.success) {
-                        message.success("流程数据已保存");
-                    }
-                });
+                if(props.onClickCheck?.(action.id)) {
+                    actionPresenter.action(action.id).then((res) => {
+                        if (res.success) {
+                            message.success("流程数据已保存");
+                        }
+                    });
+                }
             }}
             title={action.title}
         />

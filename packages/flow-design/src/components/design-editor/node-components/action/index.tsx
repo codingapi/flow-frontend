@@ -6,6 +6,8 @@ import {PlusOutlined} from "@ant-design/icons";
 import {actionOptions} from "@flow-engine/flow-types";
 import {ActionConfigModal} from "@/script-components/modal/action-config-modal";
 import {FlowActionListPresenter} from "./presenter";
+import {IdUtils} from "@/utils";
+import {SCRIPT_DEFAULT_CUSTOM} from "@/script-components/default-script";
 
 interface ActionTableProps {
     value: any[];
@@ -37,8 +39,8 @@ export const ActionTable: React.FC<ActionTableProps> = (props) => {
                 title: '类型',
                 dataIndex: 'type',
                 key: 'type',
-                render:(value:string) => {
-                    const type = actionOptions.find(item=>item.value === value);
+                render: (value: string) => {
+                    const type = actionOptions.find(item => item.value === value);
                     return type?.label
                 }
             },
@@ -63,7 +65,7 @@ export const ActionTable: React.FC<ActionTableProps> = (props) => {
                 dataIndex: 'operation',
                 key: 'operation',
                 render: (_: any, record: any) => {
-                    if(record.enable) {
+                    if (record.enable) {
                         return (
                             <Space>
                                 <a
@@ -75,10 +77,10 @@ export const ActionTable: React.FC<ActionTableProps> = (props) => {
                                 >
                                     编辑
                                 </a>
-                                {record.type==='CUSTOM' && (
+                                {record.type === 'CUSTOM' && (
                                     <Popconfirm
                                         title={"确认删除吗？"}
-                                        onConfirm={()=>{
+                                        onConfirm={() => {
                                             presenter.delete(record.id);
                                         }}
                                     >
@@ -103,6 +105,11 @@ export const ActionTable: React.FC<ActionTableProps> = (props) => {
                         icon={<PlusOutlined/>}
                         onClick={() => {
                             form.resetFields();
+                            form.setFieldsValue({
+                                id: IdUtils.generateId(),
+                                script: SCRIPT_DEFAULT_CUSTOM,
+                                type: "CUSTOM",
+                            })
                             setVisible(true);
                         }}
                     >自定义按钮</Button>

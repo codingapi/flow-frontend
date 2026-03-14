@@ -57,11 +57,11 @@ export const ActionCustomView: React.FC<ActionCustomViewPlugin> = (props) => {
                     options={[
                         {
                             label: '通过',
-                            value: 'pass'
+                            value: 'PASS'
                         },
                         {
                             label: '拒绝',
-                            value: 'reject'
+                            value: 'REJECT'
                         }
                     ]}
                 />

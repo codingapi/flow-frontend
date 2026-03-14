@@ -48,11 +48,13 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
             <CustomStyleButton
                 display={props.action.display}
                 onClick={() => {
-                    if (isStartNode) {
-                        handleSubmit();
-                    } else {
-                        form.resetFields();
-                        setModalVisible(true);
+                    if(props.onClickCheck?.(action.id)) {
+                        if (isStartNode) {
+                            handleSubmit();
+                        } else {
+                            form.resetFields();
+                            setModalVisible(true);
+                        }
                     }
                 }}
                 title={action.title}

@@ -23,25 +23,38 @@ export const CustomAction: React.FC<FlowActionProps> = (props) => {
     const triggerType = returnData.replaceAll('\'', '');
 
 
-    const ActionView = ActionFactory.getInstance().render({
-        ...props.action,
-        type: triggerType as ActionType,
-    });
+    const FlowActionComponent =
+        ActionFactory.getInstance().getFlowActionComponent({
+            ...props.action,
+            type: triggerType as ActionType,
+        });
 
-    if (ActionView) {
-        return ActionView
+    if (FlowActionComponent) {
+        return (
+            <FlowActionComponent
+                action={action}
+                onClickCheck={(actionId) => {
+                    if (props.onClickCheck) {
+                        return props.onClickCheck?.(actionId);
+                    }
+                    return false;
+                }}
+            />
+        )
     }
 
     return (
         <CustomStyleButton
             display={props.action.display}
             onClick={() => {
-                actionPresenter.action(action.id).then((res) => {
-                    if (res.success) {
-                        message.success("操作成功");
-                        context.close();
-                    }
-                });
+                if (props.onClickCheck?.(action.id)) {
+                    actionPresenter.action(action.id).then((res) => {
+                        if (res.success) {
+                            message.success("操作成功");
+                            context.close();
+                        }
+                    });
+                }
             }}
             title={action.title}
         />
