@@ -54,16 +54,7 @@ export const ActionCustomView: React.FC<ActionCustomViewPlugin> = (props) => {
                     value={trigger}
                     placeholder={"请选择触发动作类型"}
                     onChange={handleChangeNodeType}
-                    options={[
-                        {
-                            label: '通过',
-                            value: 'PASS'
-                        },
-                        {
-                            label: '拒绝',
-                            value: 'REJECT'
-                        }
-                    ]}
+                    options={props.options}
                 />
             </div>
 

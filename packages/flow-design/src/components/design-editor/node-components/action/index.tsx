@@ -106,7 +106,6 @@ export const ActionTable: React.FC<ActionTableProps> = (props) => {
                         onClick={() => {
                             form.resetFields();
                             form.setFieldsValue({
-                                id: IdUtils.generateId(),
                                 script: SCRIPT_DEFAULT_CUSTOM,
                                 type: "CUSTOM",
                             })

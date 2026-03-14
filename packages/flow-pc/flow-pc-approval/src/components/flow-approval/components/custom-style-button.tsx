@@ -12,7 +12,7 @@ interface CustomStyleButtonProps {
 export const CustomStyleButton: React.FC<CustomStyleButtonProps> = (props) => {
 
     const display = props.display;
-    const title = display.title || props.title;
+    const title = props.title || display.title;
 
     const style = React.useMemo(() => {
         if (display) {

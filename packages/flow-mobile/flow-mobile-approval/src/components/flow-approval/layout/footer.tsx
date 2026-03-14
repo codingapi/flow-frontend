@@ -23,7 +23,7 @@ export const Footer = () => {
             const presenter = context.getPresenter().getFlowActionPresenter();
             const selectRecordIds = presenter.getSubmitRecordIds();
             const currentFormData = presenter.getCurrentFormData();
-            if (ObjectUtils.isEmptyObject(currentFormData) &&selectRecordIds.length == 0) {
+            if (ObjectUtils.isEmptyObject(currentFormData) && selectRecordIds.length == 0) {
                 Toast.show('请先选择审批流程.')
                 return;
             }
@@ -93,6 +93,7 @@ export const Footer = () => {
                     onAction={(action) => {
                         handlerAction(action.key as string);
                     }}
+                    cancelText={"取消"}
                     actions={presenter.getMoreOptions().map(action => {
                         return {
                             text: action.title,
