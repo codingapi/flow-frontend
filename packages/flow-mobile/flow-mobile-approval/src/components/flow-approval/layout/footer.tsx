@@ -3,19 +3,31 @@ import {MoreOutlined} from "@ant-design/icons";
 import {FOOTER_HEIGHT} from "@/components/flow-approval/typings";
 import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
 import {useLayoutPresenter} from "@/components/flow-approval/layout/hooks/use-layout-presenter";
-import {ActionSheet, Button, Space} from "antd-mobile";
+import {ActionSheet, Button, Space, Toast} from "antd-mobile";
 import {RevokeAction} from "@/components/flow-approval/components/action/revoke";
 import {UrgeAction} from "@/components/flow-approval/components/action/urge";
 import {ActionFactory} from "@/components/flow-approval/components/action/factory";
 import {EventBus} from "@flow-engine/flow-core";
+import {useApprovalContext} from "@flow-engine/flow-approval-presenter";
+import {ObjectUtils} from "@flow-engine/flow-core";
 
 export const Footer = () => {
 
+    const {state, context} = useApprovalContext();
     const presenter = useLayoutPresenter();
 
     const [moreVisible, setMoreVisible] = useState(false);
 
     const handlerAction = (id: string) => {
+        if (state.flow?.mergeable) {
+            const presenter = context.getPresenter().getFlowActionPresenter();
+            const selectRecordIds = presenter.getSubmitRecordIds();
+            const currentFormData = presenter.getCurrentFormData();
+            if (ObjectUtils.isEmptyObject(currentFormData) &&selectRecordIds.length == 0) {
+                Toast.show('请先选择审批流程.')
+                return;
+            }
+        }
         EventBus.getInstance().emit(id);
     }
 

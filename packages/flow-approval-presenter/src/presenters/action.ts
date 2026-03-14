@@ -1,4 +1,4 @@
-import {FlowApprovalApi, ApprovalState} from "@/typings";
+import {ApprovalState, FlowApprovalApi} from "@/typings";
 import {FormActionContext} from "@flow-engine/flow-types";
 import {GroovyScriptConvertorUtil} from "@flow-engine/flow-core";
 
@@ -7,14 +7,14 @@ export class FlowActionPresenter {
     private readonly api: FlowApprovalApi;
     private readonly formActionContext: FormActionContext;
     private state: ApprovalState;
-    private readonly mockKey:string;
+    private readonly mockKey: string;
 
     private submitRecordIds: number[];
 
     constructor(state: ApprovalState,
                 api: FlowApprovalApi,
                 formActionContext: FormActionContext,
-                mockKey:string) {
+                mockKey: string) {
         this.state = state;
         this.api = api;
         this.formActionContext = formActionContext;
@@ -32,6 +32,10 @@ export class FlowActionPresenter {
         this.submitRecordIds = [];
     }
 
+    public getSubmitRecordIds(){
+        return this.submitRecordIds;
+    }
+
     public syncState(state: ApprovalState) {
         this.state = state;
     }
@@ -47,7 +51,7 @@ export class FlowActionPresenter {
         return await this.api.processNodes({
             id,
             formData,
-        },this.mockKey);
+        }, this.mockKey);
     }
 
 
@@ -93,14 +97,14 @@ export class FlowActionPresenter {
                     ...params
                 }
             }
-            return await this.api.action(request,this.mockKey);
+            return await this.api.action(request, this.mockKey);
         } else {
             const createRequest = {
                 workId,
                 formData,
                 actionId,
             }
-            const recordId = await this.api.create(createRequest,this.mockKey);
+            const recordId = await this.api.create(createRequest, this.mockKey);
             const actionRequest = {
                 formData,
                 recordId,
@@ -109,8 +113,12 @@ export class FlowActionPresenter {
                     ...params
                 }
             }
-            return await this.api.action(actionRequest,this.mockKey);
+            return await this.api.action(actionRequest, this.mockKey);
         }
+    }
+
+    public getCurrentFormData(){
+        return this.formActionContext.save();
     }
 
     private async executeAction(actionId: string, params?: any) {
@@ -140,14 +148,14 @@ export class FlowActionPresenter {
     public async revoke() {
         const recordId = this.state.flow?.recordId;
         if (recordId) {
-            return await this.api.revoke(recordId,this.mockKey);
+            return await this.api.revoke(recordId, this.mockKey);
         }
     }
 
     public async urge() {
         const recordId = this.state.flow?.recordId;
         if (recordId) {
-            return await this.api.urge(recordId,this.mockKey);
+            return await this.api.urge(recordId, this.mockKey);
         }
     }
 

@@ -165,6 +165,18 @@ export interface FlowTodo {
     recordState: number;
     // 流程状态
     flowState: number;
+    // 流程创建时间
+    createTime: number;
+    // 流程id
+    processId: string;
+    // 流程标题
+    workTitle: string;
+    // 节点id
+    nodeId: string;
+    // 节点名称
+    nodeName: string;
+    // 节点类型
+    nodeType: string;
 }
 
 
@@ -226,6 +238,8 @@ export interface FlowContent {
     workId: string;
     // 流程设计编码
     workCode: string;
+    // 流程设计标题
+    workTitle: string;
     // 节点id
     nodeId: string;
     // 节点名称

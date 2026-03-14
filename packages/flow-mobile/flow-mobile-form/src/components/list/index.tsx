@@ -1,46 +1,34 @@
 import React from "react";
 import {FlowListProps} from "@/components/list/types";
-import {CheckList} from "antd-mobile";
-import {CheckCircleFilled, CheckCircleTwoTone} from "@ant-design/icons";
+import {FlowMultipleList} from "@/components/list/components/multiple-list";
+import {FlowSingleList} from "@/components/list/components/single-list";
 
-interface RightProps{
-    active: boolean;
-}
 
-const Right:React.FC<RightProps> = (props)=>{
-    if(props.active){
+export const FlowList: React.FC<FlowListProps> = (props) => {
+
+    const [multiple,setMultiple] = React.useState(true);
+
+    if (multiple) {
         return (
-            <CheckCircleFilled />
+            <FlowMultipleList
+                {...props}
+                onChangeMode={()=>{
+                    setMultiple(false);
+                }}
+                onSelect={(recordIds)=>{
+                    props.onMergeRecordIdsSelected?.(recordIds);
+                }}
+            />
         )
     }else {
         return (
-            <CheckCircleTwoTone />
+            <FlowSingleList
+                {...props}
+                onChangeMode={()=>{
+                    setMultiple(true);
+                }}
+            />
         )
     }
-}
 
-
-export const FlowList:React.FC<FlowListProps> = (props)=>{
-
-    const {formList, meta} = props;
-
-    return (
-        <>
-            <div>全选 返回 尚未完成 TODO </div>
-            <CheckList
-                extra={active =>
-                    <Right active={active}/>
-                }
-                defaultValue={['B']}
-                multiple={true}
-            >
-                <CheckList.Item value='A'>
-                    <a
-                        onClick={(event)=>{
-                        event.stopPropagation();
-                    }}>A</a>
-                </CheckList.Item>
-            </CheckList>
-        </>
-    )
 }

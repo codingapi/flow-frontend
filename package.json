@@ -24,6 +24,7 @@
     "dev:app-mobile": "pnpm -F  @flow-example/app-mobile dev",
     "watch:flow-core": "pnpm -F  @flow-engine/flow-core dev",
     "watch:flow-types": "pnpm -F  @flow-engine/flow-types dev",
+    "watch:flow-approval-presenter": "pnpm -F  @flow-engine/flow-approval-presenter dev",
     "watch:flow-design": "pnpm -F  @flow-engine/flow-design dev",
     "watch:flow-pc-form": "pnpm -F  @flow-engine/flow-pc-form dev",
     "watch:flow-pc-ui": "pnpm -F  @flow-engine/flow-pc-ui dev",
