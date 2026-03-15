@@ -76,7 +76,7 @@ export class FlowFormPresenter {
             render: (value: any, record: any) => {
                 return (
                     <FormValue
-                        item={record}
+                        field={record}
                     />
                 )
             }

@@ -16,9 +16,15 @@ export const SubProcessView: React.FC<SubProcessViewProps> = (props) => {
 
     React.useEffect(() => {
         if (props.value) {
-            const data = subProcessPresenter.parserFormData(props.value);
+            const data = subProcessPresenter.parserScript(props.value);
+
+            const workId = data.workId;
             form.resetFields();
             form.setFieldsValue(data);
+
+            if(workId){
+                presenter.setCurrentWorkId(workId);
+            }
         }
     }, [props.value]);
 
@@ -29,7 +35,7 @@ export const SubProcessView: React.FC<SubProcessViewProps> = (props) => {
                 layout="vertical"
                 onValuesChange={()=>{
                     const values = form.getFieldsValue();
-                    subProcessPresenter.updateFormData(values);
+                    subProcessPresenter.updateScript(values);
                 }}
             >
                 <Form.Item

@@ -19,13 +19,6 @@ export class FormDataPresenter {
         this.flowFormPresenter = new FlowFormPresenter(props.form);
     }
 
-    public hasSubForms() {
-        return this.flowFormPresenter.hasSubForms();
-    }
-
-    public getTabs() {
-        return this.flowFormPresenter.getTabs();
-    }
 
     public initState(): void {
         const value = this.props.value || '';
@@ -38,8 +31,8 @@ export class FormDataPresenter {
                 }
             })
         } else {
-            const data = this.getFormInitData()
             this.dispatch(prevState => {
+                const data = this.getFormInitData();
                 return {
                     ...prevState,
                     formData: data
@@ -48,19 +41,11 @@ export class FormDataPresenter {
         }
     }
 
-    private getFormInitData(): FormData {
-        const dataBodyState = this.state.formData?.dataBody;
-        const mainData = this.getFormItemData(this.form, dataBodyState);
-
-        let subDataMap: any = {};
-        if (this.hasSubForms()) {
-            for (const subForm of this.form.subForms) {
-                subDataMap[subForm.code] = this.getFormItemData(subForm);
-            }
-        }
+    private getFormInitData(state?:FormDataState): FormData {
+        const dataBody = state?.formData?.dataBody;
+        const mainData = this.getFormItemData(this.form, dataBody);
         return {
             dataBody: mainData,
-            subDataMap: subDataMap,
         }
     }
 
@@ -72,7 +57,7 @@ export class FormDataPresenter {
         }
         let data: any = {};
         for (const field of form.fields) {
-            const key = formCode + '.' + field.code;
+            const key = field.code;
             data[key] = value?.data[key] || '';
         }
         dataBody['data'] = data;
@@ -86,7 +71,28 @@ export class FormDataPresenter {
 
 
     public updateFieldValue(field: FormDataFiled, value: string): void {
+        this.dispatch(prevState => {
+            if (prevState.formData) {
+                const dataBody = prevState.formData?.dataBody;
+                return {
+                    ...prevState,
+                    formData: {
+                        ...prevState.formData,
+                        dataBody: {
+                            ...prevState.formData?.dataBody,
+                            data:{
+                                ...dataBody.data,
+                                [field.code]: value
+                            }
+                        }
+                    }
+                }
+            }
+            return {
+                ...prevState,
+            }
 
+        })
     }
 
     public getFormTitle(form: FlowForm) {
@@ -99,27 +105,34 @@ export class FormDataPresenter {
     }
 
 
-    public getDatasource(form: FlowForm) {
-        const flowFormPresenter = new FlowFormPresenter(form);
-        return flowFormPresenter.getDatasource();
-    }
+    public getDatasource(form: FlowForm,dataBody?: DataBody) {
+        if (dataBody) {
+            const columns: FormDataFiled[] = [];
 
-    public getStateDatasource(form: FlowForm) {
-        if (this.form.code === form.code) {
-            return this.state.formData?.dataBody;
-        } else {
-            const subDataMap = this.state.formData?.subDataMap;
-            if (subDataMap) {
-                return subDataMap[form.code]
+            for (const field of form.fields) {
+                const key = field.code;
+                columns.push({
+                    code: key,
+                    title: field.name,
+                    required: field.required,
+                    field: field,
+                    form: this.form,
+                    value: dataBody.data[key]
+                })
             }
+
+            return columns;
+        }else {
+            return []
         }
     }
 
 
-    public updateFormData() {
-        // todo update form data
-        const data = '';
-        this.props.onChange?.(data);
+    public updateFormData(state: FormDataState): void {
+        if(state.formData) {
+            const data = JSON.stringify(state.formData);
+            this.props.onChange?.(data);
+        }
     }
 
 }

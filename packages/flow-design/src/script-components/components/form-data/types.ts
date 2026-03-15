@@ -28,8 +28,6 @@ export interface DataBody {
 export interface FormData{
     // 主表数据
     dataBody: DataBody;
-    // 子表数据
-    subDataMap: Record<string, DataBody[]>;
 }
 
 

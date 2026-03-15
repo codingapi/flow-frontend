@@ -1,12 +1,12 @@
 import React from "react";
 import {FlowForm} from "@flow-engine/flow-types";
 import {FormDataList} from "./components/list";
-import {Tabs} from "antd";
 import {Provider} from "react-redux";
 import {formDataStore} from "./store";
 import {FormDataContext} from "@/script-components/components/form-data/context";
 import {
-    createFormDataContext, useFormDataContext
+    createFormDataContext,
+    useFormDataContext
 } from "@/script-components/components/form-data/hooks/use-form-data-context";
 import {FormDataContentProps} from "./types";
 
@@ -18,18 +18,18 @@ interface FormDataViewProps {
 }
 
 const FormDataContent: React.FC<FormDataContentProps> = (props) => {
-    const {context} = useFormDataContext();
+    const {state,context} = useFormDataContext();
     const presenter = context.getPresenter();
+
+    React.useEffect(()=>{
+        presenter.updateFormData(state);
+    },[state]);
+
     return (
         <>
             <FormDataList
                 form={props.form}
             />
-            {presenter.hasSubForms() && (
-                <Tabs
-                    items={presenter.getTabs()}
-                />
-            )}
         </>
     )
 }
@@ -58,7 +58,7 @@ export const FormDataView: React.FC<FormDataViewProps> = (props) => {
     const form = props.form;
     if (form) {
         return (
-            <FormDataReduxContent form={form}/>
+            <FormDataReduxContent {...props} form={form} />
         )
     }
 }

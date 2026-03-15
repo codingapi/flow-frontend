@@ -9,7 +9,7 @@ interface FormDataListProps {
 
 export const FormDataList: React.FC<FormDataListProps> = (props) => {
 
-    const {context} = useFormDataContext();
+    const {state,context} = useFormDataContext();
     const presenter = context.getPresenter();
 
     return (
@@ -19,8 +19,9 @@ export const FormDataList: React.FC<FormDataListProps> = (props) => {
                     <>{presenter.getFormTitle(props.form)}</>
                 )
             }}
+            rowKey={"code"}
             columns={presenter.getColumns(props.form)}
-            dataSource={presenter.getDatasource(props.form)}
+            dataSource={presenter.getDatasource(props.form,state.formData?.dataBody)}
             pagination={false}
         />
     )
