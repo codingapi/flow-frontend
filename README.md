@@ -2,6 +2,23 @@
 
 > Flow Engine 企业级流程引擎前端 - 基于 React 18、TypeScript、Rsbuild 的可视化流程设计与审批系统
 
+## Flow Framework Version
+
+| Package                                                                            | Description             | Version                                                                                                                                             |
+|------------------------------------------------------------------------------------|-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| [@coding-flow/flow-core](https://github.com/codingapi/flow-frontend)               | Flow-Core-Framework     | [![npm](https://img.shields.io/npm/v/@coding-flow/flow-core.svg)](https://www.npmjs.com/package/@coding-flow/flow-core)                             |
+| [@coding-flow/flow-types](https://github.com/codingapi/flow-frontend)              | Form-Type               | [![npm](https://img.shields.io/npm/v/@coding-flow/flow-types.svg)](https://www.npmjs.com/package/@coding-flow-types)                                     |
+| [@coding-flow/flow-icons](https://github.com/codingapi/flow-frontend)              | Form-Icons              | [![npm](https://img.shields.io/npm/v/@coding-flow/flow-icons.svg)](https://www.npmjs.com/package/@coding-flow/flow-icons)                           |
+| [@coding-flow/flow-design](https://github.com/codingapi/flow-frontend)             | Flow-Design (PC)        | [![npm](https://img.shields.io/npm/v/@coding-flow/flow-design.svg)](https://www.npmjs.com/package/@coding-flow/flow-design)                         |
+| [@coding-flow/flow-approval-presenter](https://github.com/codingapi/flow-frontend) | Flow-Approval-Presenter | [![npm](https://img.shields.io/npm/v/@coding-flow/flow-approval-presenter.svg)](https://www.npmjs.com/package/@coding-flow/flow-approval-presenter) |
+| [@coding-flow/flow-pc-ui](https://github.com/codingapi/flow-frontend)              | Flow-PC-UI              | [![npm](https://img.shields.io/npm/v/@coding-flow/flow-pc-ui.svg)](https://www.npmjs.com/package/@coding-flow/flow-pc-ui)                           |
+| [@coding-flow/flow-pc-form](https://github.com/codingapi/flow-frontend)            | Flow-PC-Form            | [![npm](https://img.shields.io/npm/v/@coding-flow/flow-pc-form.svg)](https://www.npmjs.com/package/@coding-flow/flow-pc-form)                       |
+| [@coding-flow/flow-pc-approval](https://github.com/codingapi/flow-frontend)        | Flow-PC-Approval        | [![npm](https://img.shields.io/npm/v/@coding-flow/flow-pc-approval.svg)](https://www.npmjs.com/package/@coding-flow/flow-pc-approval)               |
+| [@coding-flow/flow-mobile-ui](https://github.com/codingapi/flow-frontend)          | Flow-Mobile-UI          | [![npm](https://img.shields.io/npm/v/@coding-flow/flow-mobile-ui.svg)](https://www.npmjs.com/package/@coding-flow/flow-mobile-ui)                   |
+| [@coding-flow/flow-mobile-form](https://github.com/codingapi/flow-frontend)        | Flow-Mobile-Form        | [![npm](https://img.shields.io/npm/v/@coding-flow/flow-mobile-form.svg)](https://www.npmjs.com/package/@coding-flow/flow-mobile-form)               |
+| [@coding-flow/flow-mobile-approval](https://github.com/codingapi/flow-frontend)    | Flow-Mobile-Approval    | [![npm](https://img.shields.io/npm/v/@coding-flow/flow-mobile-approval.svg)](https://www.npmjs.com/package/@coding-flow/flow-mobile-approval)       |
+
+
 ## 简介
 
 Flow Frontend 是 Flow Engine 流程引擎的前端项目，提供完整的流程管理界面，包括可视化流程设计、动态表单配置、审批处理等功能。采用 monorepo 架构，支持 PC 端和移动端。
