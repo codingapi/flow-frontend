@@ -30,7 +30,7 @@
     "push:flow-pc-approval": "pnpm -F  @coding-flow/flow-pc-approval push",
     "push:flow-mobile-ui": "pnpm -F  @coding-flow/flow-mobile-ui push",
     "push:flow-mobile-form": "pnpm -F  @coding-flow/flow-mobile-form push",
-    "push:flow-mobile-apporval": "pnpm -F  @coding-flow/flow-mobile-approval push",
+    "push:flow-mobile-approval": "pnpm -F  @coding-flow/flow-mobile-approval push",
     "push:flow-pc": "pnpm run push:flow-pc-ui && pnpm run push:flow-pc-form && pnpm run push:flow-pc-approval",
     "push:flow-mobile": "pnpm run push:flow-mobile-ui && pnpm run push:flow-mobile-form && pnpm run push:flow-mobile-approval",
     "push": "pnpm run push:flow-core && pnpm run push:flow-types && pnpm run push:flow-icons && pnpm run push:flow-approval-presenter && pnpm run push:flow-pc && pnpm run push:flow-mobile && pnpm run push:flow-design",
