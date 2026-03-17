@@ -1,7 +1,22 @@
 {
   "name": "@coding-flow/flow-approval-presenter",
   "version": "0.0.1",
+  "description": "flow-engine approval presenter framework ",
   "type": "module",
+  "keywords": [
+    "coding-flow",
+    "flow-engine"
+  ],
+  "homepage": "https://github.com/codingapi/flow-frontend",
+  "bugs": {
+    "url": "https://github.com/codingapi/flow-frontend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codingapi/flow-frontend.git"
+  },
+  "license": "Apache-2.0",
+  "author": "1024lorne@gmail.com",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -15,7 +30,8 @@
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build --watch",
-    "test": "rstest"
+    "test": "rstest",
+    "push": "pnpm run build && pnpm publish --access public"
   },
   "peerDependencies": {
     "react": ">=18",
