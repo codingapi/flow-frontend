@@ -1,6 +1,6 @@
 import React from "react";
 import {FlowActionProps} from "./type";
-import {FlowAction} from "@flow-engine/flow-types";
+import {FlowAction} from "@coding-flow/flow-types";
 import {PassAction} from "@/components/flow-approval/components/action/pass";
 import {AddAuditAction} from "@/components/flow-approval/components/action/add-audit";
 import {CustomAction} from "@/components/flow-approval/components/action/custom";

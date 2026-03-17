@@ -1,4 +1,4 @@
-import {FlowForm} from "@flow-engine/flow-types";
+import {FlowForm} from "@coding-flow/flow-types";
 import {FormDataList} from "../components/list";
 import {FormData, FormDataFiled} from "../types";
 import {FormValue} from "@/script-components/components/form-data/components/value";

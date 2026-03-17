@@ -8,11 +8,11 @@ Flow Engine 的 PC 端流程管理应用。
 
 ### 核心依赖
 
-- `@flow-engine/flow-pc-design` - 流程设计器组件库
-- `@flow-engine/flow-pc-approval` - 审批页面组件库
-- `@flow-engine/flow-pc-ui` - 基础 UI 组件库
-- `@flow-engine/flow-core` - 核心 API 库
-- `@flow-engine/flow-types` - TypeScript 类型定义
+- `@coding-flow/flow-pc-design` - 流程设计器组件库
+- `@coding-flow/flow-pc-approval` - 审批页面组件库
+- `@coding-flow/flow-pc-ui` - 基础 UI 组件库
+- `@coding-flow/flow-core` - 核心 API 库
+- `@coding-flow/flow-types` - TypeScript 类型定义
 - `antd` - Ant Design 组件库
 - `react-router` + `react-router-dom` - 路由管理
 

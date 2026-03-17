@@ -1,5 +1,5 @@
 {
-  "name": "@flow-engine/flow-core",
+  "name": "@coding-flow/flow-core",
   "version": "1.0.0",
   "type": "module",
   "exports": {

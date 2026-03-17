@@ -1,4 +1,4 @@
-import {Dispatch} from "@flow-engine/flow-core";
+import {Dispatch} from "@coding-flow/flow-core";
 import {ConditionApi, ConditionState, initStateData} from "../typings";
 import {ConditionGroupPresenter} from "./group-presenter";
 import {ConditionRelationPresenter} from "@/script-components/components/condition/presenters/relation-presenter";

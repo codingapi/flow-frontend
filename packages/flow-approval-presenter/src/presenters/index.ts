@@ -1,6 +1,6 @@
 import {FlowApprovalApi, ApprovalState} from "@/typings";
-import {Dispatch} from "@flow-engine/flow-core";
-import {FormActionContext} from "@flow-engine/flow-types";
+import {Dispatch} from "@coding-flow/flow-core";
+import {FormActionContext} from "@coding-flow/flow-types";
 import {FlowActionPresenter} from "./action";
 
 export class ApprovalPresenter {

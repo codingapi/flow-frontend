@@ -1,6 +1,6 @@
 import {DesignPanelApi, FlowNode, initStateData, State, TabPanelType} from "../types";
-import {Dispatch} from "@flow-engine/flow-core";
-import {FormActionContext} from "@flow-engine/flow-types";
+import {Dispatch} from "@coding-flow/flow-core";
+import {FormActionContext} from "@coding-flow/flow-types";
 import {WorkflowFormManager} from "@/components/design-panel/manager/form";
 import {NodeConvertorManager, NodeManger} from "@/components/design-panel/manager/node";
 import {WorkflowConvertor} from "@/components/design-panel/presenters/convertor";

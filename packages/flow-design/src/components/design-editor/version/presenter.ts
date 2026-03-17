@@ -1,5 +1,5 @@
 import {VersionApi, WorkflowVersion} from "./types";
-import {Dispatch} from "@flow-engine/flow-core";
+import {Dispatch} from "@coding-flow/flow-core";
 
 export class VersionPresenter {
 

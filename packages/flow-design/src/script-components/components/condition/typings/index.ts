@@ -1,4 +1,4 @@
-import {DataType} from "@flow-engine/flow-types";
+import {DataType} from "@coding-flow/flow-types";
 import {GroovyVariableMapping} from "@/script-components/typings";
 
 /**

@@ -1,5 +1,5 @@
-import {FlowForm} from "@flow-engine/flow-types";
-import {FieldPermission} from "@flow-engine/flow-types";
+import {FlowForm} from "@coding-flow/flow-types";
+import {FieldPermission} from "@coding-flow/flow-types";
 
 export class PromissionPresenter {
 

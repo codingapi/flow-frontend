@@ -1,5 +1,5 @@
-import {FlowAction} from "@flow-engine/flow-types";
-import {ApprovalState} from "@flow-engine/flow-approval-presenter";
+import {FlowAction} from "@coding-flow/flow-types";
+import {ApprovalState} from "@coding-flow/flow-approval-presenter";
 
 export class LayoutPresenter {
 

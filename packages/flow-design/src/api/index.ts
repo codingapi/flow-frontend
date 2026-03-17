@@ -1,4 +1,4 @@
-import {HttpClient} from "@flow-engine/flow-core";
+import {HttpClient} from "@coding-flow/flow-core";
 import { message } from "antd";
 
 export const httpClient = new HttpClient(10000,{

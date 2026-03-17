@@ -1,7 +1,7 @@
 import React from "react";
 import {Button, Col, Popover, Row} from "antd";
-import {Icon} from "@flow-engine/flow-icons";
-import {icons} from "@flow-engine/flow-types";
+import {Icon} from "@coding-flow/flow-icons";
+import {icons} from "@coding-flow/flow-types";
 
 interface ActionIconProps {
     value?: string;

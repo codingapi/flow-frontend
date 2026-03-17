@@ -2,7 +2,7 @@ import React from "react";
 import {FlowTableProps} from "@/components/table/types";
 import {useTableFormPresenter} from "@/components/table/hooks/use-table-form-presenter";
 import {Button, Flex, Table} from "antd";
-import {FormData} from "@flow-engine/flow-types";
+import {FormData} from "@coding-flow/flow-types";
 import {FormView} from "@/components/form/view";
 import {CaretLeftOutlined} from "@ant-design/icons";
 

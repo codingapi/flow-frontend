@@ -1,9 +1,9 @@
 import React from "react";
 import {Button, Form, Popconfirm, Space, Switch} from "antd";
-import {Table} from "@flow-engine/flow-pc-ui";
+import {Table} from "@coding-flow/flow-pc-ui";
 import {useNodeRenderContext} from "@/components/design-editor/hooks/use-node-render-context";
 import {PlusOutlined} from "@ant-design/icons";
-import {actionOptions} from "@flow-engine/flow-types";
+import {actionOptions} from "@coding-flow/flow-types";
 import {ActionConfigModal} from "@/script-components/modal/action-config-modal";
 import {FlowActionListPresenter} from "./presenter";
 import {IdUtils} from "@/utils";

@@ -1,6 +1,6 @@
 import React from "react";
 import {ActionFormProps} from "@/script-components/typings";
-import {ActionType} from "@flow-engine/flow-types";
+import {ActionType} from "@coding-flow/flow-types";
 import {CustomActionForm} from "@/script-components/components/action/components/custom";
 import {AddAuditActionForm} from "@/script-components/components/action/components/add-audit";
 import {DelegateActionForm} from "@/script-components/components/action/components/delegate";

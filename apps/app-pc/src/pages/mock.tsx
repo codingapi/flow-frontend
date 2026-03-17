@@ -1,5 +1,5 @@
 import React from "react";
-import {FlowMock} from "@flow-engine/flow-pc-approval";
+import {FlowMock} from "@coding-flow/flow-pc-approval";
 
 const MockPage = () => {
 

@@ -1,5 +1,5 @@
 import {GroovyVariableMapping, VariableTag} from "@/script-components/typings";
-import {FlowForm} from "@flow-engine/flow-types";
+import {FlowForm} from "@coding-flow/flow-types";
 
 export class GroovyVariableUtil {
 

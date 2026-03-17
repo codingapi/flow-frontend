@@ -1,5 +1,5 @@
 import {FlowMockApi} from "@/components/flow-mock/types";
-import {Dispatch} from "@flow-engine/flow-core";
+import {Dispatch} from "@coding-flow/flow-core";
 
 export class FlowMockPresenter {
 

@@ -1,9 +1,9 @@
 import React from "react";
-import {Drawer} from "@flow-engine/flow-pc-ui";
+import {Drawer} from "@coding-flow/flow-pc-ui";
 import {detail} from "@/api/record";
-import {FlowContent} from "@flow-engine/flow-types";
+import {FlowContent} from "@coding-flow/flow-types";
 import {ApprovalLayout} from "@/components/flow-approval/layout";
-import {useMockContext} from "@flow-engine/flow-approval-presenter";
+import {useMockContext} from "@coding-flow/flow-approval-presenter";
 
 interface ApprovalPanelProps {
     // 流程设计编码

@@ -1,4 +1,4 @@
-# @flow-engine/flow-pc-ui
+# @coding-flow/flow-pc-ui
 
 Flow Engine PC 端基础 UI 组件库，提供原子化 UI 组件。
 
@@ -15,7 +15,7 @@ Flow Engine PC 端基础 UI 组件库，提供原子化 UI 组件。
 
 ### 依赖关系
 
-- **依赖**: `@flow-engine/flow-core`
+- **依赖**: `@coding-flow/flow-core`
 
 ## Setup
 
@@ -91,7 +91,7 @@ flow-pc-ui/
 ## 使用示例
 
 ```typescript
-import { Button, Input, Modal } from '@flow-engine/flow-pc-ui';
+import { Button, Input, Modal } from '@coding-flow/flow-pc-ui';
 
 // 使用按钮组件
 <Button type="primary" onClick={handleClick}>

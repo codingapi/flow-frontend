@@ -3,7 +3,7 @@ import {Button, Form, Input, message, Popover, Space, Tabs} from "antd";
 import {LayoutHeaderHeight, TabPanelType} from "../types";
 import {useDesignContext} from "../hooks/use-design-context";
 import {CloseOutlined, DownloadOutlined, SaveOutlined} from "@ant-design/icons";
-import {EventBus} from "@flow-engine/flow-core";
+import {EventBus} from "@coding-flow/flow-core";
 import {exportWorkflow} from "@/api/workflow";
 
 const Left = () => {

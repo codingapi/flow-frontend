@@ -1,8 +1,8 @@
 import React from "react";
 import {FlowActionProps} from "./type";
-import {GroovyScriptConvertorUtil} from "@flow-engine/flow-core";
+import {GroovyScriptConvertorUtil} from "@coding-flow/flow-core";
 import {ActionFactory} from "@/components/flow-approval/components/action/factory";
-import {ActionType} from "@flow-engine/flow-types";
+import {ActionType} from "@coding-flow/flow-types";
 
 /**
  * 自定义

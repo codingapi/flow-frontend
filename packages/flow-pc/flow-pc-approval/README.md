@@ -1,4 +1,4 @@
-# @flow-engine/flow-pc-approval
+# @coding-flow/flow-pc-approval
 
 Flow Engine PC 端审批组件库，提供待办/已办/审批处理等功能。
 
@@ -15,7 +15,7 @@ Flow Engine PC 端审批组件库，提供待办/已办/审批处理等功能。
 
 ### 依赖关系
 
-- **依赖**: `@flow-engine/flow-pc-design`, `@flow-engine/flow-pc-ui`
+- **依赖**: `@coding-flow/flow-pc-design`, `@coding-flow/flow-pc-ui`
 
 ## Setup
 
@@ -51,7 +51,7 @@ pnpm run dev
 - 分页加载
 
 ```typescript
-import { TodoList } from '@flow-engine/flow-pc-approval';
+import { TodoList } from '@coding-flow/flow-pc-approval';
 
 <TodoList
   filters={filters}
@@ -69,7 +69,7 @@ import { TodoList } from '@flow-engine/flow-pc-approval';
 - 查看审批详情
 
 ```typescript
-import { DoneList } from '@flow-engine/flow-pc-approval';
+import { DoneList } from '@coding-flow/flow-pc-approval';
 
 <DoneList
   filters={filters}
@@ -86,7 +86,7 @@ import { DoneList } from '@flow-engine/flow-pc-approval';
 - 撤回/取消操作
 
 ```typescript
-import { MyRequestsList } from '@flow-engine/flow-pc-approval';
+import { MyRequestsList } from '@coding-flow/flow-pc-approval';
 
 <MyRequestsList
   filters={filters}
@@ -105,7 +105,7 @@ import { MyRequestsList } from '@flow-engine/flow-pc-approval';
 - 附件上传
 
 ```typescript
-import { ApprovalForm } from '@flow-engine/flow-pc-approval';
+import { ApprovalForm } from '@coding-flow/flow-pc-approval';
 
 <ApprovalForm
   taskId={taskId}
@@ -131,7 +131,7 @@ import { ApprovalForm } from '@flow-engine/flow-pc-approval';
 - 表单数据展示
 
 ```typescript
-import { FlowDetail } from '@flow-engine/flow-pc-approval';
+import { FlowDetail } from '@coding-flow/flow-pc-approval';
 
 <FlowDetail
   workflowId={workflowId}
@@ -151,7 +151,7 @@ import { FlowDetail } from '@flow-engine/flow-pc-approval';
 - 操作记录
 
 ```typescript
-import { ApprovalTimeline } from '@flow-engine/flow-pc-approval';
+import { ApprovalTimeline } from '@coding-flow/flow-pc-approval';
 
 <ApprovalTimeline
   records={approvalRecords}
@@ -180,7 +180,7 @@ flow-pc-approval/
 ### 待办页面
 
 ```typescript
-import { TodoList, ApprovalModal } from '@flow-engine/flow-pc-approval';
+import { TodoList, ApprovalModal } from '@coding-flow/flow-pc-approval';
 
 const TodoPage = () => {
   const [selectedTask, setSelectedTask] = useState(null);
@@ -212,7 +212,7 @@ const TodoPage = () => {
 ### 审批操作
 
 ```typescript
-import { ApprovalForm } from '@flow-engine/flow-pc-approval';
+import { ApprovalForm } from '@coding-flow/flow-pc-approval';
 
 const MyApprovalForm = () => {
   const handleSubmit = async (action, opinion) => {

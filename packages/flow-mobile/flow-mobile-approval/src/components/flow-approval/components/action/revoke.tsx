@@ -1,7 +1,7 @@
 import React from "react";
 import {Button,Toast} from "antd-mobile";
-import {Popconfirm} from "@flow-engine/flow-mobile-ui";
-import {useApprovalContext} from "@flow-engine/flow-approval-presenter";
+import {Popconfirm} from "@coding-flow/flow-mobile-ui";
+import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
 
 export const RevokeAction = () => {
 

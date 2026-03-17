@@ -1,6 +1,6 @@
 import React from "react";
 import {FormInstance, Input, Switch} from "antd";
-import {CardForm} from "@flow-engine/flow-pc-ui";
+import {CardForm} from "@coding-flow/flow-pc-ui";
 
 interface UrgePanelProps{
     form:FormInstance;

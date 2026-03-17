@@ -1,5 +1,5 @@
 import React from "react";
-import {FlowApprovalOperator, ProcessNode} from "@flow-engine/flow-types";
+import {FlowApprovalOperator, ProcessNode} from "@coding-flow/flow-types";
 import dayjs from "dayjs";
 
 // 获取节点状态

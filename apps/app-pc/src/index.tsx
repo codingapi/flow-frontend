@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {RouterProvider} from 'react-router';
 import {hashRouters} from './config/routers';
-import {registerFormTypes} from "@flow-engine/flow-pc-form";
+import {registerFormTypes} from "@coding-flow/flow-pc-form";
 import {ConfigProvider} from "antd";
 import zhCN from 'antd/locale/zh_CN';
 import dayjs from 'dayjs';

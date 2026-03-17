@@ -1,6 +1,6 @@
 import React from "react";
 import {Button, message, Popconfirm} from "antd";
-import {useApprovalContext} from "@flow-engine/flow-approval-presenter";
+import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
 
 export const RevokeAction = () => {
 

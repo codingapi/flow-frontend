@@ -1,5 +1,5 @@
 import React from "react";
-import {Table} from "@flow-engine/flow-pc-ui";
+import {Table} from "@coding-flow/flow-pc-ui";
 import {Button, Popconfirm, Space} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
 import {useConditionContext} from "../../hooks/use-condition-context";

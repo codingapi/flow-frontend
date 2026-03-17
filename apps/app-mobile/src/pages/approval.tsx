@@ -1,5 +1,5 @@
 import React from "react";
-import {ApprovalPanel} from "@flow-engine/flow-mobile-approval";
+import {ApprovalPanel} from "@coding-flow/flow-mobile-approval";
 import { useLocation, useNavigate } from "react-router";
 
 const ApprovalPage = ()=>{

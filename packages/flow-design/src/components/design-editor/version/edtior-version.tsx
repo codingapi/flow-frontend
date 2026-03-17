@@ -4,7 +4,7 @@ import {Button, Popover} from "antd";
 import {HistoryOutlined} from "@ant-design/icons";
 import {useVersionPresenter} from "@/components/design-editor/version/hooks/use-version-presenter";
 import {VersionContent} from "./components/version-content";
-import {EventBus} from "@flow-engine/flow-core";
+import {EventBus} from "@coding-flow/flow-core";
 
 export const EditorVersion = () => {
 

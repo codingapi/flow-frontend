@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import {Table, TableProps} from "@flow-engine/flow-pc-ui";
+import {Table, TableProps} from "@coding-flow/flow-pc-ui";
 import {Button, Flex, Form, Popconfirm, Space} from "antd";
-import {dataTypeOptions,FormTypeContext} from "@flow-engine/flow-types";
+import {dataTypeOptions,FormTypeContext} from "@coding-flow/flow-types";
 import {useDesignContext} from "@/components/design-panel/hooks/use-design-context";
 import {WorkflowFormManager} from "@/components/design-panel/manager/form";
 import {DeleteOutlined, FolderAddOutlined, PlusOutlined} from "@ant-design/icons";

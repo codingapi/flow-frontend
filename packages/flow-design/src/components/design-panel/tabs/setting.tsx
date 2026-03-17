@@ -1,5 +1,5 @@
 import React from "react";
-import {CardForm, Panel} from "@flow-engine/flow-pc-ui";
+import {CardForm, Panel} from "@coding-flow/flow-pc-ui";
 import {InterferePanel} from "@/components/design-panel/panels/workflow/interfere";
 import {UrgePanel} from "@/components/design-panel/panels/workflow/urge";
 import {useDesignContext} from "@/components/design-panel/hooks/use-design-context";

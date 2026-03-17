@@ -1,4 +1,4 @@
-# @flow-engine/flow-core
+# @coding-flow/flow-core
 
 Flow Engine 前端核心框架库，提供 HTTP 客户端、Hooks、Presenter 等基础能力（不包含 UI 组件）。
 
@@ -50,7 +50,7 @@ pnpm run dev
 - 请求取消支持
 
 ```typescript
-import { httpClient } from '@flow-engine/flow-core';
+import { httpClient } from '@coding-flow/flow-core';
 
 // GET 请求
 const workflow = await httpClient.get<Workflow>('/api/workflows/1');
@@ -73,7 +73,7 @@ const result = await httpClient.post<Workflow>('/api/workflows', workflowData);
 实现业务逻辑与 UI 分离的 Presenter 模式:
 
 ```typescript
-import { Presenter } from '@flow-engine/flow-core';
+import { Presenter } from '@coding-flow/flow-core';
 
 class WorkflowPresenter extends Presenter {
   async loadWorkflow(id: string): Promise<Workflow> {
@@ -111,7 +111,7 @@ flow-core/
 ## 使用示例
 
 ```typescript
-import { httpClient, useWorkflow, WorkflowPresenter } from '@flow-engine/flow-core';
+import { httpClient, useWorkflow, WorkflowPresenter } from '@coding-flow/flow-core';
 
 // 使用 HTTP 客户端
 const workflows = await httpClient.get<Workflow[]>('/api/workflows');

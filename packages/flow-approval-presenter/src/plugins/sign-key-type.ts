@@ -1,4 +1,4 @@
-import {FlowOperator} from "@flow-engine/flow-types";
+import {FlowOperator} from "@coding-flow/flow-types";
 
 export const VIEW_KEY = 'SignKeyViewPlugin';
 

@@ -1,4 +1,4 @@
-import {FlowContent,ProcessNode} from "@flow-engine/flow-types";
+import {FlowContent,ProcessNode} from "@coding-flow/flow-types";
 
 /**
  * 流程审批布局组件属性

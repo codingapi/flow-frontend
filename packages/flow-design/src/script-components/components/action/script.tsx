@@ -1,7 +1,7 @@
 import React from "react";
 import {GroovyCodeEditor} from "@/components/groovy-code";
 import {Col, Form, FormInstance, Select, Space} from "antd";
-import {GroovyScriptConvertorUtil} from "@flow-engine/flow-core";
+import {GroovyScriptConvertorUtil} from "@coding-flow/flow-core";
 
 
 interface CustomScriptViewProps{

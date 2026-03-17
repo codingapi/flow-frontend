@@ -1,7 +1,7 @@
 import React from "react";
 import {GroovyScriptContent, GroovyScriptModal} from "@/script-components/components/groovy-script-modal";
 import {ScriptType} from "@/script-components/typings";
-import {GroovyScriptConvertorUtil} from "@flow-engine/flow-core";
+import {GroovyScriptConvertorUtil} from "@coding-flow/flow-core";
 import {AdvancedScriptEditor} from "@/script-components/components/advanced-script-editor";
 import {OperatorLoadPluginView} from "@/plugins/view/operator-load-view";
 import {SCRIPT_DEFAULT_OPERATOR_LOAD} from "@/script-components/default-script";

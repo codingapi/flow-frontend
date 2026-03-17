@@ -1,6 +1,6 @@
 import React from "react";
-import {FlowForm} from "@flow-engine/flow-types";
-import {Table} from "@flow-engine/flow-pc-ui";
+import {FlowForm} from "@coding-flow/flow-types";
+import {Table} from "@coding-flow/flow-pc-ui";
 import {useFormDataContext} from "@/script-components/components/form-data/hooks/use-form-data-context";
 
 interface FormDataListProps {

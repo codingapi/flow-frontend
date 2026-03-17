@@ -1,4 +1,4 @@
-import {FormData, FieldPermission, FlowForm} from "@flow-engine/flow-types";
+import {FormData, FieldPermission, FlowForm} from "@coding-flow/flow-types";
 
 
 export interface FlowListProps {

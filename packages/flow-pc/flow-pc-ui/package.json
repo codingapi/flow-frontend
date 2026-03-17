@@ -1,5 +1,5 @@
 {
-  "name": "@flow-engine/flow-pc-ui",
+  "name": "@coding-flow/flow-pc-ui",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -23,7 +23,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flow-engine/flow-core": "workspace:*",
+    "@coding-flow/flow-core": "workspace:*",
     "@ant-design/icons": "~6.1.0",
     "antd": "^6.2.1"
   },

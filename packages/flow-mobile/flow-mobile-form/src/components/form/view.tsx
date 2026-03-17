@@ -1,7 +1,7 @@
 import React from "react";
 import {FormItemFactory} from "@/components/factory/form-item-factory";
 import {Form, Input} from "antd-mobile";
-import {FieldPermission, FlowForm, FlowTodo, FormInstance} from "@flow-engine/flow-types";
+import {FieldPermission, FlowForm, FlowTodo, FormInstance} from "@coding-flow/flow-types";
 
 interface FormViewProps{
     /** 流程数据 **/

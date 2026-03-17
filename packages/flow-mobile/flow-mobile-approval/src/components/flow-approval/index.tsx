@@ -1,8 +1,8 @@
 import React from "react";
 import {detail} from "@/api/record";
-import {FlowContent} from "@flow-engine/flow-types";
+import {FlowContent} from "@coding-flow/flow-types";
 import {ApprovalLayout} from "@/components/flow-approval/layout";
-import {useMockContext} from "@flow-engine/flow-approval-presenter";
+import {useMockContext} from "@coding-flow/flow-approval-presenter";
 import "./index.scss";
 
 interface ApprovalPanelProps {

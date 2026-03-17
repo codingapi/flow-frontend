@@ -3,7 +3,7 @@ import {ActionCustomScriptUtils} from "@/script-components/services/action-custo
 import {GroovyCodeEditor} from "@/components/groovy-code";
 import {Select} from "antd";
 import {ActionCustomViewPlugin, VIEW_KEY} from "@/plugins/action-custom-view-type";
-import {ViewBindPlugin} from "@flow-engine/flow-core";
+import {ViewBindPlugin} from "@coding-flow/flow-core";
 
 
 export const ActionCustomView: React.FC<ActionCustomViewPlugin> = (props) => {

@@ -1,5 +1,5 @@
 import React from "react";
-import {FlowForm} from "@flow-engine/flow-types";
+import {FlowForm} from "@coding-flow/flow-types";
 import {FormDataList} from "./components/list";
 import {Provider} from "react-redux";
 import {formDataStore} from "./store";

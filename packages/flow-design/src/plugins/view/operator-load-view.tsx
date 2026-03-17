@@ -1,9 +1,9 @@
 import React from "react";
 import {OperatorLoadViewPlugin, VIEW_KEY} from "@/plugins/operator-load-view-type";
 import {Button, Form, Select, Space} from "antd";
-import {ViewBindPlugin} from "@flow-engine/flow-core";
+import {ViewBindPlugin} from "@coding-flow/flow-core";
 import {SCRIPT_DEFAULT_OPERATOR_LOAD} from "@/script-components/default-script";
-import {GroovyScriptConvertorUtil} from "@flow-engine/flow-core";
+import {GroovyScriptConvertorUtil} from "@coding-flow/flow-core";
 import {CodeOutlined, ReloadOutlined} from "@ant-design/icons";
 import {useScriptMetaData} from "@/script-components/hooks/use-script-meta-data";
 

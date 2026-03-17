@@ -4,7 +4,7 @@ import {GroovyScriptContent} from "@/script-components/components/groovy-script-
 import {MenuUnfoldOutlined, ReloadOutlined} from "@ant-design/icons";
 import {GroovyVariableMapping, ScriptType} from "@/script-components/typings";
 import {GroovyCodeEditor} from '@/components/groovy-code';
-import {GroovyScriptConvertorUtil} from "@flow-engine/flow-core";
+import {GroovyScriptConvertorUtil} from "@coding-flow/flow-core";
 
 interface ScriptEditorProps {
     /** 脚本类型 */

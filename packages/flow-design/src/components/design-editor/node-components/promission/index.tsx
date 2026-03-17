@@ -1,6 +1,6 @@
 import React from "react";
 import {Tabs,Switch} from "antd";
-import {Table} from "@flow-engine/flow-pc-ui";
+import {Table} from "@coding-flow/flow-pc-ui";
 import {PromissionPresenter} from "./presenter";
 import {useDesignContext} from "@/components/design-panel/hooks/use-design-context";
 

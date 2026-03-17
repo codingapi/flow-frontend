@@ -1,6 +1,6 @@
 import React from "react";
 import {FormInstance, Switch} from "antd";
-import {CardForm} from "@flow-engine/flow-pc-ui";
+import {CardForm} from "@coding-flow/flow-pc-ui";
 
 interface InterferePanelProps{
     form:FormInstance;

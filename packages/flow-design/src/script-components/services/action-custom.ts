@@ -1,4 +1,4 @@
-import {GroovyScriptConvertorUtil} from "@flow-engine/flow-core";
+import {GroovyScriptConvertorUtil} from "@coding-flow/flow-core";
 
 export class ActionCustomScriptUtils {
 

@@ -1,4 +1,4 @@
-import {FormField} from "@flow-engine/flow-types";
+import {FormField} from "@coding-flow/flow-types";
 
 export interface FormItemInputProps {
     defaultValue?: string;

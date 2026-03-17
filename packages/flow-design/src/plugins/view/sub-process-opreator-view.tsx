@@ -1,6 +1,6 @@
 import React from "react";
 import {SubProcessOperatorViewPlugin, VIEW_KEY} from "@/plugins/sub-process-operator-view-type";
-import {ViewBindPlugin} from "@flow-engine/flow-core";
+import {ViewBindPlugin} from "@coding-flow/flow-core";
 import {Select} from "antd";
 import {
     useCurrentWorkflowPresenter

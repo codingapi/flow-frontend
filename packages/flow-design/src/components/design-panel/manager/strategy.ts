@@ -1,4 +1,4 @@
-import {ObjectUtils} from "@flow-engine/flow-core";
+import {ObjectUtils} from "@coding-flow/flow-core";
 
 export class WorkflowStrategyManager {
 

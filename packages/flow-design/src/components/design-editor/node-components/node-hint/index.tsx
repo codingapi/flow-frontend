@@ -1,7 +1,7 @@
 import React from "react";
-import {GroovyScriptConvertorUtil} from "@flow-engine/flow-core";
+import {GroovyScriptConvertorUtil} from "@coding-flow/flow-core";
 import {Field, FieldRenderProps} from "@flowgram.ai/fixed-layout-editor";
-import {Text} from "@flow-engine/flow-pc-ui";
+import {Text} from "@coding-flow/flow-pc-ui";
 
 interface NodeHintProps {
     fieldName: string;

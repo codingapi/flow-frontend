@@ -1,7 +1,7 @@
 import React from "react";
 import {GroovyVariableMapping, ScriptType} from "@/script-components/typings";
 import {GroovyScriptContent, GroovyScriptModal} from "@/script-components/components/groovy-script-modal";
-import {GroovyScriptConvertorUtil} from "@flow-engine/flow-core";
+import {GroovyScriptConvertorUtil} from "@coding-flow/flow-core";
 import {AdvancedScriptEditor} from "@/script-components/components/advanced-script-editor";
 import {SCRIPT_DEFAULT_ROUTER} from "@/script-components/default-script";
 import {RouterPluginView} from "@/plugins/view/router-view";

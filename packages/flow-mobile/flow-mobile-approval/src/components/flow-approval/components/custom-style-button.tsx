@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Space } from "antd-mobile";
-import {DisplayStyle, FlowActionDisplay} from "@flow-engine/flow-types";
-import {Icon} from "@flow-engine/flow-icons";
+import {DisplayStyle, FlowActionDisplay} from "@coding-flow/flow-types";
+import {Icon} from "@coding-flow/flow-icons";
 
 interface CustomStyleButtonProps {
     onClick: () => void;

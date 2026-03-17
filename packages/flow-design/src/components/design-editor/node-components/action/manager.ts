@@ -1,4 +1,4 @@
-import {actionOptions, FlowAction} from "@flow-engine/flow-types";
+import {actionOptions, FlowAction} from "@coding-flow/flow-types";
 
 export class FlowActionManager {
     private readonly data: FlowAction[];

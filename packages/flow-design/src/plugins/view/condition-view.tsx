@@ -1,6 +1,6 @@
 import React from "react";
 import {ConditionViewPlugin, VIEW_KEY} from "@/plugins/condition-view-type";
-import {ViewBindPlugin} from "@flow-engine/flow-core";
+import {ViewBindPlugin} from "@coding-flow/flow-core";
 import {ConditionView} from "@/script-components/components/condition";
 
 /**

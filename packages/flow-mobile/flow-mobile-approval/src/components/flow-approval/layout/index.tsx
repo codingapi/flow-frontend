@@ -4,7 +4,7 @@ import {
     ApprovalLayoutProps,
     approvalStore,
     createApprovalContext
-} from "@flow-engine/flow-approval-presenter";
+} from "@coding-flow/flow-approval-presenter";
 import {Provider} from "react-redux";
 import {BODY_HEIGHT, BODY_MAX_HEIGHT} from "@/components/flow-approval/typings";
 import {Header} from "./header";

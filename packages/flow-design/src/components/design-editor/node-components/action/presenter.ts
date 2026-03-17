@@ -1,4 +1,4 @@
-import {actionOptions, ActionType, FlowAction} from "@flow-engine/flow-types";
+import {actionOptions, ActionType, FlowAction} from "@coding-flow/flow-types";
 import {nanoid} from "nanoid";
 import {IdUtils} from "@/utils";
 import {FlowActionManager} from "./manager";

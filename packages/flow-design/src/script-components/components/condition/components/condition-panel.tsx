@@ -1,7 +1,7 @@
 import React from "react";
 import {RelationPanel} from "@/script-components/components/condition/components/condition-relation";
 import {Group} from "@/script-components/components/condition/components/condition-group";
-import {GroovyScriptConvertorUtil} from "@flow-engine/flow-core";
+import {GroovyScriptConvertorUtil} from "@coding-flow/flow-core";
 import {SCRIPT_DEFAULT_CONDITION} from "@/script-components/default-script";
 import {Button, Space} from "antd";
 import {CodeOutlined, ReloadOutlined} from "@ant-design/icons";

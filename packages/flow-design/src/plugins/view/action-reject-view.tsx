@@ -1,6 +1,6 @@
 import React from "react";
 import {ActionRejectViewPlugin, VIEW_KEY} from "@/plugins/action-reject-view-type";
-import {ViewBindPlugin} from "@flow-engine/flow-core";
+import {ViewBindPlugin} from "@coding-flow/flow-core";
 import {useDesignContext} from "@/components/design-panel/hooks/use-design-context";
 import {ActionRejectService} from "@/script-components/services/action-reject";
 import {Select} from "antd";

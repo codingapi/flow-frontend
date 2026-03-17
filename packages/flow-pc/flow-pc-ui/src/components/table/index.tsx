@@ -1,6 +1,6 @@
 import React from "react";
 import {Card, Flex, Space, Table as AntdTable, TableProps as AntdTableProps} from "antd";
-import {ActionType, ParamRequest, Result} from "@flow-engine/flow-core";
+import {ActionType, ParamRequest, Result} from "@coding-flow/flow-core";
 
 export interface TableProps<RecordType> extends AntdTableProps<RecordType> {
     actionType?: React.Ref<ActionType>;

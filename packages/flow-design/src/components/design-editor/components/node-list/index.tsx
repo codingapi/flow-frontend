@@ -4,7 +4,7 @@ import {FlowNodeRegistry} from "@/components/design-editor/typings";
 import styled from 'styled-components';
 import {FlowNodeRegistries} from "@/components/design-editor/nodes";
 import {NodeIcon} from "@/components/design-editor/components/node-icon";
-import {NodeType} from "@flow-engine/flow-types";
+import {NodeType} from "@coding-flow/flow-types";
 import {useDesignContext} from "@/components/design-panel/hooks/use-design-context";
 
 const NodesWrap = styled.div`

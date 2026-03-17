@@ -1,5 +1,5 @@
 import {SubProcessViewApi, SubProcessViewState} from "@/script-components/components/sub-process/typings";
-import {Dispatch} from "@flow-engine/flow-core";
+import {Dispatch} from "@coding-flow/flow-core";
 
 export class TargetWorkflowPresenter{
 

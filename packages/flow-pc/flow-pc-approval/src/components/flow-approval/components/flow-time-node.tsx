@@ -1,7 +1,7 @@
 import {CheckCircleFilled, ClockCircleOutlined, SyncOutlined} from "@ant-design/icons";
 import {Tag, Typography} from "antd";
 import React from "react";
-import {FlowApprovalOperator, ProcessNode} from "@flow-engine/flow-types";
+import {FlowApprovalOperator, ProcessNode} from "@coding-flow/flow-types";
 import dayjs from "dayjs";
 
 const {Text} = Typography;

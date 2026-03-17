@@ -1,6 +1,6 @@
 import React from "react";
 import {SubProcessViewPlugin, VIEW_KEY} from "@/plugins/sub-process-view-type";
-import {GroovyScriptConvertorUtil, ViewBindPlugin} from "@flow-engine/flow-core";
+import {GroovyScriptConvertorUtil, ViewBindPlugin} from "@coding-flow/flow-core";
 import {SCRIPT_DEFAULT_SUB_PROCESS} from "@/script-components/default-script";
 import {Button, Space} from "antd";
 import {CodeOutlined, ReloadOutlined} from "@ant-design/icons";

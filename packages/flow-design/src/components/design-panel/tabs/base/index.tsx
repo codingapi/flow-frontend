@@ -1,6 +1,6 @@
 import React from "react";
 import {Input} from "antd";
-import {CardForm, Panel} from "@flow-engine/flow-pc-ui";
+import {CardForm, Panel} from "@coding-flow/flow-pc-ui";
 import {useDesignContext} from "@/components/design-panel/hooks/use-design-context";
 import {FlowCreateOperatorEditor} from "./operator";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import {NodeType} from "@flow-engine/flow-types";
+import {NodeType} from "@coding-flow/flow-types";
 import {theme} from "antd";
 import {
     ApiOutlined,

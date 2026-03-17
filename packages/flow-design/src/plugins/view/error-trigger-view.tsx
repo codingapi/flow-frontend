@@ -1,9 +1,9 @@
 import React from "react";
-import {GroovyScriptConvertorUtil} from "@flow-engine/flow-core";
+import {GroovyScriptConvertorUtil} from "@coding-flow/flow-core";
 import {Button, Form, Select, Space} from "antd";
 import {CodeOutlined, ReloadOutlined} from "@ant-design/icons";
 import {ErrorTriggerViewPlugin, VIEW_KEY} from "@/plugins/error-trigger-view-type";
-import {ViewBindPlugin} from "@flow-engine/flow-core";
+import {ViewBindPlugin} from "@coding-flow/flow-core";
 import {SCRIPT_DEFAULT_ERROR_TRIGGER} from "@/script-components/default-script";
 import {useNodeRouterManager} from "@/components/design-panel/hooks/use-node-router-manager";
 import {useNodeRenderContext} from "@/components/design-editor/hooks/use-node-render-context";

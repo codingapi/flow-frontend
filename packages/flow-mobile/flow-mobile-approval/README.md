@@ -10,8 +10,8 @@ Flow Engine 的移动端流程管理应用（开发中）。
 
 ### 核心依赖
 
-- `@flow-engine/flow-core` - 核心 API 库
-- `@flow-engine/flow-types` - TypeScript 类型定义
+- `@coding-flow/flow-core` - 核心 API 库
+- `@coding-flow/flow-types` - TypeScript 类型定义
 - `antd` - Ant Design 组件库（移动端适配）
 - `react-router` + `react-router-dom` - 路由管理
 

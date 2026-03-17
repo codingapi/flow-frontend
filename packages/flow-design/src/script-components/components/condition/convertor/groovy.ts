@@ -7,7 +7,7 @@ import {
 import {
     RelationListValidate
 } from "@/script-components/components/condition/components/condition-relation/domain/relation-validate";
-import {DataType} from "@flow-engine/flow-types";
+import {DataType} from "@coding-flow/flow-types";
 
 class ConditionTitleConvertor {
     private readonly relations: LogicalRelation[];

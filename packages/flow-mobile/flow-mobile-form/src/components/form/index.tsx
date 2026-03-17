@@ -1,5 +1,5 @@
 import React from "react";
-import {FormViewProps} from "@flow-engine/flow-types";
+import {FormViewProps} from "@coding-flow/flow-types";
 import {FormView} from "./view";
 import {FlowList} from "@/components/list";
 

@@ -1,6 +1,6 @@
 import {Form, FormInstance, Select} from "antd";
 import React from "react";
-import {FormTypeContext} from "@flow-engine/flow-types";
+import {FormTypeContext} from "@coding-flow/flow-types";
 
 
 interface FormTypeItemProps{

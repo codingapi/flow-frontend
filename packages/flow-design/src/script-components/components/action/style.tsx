@@ -1,6 +1,6 @@
 import {Col, ColorPicker, Input, Row, Space} from "antd";
 import React from "react";
-import {DisplayStyle} from "@flow-engine/flow-types";
+import {DisplayStyle} from "@coding-flow/flow-types";
 
 
 interface ActionStyleProps {

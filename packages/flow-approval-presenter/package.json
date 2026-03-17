@@ -1,5 +1,5 @@
 {
-  "name": "@flow-engine/flow-approval-presenter",
+  "name": "@coding-flow/flow-approval-presenter",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -23,14 +23,14 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flow-engine/flow-core": "workspace:*",
-    "@flow-engine/flow-types": "workspace:*",
+    "@coding-flow/flow-core": "workspace:*",
+    "@coding-flow/flow-types": "workspace:*",
     "@reduxjs/toolkit": "^2.11.2",
     "dayjs": "^1.11.19",
     "immer": "^11.1.3",
     "react-redux": "^9.2.0"
   },
   "devDependencies": {
-    "@flow-engine/flow-types": "workspace:*"
+    "@coding-flow/flow-types": "workspace:*"
   }
 }

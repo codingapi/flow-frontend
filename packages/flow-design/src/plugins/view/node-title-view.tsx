@@ -1,12 +1,12 @@
 import React from "react";
 import {NodeTitleScriptUtils} from "@/script-components/services/node-title";
-import {GroovyScriptConvertorUtil} from "@flow-engine/flow-core";
+import {GroovyScriptConvertorUtil} from "@coding-flow/flow-core";
 import {GroovyScriptPreview} from "@/script-components/components/groovy-script-preview";
 import {VariablePicker} from "@/script-components/components/variable-picker";
 import {Button, Input, Space} from "antd";
 import {CodeOutlined, ReloadOutlined} from "@ant-design/icons";
 import {NodeTitleViewPlugin, VIEW_KEY} from "@/plugins/node-title-view-type";
-import {ViewBindPlugin} from "@flow-engine/flow-core";
+import {ViewBindPlugin} from "@coding-flow/flow-core";
 import {SCRIPT_DEFAULT_NODE_TITLE} from "@/script-components/default-script";
 
 const {TextArea} = Input;

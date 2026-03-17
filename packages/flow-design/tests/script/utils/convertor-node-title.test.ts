@@ -1,8 +1,8 @@
 import {describe, expect, it} from '@rstest/core';
-import {FlowForm} from "@flow-engine/flow-types";
+import {FlowForm} from "@coding-flow/flow-types";
 import {NodeTitleScriptUtils} from "@/script-components/services/node-title";
 import {GroovyVariableUtil} from "@/script-components/utils/varibale";
-import {GroovyScriptConvertorUtil} from "@flow-engine/flow-core";
+import {GroovyScriptConvertorUtil} from "@coding-flow/flow-core";
 
 describe('NodeTitleScriptUtils', () => {
 

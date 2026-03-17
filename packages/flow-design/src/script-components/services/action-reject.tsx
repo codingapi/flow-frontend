@@ -1,4 +1,4 @@
-import {GroovyScriptConvertorUtil} from "@flow-engine/flow-core";
+import {GroovyScriptConvertorUtil} from "@coding-flow/flow-core";
 import {ActionSelectOption} from "@/script-components/typings";
 import {NodeManger} from "@/components/design-panel/manager/node";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import {Panel} from "@flow-engine/flow-pc-ui";
+import {Panel} from "@coding-flow/flow-pc-ui";
 import {Empty, Tabs} from "antd";
 import {useDesignContext} from "@/components/design-panel/hooks/use-design-context";
 import {FormTable} from "./table";

@@ -1,5 +1,5 @@
 {
-  "name": "@flow-engine/flow-types",
+  "name": "@coding-flow/flow-types",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -22,6 +22,6 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@flow-engine/flow-core": "workspace:*"
+    "@coding-flow/flow-core": "workspace:*"
   }
 }

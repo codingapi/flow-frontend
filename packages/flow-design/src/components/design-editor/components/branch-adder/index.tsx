@@ -6,7 +6,7 @@ import {Button} from "antd";
 import {nodeFormPanelFactory} from "@/components/design-editor/components/sidebar";
 import {usePanelManager} from "@flowgram.ai/panel-manager-plugin";
 import {useDesignContext} from "@/components/design-panel/hooks/use-design-context";
-import {NodeType} from "@flow-engine/flow-types";
+import {NodeType} from "@coding-flow/flow-types";
 
 interface BranchAdderPropsType {
     activated?: boolean;

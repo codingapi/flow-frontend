@@ -1,5 +1,5 @@
 import {SubProcessViewProps} from "@/script-components/components/sub-process/typings";
-import {GroovyScriptConvertorUtil} from "@flow-engine/flow-core";
+import {GroovyScriptConvertorUtil} from "@coding-flow/flow-core";
 
 
 export class SubProcessPresenter {
