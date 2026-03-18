@@ -17,7 +17,7 @@ describe('NodeTitleScriptUtils', () => {
                 type: 'number',
                 required: true,
                 defaultValue: '',
-                dateType:'NUMBER',
+                dateType:'INTEGER',
                 hidden:false,
             },
             {
@@ -41,12 +41,12 @@ describe('NodeTitleScriptUtils', () => {
             const script = `
 // @CUSTOM_SCRIPT 
 def run(request){
-    return "你有一条" + request.getOperatorName() + "的" + request.getWorkflowTitle() + "待办消息 【" + request.getNodeName() + "】"
+    return "你有一条" + request.getCurrentOperatorName() + "的" + request.getWorkflowTitle() + "待办消息 【" + request.getNodeName() + "】"
 }
 `;
-            const result = NodeTitleScriptUtils.updateExpression(script, '你有一条${当前操作人}的${流程标题}待办消息 【${当前节点}】', variables)
+            const result = NodeTitleScriptUtils.updateExpression(script, '你有一条${当前审批人}的${流程标题}待办消息 【${当前节点}】', variables)
             const title = GroovyScriptConvertorUtil.getScriptTitle(result);
-            expect(title).toEqual("你有一条${当前操作人}的${流程标题}待办消息 【${当前节点}】");
+            expect(title).toEqual("你有一条${当前审批人}的${流程标题}待办消息 【${当前节点}】");
         });
     });
 
@@ -56,13 +56,13 @@ def run(request){
             const script = `
 // @CUSTOM_SCRIPT 
 def run(request){
-    return "你有一条" + request.getOperatorName() + "的" + request.getWorkflowTitle() + "待办消息 【" + request.getNodeName() + "】"
+    return "你有一条" + request.getCurrentOperatorName() + "的" + request.getWorkflowTitle() + "待办消息 【" + request.getNodeName() + "】"
 }
 `;
             const variable = variables[0];
             const result = NodeTitleScriptUtils.addVariable(script, variable, variables)
             const title = GroovyScriptConvertorUtil.getScriptTitle(result);
-            expect(title).toEqual("你有一条${当前操作人}的${流程标题}待办消息 【${当前节点}】${当前操作人}");
+            expect(title).toEqual("你有一条${当前审批人}的${流程标题}待办消息 【${当前节点}】${当前审批人}");
         });
     });
 });
