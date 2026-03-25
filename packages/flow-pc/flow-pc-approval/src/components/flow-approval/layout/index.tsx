@@ -6,9 +6,10 @@ import {ApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {createApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {Header} from "@/components/flow-approval/layout/header";
 import {Body} from "@/components/flow-approval/layout/body";
+import {FlowApprovalApiImpl} from "@/components/flow-approval/model";
 
 const ApprovalLayoutScope: React.FC<ApprovalLayoutProps> = (props) => {
-    const {context} = createApprovalContext(props);
+    const {context} = createApprovalContext(props,new FlowApprovalApiImpl());
     return (
         <ApprovalContext.Provider value={context}>
             <div style={{
