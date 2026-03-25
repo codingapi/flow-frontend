@@ -11,6 +11,7 @@ import {Header} from "./header";
 import {Body} from "./body";
 import {Footer} from "./footer";
 import {useLayoutPresenter} from "@/components/flow-approval/layout/hooks/use-layout-presenter";
+import {FlowApprovalApiImpl} from "@/components/flow-approval/model";
 
 const ApprovalContent = ()=>{
 
@@ -27,7 +28,7 @@ const ApprovalContent = ()=>{
 }
 
 const ApprovalLayoutScope: React.FC<ApprovalLayoutProps> = (props) => {
-    const {context} = createApprovalContext(props);
+    const {context} = createApprovalContext(props,new FlowApprovalApiImpl());
 
     return (
         <ApprovalContext.Provider value={context}>

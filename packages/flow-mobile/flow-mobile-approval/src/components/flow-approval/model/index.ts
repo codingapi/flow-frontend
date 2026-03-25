@@ -1,4 +1,4 @@
-import {FlowApprovalApi} from "@/typings";
+import {FlowApprovalApi} from "@coding-flow/flow-approval-presenter";
 import {action as actionRecord, create as createRecord, processNodes as postProcessNodes,revoke as revokeRecord,urge as urgeRecord} from "@/api/record";
 
 export class FlowApprovalApiImpl implements FlowApprovalApi {

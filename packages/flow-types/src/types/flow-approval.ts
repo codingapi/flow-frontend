@@ -40,7 +40,7 @@ export interface FormField {
     // 字段类型
     type:string;
     // 数据类型
-    dateType: DataType;
+    dataType: DataType;
     // 是否隐藏
     hidden: boolean;
     // 是否必填

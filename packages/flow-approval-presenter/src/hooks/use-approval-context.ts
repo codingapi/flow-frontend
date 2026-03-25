@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {ApprovalContext, ApprovalContextScope} from "@/context";
 import {ApprovalReduxState, updateState} from "@/store";
 import {ApprovalPresenter} from "@/presenters";
-import {FlowApprovalApiImpl} from "@/model";
+import {FlowApprovalApi} from "@/typings";
 import {ApprovalLayoutProps} from "@/typings";
 import {useMockContext} from "@/hooks/use-mock-context";
 
@@ -19,7 +19,7 @@ export const useApprovalContext = () => {
     };
 }
 
-export const createApprovalContext = (props: ApprovalLayoutProps) => {
+export const createApprovalContext = (props: ApprovalLayoutProps,flowApprovalApi:FlowApprovalApi) => {
     const ref = React.useRef<ApprovalContextScope | undefined>(undefined);
 
     const dispatch = useDispatch();
@@ -35,7 +35,7 @@ export const createApprovalContext = (props: ApprovalLayoutProps) => {
                 dispatch(updateState(prevState));
                 return prevState;
             },
-            new FlowApprovalApiImpl(),
+            flowApprovalApi,
             mockKey
         );
         ref.current = new ApprovalContextScope(presenter, props);

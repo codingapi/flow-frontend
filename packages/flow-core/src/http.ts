@@ -17,7 +17,7 @@ export type Response = {
 
 export class HttpClient {
     private readonly api: AxiosInstance;
-    private readonly messageBox: MessageBox;
+    private messageBox: MessageBox;
 
     constructor(timeout: number, messageBox: MessageBox, baseUrl = '') {
         this.messageBox = messageBox;
@@ -32,6 +32,12 @@ export class HttpClient {
         this.addRequestInterceptors();
         this.addResponseInterceptors();
     }
+
+
+    public setMessageBox(messageBox: MessageBox) {
+        this.messageBox = messageBox;
+    }
+
 
     private addRequestInterceptors() {
         this.api.interceptors.request.use((config: any) => {
