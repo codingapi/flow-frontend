@@ -1,11 +1,10 @@
 import React from "react";
-import {DatePicker, Form} from "antd-mobile";
+import {DatePicker, Form} from "antd";
 import dayjs from "dayjs";
-import {FormItemInputProps, FormItemProps} from "@/type";
+import {type FormItemInputProps} from "./type";
+import type {FormItemProps} from "@coding-form/form-engine";
 
 const $Date: React.FC<FormItemInputProps> = (props) => {
-
-    const [visible,setVisible] = React.useState(false);
 
     const handlerChange = (value: any) => {
         if (value) {
@@ -16,24 +15,20 @@ const $Date: React.FC<FormItemInputProps> = (props) => {
     }
 
     const value = props.value ? dayjs(props.value) : undefined;
+    const defaultValue = props.defaultValue ? dayjs(props.defaultValue) : undefined;
 
     return (
-        <>
-            {value && (<a onClick={()=>{setVisible(true)}}>{value.format('YYYY-MM-DD')}</a>)}
-            <DatePicker
-                visible={visible}
-                onClose={()=>{setVisible(false)}}
-                onConfirm={(value) => {
-                    handlerChange(value);
-                    setVisible(false);
-                }}
-                value={value?value.toDate():undefined}
-            />
-        </>
+        <DatePicker
+            disabled={props.readOnly}
+            value={value as any}
+            onChange={handlerChange}
+            placeholder={props.placeholder}
+            defaultValue={defaultValue}
+        />
     )
 }
 
-export const FormItemDate: React.FC<FormItemProps> = (props) => {
+export const FormDate: React.FC<FormItemProps> = (props) => {
 
     const rules = props.required ? [
         {
@@ -44,13 +39,13 @@ export const FormItemDate: React.FC<FormItemProps> = (props) => {
 
     return (
         <Form.Item
-            name={props.code}
-            label={props.name}
+            name={props.name}
+            label={props.label}
             required={props.required}
             rules={rules}
+            tooltip={props.tooltip}
             help={props.help}
             hidden={props.hidden}
-            disabled={props.readOnly}
         >
             <$Date
                 defaultValue={props.defaultValue}

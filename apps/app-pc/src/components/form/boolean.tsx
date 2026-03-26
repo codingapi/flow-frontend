@@ -1,6 +1,7 @@
 import React from "react";
 import {Form, Switch} from "antd";
-import {FormItemInputProps, FormItemProps} from "@/type";
+import {type FormItemInputProps} from "./type";
+import type {FormItemProps} from "@coding-form/form-engine";
 
 
 const $Switch: React.FC<FormItemInputProps> = (props) => {
@@ -20,7 +21,7 @@ const $Switch: React.FC<FormItemInputProps> = (props) => {
     )
 }
 
-export const FormItemBoolean: React.FC<FormItemProps> = (props) => {
+export const FormBoolean: React.FC<FormItemProps> = (props) => {
 
     const rules = props.required ? [
         {
@@ -32,8 +33,8 @@ export const FormItemBoolean: React.FC<FormItemProps> = (props) => {
 
     return (
         <Form.Item
-            name={props.code}
-            label={props.name}
+            name={props.name}
+            label={props.label}
             required={props.required}
             rules={rules}
             tooltip={props.tooltip}

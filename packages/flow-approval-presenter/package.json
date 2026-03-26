@@ -1,6 +1,6 @@
 {
   "name": "@coding-flow/flow-approval-presenter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "flow-engine approval presenter framework ",
   "type": "module",
   "keywords": [

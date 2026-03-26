@@ -1,5 +1,5 @@
 import React from "react";
-import {WorkflowList} from "@/components/workflow-list.tsx";
+import {WorkflowList} from "@/components/workflow-list";
 
 
 const DesignPage = () => {

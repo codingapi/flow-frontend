@@ -1,6 +1,14 @@
 import React from "react";
 import {FormTypeContext} from "@coding-flow/flow-types";
-import {FormType} from "@coding-flow/flow-types";
+import {type FormType} from "@coding-flow/flow-types";
+import { registerFormItems } from "@coding-form/form-engine";
+import { Form } from "antd";
+import {FormString} from "@/components/form/string.tsx";
+import {FormBoolean} from "@/components/form/boolean.tsx";
+import {FormInteger} from "@/components/form/integer.tsx";
+import {FormLong} from "@/components/form/long.tsx";
+import {FormDouble} from "@/components/form/double.tsx";
+import {FormDate} from "@/components/form/date.tsx";
 
 class RegisterRef{
 
@@ -47,6 +55,33 @@ export const registerFormTypes = ()=>{
         ];
 
         FormTypeContext.getInstance().register(types);
+
+        registerFormItems(Form,[
+            {
+                type: 'string',
+                componentType:FormString
+            },
+            {
+                type: 'boolean',
+                componentType:FormBoolean
+            },
+            {
+                type: 'integer',
+                componentType:FormInteger
+            },
+            {
+                type: 'long',
+                componentType:FormLong
+            },
+            {
+                type: 'double',
+                componentType:FormDouble
+            },
+            {
+                type: 'date',
+                componentType:FormDate
+            }
+        ])
     }
 
 }

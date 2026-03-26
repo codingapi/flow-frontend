@@ -1,43 +1,46 @@
 import React from "react";
-import {Form, Input} from "antd";
-import {FormItemInputProps, FormItemProps} from "@/type";
+import {Form, Input} from "antd-mobile";
+import {type FormItemInputProps} from "./type";
+import type { FormItemProps } from "@coding-form/form-engine";
 
 
-const $Input:React.FC<FormItemInputProps> = (props)=>{
+const $Input: React.FC<FormItemInputProps> = (props) => {
+
     const value = props.value || undefined;
 
     return (
         <Input
-            type="number"
             value={value}
             disabled={props.readOnly}
             placeholder={props.placeholder}
             defaultValue={props.defaultValue}
-            onChange={(event) => {
-                props.onChange?.(event.target.value);
+            onChange={(value) => {
+                props.onChange?.(value);
             }}
         />
     )
 }
 
-export const FormItemDouble:React.FC<FormItemProps> = (props)=>{
 
-    const rules = props.required?[
+export const FormString: React.FC<FormItemProps> = (props) => {
+
+    const rules = props.required ? [
         {
             required: props.required,
             message: `${props.name}不能为空`
         }
-    ]:[];
+    ] : [];
 
     return (
         <Form.Item
-            name={props.code}
-            label={props.name}
+            name={props.name}
+            label={props.label}
+            layout={props.layout}
             required={props.required}
             rules={rules}
-            tooltip={props.tooltip}
             help={props.help}
             hidden={props.hidden}
+            disabled={props.readOnly}
         >
             <$Input
                 defaultValue={props.defaultValue}

@@ -3,7 +3,7 @@ import {FlowTableProps} from "@/components/table/types";
 import {useTableFormPresenter} from "@/components/table/hooks/use-table-form-presenter";
 import {Button, Flex, Table} from "antd";
 import {FormData} from "@coding-flow/flow-types";
-import {FormView} from "@/components/form/view";
+import {FlowFormView as FormView} from "@/components/form/view";
 import {CaretLeftOutlined} from "@ant-design/icons";
 
 export const FlowTable: React.FC<FlowTableProps> = (props) => {
