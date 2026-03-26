@@ -44,6 +44,7 @@ export const OperatorLoadConfigModal:React.FC<OperatorLoadConfigModalProps> = (p
     return (
         <GroovyScriptModal
             title={"操作人配置"}
+            width={"70%"}
             type={ScriptType.OPERATOR_LOAD}
             variables={[]}
             script={props.script}

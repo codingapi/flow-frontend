@@ -45,6 +45,7 @@ export const SubProcessConfigModal:React.FC<SubProcessConfigModalProps> = (props
     return (
         <GroovyScriptModal
             type={ScriptType.SUB_PROCESS}
+            width={"70%"}
             open={props.open}
             script={props.script}
             variables={props.variables || []}

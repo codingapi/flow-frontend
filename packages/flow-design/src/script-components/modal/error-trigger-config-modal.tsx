@@ -46,6 +46,7 @@ export const ErrorTriggerConfigModal:React.FC<ErrorTriggerConfigModalProps> = (p
         <GroovyScriptModal
             type={ScriptType.ERROR_TRIGGER}
             open={props.open}
+            width={"70%"}
             script={props.script}
             variables={props.variables || []}
             onConfirm={props.onConfirm}

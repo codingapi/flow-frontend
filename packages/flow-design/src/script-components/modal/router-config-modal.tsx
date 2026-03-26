@@ -43,6 +43,7 @@ export const RouterConfigModal:React.FC<RouterConfigModalProps> = (props) => {
     return (
         <GroovyScriptModal
             type={ScriptType.ROUTER}
+            width={"70%"}
             open={props.open}
             script={props.script}
             variables={props.variables || []}

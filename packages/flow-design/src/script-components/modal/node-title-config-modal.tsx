@@ -49,6 +49,7 @@ export const NodeTitleConfigModal: React.FC<NodeTitleConfigModalProps> = (props)
         <GroovyScriptModal
             type={ScriptType.TITLE}
             open={props.open}
+            width={"70%"}
             script={props.script}
             variables={props.variables || []}
             onConfirm={props.onConfirm}

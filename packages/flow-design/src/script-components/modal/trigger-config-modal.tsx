@@ -45,6 +45,7 @@ export const TriggerConfigModal:React.FC<TriggerConfigModalProps> = (props) => {
     return (
         <GroovyScriptModal
             type={ScriptType.TRIGGER}
+            width={"70%"}
             open={props.open}
             script={props.script}
             variables={props.variables || []}
