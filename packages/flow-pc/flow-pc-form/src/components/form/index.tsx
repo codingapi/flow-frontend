@@ -1,6 +1,6 @@
 import React from "react";
 import {FormViewProps} from "@coding-flow/flow-types";
-import {FormView} from "@/components/form/view";
+import {FlowFormView as FormView} from "@/components/form/view";
 import {FlowTable} from "@/components/table";
 
 export const FlowFormView: React.FC<FormViewProps> = (props) => {

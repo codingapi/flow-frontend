@@ -1,11 +1,10 @@
 import React from "react";
-import {FormItemFactory} from "@/components/factory/form-item-factory";
 import {ObjectUtils} from "@coding-flow/flow-core";
-import { Form,Input } from "antd";
-import {FormInstance} from "@coding-flow/flow-types";
-import {FieldPermission,FlowForm,FlowTodo} from "@coding-flow/flow-types";
+import {FormView} from "@coding-form/form-engine";
+import {Form, Input} from "antd";
+import {FieldPermission, FlowForm, FlowTodo, FormInstance} from "@coding-flow/flow-types";
 
-interface FormViewProps{
+interface FlowFormViewProps{
     /** 流程数据 **/
     data?:FlowTodo
     /** 表单操控对象 */
@@ -20,19 +19,20 @@ interface FormViewProps{
     review: boolean;
 }
 
-export const FormView:React.FC<FormViewProps> = (props)=>{
+export const FlowFormView:React.FC<FlowFormViewProps> = (props)=>{
     const [values, setValues] = React.useState<any>({});
     const form = props.form;
     const meta = props.meta;
-    const fields = meta.fields || [];
-
     const review = props.review;
+
     return (
         <>
-            <Form
+            <FormView
+                meta={meta}
                 form={form as any}
-                layout={"vertical"}
-                onBlur={() => {
+                layout={'vertical'}
+                review={review}
+                onBlur={()=>{
                     const latestValues = form.getFieldsValue();
                     if (ObjectUtils.isEqual(values, latestValues)) {
                         return;
@@ -48,19 +48,8 @@ export const FormView:React.FC<FormViewProps> = (props)=>{
                 >
                     <Input/>
                 </Form.Item>
-                {fields.map((field, i) => {
-                    const FormItem = FormItemFactory.getInstance().createFrom(field.type);
-                    if (FormItem) {
-                        return (
-                            <FormItem
-                                key={field.id}
-                                {...field}
-                                readOnly={review}
-                            />
-                        );
-                    }
-                })}
-            </Form>
+            </FormView>
+
         </>
     )
 }

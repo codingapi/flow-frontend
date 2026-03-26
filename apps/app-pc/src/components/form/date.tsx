@@ -1,7 +1,8 @@
 import React from "react";
 import {DatePicker, Form} from "antd";
 import dayjs from "dayjs";
-import {FormItemInputProps, FormItemProps} from "@/type";
+import {type FormItemInputProps} from "./type";
+import type {FormItemProps} from "@coding-form/form-engine";
 
 const $Date: React.FC<FormItemInputProps> = (props) => {
 
@@ -27,7 +28,7 @@ const $Date: React.FC<FormItemInputProps> = (props) => {
     )
 }
 
-export const FormItemDate: React.FC<FormItemProps> = (props) => {
+export const FormDate: React.FC<FormItemProps> = (props) => {
 
     const rules = props.required ? [
         {
@@ -38,8 +39,8 @@ export const FormItemDate: React.FC<FormItemProps> = (props) => {
 
     return (
         <Form.Item
-            name={props.code}
-            label={props.name}
+            name={props.name}
+            label={props.label}
             required={props.required}
             rules={rules}
             tooltip={props.tooltip}
