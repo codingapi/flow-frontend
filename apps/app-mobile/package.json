@@ -1,6 +1,6 @@
 {
   "name": "@flow-example/app-mobile",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,7 +9,7 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "@coding-form/form-engine": "^0.0.10",
+    "@coding-form/form-engine": "^0.0.11",
     "@coding-flow/flow-core": "workspace:*",
     "@coding-flow/flow-types": "workspace:*",
     "@coding-flow/flow-mobile-ui": "workspace:*",

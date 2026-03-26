@@ -29,6 +29,9 @@ export const FlowFormView:React.FC<FlowFormViewProps> = (props)=>{
                 layout={"vertical"}
                 meta={meta}
                 review={review}
+                onValuesChange={(partial, values,formCode)=>{
+                    props.onValuesChange?.(values);
+                }}
             >
                 <Form.Item
                     key={"recordId"}
