@@ -1,9 +1,9 @@
 import React from "react";
-import {FormItemFactory} from "@/components/factory/form-item-factory";
 import {Form, Input} from "antd-mobile";
+import {FormView} from "@coding-form/form-engine";
 import {FieldPermission, FlowForm, FlowTodo, FormInstance} from "@coding-flow/flow-types";
 
-interface FormViewProps{
+interface FlowFormViewProps{
     /** 流程数据 **/
     data?:FlowTodo
     /** 表单操控对象 */
@@ -18,18 +18,17 @@ interface FormViewProps{
     review: boolean;
 }
 
-export const FormView:React.FC<FormViewProps> = (props)=>{
+export const FlowFormView:React.FC<FlowFormViewProps> = (props)=>{
     const form = props.form;
     const meta = props.meta;
-    const fields = meta.fields || [];
-
     const review = props.review;
     return (
         <>
-            <Form
+            <FormView
                 form={form as any}
                 layout={"vertical"}
-                onValuesChange={props.onValuesChange}
+                meta={meta}
+                review={review}
             >
                 <Form.Item
                     key={"recordId"}
@@ -38,19 +37,7 @@ export const FormView:React.FC<FormViewProps> = (props)=>{
                 >
                     <Input/>
                 </Form.Item>
-                {fields.map((field, i) => {
-                    const FormItem = FormItemFactory.getInstance().createFrom(field.type);
-                    if (FormItem) {
-                        return (
-                            <FormItem
-                                key={field.id}
-                                {...field}
-                                readOnly={review}
-                            />
-                        );
-                    }
-                })}
-            </Form>
+            </FormView>
         </>
     )
 }

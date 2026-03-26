@@ -3,7 +3,7 @@ import {FlowListProps} from "@/components/list/types";
 import {Button, List, Space} from "antd-mobile";
 import {useListFormPresenter} from "@/components/list/hooks/use-list-form-presenter";
 import dayjs from "dayjs";
-import {FormView} from "@/components/form/view";
+import {FlowFormView} from "@/components/form/view";
 import { LeftOutlined } from "@ant-design/icons";
 
 
@@ -59,7 +59,7 @@ export const FlowSingleList: React.FC<FlowSingleListProps> = (props) => {
 
             {currentForm && (
                 <>
-                    <FormView
+                    <FlowFormView
                         form={currentForm.form}
                         data={currentForm.data}
                         meta={props.meta}

@@ -1,8 +1,8 @@
 import React from "react";
 import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {ViewBindPlugin} from "@coding-flow/flow-core";
-import {Form as AntdForm} from "antd-mobile";
 import {FlowFormView} from "@coding-flow/flow-mobile-form";
+import { createFormInstance } from "@coding-form/form-engine";
 
 interface FormViewComponentProps {
     onValuesChange?: (values: any) => void;
@@ -21,12 +21,12 @@ export const FormViewComponent: React.FC<FormViewComponentProps> = (props) => {
     const todos = state.flow?.todos || [];
     const formList = todos.length > 0 ? todos.map(item => {
         return {
-            form: AntdForm.useForm()[0],
+            form: createFormInstance(flowForm as any),
             data: item,
         }
     }) : [
         {
-            form: AntdForm.useForm()[0],
+            form: createFormInstance(flowForm as any),
             data: undefined,
         }
     ]
