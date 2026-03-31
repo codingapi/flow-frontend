@@ -63,6 +63,7 @@ export const FlowSingleList: React.FC<FlowSingleListProps> = (props) => {
                         form={currentForm.form}
                         data={currentForm.data}
                         meta={props.meta}
+                        initData={props.initData}
                         onValuesChange={props.onValuesChange}
                         review={props.review}
                         fieldPermissions={props.fieldPermissions}
@@ -71,7 +72,7 @@ export const FlowSingleList: React.FC<FlowSingleListProps> = (props) => {
             )}
             {!currentForm && (
                 <List>
-                    {presenter.getDatasource().map(item => {
+                    {presenter.getDatasource(props.initData).map(item => {
                         return (
                             <List.Item
                                 onClick={() => {

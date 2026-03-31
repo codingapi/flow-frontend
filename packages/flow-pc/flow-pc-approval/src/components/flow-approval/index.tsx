@@ -6,6 +6,8 @@ import {ApprovalLayout} from "@/components/flow-approval/layout";
 import {useMockContext} from "@coding-flow/flow-approval-presenter";
 
 interface ApprovalPanelProps {
+    /** 初始化数据 **/
+    initData?:any;
     // 流程设计编码
     workflowCode?: string;
     // 流程记录Id
@@ -37,6 +39,7 @@ export const ApprovalPanel: React.FC<ApprovalPanelProps> = (props) => {
                 content={content}
                 onClose={props.onClose}
                 review={props.review}
+                initData={props.initData}
             />}
         </div>
     )

@@ -3,6 +3,8 @@ import {FormData, FieldPermission, FlowForm} from "@coding-flow/flow-types";
 
 export interface FlowTableProps {
     formList: FormData[];
+    /** 初始化数据 **/
+    initData?:any;
     /** 表单数据更新事件 */
     onValuesChange?: (values: any) => void;
     /** 表单元数据对象 */

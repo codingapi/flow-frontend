@@ -58,7 +58,7 @@ export const FlowMultipleList: React.FC<FlowMultipleListProps> = (props) => {
                     <Checkbox
                         onChange={(value) => {
                             if (value) {
-                                const list = presenter.getDatasource();
+                                const list = presenter.getDatasource(props.initData);
                                 setKeys(list.map(item => {
                                     return item.recordId as any;
                                 }));
@@ -83,7 +83,7 @@ export const FlowMultipleList: React.FC<FlowMultipleListProps> = (props) => {
                         }));
                 }}
             >
-                {presenter.getDatasource().map(item => {
+                {presenter.getDatasource(props.initData).map(item => {
                     return (
                         <CheckList.Item
                             value={item.recordId}

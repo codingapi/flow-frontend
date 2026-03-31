@@ -72,7 +72,7 @@ export class TableFormPresenter {
         return data;
     }
 
-    public getDatasource() {
+    public getDatasource(initData:any) {
         const datasource = [];
         for (const form of this.formList) {
             const data = form.data;
@@ -87,6 +87,7 @@ export class TableFormPresenter {
             datasource.push({
                 ...this.getFormData(form),
                 ...data,
+                ...initData,
                 ...submitOperator,
                 ...createdOperator
             });

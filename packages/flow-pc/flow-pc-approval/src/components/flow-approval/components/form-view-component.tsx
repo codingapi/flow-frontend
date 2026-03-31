@@ -73,6 +73,7 @@ export const FormViewComponent: React.FC<FormViewComponentProps> = (props) => {
                     fieldPermissions={fieldPermissions}
                     review={review}
                     meta={flowForm}
+                    initData={context.getInitData()}
                     formList={formList as any}
                     onValuesChange={props.onValuesChange}
                     onMergeRecordIdsSelected={handleMergeRecordIdsSelected}
@@ -88,6 +89,7 @@ export const FormViewComponent: React.FC<FormViewComponentProps> = (props) => {
                         mergeable={mergeable}
                         fieldPermissions={fieldPermissions}
                         review={review}
+                        initData={context.getInitData()}
                         meta={flowForm}
                         form={item.form as any}
                         onValuesChange={props.onValuesChange}

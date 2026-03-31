@@ -33,7 +33,7 @@ export class ListFormPresenter {
         return data;
     }
 
-    public getDatasource() {
+    public getDatasource(initData:any) {
         const datasource = [];
         for (const form of this.formList) {
             const data = form.data;
@@ -48,6 +48,7 @@ export class ListFormPresenter {
             datasource.push({
                 ...this.getFormData(form),
                 ...data,
+                ...initData,
                 ...submitOperator,
                 ...createdOperator
             });
