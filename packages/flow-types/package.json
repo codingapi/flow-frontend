@@ -1,6 +1,6 @@
 {
   "name": "@coding-flow/flow-types",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "flow-engine types",
   "type": "module",
   "keywords": [
