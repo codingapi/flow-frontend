@@ -27,12 +27,6 @@ export const FlowFormView:React.FC<FlowFormViewProps> = (props)=>{
     const meta = props.meta;
     const review = props.review;
 
-    React.useEffect(()=>{
-        if(props.initData){
-            form.setFieldsValue(props.initData);
-        }
-    },[props.initData]);
-
     return (
         <>
             <FormView

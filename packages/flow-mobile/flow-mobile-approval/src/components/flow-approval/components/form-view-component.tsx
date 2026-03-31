@@ -52,6 +52,7 @@ export const FormViewComponent: React.FC<FormViewComponentProps> = (props) => {
             });
             formInstance.resetFields();
             formInstance.setFieldsValue({
+                ...context.getInitData(),
                 ...formRecord,
                 recordId: item.data?.recordId,
             });
