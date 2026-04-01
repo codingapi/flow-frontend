@@ -13,6 +13,7 @@ import {
     PoweroffOutlined,
     PullRequestOutlined,
     ShareAltOutlined,
+    StarOutlined,
     UserOutlined
 } from "@ant-design/icons";
 
@@ -49,6 +50,12 @@ export const NodeIcon: React.FC<NodeIconProps> = (props) => {
     if (icon === 'HANDLE') {
         return <EditOutlined style={style}/>
     }
+    if (icon === 'MANUAL') {
+        return <UserOutlined style={style}/>
+    }
+    if (icon === 'MANUAL_BRANCH') {
+        return <UserOutlined  style={style}/>
+    }
     if (icon === 'INCLUSIVE') {
         return <MergeOutlined style={style}/>
     }
@@ -68,7 +75,7 @@ export const NodeIcon: React.FC<NodeIconProps> = (props) => {
         return <PullRequestOutlined style={style}/>
     }
     if (icon === 'START') {
-        return <UserOutlined style={style}/>
+        return <StarOutlined  style={style}/>
     }
     if (icon === 'SUB_PROCESS') {
         return <ShareAltOutlined style={style}/>

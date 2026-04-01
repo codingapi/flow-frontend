@@ -2,20 +2,17 @@ import {FlowNodeRegistry} from '../../typings';
 import {formMeta} from './form-meta';
 import {nanoid} from "nanoid";
 
-export const ParallelBranchNodeRegistry: FlowNodeRegistry = {
-    type: 'PARALLEL_BRANCH',
+export const ManualBranchNodeRegistry: FlowNodeRegistry = {
+    type: 'MANUAL_BRANCH',
     extend: 'block',
     meta: {
         copyDisable: true,
         addDisable: true,
         sidebarDisable:true,
-        style:{
-            width: '100%',
-        }
     },
     info: {
-        icon: 'PARALLEL_BRANCH',
-        description: '并行分支',
+        icon: 'MANUAL_BRANCH',
+        description: '分支节点',
     },
     /**
      * Render node via formMeta
@@ -23,11 +20,11 @@ export const ParallelBranchNodeRegistry: FlowNodeRegistry = {
     formMeta,
     onAdd(ctx, from) {
         return {
-            id: `parallel_branch_${nanoid(5)}`,
-            type: 'PARALLEL_BRANCH',
+            id: `manual_branch_${nanoid(5)}`,
+            type: 'MANUAL_BRANCH',
             data: {
-                title: `并行分支节点`,
-                value: 'branch Value'
+                title: `条件分支节点`,
+                value: 'manal Value'
             },
         };
     }

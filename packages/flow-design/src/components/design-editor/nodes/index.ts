@@ -14,6 +14,8 @@ import {ParallelBranchNodeRegistry} from "@/components/design-editor/nodes/paral
 import {RouterNodeRegistry} from "@/components/design-editor/nodes/router";
 import {SubProcessNodeRegistry} from "@/components/design-editor/nodes/sub-process";
 import {TriggerNodeRegistry} from "@/components/design-editor/nodes/trigger";
+import {ManualNodeRegistry} from "@/components/design-editor/nodes/manual";
+import {ManualBranchNodeRegistry} from "@/components/design-editor/nodes/manual-branch";
 
 export const FlowNodeRegistries: FlowNodeRegistry[] = [
     ApprovalNodeRegistry,
@@ -24,6 +26,8 @@ export const FlowNodeRegistries: FlowNodeRegistry[] = [
     HandleNodeRegistry,
     InclusiveNodeRegistry,
     InclusiveBranchNodeRegistry,
+    ManualNodeRegistry,
+    ManualBranchNodeRegistry,
     NotifyNodeRegistry,
     ParallelNodeRegistry,
     ParallelBranchNodeRegistry,

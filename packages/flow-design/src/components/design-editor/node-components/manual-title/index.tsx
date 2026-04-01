@@ -1,10 +1,8 @@
-import React, {useCallback, useMemo, useState} from "react";
+import React, {useCallback, useState} from "react";
 import {useIsSidebar} from "@/components/design-editor/hooks";
-import {Button, Flex, Input, Space, theme} from "antd";
-import {nodeFormPanelFactory} from "@/components/design-editor/components/sidebar";
-import {usePanelManager} from "@flowgram.ai/panel-manager-plugin";
-import {Field, FieldRenderProps} from "@flowgram.ai/fixed-layout-editor";
-import {CloseOutlined, EditOutlined} from "@ant-design/icons";
+import {Flex, Input, Space, theme} from "antd";
+import {Field, FieldRenderProps, useClientContext} from "@flowgram.ai/fixed-layout-editor";
+import {EditOutlined} from "@ant-design/icons";
 import {NodeIcon} from "@/components/design-editor/components/node-icon";
 import {NodeType} from "@coding-flow/flow-types";
 import {FlowNodeRegistry} from "@/components/design-editor/typings";
@@ -19,14 +17,9 @@ interface HeaderTitleProps {
 const HeaderTitle: React.FC<HeaderTitleProps> = ({title, onChange, readonly}) => {
     const {token} = theme.useToken();
     const [editTitle, setEditTitle] = useState(false);
-    const isSidebar = useIsSidebar();
-    const {node} = useNodeRenderContext();
-
-    const registry = node.getNodeRegistry<FlowNodeRegistry>();
-    const editTitleDisabled = useMemo(() => {
-        const {meta} = registry;
-        return meta?.editTitleDisable ?? false;
-    }, [registry, node]);
+    const ctx = useClientContext();
+    const {playground} = ctx;
+    const canAddBranch = playground.config.readonlyOrDisabled;
 
     const handleChange = useCallback((value: string) => {
         const trimmed = value.trim();
@@ -35,7 +28,7 @@ const HeaderTitle: React.FC<HeaderTitleProps> = ({title, onChange, readonly}) =>
         }
     }, [onChange]);
 
-    if (readonly || !isSidebar || editTitleDisabled) {
+    if (readonly || canAddBranch) {
         return <span>{title}</span>;
     }
 
@@ -75,18 +68,11 @@ interface NodeHeaderProps {
     iconEnable?: boolean;
 }
 
-export const NodeHeader: React.FC<NodeHeaderProps> = (props) => {
+export const ManualTitle: React.FC<NodeHeaderProps> = (props) => {
     const {node} = useNodeRenderContext();
     const isSidebar = useIsSidebar();
-    const panelManager = usePanelManager();
-    const {token} = theme.useToken();
     const iconEnable = props.iconEnable ?? true;
-
     const nodeType = node.getNodeRegistry<FlowNodeRegistry>().type as NodeType;
-
-    const handleClose = useCallback(() => {
-        panelManager.close(nodeFormPanelFactory.key);
-    }, [panelManager]);
 
     const headerStyle: React.CSSProperties = {
         width: "100%",
@@ -113,29 +99,8 @@ export const NodeHeader: React.FC<NodeHeaderProps> = (props) => {
                         />
                     )}
                 </Field>
-                {!isSidebar && (
-                    <Field name="order">
-                        {({field: {value, onChange}}: FieldRenderProps<string>) => {
-                            if (nodeType === 'INCLUSIVE_BRANCH' || nodeType === 'CONDITION_BRANCH' || nodeType === 'PARALLEL_BRANCH') {
-                                return (
-                                    <>优先级:{value}</>
-                                )
-                            }
-                            return (
-                                <></>
-                            );
-                        }}
-                    </Field>
-                )}
             </Space>
 
-            {isSidebar && (
-                <Button
-                    type="text"
-                    icon={<CloseOutlined style={{color: token.colorPrimary}}/>}
-                    onClick={handleClose}
-                />
-            )}
         </Flex>
     );
 };
