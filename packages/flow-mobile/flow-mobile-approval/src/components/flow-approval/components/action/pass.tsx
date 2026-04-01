@@ -5,7 +5,8 @@ import {FlowActionProps} from "./type";
 import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {SignKeyView} from "@/plugins/view/sign-key-view";
 import {EventBus} from "@coding-flow/flow-core";
-
+import { NodeOption } from "@coding-flow/flow-types";
+import {ManualView} from "@/plugins/view/manual-view";
 
 /**
  * 通过
@@ -19,6 +20,8 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
 
     const [modalVisible, setModalVisible] = React.useState(false);
+    const [options, setOptions] = React.useState<NodeOption[]>([]);
+    const [request,setRequest] = React.useState<any>({});
 
     const isStartNode = state.flow?.nodeType === 'START';
 
@@ -44,9 +47,15 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
     const handleSubmit = (params?: any) => {
         actionPresenter.action(action.id, params).then((res) => {
             if (res.success) {
-                Toast.show("操作成功");
-                setModalVisible(false);
-                context.close();
+                const options = res.data?.options || [];
+                if(options.length > 0) {
+                    setRequest(params);
+                    setOptions(options);
+                }else {
+                    Toast.show("操作成功");
+                    setModalVisible(false);
+                    context.close();
+                }
             }
         });
     }
@@ -104,6 +113,22 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                     )}
                 </Form>
             </PopupModal>
+
+
+            {options && options.length > 0 && (
+                <ManualView
+                    options={options}
+                    onChange={(value)=>{
+                        setOptions([]);
+                        if(value){
+                            handleSubmit({
+                                ...request,
+                                manualNodeId:value,
+                            });
+                        }
+                    }}
+                />
+            )}
         </>
     )
 }

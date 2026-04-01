@@ -4,6 +4,8 @@ import {Form, Input, message, Modal} from "antd";
 import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {SignKeyView} from "@/plugins/view/sign-key-view";
 import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
+import {NodeOption} from "@coding-flow/flow-types";
+import {ManualView} from "@/plugins/view/manual-view";
 
 const {TextArea} = Input;
 
@@ -20,6 +22,10 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
 
     const [modalVisible, setModalVisible] = React.useState(false);
 
+    const [options, setOptions] = React.useState<NodeOption[]>([]);
+
+    const [request,setRequest] = React.useState<any>({});
+
     const isStartNode = state.flow?.nodeType === 'START';
 
     const currentOperator = state.flow?.currentOperator;
@@ -29,9 +35,15 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
     const handleSubmit = (params?: any) => {
         actionPresenter.action(action.id, params).then((res) => {
             if (res.success) {
-                message.success("操作成功");
-                setModalVisible(false);
-                context.close();
+                const options = res.data?.options || [];
+                if(options.length > 0) {
+                    setRequest(params);
+                    setOptions(options);
+                }else {
+                    message.success("操作成功");
+                    setModalVisible(false);
+                    context.close();
+                }
             }
         });
     }
@@ -108,6 +120,23 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                 </Form>
 
             </Modal>
+
+
+            {options && options.length > 0 && (
+                <ManualView
+                    options={options}
+                    onChange={(value)=>{
+                        setOptions([]);
+                        if(value){
+                            handleSubmit({
+                                ...request,
+                                manualNodeId:value,
+                            });
+                        }
+                    }}
+                />
+            )}
+
         </>
     )
 }
