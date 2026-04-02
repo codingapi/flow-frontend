@@ -15,7 +15,7 @@ export class FlowActionPresenter {
                 api: FlowApprovalApi,
                 formActionContext: FormActionContext,
                 mockKey: string) {
-        this.state = state;
+        this.state = JSON.parse(JSON.stringify(state));
         this.api = api;
         this.formActionContext = formActionContext;
         this.submitRecordIds = [];
@@ -37,7 +37,7 @@ export class FlowActionPresenter {
     }
 
     public syncState(state: ApprovalState) {
-        this.state = state;
+        this.state = JSON.parse(JSON.stringify(state));
     }
 
     public async processNodes() {
@@ -105,6 +105,11 @@ export class FlowActionPresenter {
                 actionId,
             }
             const recordId = await this.api.create(createRequest, this.mockKey);
+
+            if(this.state.flow) {
+                this.state.flow.recordId = recordId;
+            }
+
             const actionRequest = {
                 formData,
                 recordId,

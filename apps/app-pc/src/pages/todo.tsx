@@ -110,7 +110,7 @@ const TodoPage: React.FC = () => {
             label: '我的待办',
             children: (
                 <Table
-                    rowKey={"id"}
+                    rowKey={"recordId"}
                     actionType={actionTodo}
                     columns={columns}
                     request={(request) => {
@@ -124,7 +124,7 @@ const TodoPage: React.FC = () => {
             label: '我的已办',
             children: (
                 <Table
-                    rowKey={"id"}
+                    rowKey={"recordId"}
                     actionType={actionDone}
                     columns={columns}
                     request={(request) => {
@@ -138,7 +138,7 @@ const TodoPage: React.FC = () => {
             label: '我的抄送',
             children: (
                 <Table
-                    rowKey={"id"}
+                    rowKey={"recordId"}
                     actionType={actionNotify}
                     columns={columns}
                     request={(request) => {
@@ -152,7 +152,7 @@ const TodoPage: React.FC = () => {
             label: '全部流程',
             children: (
                 <Table
-                    rowKey={"id"}
+                    rowKey={"recordId"}
                     actionType={actionAll}
                     columns={columns}
                     request={(request) => {
