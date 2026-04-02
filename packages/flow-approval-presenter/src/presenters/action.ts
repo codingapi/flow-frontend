@@ -32,7 +32,7 @@ export class FlowActionPresenter {
         this.submitRecordIds = [];
     }
 
-    public getSubmitRecordIds(){
+    public getSubmitRecordIds() {
         return this.submitRecordIds;
     }
 
@@ -105,24 +105,25 @@ export class FlowActionPresenter {
                 actionId,
             }
             const recordId = await this.api.create(createRequest, this.mockKey);
-
-            if(this.state.flow) {
-                this.state.flow.recordId = recordId;
-            }
-
-            const actionRequest = {
-                formData,
-                recordId,
-                advice: {
-                    actionId,
-                    ...params
+            console.log('create recordId:', recordId);
+            if (recordId) {
+                if (this.state.flow) {
+                    this.state.flow.recordId = recordId;
                 }
+                const actionRequest = {
+                    formData,
+                    recordId,
+                    advice: {
+                        actionId,
+                        ...params
+                    }
+                }
+                return await this.api.action(actionRequest, this.mockKey);
             }
-            return await this.api.action(actionRequest, this.mockKey);
         }
     }
 
-    public getCurrentFormData(){
+    public getCurrentFormData() {
         return this.formActionContext.save();
     }
 
