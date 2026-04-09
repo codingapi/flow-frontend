@@ -41,6 +41,9 @@ export const NodeIcon: React.FC<NodeIconProps> = (props) => {
     if (icon === 'CONDITION_BRANCH') {
         return <BranchesOutlined style={style}/>
     }
+    if (icon === 'CONDITION_ELSE_BRANCH') {
+        return <BranchesOutlined style={style}/>
+    }
     if (icon === 'DELAY') {
         return <ClockCircleOutlined style={style}/>
     }
@@ -60,6 +63,9 @@ export const NodeIcon: React.FC<NodeIconProps> = (props) => {
         return <MergeOutlined style={style}/>
     }
     if (icon === 'INCLUSIVE_BRANCH') {
+        return <MergeOutlined style={style}/>
+    }
+    if (icon === 'INCLUSIVE_ELSE_BRANCH') {
         return <MergeOutlined style={style}/>
     }
     if (icon === 'NOTIFY') {
