@@ -1,3 +1,6 @@
+import React from "react";
+import {ApprovalViewPluginAction} from "@/plugins/approval-view-plugin-action";
+
 export const VIEW_KEY = 'TransferViewPlugin';
 
 export interface TransferViewPlugin {
@@ -5,4 +8,6 @@ export interface TransferViewPlugin {
     onChange?: (value: string|string[]) => void;
     /** 当前用户 */
     value?: string|string[];
+    /** 动作控制 **/
+    action?:React.Ref<ApprovalViewPluginAction>;
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import {FlowActionProps} from "./type";
 import {Form, message, Modal} from "antd";
-import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
+import {ApprovalViewPluginAction, useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {TransferView} from "@/plugins/view/transfer-view";
 import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
 
@@ -17,6 +17,21 @@ export const TransferAction: React.FC<FlowActionProps> = (props) => {
     const [form] = Form.useForm();
 
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
+
+
+    const actionRef = React.useRef<ApprovalViewPluginAction>(null);
+
+    const handlerOK = ()=>{
+        if(actionRef.current){
+            actionRef.current.onValidate().then(res=>{
+                if(res){
+                    form.submit();
+                }
+            })
+            return;
+        }
+        form.submit();
+    }
 
     const [modalVisible, setModalVisible] = React.useState(false);
 
@@ -45,9 +60,13 @@ export const TransferAction: React.FC<FlowActionProps> = (props) => {
             <Modal
                 title={"转办审批"}
                 open={modalVisible}
+                maskClosable={false}
+                mask={{
+                    closable: false,
+                }}
                 onCancel={() => setModalVisible(false)}
                 onOk={() => {
-                    form.submit();
+                    handlerOK();
                 }}
             >
                 <Form
@@ -68,7 +87,9 @@ export const TransferAction: React.FC<FlowActionProps> = (props) => {
                             }
                         ]}
                     >
-                        <TransferView/>
+                        <TransferView
+                            action={actionRef}
+                        />
                     </Form.Item>
                 </Form>
             </Modal>

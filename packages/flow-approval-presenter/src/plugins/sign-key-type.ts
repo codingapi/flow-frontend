@@ -1,4 +1,6 @@
 import {FlowOperator} from "@coding-flow/flow-types";
+import React from "react";
+import {ApprovalViewPluginAction} from "@/plugins/approval-view-plugin-action";
 
 export const VIEW_KEY = 'SignKeyViewPlugin';
 
@@ -9,4 +11,6 @@ export interface SignKeyViewPlugin {
     onChange?: (value: string) => void;
     /** 当前签名 */
     value?: string;
+    /** 动作控制 **/
+    action?:React.Ref<ApprovalViewPluginAction>;
 }

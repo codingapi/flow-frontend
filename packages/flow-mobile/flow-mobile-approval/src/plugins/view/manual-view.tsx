@@ -1,5 +1,5 @@
 import React from "react";
-import {ManualViewPlugin, ManualViewPluginKey} from "@coding-flow/flow-approval-presenter";
+import {ApprovalViewPluginAction, ManualViewPlugin, ManualViewPluginKey} from "@coding-flow/flow-approval-presenter";
 import {ViewBindPlugin} from "@coding-flow/flow-core";
 import {Selector,Form} from "antd-mobile";
 import {PopupModal} from "@coding-flow/flow-mobile-ui";
@@ -9,9 +9,26 @@ export const ManualView: React.FC<ManualViewPlugin> = (props) => {
     const [visible, setVisible] = React.useState(true);
     const [form] = Form.useForm();
 
+    const actionRef = React.useRef<ApprovalViewPluginAction>(null);
+
+    const handlerOK = ()=>{
+        if(actionRef.current){
+            actionRef.current.onValidate().then(res=>{
+                if(res){
+                    form.submit();
+                }
+            })
+            return;
+        }
+        form.submit();
+    }
+
     if (ManualViewComponent) {
         return (
-            <ManualViewComponent {...props} />
+            <ManualViewComponent
+                {...props}
+                action={actionRef}
+            />
         );
     }
 
@@ -29,7 +46,7 @@ export const ManualView: React.FC<ManualViewPlugin> = (props) => {
                 setVisible(false)
             }}
             onOk={() => {
-                form.submit();
+                handlerOK();
             }}
         >
             <Form

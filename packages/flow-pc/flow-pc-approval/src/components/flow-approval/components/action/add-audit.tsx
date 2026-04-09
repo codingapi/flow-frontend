@@ -4,6 +4,7 @@ import {Form, message, Modal} from "antd";
 import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {AddAuditView} from "@/plugins/view/add-audit-view";
 import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
+import {ApprovalViewPluginAction} from "@coding-flow/flow-approval-presenter";
 
 /**
  * 加签
@@ -19,6 +20,20 @@ export const AddAuditAction: React.FC<FlowActionProps> = (props) => {
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
 
     const [modalVisible, setModalVisible] = React.useState(false);
+
+    const actionRef = React.useRef<ApprovalViewPluginAction>(null);
+
+    const handlerOK = ()=>{
+        if(actionRef.current){
+            actionRef.current.onValidate().then(res=>{
+                if(res){
+                    form.submit();
+                }
+            })
+            return;
+        }
+        form.submit();
+    }
 
     const handleSubmit = (params?: any) => {
         actionPresenter.action(action.id, params).then((res) => {
@@ -45,9 +60,13 @@ export const AddAuditAction: React.FC<FlowActionProps> = (props) => {
             <Modal
                 title={"加签审批"}
                 open={modalVisible}
+                maskClosable={false}
+                mask={{
+                    closable: false,
+                }}
                 onCancel={() => setModalVisible(false)}
                 onOk={() => {
-                    form.submit();
+                    handlerOK();
                 }}
             >
                 <Form
@@ -68,7 +87,9 @@ export const AddAuditAction: React.FC<FlowActionProps> = (props) => {
                             }
                         ]}
                     >
-                        <AddAuditView/>
+                        <AddAuditView
+                            action={actionRef}
+                        />
                     </Form.Item>
                 </Form>
             </Modal>

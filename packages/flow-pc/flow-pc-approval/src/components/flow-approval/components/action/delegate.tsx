@@ -4,6 +4,7 @@ import {Form, message, Modal} from "antd";
 import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {DelegateView} from "@/plugins/view/delegate-view";
 import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
+import {ApprovalViewPluginAction} from "@coding-flow/flow-approval-presenter";
 
 /**
  * 委派
@@ -19,6 +20,20 @@ export const DelegateAction: React.FC<FlowActionProps> = (props) => {
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
 
     const [modalVisible, setModalVisible] = React.useState(false);
+
+    const actionRef = React.useRef<ApprovalViewPluginAction>(null);
+
+    const handlerOK = ()=>{
+        if(actionRef.current){
+            actionRef.current.onValidate().then(res=>{
+                if(res){
+                    form.submit();
+                }
+            })
+            return;
+        }
+        form.submit();
+    }
 
     const handleSubmit = (params?: any) => {
         actionPresenter.action(action.id, params).then((res) => {
@@ -47,7 +62,7 @@ export const DelegateAction: React.FC<FlowActionProps> = (props) => {
                 open={modalVisible}
                 onCancel={() => setModalVisible(false)}
                 onOk={() => {
-                    form.submit();
+                    handlerOK();
                 }}
             >
                 <Form
@@ -68,7 +83,9 @@ export const DelegateAction: React.FC<FlowActionProps> = (props) => {
                             }
                         ]}
                     >
-                        <DelegateView/>
+                        <DelegateView
+                            action={actionRef}
+                        />
                     </Form.Item>
                 </Form>
             </Modal>

@@ -2,6 +2,7 @@ import React from "react";
 import {ManualViewPlugin, ManualViewPluginKey} from "@coding-flow/flow-approval-presenter"
 import {ViewBindPlugin} from "@coding-flow/flow-core";
 import {Modal, Select, Form} from "antd";
+import {ApprovalViewPluginAction} from "@coding-flow/flow-approval-presenter";
 
 
 export const ManualView: React.FC<ManualViewPlugin> = (props) => {
@@ -10,14 +11,31 @@ export const ManualView: React.FC<ManualViewPlugin> = (props) => {
 
     const [form] = Form.useForm();
 
-    const handleOk = (value: any) => {
+    const handlerFinish = (value: any) => {
         props.onChange(value?.manualNodeId || '');
         setVisible(false);
     }
 
+    const actionRef = React.useRef<ApprovalViewPluginAction>(null);
+
+    const handlerOK = ()=>{
+        if(actionRef.current){
+            actionRef.current.onValidate().then(res=>{
+                if(res){
+                    form.submit();
+                }
+            })
+            return;
+        }
+        form.submit();
+    }
+
     if (ManualViewComponent) {
         return (
-            <ManualViewComponent {...props} />
+            <ManualViewComponent
+                {...props}
+                action={actionRef}
+            />
         );
     }
     return (
@@ -28,12 +46,12 @@ export const ManualView: React.FC<ManualViewPlugin> = (props) => {
             destroyOnHidden
             onCancel={() => setVisible(false)}
             onOk={() => {
-                form.submit();
+                handlerOK();
             }}
         >
             <Form
                 form={form}
-                onFinish={handleOk}
+                onFinish={handlerFinish}
                 layout="vertical"
             >
                 <Form.Item

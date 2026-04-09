@@ -2,7 +2,7 @@ import React from "react";
 import {Form, TextArea, Toast} from "antd-mobile";
 import {PopupModal} from "@coding-flow/flow-mobile-ui";
 import {FlowActionProps} from "./type";
-import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
+import {ApprovalViewPluginAction, useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {SignKeyView} from "@/plugins/view/sign-key-view";
 import {EventBus} from "@coding-flow/flow-core";
 import { NodeOption } from "@coding-flow/flow-types";
@@ -44,6 +44,21 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
         }
     },[]);
 
+    const actionRef = React.useRef<ApprovalViewPluginAction>(null);
+
+    const handlerOK = ()=>{
+        if(actionRef.current){
+            actionRef.current.onValidate().then(res=>{
+                if(res){
+                    form.submit();
+                }
+            })
+            return;
+        }
+        form.submit();
+    }
+
+
     const handleSubmit = (params?: any) => {
         actionPresenter.action(action.id, params).then((res) => {
             if (res.success) {
@@ -75,7 +90,7 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                     setModalVisible(false)
                 }}
                 onOk={()=>{
-                    form.submit();
+                    handlerOK();
                 }}
             >
                 <Form
@@ -108,6 +123,7 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                         >
                             <SignKeyView
                                 current={currentOperator}
+                                action={actionRef}
                             />
                         </Form.Item>
                     )}

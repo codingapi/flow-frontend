@@ -52,6 +52,10 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
             <Modal
                 title={"审批拒绝"}
                 open={modalVisible}
+                maskClosable={false}
+                mask={{
+                    closable: false,
+                }}
                 onCancel={() => setModalVisible(false)}
                 onOk={() => {
                     form.submit();

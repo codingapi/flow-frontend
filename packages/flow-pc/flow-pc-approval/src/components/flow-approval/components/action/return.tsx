@@ -1,7 +1,7 @@
 import React from "react";
 import {FlowActionProps} from "./type";
 import {Form, message, Modal} from "antd";
-import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
+import {ApprovalViewPluginAction, useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {ReturnView} from "@/plugins/view/return-view";
 import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
 
@@ -19,6 +19,21 @@ export const ReturnAction: React.FC<FlowActionProps> = (props) => {
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
 
     const [modalVisible, setModalVisible] = React.useState(false);
+
+
+    const actionRef = React.useRef<ApprovalViewPluginAction>(null);
+
+    const handlerOK = ()=>{
+        if(actionRef.current){
+            actionRef.current.onValidate().then(res=>{
+                if(res){
+                    form.submit();
+                }
+            })
+            return;
+        }
+        form.submit();
+    }
 
     const handleSubmit = (params?: any) => {
         actionPresenter.action(action.id, params).then((res) => {
@@ -45,9 +60,13 @@ export const ReturnAction: React.FC<FlowActionProps> = (props) => {
             <Modal
                 title={"退回审批"}
                 open={modalVisible}
+                maskClosable={false}
+                mask={{
+                    closable: false,
+                }}
                 onCancel={() => setModalVisible(false)}
                 onOk={() => {
-                    form.submit();
+                    handlerOK();
                 }}
             >
                 <Form
@@ -68,7 +87,9 @@ export const ReturnAction: React.FC<FlowActionProps> = (props) => {
                             }
                         ]}
                     >
-                        <ReturnView/>
+                        <ReturnView
+                            action={actionRef}
+                        />
                     </Form.Item>
                 </Form>
             </Modal>

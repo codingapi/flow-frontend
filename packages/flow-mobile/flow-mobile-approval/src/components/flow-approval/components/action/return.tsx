@@ -5,6 +5,7 @@ import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {ReturnView} from "@/plugins/view/return-view";
 import {PopupModal} from "@coding-flow/flow-mobile-ui";
 import {EventBus} from "@coding-flow/flow-core";
+import {ApprovalViewPluginAction} from "@coding-flow/flow-approval-presenter";
 
 /**
  * 退回
@@ -20,6 +21,20 @@ export const ReturnAction: React.FC<FlowActionProps> = (props) => {
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
 
     const [modalVisible, setModalVisible] = React.useState(false);
+
+    const actionRef = React.useRef<ApprovalViewPluginAction>(null);
+
+    const handlerOK = ()=>{
+        if(actionRef.current){
+            actionRef.current.onValidate().then(res=>{
+                if(res){
+                    form.submit();
+                }
+            })
+            return;
+        }
+        form.submit();
+    }
 
     const handleSubmit = (params?: any) => {
         actionPresenter.action(action.id, params).then((res) => {
@@ -49,7 +64,7 @@ export const ReturnAction: React.FC<FlowActionProps> = (props) => {
                 open={modalVisible}
                 onClose={() => setModalVisible(false)}
                 onOk={() => {
-                    form.submit();
+                    handlerOK();
                 }}
             >
                 <Form
@@ -70,7 +85,9 @@ export const ReturnAction: React.FC<FlowActionProps> = (props) => {
                             }
                         ]}
                     >
-                        <ReturnView/>
+                        <ReturnView
+                            action={actionRef}
+                        />
                     </Form.Item>
                 </Form>
             </PopupModal>
