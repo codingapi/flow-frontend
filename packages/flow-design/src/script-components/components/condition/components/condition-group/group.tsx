@@ -5,6 +5,7 @@ import {PlusOutlined} from "@ant-design/icons";
 import {useConditionContext} from "../../hooks/use-condition-context";
 import {ConditionItemView} from "./condition";
 import {ConditionTypeView} from "./type";
+import {Condition} from "@/script-components/components/condition/typings";
 
 /**
  * @constructor
@@ -66,11 +67,19 @@ export const Group = () => {
                         title: '右侧参数',
                         dataIndex: 'right',
                         render: (_, record) => {
-                            return (<ConditionItemView
-                                id={record.id}
-                                location={'right'}
-                                data={record.right}
-                            />)
+                            if (record.right!==false) {
+                                return (<ConditionItemView
+                                    id={record.id}
+                                    location={'right'}
+                                    data={record.right as Condition}
+                                />)
+                            } else {
+                                return (
+                                    <div
+                                        style={{width: "100px"}}
+                                    >无</div>
+                                );
+                            }
                         }
                     },
                     {
@@ -78,12 +87,18 @@ export const Group = () => {
                         title: '操作',
                         render: (text, record) => {
                             return (
-                                <Space>
-                                    <a
-                                        onClick={() => {
-                                            presenter.switchCondition(record.id);
-                                        }}
-                                    >互换</a>
+                                <Space
+                                    style={{
+                                        width: '100px',
+                                    }}
+                                >
+                                    {record.type!='is_null' && (
+                                        <a
+                                            onClick={() => {
+                                                presenter.switchCondition(record.id);
+                                            }}
+                                        >互换</a>
+                                    )}
                                     <Popconfirm
                                         title={"确认要删除吗？"}
                                         onConfirm={() => {

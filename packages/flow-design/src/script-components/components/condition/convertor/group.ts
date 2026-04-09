@@ -10,11 +10,19 @@ export class GroupConvertor {
 
     public getLabel() {
         const left = this.group.left;
-        const right = this.group.right;
+        const right = this.group.right as any;
         const type = this.group.type;
-        if (left && right && type) {
-            const relation = relationTypeOptions.find(relationTypeOption => relationTypeOption.value === type);
-            return `${left.label} ${relation?.label} ${right.label}`;
+        if(type) {
+            if(type ==='is_null'){
+                if(left){
+                    const relation = relationTypeOptions.find(relationTypeOption => relationTypeOption.value === type);
+                    return `${left.label} ${relation?.label}`;
+                }
+            }
+            if (left && right && type) {
+                const relation = relationTypeOptions.find(relationTypeOption => relationTypeOption.value === type);
+                return `${left.label} ${relation?.label} ${right.label}`;
+            }
         }
         return '未知';
     }

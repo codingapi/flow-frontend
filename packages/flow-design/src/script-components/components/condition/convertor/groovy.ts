@@ -2,7 +2,8 @@ import {
     Condition,
     ConditionGroup,
     ConditionState,
-    LogicalRelation, RelationType
+    LogicalRelation,
+    RelationType
 } from "@/script-components/components/condition/typings";
 import {
     RelationListValidate
@@ -54,7 +55,7 @@ class ConditionReturnConvertor {
     }
 
     public getReturn() {
-        const builder:string[] = this.getReturnExpression(this.relations);
+        const builder: string[] = this.getReturnExpression(this.relations);
         return builder.join(" ");
     }
 
@@ -73,46 +74,47 @@ class ConditionReturnConvertor {
                 return conditionGroup.left.dataType;
             }
         }
-        if (conditionGroup.right) {
-            if (conditionGroup.right.type === 'variable') {
-                return conditionGroup.right.dataType;
+        if (conditionGroup.right!==false && conditionGroup.right) {
+            const right = conditionGroup.right as Condition;
+            if (right.type === 'variable') {
+                return right.dataType;
             }
         }
         return 'STRING'
     }
 
-    private getConditionExpression(condition:Condition,dataType:DataType){
-        if(condition.type==='variable') {
+    private getConditionExpression(condition: Condition, dataType: DataType) {
+        if (condition.type === 'variable') {
             return condition.value;
         }
-        if(dataType==='BOOLEAN'){
-            return condition.value==='true';
+        if (dataType === 'BOOLEAN') {
+            return condition.value === 'true';
         }
 
-        if(dataType==='STRING'){
+        if (dataType === 'STRING') {
             return `'${condition.value}'`;
         }
 
         return `${condition.value}`;
     }
 
-    private getConditionTypeExpression(relationType:RelationType){
-        if(relationType==='equal') {
+    private getConditionTypeExpression(relationType: RelationType) {
+        if (relationType === 'equal') {
             return '==';
         }
-        if(relationType==='not_equal') {
+        if (relationType === 'not_equal') {
             return '!=';
         }
-        if(relationType==='greater_equal') {
+        if (relationType === 'greater_equal') {
             return '>=';
         }
-        if(relationType==='less_equal') {
+        if (relationType === 'less_equal') {
             return '<=';
         }
-        if(relationType==='greater_than') {
+        if (relationType === 'greater_than') {
             return '>';
         }
-        if(relationType==='less_than') {
+        if (relationType === 'less_than') {
             return '<';
         }
         return `${relationType}`;
@@ -128,11 +130,34 @@ class ConditionReturnConvertor {
             const right = conditionGroup.right;
             const type = conditionGroup.type;
 
-            if(left && right && type){
-                const leftExpression = this.getConditionExpression(left,dataType);
-                const rightExpression = this.getConditionExpression(right,dataType);
-                const typeExpression = this.getConditionTypeExpression(type);
-                return leftExpression + typeExpression + rightExpression;
+            if (type) {
+                if (type === 'is_null') {
+                    if (left) {
+                        const leftExpression = this.getConditionExpression(left, dataType);
+                        if (dataType === 'STRING') {
+                            return `(${leftExpression} == '' ||  ${leftExpression} == null)`;
+                        }
+                        if (dataType === 'LONG') {
+                            return `${leftExpression} == 0`;
+                        }
+                        if (dataType === 'INTEGER') {
+                            return `${leftExpression} == 0`;
+                        }
+                        if (dataType === 'DOUBLE') {
+                            return `${leftExpression} == 0`;
+                        }
+                        if (dataType === 'BOOLEAN') {
+                            return `${leftExpression} == false`;
+                        }
+                        return `${leftExpression} == null`;
+                    }
+                }
+                if (left && right && type) {
+                    const leftExpression = this.getConditionExpression(left, dataType);
+                    const rightExpression = this.getConditionExpression(right as any, dataType);
+                    const typeExpression = this.getConditionTypeExpression(type);
+                    return leftExpression + typeExpression + rightExpression;
+                }
             }
         }
         return '';

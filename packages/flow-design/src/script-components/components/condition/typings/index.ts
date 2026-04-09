@@ -11,6 +11,7 @@ export type RelationType =
     | 'less_than'
     | 'less_equal'
     | 'not_equal'
+    | 'is_null'
     | 'unknow';
 
 /**
@@ -111,6 +112,10 @@ export const relationTypeOptions = [
         label: '不等于',
         value: 'not_equal',
     },
+    {
+        label: '为空',
+        value: 'is_null',
+    },
 ]
 
 
@@ -138,7 +143,7 @@ export interface ConditionGroup {
     // 左侧参数
     left?: Condition;
     // 右侧参数
-    right?: Condition;
+    right?: Condition | boolean;
     // 参数关系
     type?: RelationType;
 }

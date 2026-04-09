@@ -41,10 +41,27 @@ export class ConditionGroupPresenter {
         this.presenter.updateState(prevState => {
             const groups = prevState.groups.map(group => {
                 if (group.id === id) {
-                    return {
-                        ...group,
-                        type: type
-                    };
+                    if (type === 'is_null') {
+                        return {
+                            ...group,
+                            type: type,
+                            right: false
+                        };
+                    }
+                    if (group.right) {
+                        return {
+                            ...group,
+                            type: type,
+                        };
+                    } else {
+                        const data = {
+                            ...group,
+                            type: type,
+                        };
+                        delete data.right;
+                        return data;
+                    }
+
                 }
                 return group;
             });
@@ -100,7 +117,7 @@ export class ConditionGroupPresenter {
                     if (group.id === id) {
                         latest.push({
                             ...target,
-                            left: target.right,
+                            left: target.right as Condition,
                             right: target.left
                         });
                     } else {
