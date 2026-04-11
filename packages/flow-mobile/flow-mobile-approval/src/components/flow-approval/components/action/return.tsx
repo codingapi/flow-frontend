@@ -1,11 +1,11 @@
 import React from "react";
 import {FlowActionProps} from "./type";
 import {Form, Toast} from "antd-mobile";
-import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
+import {ApprovalViewPluginAction, useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {ReturnView} from "@/plugins/view/return-view";
 import {PopupModal} from "@coding-flow/flow-mobile-ui";
-import {EventBus} from "@coding-flow/flow-core";
-import {ApprovalViewPluginAction} from "@coding-flow/flow-approval-presenter";
+import {EventBus, ViewBindPlugin} from "@coding-flow/flow-core";
+import {APPROVAL_ACTION_RETURN_KEY} from "@/components/flow-approval";
 
 /**
  * 退回
@@ -24,10 +24,10 @@ export const ReturnAction: React.FC<FlowActionProps> = (props) => {
 
     const actionRef = React.useRef<ApprovalViewPluginAction>(null);
 
-    const handlerOK = ()=>{
-        if(actionRef.current){
-            actionRef.current.onValidate().then(res=>{
-                if(res){
+    const handlerOK = () => {
+        if (actionRef.current) {
+            actionRef.current.onValidate().then(res => {
+                if (res) {
                     form.submit();
                 }
             })
@@ -46,8 +46,8 @@ export const ReturnAction: React.FC<FlowActionProps> = (props) => {
         });
     }
 
-    React.useEffect(()=>{
-        EventBus.getInstance().on(action.id,()=>{
+    React.useEffect(() => {
+        EventBus.getInstance().on(action.id, () => {
             form.resetFields();
             setModalVisible(true);
         });
@@ -55,7 +55,18 @@ export const ReturnAction: React.FC<FlowActionProps> = (props) => {
         return () => {
             EventBus.getInstance().off(action.id);
         }
-    },[]);
+    }, []);
+
+
+    const ActionView = ViewBindPlugin.getInstance().get(APPROVAL_ACTION_RETURN_KEY);
+
+    if (ActionView) {
+        return (
+            <ActionView
+                {...props}
+            />
+        )
+    }
 
     return (
         <>

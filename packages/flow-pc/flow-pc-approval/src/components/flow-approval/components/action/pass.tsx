@@ -6,6 +6,8 @@ import {SignKeyView} from "@/plugins/view/sign-key-view";
 import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
 import {NodeOption} from "@coding-flow/flow-types";
 import {ManualView} from "@/plugins/view/manual-view";
+import {APPROVAL_ACTION_PASS_KEY} from "@/components/flow-approval";
+import {ViewBindPlugin} from "@coding-flow/flow-core";
 
 const {TextArea} = Input;
 
@@ -24,7 +26,7 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
 
     const [options, setOptions] = React.useState<NodeOption[]>([]);
 
-    const [request,setRequest] = React.useState<any>({});
+    const [request, setRequest] = React.useState<any>({});
 
     const isStartNode = state.flow?.nodeType === 'START';
 
@@ -36,10 +38,10 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
         actionPresenter.action(action.id, params).then((res) => {
             if (res.success) {
                 const options = res.data?.options || [];
-                if(options.length > 0) {
+                if (options.length > 0) {
                     setRequest(params);
                     setOptions(options);
-                }else {
+                } else {
                     message.success("操作成功");
                     setModalVisible(false);
                     context.close();
@@ -50,10 +52,10 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
 
     const actionRef = React.useRef<ApprovalViewPluginAction>(null);
 
-    const handlerOK = ()=>{
-        if(actionRef.current){
-            actionRef.current.onValidate().then(res=>{
-                if(res){
+    const handlerOK = () => {
+        if (actionRef.current) {
+            actionRef.current.onValidate().then(res => {
+                if (res) {
                     form.submit();
                 }
             })
@@ -69,12 +71,23 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
         }
     ] : [];
 
+
+    const ActionView = ViewBindPlugin.getInstance().get(APPROVAL_ACTION_PASS_KEY);
+
+    if (ActionView) {
+        return (
+            <ActionView
+                {...props}
+            />
+        )
+    }
+
     return (
         <>
             <CustomStyleButton
                 display={props.action.display}
                 onClick={() => {
-                    if(props.onClickCheck?.(action.id)) {
+                    if (props.onClickCheck?.(action.id)) {
                         if (isStartNode) {
                             handleSubmit();
                         } else {
@@ -144,12 +157,12 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
             {options && options.length > 0 && (
                 <ManualView
                     options={options}
-                    onChange={(value)=>{
+                    onChange={(value) => {
                         setOptions([]);
-                        if(value){
+                        if (value) {
                             handleSubmit({
                                 ...request,
-                                manualNodeId:value,
+                                manualNodeId: value,
                             });
                         }
                     }}

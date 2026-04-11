@@ -4,9 +4,10 @@ import {PopupModal} from "@coding-flow/flow-mobile-ui";
 import {FlowActionProps} from "./type";
 import {ApprovalViewPluginAction, useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {SignKeyView} from "@/plugins/view/sign-key-view";
-import {EventBus} from "@coding-flow/flow-core";
-import { NodeOption } from "@coding-flow/flow-types";
+import {EventBus, ViewBindPlugin} from "@coding-flow/flow-core";
+import {NodeOption} from "@coding-flow/flow-types";
 import {ManualView} from "@/plugins/view/manual-view";
+import {APPROVAL_ACTION_PASS_KEY} from "@/components/flow-approval";
 
 /**
  * 通过
@@ -21,7 +22,7 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
 
     const [modalVisible, setModalVisible] = React.useState(false);
     const [options, setOptions] = React.useState<NodeOption[]>([]);
-    const [request,setRequest] = React.useState<any>({});
+    const [request, setRequest] = React.useState<any>({});
 
     const isStartNode = state.flow?.nodeType === 'START';
 
@@ -29,8 +30,8 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
 
     const [form] = Form.useForm();
 
-    React.useEffect(()=>{
-        EventBus.getInstance().on(action.id,()=>{
+    React.useEffect(() => {
+        EventBus.getInstance().on(action.id, () => {
             if (isStartNode) {
                 handleSubmit();
             } else {
@@ -42,14 +43,14 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
         return () => {
             EventBus.getInstance().off(action.id);
         }
-    },[]);
+    }, []);
 
     const actionRef = React.useRef<ApprovalViewPluginAction>(null);
 
-    const handlerOK = ()=>{
-        if(actionRef.current){
-            actionRef.current.onValidate().then(res=>{
-                if(res){
+    const handlerOK = () => {
+        if (actionRef.current) {
+            actionRef.current.onValidate().then(res => {
+                if (res) {
                     form.submit();
                 }
             })
@@ -63,10 +64,10 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
         actionPresenter.action(action.id, params).then((res) => {
             if (res.success) {
                 const options = res.data?.options || [];
-                if(options.length > 0) {
+                if (options.length > 0) {
                     setRequest(params);
                     setOptions(options);
-                }else {
+                } else {
                     Toast.show("操作成功");
                     setModalVisible(false);
                     context.close();
@@ -82,6 +83,16 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
         }
     ] : [];
 
+    const ActionView = ViewBindPlugin.getInstance().get(APPROVAL_ACTION_PASS_KEY);
+
+    if (ActionView) {
+        return (
+            <ActionView
+                {...props}
+            />
+        )
+    }
+
     return (
         <>
             <PopupModal
@@ -89,7 +100,7 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                 onClose={() => {
                     setModalVisible(false)
                 }}
-                onOk={()=>{
+                onOk={() => {
                     handlerOK();
                 }}
             >
@@ -134,12 +145,12 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
             {options && options.length > 0 && (
                 <ManualView
                     options={options}
-                    onChange={(value)=>{
+                    onChange={(value) => {
                         setOptions([]);
-                        if(value){
+                        if (value) {
                             handleSubmit({
                                 ...request,
-                                manualNodeId:value,
+                                manualNodeId: value,
                             });
                         }
                     }}

@@ -4,6 +4,8 @@ import {Form, message, Modal} from "antd";
 import {ApprovalViewPluginAction, useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {ReturnView} from "@/plugins/view/return-view";
 import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
+import {APPROVAL_ACTION_RETURN_KEY} from "@/components/flow-approval";
+import {ViewBindPlugin} from "@coding-flow/flow-core";
 
 /**
  * 退回
@@ -23,10 +25,10 @@ export const ReturnAction: React.FC<FlowActionProps> = (props) => {
 
     const actionRef = React.useRef<ApprovalViewPluginAction>(null);
 
-    const handlerOK = ()=>{
-        if(actionRef.current){
-            actionRef.current.onValidate().then(res=>{
-                if(res){
+    const handlerOK = () => {
+        if (actionRef.current) {
+            actionRef.current.onValidate().then(res => {
+                if (res) {
                     form.submit();
                 }
             })
@@ -44,12 +46,23 @@ export const ReturnAction: React.FC<FlowActionProps> = (props) => {
             }
         });
     }
+
+    const ActionView = ViewBindPlugin.getInstance().get(APPROVAL_ACTION_RETURN_KEY);
+
+    if (ActionView) {
+        return (
+            <ActionView
+                {...props}
+            />
+        )
+    }
+
     return (
         <>
             <CustomStyleButton
                 display={props.action.display}
                 onClick={() => {
-                    if(props.onClickCheck?.(action.id)) {
+                    if (props.onClickCheck?.(action.id)) {
                         form.resetFields();
                         setModalVisible(true);
                     }

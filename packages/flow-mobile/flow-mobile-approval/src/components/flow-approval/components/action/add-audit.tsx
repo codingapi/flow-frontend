@@ -5,6 +5,8 @@ import {ApprovalViewPluginAction, useApprovalContext} from "@coding-flow/flow-ap
 import {AddAuditView} from "@/plugins/view/add-audit-view";
 import {PopupModal} from "@coding-flow/flow-mobile-ui";
 import {EventBus} from "@coding-flow/flow-core";
+import {ViewBindPlugin} from "@coding-flow/flow-core";
+import {APPROVAL_ACTION_ADD_AUDIT_KEY} from "@/components/flow-approval";
 
 /**
  * 加签
@@ -55,6 +57,16 @@ export const AddAuditAction: React.FC<FlowActionProps> = (props) => {
             EventBus.getInstance().off(action.id);
         }
     },[]);
+
+    const ActionView = ViewBindPlugin.getInstance().get(APPROVAL_ACTION_ADD_AUDIT_KEY);
+
+    if (ActionView) {
+        return (
+            <ActionView
+                {...props}
+            />
+        )
+    }
 
     return (
         <>

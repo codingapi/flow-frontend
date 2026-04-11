@@ -1,6 +1,8 @@
 import React from "react";
 import {Button, message, Popconfirm} from "antd";
 import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
+import {APPROVAL_ACTION_REVOKE_KEY} from "@/components/flow-approval";
+import {ViewBindPlugin} from "@coding-flow/flow-core";
 
 export const RevokeAction = () => {
 
@@ -9,6 +11,16 @@ export const RevokeAction = () => {
     const presenter = context.getPresenter().getFlowActionPresenter();
 
     const revoke = state.flow?.revoke || false;
+
+
+    const ActionView = ViewBindPlugin.getInstance().get(APPROVAL_ACTION_REVOKE_KEY);
+
+    if (ActionView) {
+        return (
+            <ActionView
+            />
+        )
+    }
 
     return (
         <>

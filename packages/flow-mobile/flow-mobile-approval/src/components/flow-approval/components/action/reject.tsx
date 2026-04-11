@@ -3,7 +3,8 @@ import {FlowActionProps} from "./type";
 import {Form, TextArea, Toast} from "antd-mobile";
 import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {PopupModal} from "@coding-flow/flow-mobile-ui";
-import {EventBus} from "@coding-flow/flow-core";
+import {EventBus, ViewBindPlugin} from "@coding-flow/flow-core";
+import {APPROVAL_ACTION_REJECT_KEY} from "@/components/flow-approval";
 
 /**
  * 拒绝
@@ -19,8 +20,8 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
     const [form] = Form.useForm();
 
 
-    React.useEffect(()=>{
-        EventBus.getInstance().on(action.id,()=>{
+    React.useEffect(() => {
+        EventBus.getInstance().on(action.id, () => {
             form.resetFields();
             setModalVisible(true);
         });
@@ -28,7 +29,7 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
         return () => {
             EventBus.getInstance().off(action.id);
         }
-    },[]);
+    }, []);
 
     const handleSubmit = (params?: any) => {
         actionPresenter.action(action.id, params).then((res) => {
@@ -46,6 +47,16 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
             message: '请输入审批意见'
         }
     ] : [];
+
+    const ActionView = ViewBindPlugin.getInstance().get(APPROVAL_ACTION_REJECT_KEY);
+
+    if (ActionView) {
+        return (
+            <ActionView
+                {...props}
+            />
+        )
+    }
 
     return (
         <>

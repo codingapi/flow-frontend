@@ -12,6 +12,8 @@ export interface ApprovalLayoutProps {
     onClose?: () => void;
     /** 初始化数据 **/
     initData?: any;
+    // 样式定义
+    className?: string;
 }
 
 
@@ -27,6 +29,8 @@ export interface ApprovalPanelProps {
     onClose?: () => void;
     // 是否预览（当查看详情非审批时，设置为true）
     review?: boolean;
+    // 样式定义
+    className?: string;
 }
 
 export type ApprovalState = {

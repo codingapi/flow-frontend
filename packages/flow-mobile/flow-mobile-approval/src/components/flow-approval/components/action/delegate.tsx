@@ -3,8 +3,9 @@ import {FlowActionProps} from "./type";
 import {Form, Toast} from "antd-mobile";
 import {ApprovalViewPluginAction, useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {DelegateView} from "@/plugins/view/delegate-view";
-import {EventBus} from "@coding-flow/flow-core";
+import {EventBus, ViewBindPlugin} from "@coding-flow/flow-core";
 import {PopupModal} from "@coding-flow/flow-mobile-ui";
+import {APPROVAL_ACTION_DELEGATE_KEY} from "@/components/flow-approval";
 
 /**
  * 委派
@@ -55,6 +56,16 @@ export const DelegateAction: React.FC<FlowActionProps> = (props) => {
             EventBus.getInstance().off(action.id);
         }
     },[]);
+
+    const ActionView = ViewBindPlugin.getInstance().get(APPROVAL_ACTION_DELEGATE_KEY);
+
+    if (ActionView) {
+        return (
+            <ActionView
+                {...props}
+            />
+        )
+    }
 
     return (
         <>

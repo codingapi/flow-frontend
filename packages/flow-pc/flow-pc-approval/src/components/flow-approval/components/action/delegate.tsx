@@ -1,10 +1,11 @@
 import React from "react";
 import {FlowActionProps} from "./type";
 import {Form, message, Modal} from "antd";
-import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
+import {ApprovalViewPluginAction, useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {DelegateView} from "@/plugins/view/delegate-view";
 import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
-import {ApprovalViewPluginAction} from "@coding-flow/flow-approval-presenter";
+import {APPROVAL_ACTION_DELEGATE_KEY} from "@/components/flow-approval";
+import {ViewBindPlugin} from "@coding-flow/flow-core";
 
 /**
  * 委派
@@ -44,6 +45,17 @@ export const DelegateAction: React.FC<FlowActionProps> = (props) => {
             }
         });
     }
+
+    const ActionView = ViewBindPlugin.getInstance().get(APPROVAL_ACTION_DELEGATE_KEY);
+
+    if (ActionView) {
+        return (
+            <ActionView
+                {...props}
+            />
+        )
+    }
+
     return (
         <>
             <CustomStyleButton

@@ -37,7 +37,6 @@ export const CustomStyleButton: React.FC<CustomStyleButtonProps> = (props) => {
         return {}
     }, [display]);
 
-
     return (
         <Button
             onClick={props.onClick}
