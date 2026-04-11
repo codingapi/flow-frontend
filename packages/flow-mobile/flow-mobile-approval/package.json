@@ -1,6 +1,6 @@
 {
   "name": "@coding-flow/flow-mobile-approval",
-  "version": "0.0.13",
+  "version": "0.0.15",
   "description": "flow-engine pc mobile approval components",
   "type": "module",
   "keywords": [
@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "~6.1.0",
-    "@coding-form/form-engine": "^0.0.14",
+    "@coding-form/form-engine": "^0.0.15",
     "@coding-flow/flow-core": "workspace:*",
     "@coding-flow/flow-types": "workspace:*",
     "@coding-flow/flow-icons": "workspace:*",
