@@ -342,6 +342,9 @@ export class GroovyScriptConvertorUtil {
      * @param script
      */
     public static isCustomScript(script: string): boolean {
+        if (!script) {
+            return false;
+        }
         return script.includes(CUSTOM_SCRIPT);
     }
 
@@ -351,6 +354,9 @@ export class GroovyScriptConvertorUtil {
      *  @param script
      */
     public static formatScript(script: string): string {
+        if (!script) {
+            return '';
+        }
         // 这里可以添加一些格式化逻辑，比如统一换行、缩进等
         return GroovyFormatter.formatScript(script);
     }
@@ -373,6 +379,9 @@ export class GroovyScriptConvertorUtil {
      * @param script
      */
     public static getScriptTitle(script: string): string {
+        if (!script) {
+            return '';
+        }
         const titleMatch = script.match(new RegExp(`//\\s*${SCRIPT_TITLE}\\s*(.+)`));
         if (titleMatch) {
             return titleMatch[1].trim();
@@ -400,6 +409,9 @@ export class GroovyScriptConvertorUtil {
      * @param script
      */
     public static getScriptMeta(script: string): string {
+        if (!script) {
+            return '';
+        }
         const titleMatch = script.match(new RegExp(`//\\s*${SCRIPT_META}\\s*(.+)`));
         if (titleMatch) {
             return titleMatch[1].trim();
@@ -428,6 +440,9 @@ export class GroovyScriptConvertorUtil {
      * @param script
      */
     public static clearComments(script: string): string {
+        if (!script) {
+            return '';
+        }
         return script.replace(/\/\/.*$/gm, '').trim();
     }
 

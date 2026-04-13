@@ -1,4 +1,3 @@
-
 // 默认发起人范围设置脚本，任意人员
 export const SCRIPT_DEFAULT_OPERATOR_CREATE =
 `// @SCRIPT_TITLE 任意人员
@@ -15,6 +14,24 @@ export const SCRIPT_DEFAULT_OPERATOR_LOAD =
 // @SCRIPT_META {"type":"creator"}
 def run(request){
     return [request.getCreatedOperatorId()]
+}
+`;
+
+// 发起人设定操作人脚本
+export const SCRIPT_INITIATOR_SELECT =
+`// @SCRIPT_TITLE 发起人设定
+// @SCRIPT_META {"type":"initiator_select"}
+def run(request){
+    return []
+}
+`;
+
+// 审批人设定操作人脚本
+export const SCRIPT_APPROVER_SELECT =
+`// @SCRIPT_TITLE 审批人设定
+// @SCRIPT_META {"type":"approver_select"}
+def run(request){
+    return []
 }
 `;
 

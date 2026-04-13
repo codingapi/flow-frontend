@@ -43,7 +43,7 @@ export const renderForm = (data: FormRenderProps<FlowNodeJSON['data']>) => {
   return (
     <NodePanel data={data}>
         <NodeHeader/>
-        <NodeHint fieldName={"OperatorLoadStrategy.script"}/>
+        <NodeHint fieldName={"OperatorLoadStrategy.script"} selectTypeFieldName={"OperatorLoadStrategy.selectType"}/>
     </NodePanel>
   );
 };
