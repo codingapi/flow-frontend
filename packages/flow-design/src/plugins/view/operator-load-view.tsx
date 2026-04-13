@@ -41,15 +41,7 @@ export const OperatorLoadPluginView: React.FC<OperatorLoadViewPlugin> = (props) 
                         {
                             label: '流程创建者',
                             value: 'creator',
-                        },
-                        {
-                            label: '发起人设定',
-                            value: 'initiator_select',
-                        },
-                        {
-                            label: '审批人设定',
-                            value: 'approver_select',
-                        },
+                        }                    
                     ]}
                     placeholder={"请选择人员类型"}
                     onChange={(value) => {
