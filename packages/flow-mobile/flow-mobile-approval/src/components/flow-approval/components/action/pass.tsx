@@ -5,6 +5,8 @@ import {FlowActionProps} from "./type";
 import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {SignKeyView} from "@/plugins/view/sign-key-view";
 import {EventBus} from "@coding-flow/flow-core";
+import {NodeOption} from "@coding-flow/flow-types";
+import {OperatorSelectView} from "@/plugins/view/operator-select-view";
 
 
 /**
@@ -19,6 +21,12 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
 
     const [modalVisible, setModalVisible] = React.useState(false);
+
+    const [options, setOptions] = React.useState<NodeOption[]>([]);
+
+    const [request, setRequest] = React.useState<any>({});
+
+    const [responseType, setResponseType] = React.useState<string | null>(null);
 
     const isStartNode = state.flow?.nodeType === 'START';
 
@@ -44,9 +52,17 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
     const handleSubmit = (params?: any) => {
         actionPresenter.action(action.id, params).then((res) => {
             if (res.success) {
-                Toast.show("操作成功");
-                setModalVisible(false);
-                context.close();
+                const resOptions = res.data?.options || [];
+                if (resOptions.length > 0) {
+                    const resType = res.data?.responseType || 'OPERATOR_SELECT';
+                    setRequest(params);
+                    setOptions(resOptions);
+                    setResponseType(resType);
+                } else {
+                    Toast.show("操作成功");
+                    setModalVisible(false);
+                    context.close();
+                }
             }
         });
     }
@@ -104,6 +120,22 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                     )}
                 </Form>
             </PopupModal>
+
+            {options && options.length > 0 && responseType === 'OPERATOR_SELECT' && (
+                <OperatorSelectView
+                    options={options}
+                    onChange={(operatorSelectMap) => {
+                        setOptions([]);
+                        setResponseType(null);
+                        if (Object.keys(operatorSelectMap).length > 0) {
+                            handleSubmit({
+                                ...request,
+                                operatorSelectMap,
+                            });
+                        }
+                    }}
+                />
+            )}
         </>
     )
 }
