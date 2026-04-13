@@ -5,6 +5,7 @@ import {ApprovalViewPluginAction, useApprovalContext} from "@coding-flow/flow-ap
 import {SignKeyView} from "@/plugins/view/sign-key-view";
 import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
 import {NodeOption} from "@coding-flow/flow-types";
+import {OperatorSelectView} from "@/plugins/view/operator-select-view";
 import {ManualView} from "@/plugins/view/manual-view";
 import {APPROVAL_ACTION_PASS_KEY} from "@/components/flow-approval";
 import {ViewBindPlugin} from "@coding-flow/flow-core";
@@ -28,6 +29,8 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
 
     const [request, setRequest] = React.useState<any>({});
 
+    const [responseType, setResponseType] = React.useState<string | null>(null);
+
     const isStartNode = state.flow?.nodeType === 'START';
 
     const currentOperator = state.flow?.currentOperator;
@@ -37,10 +40,12 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
     const handleSubmit = (params?: any) => {
         actionPresenter.action(action.id, params).then((res) => {
             if (res.success) {
-                const options = res.data?.options || [];
-                if (options.length > 0) {
+                const resOptions = res.data?.options || [];
+                if (resOptions.length > 0) {
+                    const resType = res.data?.responseType || 'OPERATOR_SELECT';
                     setRequest(params);
-                    setOptions(options);
+                    setOptions(resOptions);
+                    setResponseType(resType);
                 } else {
                     message.success("操作成功");
                     setModalVisible(false);
@@ -153,12 +158,28 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
 
             </Modal>
 
+            {options && options.length > 0 && responseType === 'OPERATOR_SELECT' && (
+                <OperatorSelectView
+                    options={options}
+                    onChange={(operatorSelectMap) => {
+                        setOptions([]);
+                        setResponseType(null);
+                        if (Object.keys(operatorSelectMap).length > 0) {
+                            handleSubmit({
+                                ...request,
+                                operatorSelectMap,
+                            });
+                        }
+                    }}
+                />
+            )}
 
-            {options && options.length > 0 && (
+            {options && options.length > 0 && responseType !== 'OPERATOR_SELECT' && (
                 <ManualView
                     options={options}
                     onChange={(value) => {
                         setOptions([]);
+                        setResponseType(null);
                         if (value) {
                             handleSubmit({
                                 ...request,
@@ -168,7 +189,6 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                     }}
                 />
             )}
-
         </>
     )
 }

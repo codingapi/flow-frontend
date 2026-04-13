@@ -1,6 +1,6 @@
 {
   "name": "@flow-example/app-pc",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "private": true,
   "type": "module",
   "scripts": {

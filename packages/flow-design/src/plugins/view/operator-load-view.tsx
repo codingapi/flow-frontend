@@ -2,10 +2,16 @@ import React from "react";
 import {OperatorLoadViewPlugin, VIEW_KEY} from "@/plugins/operator-load-view-type";
 import {Button, Form, Select, Space} from "antd";
 import {ViewBindPlugin} from "@coding-flow/flow-core";
-import {SCRIPT_DEFAULT_OPERATOR_LOAD} from "@/script-components/default-script";
+import {SCRIPT_DEFAULT_OPERATOR_LOAD, SCRIPT_INITIATOR_SELECT, SCRIPT_APPROVER_SELECT} from "@/script-components/default-script";
 import {GroovyScriptConvertorUtil} from "@coding-flow/flow-core";
 import {CodeOutlined, ReloadOutlined} from "@ant-design/icons";
 import {useScriptMetaData} from "@/script-components/hooks/use-script-meta-data";
+
+const SCRIPT_MAP: Record<string, string> = {
+    'creator': SCRIPT_DEFAULT_OPERATOR_LOAD,
+    'initiator_select': SCRIPT_INITIATOR_SELECT,
+    'approver_select': SCRIPT_APPROVER_SELECT,
+};
 
 export const OperatorLoadPluginView: React.FC<OperatorLoadViewPlugin> = (props) => {
 
@@ -35,11 +41,12 @@ export const OperatorLoadPluginView: React.FC<OperatorLoadViewPlugin> = (props) 
                         {
                             label: '流程创建者',
                             value: 'creator',
-                        },
+                        }                    
                     ]}
                     placeholder={"请选择人员类型"}
                     onChange={(value) => {
-                        props.onChange(SCRIPT_DEFAULT_OPERATOR_LOAD);
+                        const script = SCRIPT_MAP[value] || SCRIPT_DEFAULT_OPERATOR_LOAD;
+                        props.onChange(script);
                     }}
                 />
             </Form.Item>
