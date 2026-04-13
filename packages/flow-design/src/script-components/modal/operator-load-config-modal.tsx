@@ -32,7 +32,11 @@ const OperatorLoadConfigContent:React.FC<GroovyScriptContent> = (props)=>{
                 />
             )}
             {!isAdvance && (
-                <OperatorLoadPluginView script={props.script} onChange={props.onChange} />
+                <OperatorLoadPluginView
+                    script={props.script}
+                    onChange={props.onChange}
+                    action={props.action}
+                />
             )}
         </>
     );

@@ -4,3 +4,5 @@ export {type ReturnViewPlugin,VIEW_KEY as ReturnViewPluginKey} from "./return-ty
 export {type SignKeyViewPlugin,VIEW_KEY as SignKeyViewPluginKey} from "./sign-key-type";
 export {type TransferViewPlugin,VIEW_KEY as TransferViewPluginKey} from "./transfer-type";
 export {type OperatorSelectViewPlugin,VIEW_KEY as OperatorSelectViewPluginKey} from "./operator-select-type";
+export {type ManualViewPlugin,VIEW_KEY as ManualViewPluginKey} from "./manual-key-type";
+export * from "./approval-view-plugin-action";

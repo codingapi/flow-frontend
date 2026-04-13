@@ -37,12 +37,11 @@ export const CustomStyleButton: React.FC<CustomStyleButtonProps> = (props) => {
         return {}
     }, [display]);
 
-
     return (
         <Button
             onClick={props.onClick}
             style={style}
-            icon={<Icon type={display.icon} />}
+            icon={display.icon?<Icon type={display.icon} />:undefined}
         >
             {title}
         </Button>

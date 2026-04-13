@@ -1,6 +1,7 @@
 import React from 'react';
 import {Modal} from 'antd';
 import {GroovyVariableMapping, ScriptType} from "@/script-components/typings";
+import {DesignViewPluginAction} from "@/plugins";
 
 
 export interface GroovyScriptModalProps {
@@ -16,11 +17,11 @@ export interface GroovyScriptModalProps {
     /** 取消回调 */
     onCancel: () => void;
     // 宽度
-    width?:number|string;
+    width?: number | string;
     /** 弹框标题 */
     title?: string;
     /** 自定义内容组件（可选） */
-    content:React.ComponentType<GroovyScriptContent>;
+    content: React.ComponentType<GroovyScriptContent>;
 }
 
 
@@ -33,31 +34,45 @@ export interface GroovyScriptContent {
     variables: GroovyVariableMapping[];
     /** 确认回调 */
     onChange: (script: string) => void;
+    /** 动作控制 */
+    action?: React.Ref<DesignViewPluginAction>;
 }
 
-interface GroovyScriptContentComponentAction{
+interface GroovyScriptContentComponentAction {
     handleConfirm: () => void;
 }
 
-interface GroovyScriptContentComponentProps extends GroovyScriptModalProps{
-    actionRef:React.Ref<GroovyScriptContentComponentAction>;
+interface GroovyScriptContentComponentProps extends GroovyScriptModalProps {
+    actionRef: React.Ref<GroovyScriptContentComponentAction>;
 }
 
 const GroovyScriptContentComponent: React.FC<GroovyScriptContentComponentProps> = (props) => {
     const [content, setContent] = React.useState(props.script);
     const GroovyContent = props.content;
 
-    React.useImperativeHandle(props.actionRef,()=>{
+    const actionRef = React.useRef<DesignViewPluginAction>(null);
+
+    React.useImperativeHandle(props.actionRef, () => {
         return {
-            handleConfirm:() => {
+            handleConfirm: () => {
+                if (actionRef.current) {
+                    actionRef.current?.onValidate(content).then((res) => {
+                        if (res) {
+                            props.onConfirm(content);
+                            props.onCancel();
+                        }
+                    });
+                    return;
+                }
                 props.onConfirm(content);
                 props.onCancel();
             }
         }
-    },[content]);
+    }, [content]);
 
     return (
         <GroovyContent
+            action={actionRef}
             type={props.type}
             script={content}
             variables={props.variables}
@@ -87,6 +102,10 @@ export const GroovyScriptModal: React.FC<GroovyScriptModalProps> = (props) => {
             open={props.open}
             onCancel={props.onCancel}
             onOk={handleOk}
+            maskClosable={false}
+            mask={{
+                closable: false,
+            }}
             width={width}
             okText="确认"
             cancelText="取消"

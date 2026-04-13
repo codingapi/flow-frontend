@@ -2,10 +2,11 @@ import React from "react";
 import {FlowActionProps} from "./type";
 import {message} from "antd";
 import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
-import {GroovyScriptConvertorUtil} from "@coding-flow/flow-core";
+import {GroovyScriptConvertorUtil, ViewBindPlugin} from "@coding-flow/flow-core";
 import {ActionFactory} from "@/components/flow-approval/components/action/factory";
 import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
 import {ActionType} from "@coding-flow/flow-types";
+import {APPROVAL_ACTION_CUSTOM_KEY} from "@/components/flow-approval";
 
 /**
  * 自定义
@@ -22,6 +23,16 @@ export const CustomAction: React.FC<FlowActionProps> = (props) => {
     const returnData = GroovyScriptConvertorUtil.getReturnScript(script);
     const triggerType = returnData.replaceAll('\'', '');
 
+
+    const ActionView = ViewBindPlugin.getInstance().get(APPROVAL_ACTION_CUSTOM_KEY);
+
+    if (ActionView) {
+        return (
+            <ActionView
+                {...props}
+            />
+        )
+    }
 
     const FlowActionComponent =
         ActionFactory.getInstance().getFlowActionComponent({
@@ -42,6 +53,8 @@ export const CustomAction: React.FC<FlowActionProps> = (props) => {
             />
         )
     }
+
+
 
     return (
         <CustomStyleButton

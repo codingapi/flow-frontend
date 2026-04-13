@@ -1,11 +1,11 @@
 import React from "react";
 import {FlowActionProps} from "./type";
-import {Form, Toast, Modal} from "antd-mobile";
-import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
+import {Form, Toast} from "antd-mobile";
+import {ApprovalViewPluginAction, useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {TransferView} from "@/plugins/view/transfer-view";
-import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
-import { EventBus } from "@coding-flow/flow-core";
-import { PopupModal } from "@coding-flow/flow-mobile-ui";
+import {EventBus, ViewBindPlugin} from "@coding-flow/flow-core";
+import {PopupModal} from "@coding-flow/flow-mobile-ui";
+import {APPROVAL_ACTION_TRANSFER_KEY} from "@/components/flow-approval";
 
 /**
  * 转办
@@ -22,8 +22,23 @@ export const TransferAction: React.FC<FlowActionProps> = (props) => {
 
     const [modalVisible, setModalVisible] = React.useState(false);
 
-    React.useEffect(()=>{
-        EventBus.getInstance().on(action.id,()=>{
+
+    const actionRef = React.useRef<ApprovalViewPluginAction>(null);
+
+    const handlerOK = () => {
+        if (actionRef.current) {
+            actionRef.current.onValidate().then(res => {
+                if (res) {
+                    form.submit();
+                }
+            })
+            return;
+        }
+        form.submit();
+    }
+
+    React.useEffect(() => {
+        EventBus.getInstance().on(action.id, () => {
             form.resetFields();
             setModalVisible(true);
         });
@@ -31,7 +46,7 @@ export const TransferAction: React.FC<FlowActionProps> = (props) => {
         return () => {
             EventBus.getInstance().off(action.id);
         }
-    },[]);
+    }, []);
 
     const handleSubmit = (params?: any) => {
         actionPresenter.action(action.id, params).then((res) => {
@@ -42,6 +57,16 @@ export const TransferAction: React.FC<FlowActionProps> = (props) => {
             }
         });
     }
+
+    const ActionView = ViewBindPlugin.getInstance().get(APPROVAL_ACTION_TRANSFER_KEY);
+
+    if (ActionView) {
+        return (
+            <ActionView
+            />
+        )
+    }
+
     return (
         <>
             <PopupModal
@@ -49,7 +74,7 @@ export const TransferAction: React.FC<FlowActionProps> = (props) => {
                 open={modalVisible}
                 onClose={() => setModalVisible(false)}
                 onOk={() => {
-                    form.submit();
+                    handlerOK();
                 }}
             >
                 <Form
@@ -66,11 +91,13 @@ export const TransferAction: React.FC<FlowActionProps> = (props) => {
                         rules={[
                             {
                                 required: true,
-                                message:'转办人员不能为空'
+                                message: '转办人员不能为空'
                             }
                         ]}
                     >
-                        <TransferView/>
+                        <TransferView
+                            action={actionRef}
+                        />
                     </Form.Item>
                 </Form>
             </PopupModal>

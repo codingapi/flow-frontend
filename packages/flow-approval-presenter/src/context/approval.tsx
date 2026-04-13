@@ -20,6 +20,10 @@ export class ApprovalContextScope {
         return this.presenter;
     }
 
+    public getInitData(){
+        return this.props.initData;
+    }
+
 
     public close() {
         this.props.onClose?.();

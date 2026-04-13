@@ -58,7 +58,7 @@ export const FlowTable: React.FC<FlowTableProps> = (props) => {
             {!currentForm && (
                 <Table
                     columns={columns}
-                    dataSource={presenter.getDatasource()}
+                    dataSource={presenter.getDatasource(props.initData)}
                     rowKey={"recordId"}
                     rowSelection={{
                         type: "checkbox",

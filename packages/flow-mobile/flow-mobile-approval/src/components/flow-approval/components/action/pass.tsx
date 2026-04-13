@@ -2,12 +2,13 @@ import React from "react";
 import {Form, TextArea, Toast} from "antd-mobile";
 import {PopupModal} from "@coding-flow/flow-mobile-ui";
 import {FlowActionProps} from "./type";
-import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
+import {ApprovalViewPluginAction, useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {SignKeyView} from "@/plugins/view/sign-key-view";
-import {EventBus} from "@coding-flow/flow-core";
+import {EventBus, ViewBindPlugin} from "@coding-flow/flow-core";
 import {NodeOption} from "@coding-flow/flow-types";
 import {OperatorSelectView} from "@/plugins/view/operator-select-view";
-
+import {ManualView} from "@/plugins/view/manual-view";
+import {APPROVAL_ACTION_PASS_KEY} from "@/components/flow-approval";
 
 /**
  * 通过
@@ -21,11 +22,8 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
 
     const [modalVisible, setModalVisible] = React.useState(false);
-
     const [options, setOptions] = React.useState<NodeOption[]>([]);
-
     const [request, setRequest] = React.useState<any>({});
-
     const [responseType, setResponseType] = React.useState<string | null>(null);
 
     const isStartNode = state.flow?.nodeType === 'START';
@@ -34,8 +32,8 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
 
     const [form] = Form.useForm();
 
-    React.useEffect(()=>{
-        EventBus.getInstance().on(action.id,()=>{
+    React.useEffect(() => {
+        EventBus.getInstance().on(action.id, () => {
             if (isStartNode) {
                 handleSubmit();
             } else {
@@ -47,7 +45,22 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
         return () => {
             EventBus.getInstance().off(action.id);
         }
-    },[]);
+    }, []);
+
+    const actionRef = React.useRef<ApprovalViewPluginAction>(null);
+
+    const handlerOK = () => {
+        if (actionRef.current) {
+            actionRef.current.onValidate().then(res => {
+                if (res) {
+                    form.submit();
+                }
+            })
+            return;
+        }
+        form.submit();
+    }
+
 
     const handleSubmit = (params?: any) => {
         actionPresenter.action(action.id, params).then((res) => {
@@ -74,6 +87,16 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
         }
     ] : [];
 
+    const ActionView = ViewBindPlugin.getInstance().get(APPROVAL_ACTION_PASS_KEY);
+
+    if (ActionView) {
+        return (
+            <ActionView
+                {...props}
+            />
+        )
+    }
+
     return (
         <>
             <PopupModal
@@ -81,8 +104,8 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                 onClose={() => {
                     setModalVisible(false)
                 }}
-                onOk={()=>{
-                    form.submit();
+                onOk={() => {
+                    handlerOK();
                 }}
             >
                 <Form
@@ -115,6 +138,7 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                         >
                             <SignKeyView
                                 current={currentOperator}
+                                action={actionRef}
                             />
                         </Form.Item>
                     )}
@@ -131,6 +155,22 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                             handleSubmit({
                                 ...request,
                                 operatorSelectMap,
+                            });
+                        }
+                    }}
+                />
+            )}
+
+            {options && options.length > 0 && responseType !== 'OPERATOR_SELECT' && (
+                <ManualView
+                    options={options}
+                    onChange={(value) => {
+                        setOptions([]);
+                        setResponseType(null);
+                        if (value) {
+                            handleSubmit({
+                                ...request,
+                                manualNodeId: value,
                             });
                         }
                     }}

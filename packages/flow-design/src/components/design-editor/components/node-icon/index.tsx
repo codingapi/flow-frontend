@@ -13,6 +13,7 @@ import {
     PoweroffOutlined,
     PullRequestOutlined,
     ShareAltOutlined,
+    StarOutlined,
     UserOutlined
 } from "@ant-design/icons";
 
@@ -40,6 +41,9 @@ export const NodeIcon: React.FC<NodeIconProps> = (props) => {
     if (icon === 'CONDITION_BRANCH') {
         return <BranchesOutlined style={style}/>
     }
+    if (icon === 'CONDITION_ELSE_BRANCH') {
+        return <BranchesOutlined style={style}/>
+    }
     if (icon === 'DELAY') {
         return <ClockCircleOutlined style={style}/>
     }
@@ -49,10 +53,19 @@ export const NodeIcon: React.FC<NodeIconProps> = (props) => {
     if (icon === 'HANDLE') {
         return <EditOutlined style={style}/>
     }
+    if (icon === 'MANUAL') {
+        return <UserOutlined style={style}/>
+    }
+    if (icon === 'MANUAL_BRANCH') {
+        return <UserOutlined  style={style}/>
+    }
     if (icon === 'INCLUSIVE') {
         return <MergeOutlined style={style}/>
     }
     if (icon === 'INCLUSIVE_BRANCH') {
+        return <MergeOutlined style={style}/>
+    }
+    if (icon === 'INCLUSIVE_ELSE_BRANCH') {
         return <MergeOutlined style={style}/>
     }
     if (icon === 'NOTIFY') {
@@ -68,7 +81,7 @@ export const NodeIcon: React.FC<NodeIconProps> = (props) => {
         return <PullRequestOutlined style={style}/>
     }
     if (icon === 'START') {
-        return <UserOutlined style={style}/>
+        return <StarOutlined  style={style}/>
     }
     if (icon === 'SUB_PROCESS') {
         return <ShareAltOutlined style={style}/>

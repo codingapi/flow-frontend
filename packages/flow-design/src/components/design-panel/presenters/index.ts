@@ -158,7 +158,7 @@ export class Presenter {
         const block = nodeManager.toItemRender(flowNode);
         if (currentNode) {
             if (currentNode.blocks) {
-                const order = currentNode.blocks.length + 1;
+                const order = currentNode.blocks.length;
                 return {
                     ...block,
                     data: {

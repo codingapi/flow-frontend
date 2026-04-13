@@ -1,3 +1,6 @@
+import React from "react";
+import {DesignViewPluginAction} from "@/plugins/design-view-plugin-action";
+
 export const VIEW_KEY = 'ActionRejectViewPlugin';
 
 export interface ActionRejectViewPlugin {
@@ -7,4 +10,6 @@ export interface ActionRejectViewPlugin {
     value?: string;
     // 脚本更改回掉
     onChange?: (value: string) => void;
+    /** 动作控制 **/
+    action?:React.Ref<DesignViewPluginAction>;
 }

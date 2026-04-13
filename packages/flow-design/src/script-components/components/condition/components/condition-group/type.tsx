@@ -15,7 +15,8 @@ export const ConditionTypeView: React.FC<ConditionTypeViewProps> = (props) => {
     const presenter = context.getPresenter().getConditionGroupPresenter();
 
     const handleChangeType = (value: string) => {
-        presenter.updateType(props.id, value as RelationType);
+        const relationType = value as RelationType;
+        presenter.updateType(props.id, relationType);
     }
 
     return (

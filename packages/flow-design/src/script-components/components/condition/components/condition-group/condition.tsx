@@ -8,11 +8,13 @@ interface ConditionItemViewProps {
     data?: Condition;
     id: string;
     location: 'left' | 'right';
+    disabled?: boolean;
 }
 
 interface ConditionInputProps {
     value: string;
     onChange: (value: Condition) => void;
+    disabled?: boolean;
 }
 
 const VariableSelect: React.FC<ConditionInputProps> = (props) => {
@@ -52,6 +54,7 @@ const VariableSelect: React.FC<ConditionInputProps> = (props) => {
 
     return (
         <Select
+            disabled={props.disabled}
             showSearch={{
                 filterOption: (value: string, option) => {
                     if (option.value) {
@@ -82,6 +85,7 @@ const TypeInput: React.FC<ConditionInputProps> = (props) => {
 
     return (
         <Input
+            disabled={props.disabled}
             style={{width: "200px"}}
             value={props.value}
             placeholder={"请输入参数"}
@@ -118,6 +122,7 @@ export const ConditionItemView: React.FC<ConditionItemViewProps> = (props) => {
             <Select
                 style={{width: "100px"}}
                 value={type}
+                disabled={props.disabled}
                 options={[
                     {
                         label: '选择变量',
@@ -134,6 +139,7 @@ export const ConditionItemView: React.FC<ConditionItemViewProps> = (props) => {
             />
             {type === "variable" && (
                 <VariableSelect
+                    disabled={props.disabled}
                     value={props.data?.value || ''}
                     onChange={(value) => {
                         handleUpdate(value)
@@ -143,6 +149,7 @@ export const ConditionItemView: React.FC<ConditionItemViewProps> = (props) => {
 
             {type === "input" && (
                 <TypeInput
+                    disabled={props.disabled}
                     value={props.data?.value || ''}
                     onChange={(value) => {
                         handleUpdate(value)

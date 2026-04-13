@@ -1,10 +1,12 @@
 import React from "react";
 import {FlowActionProps} from "./type";
 import {Form, Toast} from "antd-mobile";
-import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
+import {ApprovalViewPluginAction, useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {AddAuditView} from "@/plugins/view/add-audit-view";
 import {PopupModal} from "@coding-flow/flow-mobile-ui";
 import {EventBus} from "@coding-flow/flow-core";
+import {ViewBindPlugin} from "@coding-flow/flow-core";
+import {APPROVAL_ACTION_ADD_AUDIT_KEY} from "@/components/flow-approval";
 
 /**
  * 加签
@@ -20,6 +22,20 @@ export const AddAuditAction: React.FC<FlowActionProps> = (props) => {
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
 
     const [modalVisible, setModalVisible] = React.useState(false);
+
+    const actionRef = React.useRef<ApprovalViewPluginAction>(null);
+
+    const handlerOK = ()=>{
+        if(actionRef.current){
+            actionRef.current.onValidate().then(res=>{
+                if(res){
+                    form.submit();
+                }
+            })
+            return;
+        }
+        form.submit();
+    }
 
     const handleSubmit = (params?: any) => {
         actionPresenter.action(action.id, params).then((res) => {
@@ -42,6 +58,16 @@ export const AddAuditAction: React.FC<FlowActionProps> = (props) => {
         }
     },[]);
 
+    const ActionView = ViewBindPlugin.getInstance().get(APPROVAL_ACTION_ADD_AUDIT_KEY);
+
+    if (ActionView) {
+        return (
+            <ActionView
+                {...props}
+            />
+        )
+    }
+
     return (
         <>
             <PopupModal
@@ -49,7 +75,7 @@ export const AddAuditAction: React.FC<FlowActionProps> = (props) => {
                 open={modalVisible}
                 onClose={() => setModalVisible(false)}
                 onOk={() => {
-                    form.submit();
+                    handlerOK();
                 }}
             >
                 <Form
@@ -70,7 +96,9 @@ export const AddAuditAction: React.FC<FlowActionProps> = (props) => {
                             }
                         ]}
                     >
-                        <AddAuditView/>
+                        <AddAuditView
+                            action={actionRef}
+                        />
                     </Form.Item>
                 </Form>
             </PopupModal>

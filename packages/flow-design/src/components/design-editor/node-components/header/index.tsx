@@ -54,6 +54,7 @@ const HeaderTitle: React.FC<HeaderTitleProps> = ({title, onChange, readonly}) =>
                     handleChange((e.target as HTMLInputElement).value);
                     setEditTitle(false);
                 }}
+                placeholder={"请输入标题名称"}
             />
         );
     }

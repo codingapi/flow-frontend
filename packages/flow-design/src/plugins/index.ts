@@ -8,3 +8,4 @@ export {type OperatorLoadViewPlugin,VIEW_KEY as OperatorLoadViewPluginKey} from 
 export {type RouterViewPlugin,VIEW_KEY as RouterViewPluginKey} from "./router-view-type";
 export {type SubProcessViewPlugin,VIEW_KEY as SubProcessViewPluginKey} from "./sub-process-view-type";
 export {type TriggerViewPlugin,VIEW_KEY as TriggerViewPluginKey} from "./trigger-view-type";
+export * from "./design-view-plugin-action";

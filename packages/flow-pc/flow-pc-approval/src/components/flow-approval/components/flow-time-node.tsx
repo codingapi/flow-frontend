@@ -104,7 +104,11 @@ export const FlowTimeNode: React.FC<FlowTimeNodeProps> = (props) => {
             </div>
             {operators.map(operator => {
                 return (
-                    <FlowOperatorItem operator={operator} state={node.state}/>
+                    <FlowOperatorItem
+                        key={operator.flowOperator.id}
+                        operator={operator}
+                        state={node.state}
+                    />
                 )
             })}
         </div>

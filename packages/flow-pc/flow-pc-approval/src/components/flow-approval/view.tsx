@@ -4,17 +4,7 @@ import {detail} from "@/api/record";
 import {FlowContent} from "@coding-flow/flow-types";
 import {ApprovalLayout} from "@/components/flow-approval/layout";
 import {useMockContext} from "@coding-flow/flow-approval-presenter";
-
-interface ApprovalPanelProps {
-    // 流程设计编码
-    workflowCode?: string;
-    // 流程记录Id
-    recordId?: string;
-    // 关闭回掉
-    onClose?: () => void;
-    // 是否预览（当查看详情非审批时，设置为true）
-    review?:boolean;
-}
+import {ApprovalPanelProps} from "@coding-flow/flow-approval-presenter";
 
 export const ApprovalPanel: React.FC<ApprovalPanelProps> = (props) => {
 
@@ -33,24 +23,35 @@ export const ApprovalPanel: React.FC<ApprovalPanelProps> = (props) => {
 
     return (
         <div>
-            {content && <ApprovalLayout
-                content={content}
-                onClose={props.onClose}
-                review={props.review}
-            />}
+            {content &&
+                (
+                    <ApprovalLayout
+                        className={props.className}
+                        content={content}
+                        onClose={props.onClose}
+                        review={props.review}
+                        initData={props.initData}
+                    />
+                )
+            }
         </div>
     )
 }
 
 interface ApprovalPanelDrawerProps extends ApprovalPanelProps {
+    // 是否打开抽屉
     open: boolean;
+    // 抽屉关闭回调
     onClose: () => void;
+    // 抽屉样式类对应
+    drawerClassName?: string;
 }
 
 export const ApprovalPanelDrawer: React.FC<ApprovalPanelDrawerProps> = (props) => {
 
     return (
         <Drawer
+            className={props.drawerClassName}
             open={props.open}
             onClose={props.onClose}
             styles={{

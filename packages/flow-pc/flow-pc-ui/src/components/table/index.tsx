@@ -44,7 +44,7 @@ export function Table<RecordType extends object = any>(props: TableProps<RecordT
                 setTotal(res.total);
                 setDataSource(res.data);
             }
-        })
+        });
     };
 
     React.useEffect(() => {
@@ -70,7 +70,7 @@ export function Table<RecordType extends object = any>(props: TableProps<RecordT
                 <AntdTable<RecordType>
                     dataSource={dataSource}
                     pagination={
-                        {
+                        props.request?{
                             pageSize: pageSize,
                             current: current,
                             total: total,
@@ -85,7 +85,7 @@ export function Table<RecordType extends object = any>(props: TableProps<RecordT
                                 });
                             },
                             ...props.pagination
-                        }
+                        }:false
                     }
                     {...props}
                 />

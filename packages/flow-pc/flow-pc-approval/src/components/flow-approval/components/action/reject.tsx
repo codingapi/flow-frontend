@@ -3,6 +3,8 @@ import {FlowActionProps} from "./type";
 import {Form, Input, message, Modal} from "antd";
 import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
+import {APPROVAL_ACTION_REJECT_KEY} from "@/components/flow-approval";
+import {ViewBindPlugin} from "@coding-flow/flow-core";
 
 const {TextArea} = Input;
 
@@ -36,12 +38,23 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
         }
     ] : [];
 
+
+    const ActionView = ViewBindPlugin.getInstance().get(APPROVAL_ACTION_REJECT_KEY);
+
+    if (ActionView) {
+        return (
+            <ActionView
+                {...props}
+            />
+        )
+    }
+
     return (
         <>
             <CustomStyleButton
                 display={props.action.display}
                 onClick={() => {
-                    if(props.onClickCheck?.(action.id)) {
+                    if (props.onClickCheck?.(action.id)) {
                         form.resetFields();
                         setModalVisible(true);
                     }
@@ -52,6 +65,10 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
             <Modal
                 title={"审批拒绝"}
                 open={modalVisible}
+                maskClosable={false}
+                mask={{
+                    closable: false,
+                }}
                 onCancel={() => setModalVisible(false)}
                 onOk={() => {
                     form.submit();

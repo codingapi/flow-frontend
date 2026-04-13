@@ -9,9 +9,6 @@ export const ParallelBranchNodeRegistry: FlowNodeRegistry = {
         copyDisable: true,
         addDisable: true,
         sidebarDisable:true,
-        strategies:[
-            'ParallelBranchStrategy'
-        ],
         style:{
             width: '100%',
         }

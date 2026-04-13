@@ -1,3 +1,6 @@
+import React from "react";
+import {DesignViewPluginAction} from "@/plugins/design-view-plugin-action";
+
 export const VIEW_KEY = 'OperatorLoadViewPlugin';
 
 export interface OperatorLoadViewPlugin {
@@ -5,4 +8,6 @@ export interface OperatorLoadViewPlugin {
     script: string;
     /** 确认回调 */
     onChange: (script: string) => void;
+    /** 动作控制 **/
+    action?:React.Ref<DesignViewPluginAction>;
 }

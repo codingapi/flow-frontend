@@ -34,7 +34,11 @@ const OperatorCreateConfigContent :React.FC<GroovyScriptContent> = (props)=>{
                 />
             )}
             {!isAdvance && (
-                <OperatorCreatePluginView script={props.script} onChange={props.onChange} />
+                <OperatorCreatePluginView
+                    script={props.script}
+                    onChange={props.onChange}
+                    action={props.action}
+                />
             )}
         </>
     );

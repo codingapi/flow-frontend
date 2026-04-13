@@ -11,6 +11,10 @@ export const ActionConfigModal: React.FC<ActionModalProps> = (props) => {
             onCancel={props.onCancel}
             title={"编辑按钮"}
             width={"70%"}
+            maskClosable={false}
+            mask={{
+                closable: false,
+            }}
             destroyOnHidden={true}
             onOk={()=>{
                 props.form.submit();

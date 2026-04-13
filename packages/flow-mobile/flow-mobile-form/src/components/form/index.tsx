@@ -13,6 +13,7 @@ export const FlowFormView: React.FC<FormViewProps> = (props) => {
         return (
             <FlowList
                 formList={formList}
+                initData={props.initData}
                 meta={props.meta}
                 onValuesChange={props.onValuesChange}
                 review={props.review}
@@ -28,6 +29,7 @@ export const FlowFormView: React.FC<FormViewProps> = (props) => {
                 form={form}
                 data={props.data}
                 meta={props.meta}
+                initData={props.initData}
                 onValuesChange={props.onValuesChange}
                 review={props.review}
                 fieldPermissions={props.fieldPermissions}

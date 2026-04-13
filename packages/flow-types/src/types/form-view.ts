@@ -4,7 +4,7 @@ import {FieldPermission, FlowForm, FlowTodo} from "@/types/flow-approval";
 /**
  *  合并表单操作数据
  */
-export interface FormData{
+export interface FormData {
     /** 表单操控对象 */
     form: FormInstance;
     /** 待办数据 */
@@ -16,13 +16,15 @@ export interface FormData{
  */
 export interface FormViewProps {
     /** 流程合并 */
-    mergeable:boolean;
+    mergeable: boolean;
     /** 合并表单操控对象 */
-    formList?:FormData[];
+    formList?: FormData[];
     /** 表单操控对象 */
     form?: FormInstance;
     /** 待办数据 */
     data?: FlowTodo;
+    /** 初始化数据 **/
+    initData?: any;
     /** 表单数据更新事件 */
     onValuesChange?: (values: any) => void;
     /** 当合并流程选中了流程记录的回掉 **/

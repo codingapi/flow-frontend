@@ -8,6 +8,8 @@ export type NodeType =
     "CONDITION" |
     // 分支节点
     "CONDITION_BRANCH" |
+    // else分支节点
+    "CONDITION_ELSE_BRANCH" |
     // 延迟节点
     "DELAY" |
     // 结束
@@ -18,6 +20,12 @@ export type NodeType =
     "INCLUSIVE" |
     // 包容分支
     "INCLUSIVE_BRANCH" |
+    // else包容分支
+    "INCLUSIVE_ELSE_BRANCH" |
+    // 人工控制
+    "MANUAL" |
+    // 人工分支
+    "MANUAL_BRANCH" |
     // 抄送
     "NOTIFY" |
     // 并行控制

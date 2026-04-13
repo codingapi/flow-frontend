@@ -33,6 +33,7 @@ const ApprovalLayoutScope: React.FC<ApprovalLayoutProps> = (props) => {
     return (
         <ApprovalContext.Provider value={context}>
             <div
+                className={props.className}
                 style={{
                     margin:0,
                     padding: 0,

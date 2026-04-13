@@ -9,6 +9,8 @@ interface FlowFormViewProps{
     data?:FlowTodo
     /** 表单操控对象 */
     form: FormInstance;
+    /** 初始化数据 **/
+    initData?:any;
     /** 表单数据更新事件 */
     onValuesChange?: (values: any) => void;
     /** 表单元数据对象 */
