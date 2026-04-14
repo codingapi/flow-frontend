@@ -1,6 +1,6 @@
 {
   "name": "@coding-flow/flow-core",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "flow-engine core lib framework ",
   "type": "module",
   "keywords": [

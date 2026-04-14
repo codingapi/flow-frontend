@@ -19,7 +19,7 @@ export interface FieldPermission {
 /**
  *  附加属性
  */
-export interface FieldAttribute{
+export interface FieldAttribute {
     // 属性key
     key: string;
     // 属性名称
@@ -27,6 +27,7 @@ export interface FieldAttribute{
     // 属性值
     value?: string;
 }
+
 /**
  *  流程表单字段元数据
  */
@@ -38,7 +39,7 @@ export interface FormField {
     // 字段编码
     code: string;
     // 字段类型
-    type:string;
+    type: string;
     // 数据类型
     dataType: DataType;
     // 是否隐藏
@@ -240,6 +241,10 @@ export interface FlowContent {
     workCode: string;
     // 流程设计标题
     workTitle: string;
+    // 流程设计备注
+    workDescription: string;
+    // 流程创建时间，发起时为0
+    createTime: number;
     // 节点id
     nodeId: string;
     // 节点名称

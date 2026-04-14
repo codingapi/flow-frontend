@@ -43,6 +43,10 @@ export const WorkflowList = () => {
             title: '流程标题',
         },
         {
+            dataIndex: 'description',
+            title: '流程描述',
+        },
+        {
             dataIndex: 'code',
             title: '流程编码',
         },

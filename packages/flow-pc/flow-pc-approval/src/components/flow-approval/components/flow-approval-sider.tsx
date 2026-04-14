@@ -3,18 +3,30 @@ import {FlowNodeHistory, FlowNodeHistoryAction} from "@/components/flow-approval
 import {ApprovalSidebarCollapsedWidth, ApprovalSidebarWidth,} from "@/components/flow-approval/typings";
 import {Button, Flex, Layout, Typography} from "antd";
 import {LeftOutlined, RightOutlined} from "@ant-design/icons";
+import {APPROVAL_BODY_SIDER_VIEW_KEY} from "@/components/flow-approval";
+import {ViewBindPlugin} from "@coding-flow/flow-core";
 
 const {Sider} = Layout;
 const {Title} = Typography;
 
-interface FlowApprovalSiderProps{
+interface FlowApprovalSiderProps {
     flowNodeHistoryAction: React.RefObject<FlowNodeHistoryAction>;
 }
 
-export const FlowApprovalSider:React.FC<FlowApprovalSiderProps> = (props)=>{
+export const FlowApprovalSider: React.FC<FlowApprovalSiderProps> = (props) => {
     const [collapsed, setCollapsed] = useState(false);
 
     const flowNodeHistoryAction = props.flowNodeHistoryAction;
+
+    const FlowApprovalSiderView = ViewBindPlugin.getInstance().get(APPROVAL_BODY_SIDER_VIEW_KEY);
+
+    if (FlowApprovalSiderView) {
+        return (
+            <FlowApprovalSiderView
+                {...props}
+            />
+        )
+    }
 
     return (
         <Sider

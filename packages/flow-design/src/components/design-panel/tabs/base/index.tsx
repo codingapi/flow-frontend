@@ -83,6 +83,13 @@ export const TabBase = () => {
                     <Input placeholder={"请输入流程标题"}/>
                 </CardForm.Item>
 
+                <CardForm.Item
+                    name={"description"}
+                    label={"流程备注"}
+                >
+                    <Input.TextArea placeholder={"请输入流程备注"}/>
+                </CardForm.Item>
+
 
                 <CardForm.Item
                     name={"code"}

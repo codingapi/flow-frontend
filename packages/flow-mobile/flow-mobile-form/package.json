@@ -1,6 +1,6 @@
 {
   "name": "@coding-flow/flow-mobile-form",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "flow-engine mobile form engine",
   "type": "module",
   "keywords": [
@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "~6.1.0",
-    "@coding-form/form-engine": "^0.0.15",
+    "@coding-form/form-engine": "^0.0.16",
     "@coding-flow/flow-core": "workspace:*",
     "@coding-flow/flow-types": "workspace:*",
     "antd-mobile": "^5.42.3",
