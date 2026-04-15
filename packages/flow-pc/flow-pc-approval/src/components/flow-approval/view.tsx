@@ -53,6 +53,7 @@ export const ApprovalPanelDrawer: React.FC<ApprovalPanelDrawerProps> = (props) =
         <Drawer
             rootClassName={props.drawerClassName}
             open={props.open}
+            mask={false}
             onClose={props.onClose}
             styles={{
                 body: {

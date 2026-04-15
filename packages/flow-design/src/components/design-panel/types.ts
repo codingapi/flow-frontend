@@ -14,6 +14,10 @@ export interface DesignPanelProps {
     open: boolean;
     // 关闭
     onClose?: () => void;
+    // drawer样式类
+    drawerClassName?:string;
+    // 样式类
+    className?:string;
 }
 
 

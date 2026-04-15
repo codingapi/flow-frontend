@@ -1,6 +1,6 @@
 {
   "name": "@coding-flow/root",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "flow-engine root",
   "main": "index.js",
   "scripts": {

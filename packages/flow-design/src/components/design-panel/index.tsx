@@ -9,6 +9,8 @@ export const DesignPanel:React.FC<DesignPanelProps>  = (props) =>{
         <Drawer
             open={props.open}
             onClose={props.onClose}
+            mask={false}
+            rootClassName={props.drawerClassName}
         >
             <DesignPanelLayout {...props}/>
         </Drawer>

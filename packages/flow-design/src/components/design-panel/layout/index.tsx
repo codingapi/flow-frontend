@@ -13,9 +13,11 @@ const DesignPanelLayoutScope: React.FC<DesignPanelProps> = (props) => {
     const {context} = createDesignContext(props);
     return (
         <DesignPanelContext.Provider value={context}>
-            <Header/>
-            <Body/>
-            <Footer/>
+            <div className={props.className}>
+                <Header/>
+                <Body/>
+                <Footer/>
+            </div>
         </DesignPanelContext.Provider>
     )
 }
