@@ -1,6 +1,6 @@
 import {DesignPanelApi, FlowNode, initStateData, State, TabPanelType} from "../types";
 import {Dispatch} from "@coding-flow/flow-core";
-import {FormActionContext} from "@coding-flow/flow-types";
+import {FlowForm, FormActionContext} from "@coding-flow/flow-types";
 import {WorkflowFormManager} from "@/components/design-panel/manager/form";
 import {NodeConvertorManager, NodeManger} from "@/components/design-panel/manager/node";
 import {WorkflowConvertor} from "@/components/design-panel/presenters/convertor";
@@ -127,6 +127,17 @@ export class Presenter {
         const workflowFormManager = new WorkflowFormManager(this.state.workflow.form);
         const form = workflowFormManager.updateFieldValue(code, values);
         this.updateWorkflowForm(form);
+    }
+
+    public importWorkflowForm(selectedForm: FlowForm) {
+        const updatedForm: FlowForm = {
+            ...this.state.workflow.form,
+            name: selectedForm.name,
+            code: selectedForm.code,
+            fields: selectedForm.fields || [],
+            subForms: selectedForm.subForms || [],
+        };
+        this.updateWorkflowForm(updatedForm);
     }
 
     public async save(versionName?:string) {

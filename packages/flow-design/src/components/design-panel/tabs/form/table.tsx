@@ -4,7 +4,7 @@ import {Button, Flex, Form, Popconfirm, Space} from "antd";
 import {dataTypeOptions,FormTypeContext} from "@coding-flow/flow-types";
 import {useDesignContext} from "@/components/design-panel/hooks/use-design-context";
 import {WorkflowFormManager} from "@/components/design-panel/manager/form";
-import {DeleteOutlined, FolderAddOutlined, PlusOutlined} from "@ant-design/icons";
+import {CloudUploadOutlined, DeleteOutlined, FolderAddOutlined, PlusOutlined} from "@ant-design/icons";
 import {FormFieldModal} from "./model";
 import { SubFormModal } from "./sub-form";
 
@@ -12,6 +12,8 @@ interface FormTableProps {
     name: string;
     code: string;
     mainForm: boolean;
+    hasImportForm?: boolean;
+    onImportClick?: () => void;
 }
 export const FormTable: React.FC<FormTableProps> = (props) => {
 
@@ -131,14 +133,24 @@ export const FormTable: React.FC<FormTableProps> = (props) => {
                             </Space>
                             <Space>
                                 {props.mainForm && (
-                                    <Button
-                                        icon={<FolderAddOutlined />}
-                                        onClick={() => {
-                                            subForm.resetFields();
-                                            setSubFormVisible(true)
-                                        }}>
-                                        添加子表
-                                    </Button>
+                                    <>
+                                        {props.hasImportForm && (
+                                            <Button
+                                                icon={<CloudUploadOutlined />}
+                                                onClick={props.onImportClick}
+                                            >
+                                                导入表单
+                                            </Button>
+                                        )}
+                                        <Button
+                                            icon={<FolderAddOutlined />}
+                                            onClick={() => {
+                                                subForm.resetFields();
+                                                setSubFormVisible(true)
+                                            }}>
+                                            添加子表
+                                        </Button>
+                                    </>
                                 )}
                                 {!props.mainForm && (
                                     <Popconfirm
