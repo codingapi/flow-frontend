@@ -10,11 +10,12 @@ Flow Engine 根据变更性质走不同流程：
 
 **判定条件（必须全部满足）：**
 
-- 所有变更文件路径前缀属于 `docs/`、`README.md`、`CLAUDE.md`、`.claude/`、`.md`（根目录）
+- 所有变更文件路径前缀属于 `docs/`、`README.md`、`.claude/` 目录
 - 不含 `packages/**`、`src/**`、`package.json`、`pnpm-workspace.yaml`、`tsconfig*.json` 等源码/构建文件
 - 不含任何可执行脚本、CI 配置（`.github/**`）
+- **不允许在 main 分支直接提交**，只允许在 dev 分支
 
-满足条件时：允许在当前分支（含 main、dev、任意 feature）直接 commit & push，无需创建 worktree 或 feature 分支，无需走 PR。
+满足条件时：允许在当前分支（仅限 dev 或 feature 分支）直接 commit & push，无需创建 worktree 或 feature 分支，无需走 PR。
 
 ### 路径 B：源码/工程类变更 → 严格走 feature → PR → dev 流程
 
@@ -62,15 +63,17 @@ git branch --show-current  # 告知用户当前分支
 
 ```bash
 git add {具体文档文件}     # 精确 add，不要 git add .
-git commit -m "docs: ..."
+git commit -m "$(cat <<'EOF'
+docs: {简洁描述}
+
+- {要点1}
+- {要点2}
+
+Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+EOF
+)"
 git push origin {current_branch}
 ```
-
-commit message 规范：
-
-- 首行：`docs: {简洁描述}`（50 字内，中文）
-- 空行 + 可选正文列出要点
-- 末行：`Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>`
 
 **A-3：告知用户已提交**
 
@@ -112,20 +115,23 @@ git diff HEAD
 
 向用户展示变更摘要并明确询问：「确认提交并创建 PR（base: dev）吗？」等待"确认"或"yes"后继续。
 
-**B-4：Commit**
+**B-4：Commit（如用户确认）**
 
 精确 add 涉及的文件（不要 `git add -A`）：
 
 ```bash
 git add {具体变更文件}
-git commit -m "..."
+git commit -m "$(cat <<'EOF'
+feat: {简洁描述}
+
+- {要点1}
+- {要点2}
+- {要点3}
+
+Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+EOF
+)"
 ```
-
-commit message 规范：
-
-- 首行：动词开头（feat: / fix: / refactor: / test: / chore: 前缀），50 字内，中文
-- 空行 + 正文列出要点
-- 末行：`Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>`
 
 **B-5：推送 feature 分支**
 
@@ -167,7 +173,7 @@ EOF
 ## 通用注意事项
 
 - **严禁向 main 分支创建 PR**，PR 的 `--base` 固定为 dev
-- 路径 A 允许在 main 分支直接 commit（仅限文档），路径 B 严禁
+- 路径 A 仅限 dev 或 feature 分支，**严禁在 main 分支直接提交**
 - commit 只 add 本次任务相关的文件，不要 `git add -A`
 - 未经用户明确确认，不得执行 commit 和 push
 - 混合变更必须拆分提交，不得一次性混入
