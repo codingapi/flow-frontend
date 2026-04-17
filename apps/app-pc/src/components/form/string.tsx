@@ -10,11 +10,11 @@ const $Input: React.FC<FormItemInputProps> = (props) => {
 
     const AttributeHelper = React.useMemo(() => {
         return {
-            getAttribute: (key: string, defaultValue: any) => {
+            getAttribute: (label: string, defaultValue: any) => {
                 const attributes = props.attributes || [];
 
                 for (const attribute of attributes) {
-                    if (attribute.key === key) {
+                    if (attribute.label === label) {
                         return attribute.value;
                     }
                 }
