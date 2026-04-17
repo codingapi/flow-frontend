@@ -8,9 +8,25 @@ const $Input: React.FC<FormItemInputProps> = (props) => {
 
     const value = props.value || undefined;
 
+    const AttributeHelper = React.useMemo(() => {
+        return {
+            getAttribute: (key: string, defaultValue: any) => {
+                const attributes = props.attributes || [];
+
+                for (const attribute of attributes) {
+                    if (attribute.key === key) {
+                        return attribute.value;
+                    }
+                }
+                return defaultValue;
+            }
+        }
+    }, [props.attributes]);
+
     return (
         <Input
             value={value}
+            maxLength={AttributeHelper.getAttribute('maxLength', 100)}
             disabled={props.readOnly}
             placeholder={props.placeholder}
             defaultValue={props.defaultValue}

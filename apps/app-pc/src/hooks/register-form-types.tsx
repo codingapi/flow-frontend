@@ -25,7 +25,15 @@ export const registerFormTypes = ()=>{
             {
                 name: "字符串",
                 dataType:'STRING',
-                type:'string'
+                type:'string',
+                // 该字段是用于表单引擎管理界面时支持的属性控制能力
+                attributes:[
+                    {
+                        key:'maxLength',
+                        label:'最大长度',
+                        type:'number'
+                    }
+                ]
             },
             {
                 name: "布尔值",
