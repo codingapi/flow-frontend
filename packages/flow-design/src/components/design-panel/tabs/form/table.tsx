@@ -1,12 +1,14 @@
 import React, {useState} from "react";
 import {Table, TableProps} from "@coding-flow/flow-pc-ui";
-import {Button, Flex, Form, Popconfirm, Space} from "antd";
+import {Button, Flex, Form, Popconfirm, Space,Typography} from "antd";
 import {dataTypeOptions,FormTypeContext} from "@coding-flow/flow-types";
 import {useDesignContext} from "@/components/design-panel/hooks/use-design-context";
 import {WorkflowFormManager} from "@/components/design-panel/manager/form";
 import {CloudUploadOutlined, DeleteOutlined, FolderAddOutlined, PlusOutlined} from "@ant-design/icons";
 import {FormFieldModal} from "./model";
 import { SubFormModal } from "./sub-form";
+
+const {Title} = Typography
 
 interface FormTableProps {
     name: string;
@@ -129,7 +131,7 @@ export const FormTable: React.FC<FormTableProps> = (props) => {
                             align={'center'}
                         >
                             <Space>
-                                {name}
+                                <Title level={5}>{name}</Title>
                             </Space>
                             <Space>
                                 {props.mainForm && (

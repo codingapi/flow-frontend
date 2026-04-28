@@ -104,34 +104,6 @@ export const TabBase = () => {
                     <Input placeholder={"请输入流程编码"}/>
                 </CardForm.Item>
 
-                <CardForm.Item
-                    name={["form", "name"]}
-                    label={"表单名称"}
-                    tooltip={"表单名称是主表的名称"}
-                    rules={[
-                        {
-                            required: true,
-                            message: '请输入表单名称'
-                        }
-                    ]}
-                >
-                    <Input placeholder={"请输入表单名称"}/>
-                </CardForm.Item>
-
-                <CardForm.Item
-                    name={["form", "code"]}
-                    label={"表单编码"}
-                    tooltip={"表单编码是主表的编码"}
-                    rules={[
-                        {
-                            required: true,
-                            message: '请输入表单编码'
-                        }
-                    ]}
-                >
-                    <Input placeholder={"请输入表单编码"}/>
-                </CardForm.Item>
-
             </CardForm>
 
             <CardForm

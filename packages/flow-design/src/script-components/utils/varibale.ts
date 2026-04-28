@@ -81,12 +81,20 @@ export class GroovyVariableUtil {
                 order: 11,
             },
             {
+                label: '流程Id',
+                value: 'request.getWorkflowId()',
+                expression: '${流程Id}',
+                tag: VariableTag.WORKFLOW,
+                type:'STRING',
+                order: 12,
+            },
+            {
                 label: '当前节点',
                 value: 'request.getNodeName()',
                 expression: '${当前节点}',
                 tag: VariableTag.WORKFLOW,
                 type:'STRING',
-                order: 12,
+                order: 13,
             },
             {
                 label: '节点类型',
@@ -94,7 +102,7 @@ export class GroovyVariableUtil {
                 expression: '${节点类型}',
                 tag: VariableTag.WORKFLOW,
                 type:'STRING',
-                order: 13,
+                order: 14,
             },
             {
                 label: '是否模拟测试',
@@ -102,7 +110,7 @@ export class GroovyVariableUtil {
                 expression: '${是否模拟测试}',
                 type:'BOOLEAN',
                 tag: VariableTag.WORKFLOW,
-                order: 14,
+                order: 15,
             }
         ];
     }

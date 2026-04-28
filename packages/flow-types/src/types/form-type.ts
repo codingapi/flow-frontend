@@ -28,6 +28,19 @@ export const dataTypeOptions = [
     },
 ]
 
+
+/**
+ *  表单类型附加属性,流程表单传递给form-engine的属性，主要用于一些复杂的表单控制界面，比如级联选择器的级联关系，或者一些特殊组件的属性配置
+ */
+export interface FormTypeAttribute {
+    // 属性key
+    key: string;
+    // 属性名称
+    label: string;
+    // 其他属性
+    [key: string]: any;
+}
+
 /**
  * 表单类型
  */
@@ -38,6 +51,8 @@ export interface FormType {
     type: string;
     // 数据类型
     dataType: DataType;
+    // 附加属性
+    attributes?: FormTypeAttribute[];
 }
 
 /**
