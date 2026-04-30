@@ -79,8 +79,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/flow-types
       '@coding-form/form-engine':
-        specifier: ^0.0.16
-        version: 0.0.16(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(redux@5.0.1)
+        specifier: ^0.0.18
+        version: 0.0.18(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(redux@5.0.1)
       antd-mobile:
         specifier: ^5.42.3
         version: 5.42.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -121,8 +121,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/flow-types
       '@coding-form/form-engine':
-        specifier: ^0.0.16
-        version: 0.0.16(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(redux@5.0.1)
+        specifier: ^0.0.18
+        version: 0.0.18(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(redux@5.0.1)
       antd:
         specifier: ^6.2.1
         version: 6.3.4(date-fns@2.30.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -314,8 +314,8 @@ importers:
         specifier: workspace:*
         version: link:../../flow-types
       '@coding-form/form-engine':
-        specifier: ^0.0.16
-        version: 0.0.16(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(redux@5.0.1)
+        specifier: ^0.0.18
+        version: 0.0.18(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(redux@5.0.1)
       '@reduxjs/toolkit':
         specifier: ^2.11.2
         version: 2.11.2(react-redux@9.2.0(@types/react@18.3.28)(react@18.3.1)(redux@5.0.1))(react@18.3.1)
@@ -350,8 +350,8 @@ importers:
         specifier: workspace:*
         version: link:../../flow-types
       '@coding-form/form-engine':
-        specifier: ^0.0.16
-        version: 0.0.16(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(redux@5.0.1)
+        specifier: ^0.0.18
+        version: 0.0.18(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(redux@5.0.1)
       antd-mobile:
         specifier: ^5.42.3
         version: 5.42.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -404,8 +404,8 @@ importers:
         specifier: workspace:*
         version: link:../../flow-types
       '@coding-form/form-engine':
-        specifier: ^0.0.16
-        version: 0.0.16(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(redux@5.0.1)
+        specifier: ^0.0.18
+        version: 0.0.18(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(redux@5.0.1)
       '@reduxjs/toolkit':
         specifier: ^2.11.2
         version: 2.11.2(react-redux@9.2.0(@types/react@18.3.28)(react@18.3.1)(redux@5.0.1))(react@18.3.1)
@@ -440,8 +440,8 @@ importers:
         specifier: workspace:*
         version: link:../../flow-types
       '@coding-form/form-engine':
-        specifier: ^0.0.16
-        version: 0.0.16(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(redux@5.0.1)
+        specifier: ^0.0.18
+        version: 0.0.18(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(redux@5.0.1)
       antd:
         specifier: ^6.2.1
         version: 6.3.4(date-fns@2.30.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -713,8 +713,8 @@ packages:
   '@codemirror/view@6.40.0':
     resolution: {integrity: sha512-WA0zdU7xfF10+5I3HhUUq3kqOx3KjqmtQ9lqZjfK7jtYk4G72YW9rezcSywpaUMCWOMlq+6E0pO1IWg1TNIhtg==}
 
-  '@coding-form/form-engine@0.0.16':
-    resolution: {integrity: sha512-pfil8y3QVmWe69J/z7CaWFTd6ORHAinS91AgFEWwn8QRQi6fjhkM4+b4wjxiYHTdlk1tRD8dhwLwNDYmCfJQVQ==}
+  '@coding-form/form-engine@0.0.18':
+    resolution: {integrity: sha512-Th7YgQCBAi1SA5vYX4HOr9rLxSfmXuTi6Wu3p3j5VZxPwKt9LbN8bCV0P2DURIQKPDopEzRPkM4B11ax7/xGWw==}
     peerDependencies:
       react: '>=18'
       react-dom: '>=18'
@@ -4374,7 +4374,7 @@ snapshots:
       style-mod: 4.1.3
       w3c-keyname: 2.2.8
 
-  '@coding-form/form-engine@0.0.16(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(redux@5.0.1)':
+  '@coding-form/form-engine@0.0.18(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(redux@5.0.1)':
     dependencies:
       '@reduxjs/toolkit': 2.11.2(react-redux@9.2.0(@types/react@18.3.28)(react@18.3.1)(redux@5.0.1))(react@18.3.1)
       react: 18.3.1
