@@ -19,7 +19,7 @@ const SaveAsButton = () => {
 
     const [visible, setVisible] = React.useState(false);
     const [form] = Form.useForm();
-    const {context} = useDesignContext();
+    const {context, state} = useDesignContext();
 
     React.useEffect(()=>{
         if(!visible){
@@ -73,6 +73,7 @@ const SaveAsButton = () => {
                                     form.submit();
                                 }}
                                 type="primary"
+                                loading={state.view.loading}
                             >确定</Button>
                             <Button
                                 onClick={() => {
@@ -107,6 +108,7 @@ const Right = () => {
             <Button
                 icon={<SaveOutlined/>}
                 type="primary"
+                loading={state.view.loading}
                 onClick={() => {
                     context.save().then(() => {
                         message.success("流程已经保存.");

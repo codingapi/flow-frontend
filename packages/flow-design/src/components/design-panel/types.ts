@@ -70,6 +70,8 @@ export interface FlowNode {
 export interface State {
     view: {
         tabPanel: TabPanelType;
+        loading: boolean;
+        loadingText?: string;
     },
     workflow: Workflow
 }
@@ -77,7 +79,8 @@ export interface State {
 // 初始化数据
 export const initStateData: State = {
     view: {
-        tabPanel: 'base'
+        tabPanel: 'base',
+        loading: false,
     },
     workflow: {
         id: '',

@@ -152,21 +152,33 @@ export class Presenter {
         this.updateWorkflowForm(updatedForm);
     }
 
-    public async save(versionName?: string) {
-        const values = this.formActionContext.save() as any;
-        this.updateWorkflow(values);
-        const latest = {
-            ...this.state,
-            workflow: this.mergeWorkflow(this.state.workflow, values),
-        };
-        const convertor = new WorkflowConvertor(latest.workflow);
-        const apiData = convertor.toApi();
+    private setLoading(loading: boolean, loadingText?: string) {
+        this.dispatch((prevState: State) => ({
+            ...prevState,
+            view: { ...prevState.view, loading, loadingText },
+        }));
+    }
 
-        await this.api.save({
-            ...apiData,
-            versionName
-        });
-        console.log('save latest:', apiData);
+    public async save(versionName?: string) {
+        this.setLoading(true, '正在保存...');
+        try {
+            const values = this.formActionContext.save() as any;
+            this.updateWorkflow(values);
+            const latest = {
+                ...this.state,
+                workflow: this.mergeWorkflow(this.state.workflow, values),
+            };
+            const convertor = new WorkflowConvertor(latest.workflow);
+            const apiData = convertor.toApi();
+
+            await this.api.save({
+                ...apiData,
+                versionName
+            });
+            console.log('save latest:', apiData);
+        } finally {
+            this.setLoading(false);
+        }
     }
 
     public getNodeManager() {
@@ -201,18 +213,24 @@ export class Presenter {
     }
 
     public loadDesign(id: string) {
+        this.setLoading(true, '正在加载流程...');
         this.api.load(id).then(result => {
             const convertor = new WorkflowConvertor(result);
             const renderData = convertor.toRender();
             this.updateWorkflow(renderData);
+        }).finally(() => {
+            this.setLoading(false);
         });
     }
 
     public createDesign() {
+        this.setLoading(true, '正在创建流程...');
         this.api.create().then(result => {
             const convertor = new WorkflowConvertor(result);
             const renderData = convertor.toRender();
             this.updateWorkflow(renderData);
+        }).finally(() => {
+            this.setLoading(false);
         });
     }
 }
