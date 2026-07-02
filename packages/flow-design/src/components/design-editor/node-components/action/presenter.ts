@@ -57,10 +57,7 @@ export class FlowActionListPresenter {
 
         const actionIdList = this.data.map(action => action.id);
 
-        console.log('actionIdList:', actionIdList)
-        console.log('action:', action)
-
-        if (actionIdList.indexOf(actionId) > 0) {
+        if (actionIdList.includes(actionId)) {
             const data = this.data.map(item => {
                 if (item.id === actionId) {
                     return {
