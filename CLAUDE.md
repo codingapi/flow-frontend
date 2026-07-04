@@ -47,14 +47,19 @@ flow-core (无UI：HTTP客户端、Presenter模式、EventBus、ViewBindPlugin�
 
 【PC 端】                         【移动端】
 flow-pc-ui (antd)                 flow-mobile-ui (antd-mobile)
-    └→ flow-pc-form                   └→ flow-mobile-form
-         └→ flow-pc-approval               └→ flow-mobile-approval
+flow-pc-form (依赖 flow-types)    flow-mobile-form (依赖 flow-types)
+    ↓ 两者共同被依赖                   ↓ 两者共同被依赖
+flow-pc-approval                  flow-mobile-approval
+  (依赖 flow-pc-ui + flow-pc-form     (依赖 flow-mobile-ui + flow-mobile-form
+   + flow-approval-presenter)          + flow-approval-presenter)
 
 flow-design (流程设计器，依赖 flow-pc-ui + @flowgram.ai)
 
-app-pc (依赖 flow-design + flow-pc-approval + flow-pc-form)
-app-mobile (依赖 flow-mobile-approval + flow-mobile-ui)
+app-pc (依赖 flow-design + flow-pc-ui + flow-pc-form + flow-pc-approval)
+app-mobile (依赖 flow-mobile-ui + flow-mobile-approval)
 ```
+
+> 图中省略各包对 flow-core / flow-types 的传递依赖。flow-pc-ui 与 flow-pc-form 互相并列、无依赖关系；flow-pc-approval 同时依赖二者。
 
 ### 外部依赖（非 workspace 包）
 
