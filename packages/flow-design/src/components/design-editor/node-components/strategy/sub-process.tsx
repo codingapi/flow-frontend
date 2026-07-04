@@ -5,6 +5,7 @@ import { GroovyScriptPreview } from "@/script-components/components/groovy-scrip
 import { EditOutlined } from "@ant-design/icons";
 import { SubProcessConfigModal } from "@/script-components/modal/sub-process-config-modal";
 import { GroovyScriptLoader } from "@/script-components/components/groovy-script-loader";
+import {FieldTip} from "@/components/field-tip";
 
 
 
@@ -64,7 +65,12 @@ export const SubProcessStrategy: React.FC = () => {
             layout="vertical"
         >
             <Form.Item
-                label={"子流程表达式"}
+                label={
+                    <FieldTip
+                        label={"子流程表达式"}
+                        description={"子流程触发的脚本，用于构造并在当前流程中发起一个子流程。"}
+                    />
+                }
                 name={["SubProcessStrategy", "script"]}
             >
                 <Field
@@ -80,7 +86,12 @@ export const SubProcessStrategy: React.FC = () => {
             </Form.Item>
 
             <Form.Item
-                label={"创建后并提交"}
+                label={
+                    <FieldTip
+                        label={"创建后并提交"}
+                        description={"开启后，子流程创建完毕后自动提交；关闭则仅创建不提交。"}
+                    />
+                }
                 name={["SubProcessStrategy", "submit"]}
             >
                 <Field

@@ -37,8 +37,8 @@ export class TargetWorkflowPresenter{
                 return {
                     ...prevState,
                     currentWorkId:workId,
-                    actions:meta.actions,
-                    form:meta.form
+                    actions: meta?.actions ?? [],
+                    form: meta?.form
                 }
             })
         })

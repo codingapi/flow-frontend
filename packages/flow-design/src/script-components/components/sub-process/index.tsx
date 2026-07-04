@@ -57,7 +57,7 @@ export const SubProcessView: React.FC<SubProcessViewProps> = (props) => {
                 >
                     <Select
                         placeholder={"请选择触发动作"}
-                        options={state.actions.map((item) => {
+                        options={(state.actions ?? []).map((item) => {
                             return {
                                 key: item.actionId,
                                 value: item.actionId,

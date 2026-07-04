@@ -5,6 +5,7 @@ import { GroovyScriptPreview } from "@/script-components/components/groovy-scrip
 import { EditOutlined } from "@ant-design/icons";
 import { RouterConfigModal } from "@/script-components/modal/router-config-modal";
 import { GroovyScriptLoaderContent, GroovyScriptLoader } from "@/script-components/components/groovy-script-loader";
+import {FieldTip} from "@/components/field-tip";
 
 
 const RouterConfigContent: React.FC<GroovyScriptLoaderContent> = (props) => {
@@ -58,7 +59,12 @@ export const RouterStrategy: React.FC = () => {
             layout="vertical"
         >
             <Form.Item
-                label={"路由表达式"}
+                label={
+                    <FieldTip
+                        label={"路由表达式"}
+                        description={"路由节点的判断脚本，根据返回值决定下一个流转节点。"}
+                    />
+                }
                 name={["RouterStrategy", "script"]}
             >
                 <Field

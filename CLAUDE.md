@@ -93,13 +93,6 @@ React 18、TypeScript 5、pnpm 10、Rsbuild/Rslib（构建）、@rstest/core（�
 
 ## 开发规范
 
-### 设计先行
-
-- **开发任何新功能前，必须先在 `docs/architecture/` 下完成架构设计文档，经用户确认后再编码**
-- 架构文档包含：系统架构、API 接口、核心组件方案、模块职责划分
-- 任务清单见 `docs/todo/`
-- 各阶段详细可执行的开发计划见 `docs/plan/`
-
 ### 禁止自动提交
 
 - **未经用户明确要求，任何情况下不得执行 `git commit` / `git push` / `git merge` 操作**
@@ -113,13 +106,6 @@ React 18、TypeScript 5、pnpm 10、Rsbuild/Rslib（构建）、@rstest/core（�
 - 前端文件命名规范：使用小写字母 + 下划线组合（如 `script_editor.tsx`、`variable_picker.tsx`）
 - **前端导入规范**：引入当前文件夹下的内容使用 `./` 相对路径，引入其他模块的代码使用 `@/` 路径别名
 - **前端样式规范**：组件样式使用 `.module.scss` 模块化方式引入，禁止在 TSX 文件中使用内联 `style` 对象定义样式
-- 设计涉及流程或 UML 图形的解决方案时，使用 Mermaid Markdown 语法
-- 在设计计划方案或执行方案过程中，对于代码的设计规划与调整修改要遵循本项目的代码风格和架构设计规则
-- 设计的计划要保存到本地的 `docs/` 目录下：
-  - `docs/plan/` - 存放详细可执行开发计划，文件命名格式为 `yyyy-mm-dd-标题.md`
-  - `docs/architecture/` - 存放架构设计文档
-  - `docs/todo/` - 存放阶段任务清单
-  - 设计文件（如 `.pen`）可放在 `docs/design/` 目录下
 
 ### 工程规范（强制）
 

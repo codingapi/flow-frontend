@@ -1,6 +1,7 @@
 import React from "react";
 import {Form, Input, Select} from "antd";
 import {Field, FieldRenderProps} from "@flowgram.ai/fixed-layout-editor";
+import {FieldTip} from "@/components/field-tip";
 
 /**
  * 延迟策略配置
@@ -19,7 +20,12 @@ export const DelayStrategy: React.FC = () => {
             layout="vertical"
         >
             <Form.Item
-                label={"延迟时间类型"}
+                label={
+                    <FieldTip
+                        label={"延迟时间类型"}
+                        description={"延迟时间的计量单位（秒、分、时、天）。"}
+                    />
+                }
                 name={["DelayStrategy", "type"]}
             >
                 <Field
@@ -55,7 +61,12 @@ export const DelayStrategy: React.FC = () => {
             </Form.Item>
 
             <Form.Item
-                label={"延迟时间"}
+                label={
+                    <FieldTip
+                        label={"延迟时间"}
+                        description={"节点执行的延迟时长，需配合延迟时间类型一起使用。"}
+                    />
+                }
                 name={["DelayStrategy", "time"]}
             >
                 <Field

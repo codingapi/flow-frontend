@@ -8,6 +8,7 @@ import { useDesignContext } from "@/components/design-panel/hooks/use-design-con
 import { FormTable } from "./table";
 import { ImportFormPluginView } from "./import-form-plugin-view";
 import { FlowForm } from "@coding-flow/flow-types";
+import {FieldTip} from "@/components/field-tip";
 
 
 export const TabForm = () => {
@@ -83,8 +84,12 @@ export const TabForm = () => {
             >
                 <CardForm.Item
                     name={["form", "name"]}
-                    label={"表单名称"}
-                    tooltip={"表单名称是主表的名称"}
+                    label={
+                        <FieldTip
+                            label={"表单名称"}
+                            description={"主表的显示名称。"}
+                        />
+                    }
                     rules={[
                         {
                             required: true,
@@ -96,8 +101,12 @@ export const TabForm = () => {
                 </CardForm.Item>
                 <CardForm.Item
                     name={["form", "code"]}
-                    label={"表单编码"}
-                    tooltip={"表单编码是主表的编码"}
+                    label={
+                        <FieldTip
+                            label={"表单编码"}
+                            description={"主表的唯一编码，用于系统识别与数据存取。"}
+                        />
+                    }
                     rules={[
                         {
                             required: true,

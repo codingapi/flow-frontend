@@ -13,10 +13,18 @@ export class SubProcessViewApiImpl implements SubProcessViewApi {
 
     meta = async (workId: string)=>{
         const res =  await metaApi(workId)
-        if (res.success) {
-            return res.data;
+        if (res.success && res.data) {
+            return {
+                workId,
+                actions: res.data.actions ?? [],
+                form: res.data.form,
+            };
         }
-        return null;
+        return {
+            workId,
+            actions: [],
+            form: undefined,
+        };
     }
 
 

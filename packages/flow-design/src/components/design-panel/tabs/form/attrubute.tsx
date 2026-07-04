@@ -2,6 +2,7 @@ import {CloseCircleOutlined, PlusCircleOutlined} from "@ant-design/icons";
 import {Button, Col, Form, Input, Space} from "antd";
 import React from "react";
 import {IdUtils} from "@/utils";
+import {FieldTip} from "@/components/field-tip";
 
 interface FieldAttribute {
     label?: string;
@@ -148,10 +149,12 @@ export const FieldAttributeForm = () => {
     return (
         <Form.Item
             name={"attributes"}
-            help={"附加属性，主要用于一些复杂的表单控制界面"}
             label={(
                 <Space>
-                    <span>附加属性</span>
+                    <FieldTip
+                        label={"附加属性"}
+                        description={"附加属性，主要用于一些复杂的表单控制界面。"}
+                    />
                     <Button
                         type={"link"}
                         icon={<PlusCircleOutlined/>}

@@ -55,7 +55,7 @@ export const TriggerConfigModal: React.FC<TriggerConfigModalProps> = (props) => 
             onCancel={props.onCancel}
             title="触发配置"
             content={TriggerConfigContent}
-            scriptKey={props.script}
+            scriptKey={props.scriptKey}
         />
     );
 }

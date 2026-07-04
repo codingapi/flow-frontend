@@ -1,6 +1,7 @@
 import React from "react";
 import {Form, Switch} from "antd";
 import { Field, FieldRenderProps } from "@flowgram.ai/fixed-layout-editor";
+import {FieldTip} from "@/components/field-tip";
 
 /**
  * 节点审批意见策略
@@ -20,7 +21,12 @@ export const AdviceStrategy: React.FC = () => {
             layout="vertical"
         >
             <Form.Item
-                label={"审批意见是否必填"}
+                label={
+                    <FieldTip
+                        label={"审批意见是否必填"}
+                        description={"开启后，审批人提交审批时必须填写审批意见。"}
+                    />
+                }
                 name={["AdviceStrategy","adviceRequired"]}
             >
                 <Field
@@ -34,7 +40,12 @@ export const AdviceStrategy: React.FC = () => {
             </Form.Item>
 
             <Form.Item
-                label={"审批签名是否必填"}
+                label={
+                    <FieldTip
+                        label={"审批签名是否必填"}
+                        description={"开启后，审批人提交审批时必须完成签名。"}
+                    />
+                }
                 name={["AdviceStrategy","signRequired"]}
             >
                 <Field

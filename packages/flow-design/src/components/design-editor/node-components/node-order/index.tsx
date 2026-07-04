@@ -1,6 +1,7 @@
 import React from "react";
 import {Field, FieldRenderProps} from "@flowgram.ai/fixed-layout-editor";
 import {Form, Input} from "antd";
+import {FieldTip} from "@/components/field-tip";
 
 
 export const NodeOrder = () => {
@@ -15,9 +16,13 @@ export const NodeOrder = () => {
             layout="vertical"
         >
             <Form.Item
-                label={"优先级"}
+                label={
+                    <FieldTip
+                        label={"优先级"}
+                        description={"数字越小优先级越高。当多个分支或节点可同时执行时，按此排序。"}
+                    />
+                }
                 name={"order"}
-                tooltip={"数字越小优先级越高"}
             >
                 <Field
                     name={"order"}

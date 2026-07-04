@@ -3,6 +3,7 @@ import { Button, Form, Input, Space } from "antd";
 import { Field, FieldRenderProps } from "@flowgram.ai/fixed-layout-editor";
 import { BugOutlined } from "@ant-design/icons";
 import { ViewCodeDrawer } from "@/script-components/components/view-code-drawer";
+import {FieldTip} from "@/components/field-tip";
 
 export const View = () => {
     const [form] = Form.useForm();
@@ -17,7 +18,12 @@ export const View = () => {
             layout="vertical"
         >
             <Form.Item
-                label={"视图名称"}
+                label={
+                    <FieldTip
+                        label={"视图名称"}
+                        description={"节点绑定的展示视图，用于自定义该节点的表单或界面展示。"}
+                    />
+                }
                 name={["view"]}
             >
                 <Field

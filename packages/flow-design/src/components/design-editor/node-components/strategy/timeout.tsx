@@ -1,6 +1,7 @@
 import React from "react";
 import {Form, Input,Select} from "antd";
 import {Field, FieldRenderProps} from "@flowgram.ai/fixed-layout-editor";
+import {FieldTip} from "@/components/field-tip";
 
 /**
  * 超时策略配置
@@ -19,7 +20,17 @@ export const TimeoutStrategy:React.FC = () => {
             layout="vertical"
         >
             <Form.Item
-                label={"超时类型"}
+                label={
+                    <FieldTip
+                        label={"超时类型"}
+                        description={"节点超时后自动执行的动作。"}
+                        items={[
+                            {label: "自动提醒", detail: "超时后发送提醒，不改变审批状态。"},
+                            {label: "自动同意", detail: "超时后自动通过该节点。"},
+                            {label: "自动拒绝", detail: "超时后自动拒绝该节点。"},
+                        ]}
+                    />
+                }
                 name={["TimeoutStrategy","type"]}
             >
                 <Field
@@ -41,7 +52,12 @@ export const TimeoutStrategy:React.FC = () => {
             </Form.Item>
 
             <Form.Item
-                label={"超时时间(分钟)"}
+                label={
+                    <FieldTip
+                        label={"超时时间(分钟)"}
+                        description={"触发超时动作的等待时长，单位为分钟。"}
+                    />
+                }
                 name={["TimeoutStrategy","timeoutTime"]}
             >
                 <Field

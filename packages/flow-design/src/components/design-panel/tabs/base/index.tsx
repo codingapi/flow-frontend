@@ -4,6 +4,7 @@ import {CardForm, Panel} from "@coding-flow/flow-pc-ui";
 import {useDesignContext} from "@/components/design-panel/hooks/use-design-context";
 import {FlowCreateOperatorEditor} from "./operator";
 import { GroovyScriptLoader } from "@/script-components/components/groovy-script-loader";
+import {FieldTip} from "@/components/field-tip";
 
 export const TabBase = () => {
 
@@ -73,7 +74,12 @@ export const TabBase = () => {
             >
                 <CardForm.Item
                     name={"title"}
-                    label={"流程标题"}
+                    label={
+                        <FieldTip
+                            label={"流程标题"}
+                            description={"流程的显示名称，便于识别与管理。"}
+                        />
+                    }
                     rules={[
                         {
                             required: true,
@@ -86,7 +92,12 @@ export const TabBase = () => {
 
                 <CardForm.Item
                     name={"description"}
-                    label={"流程备注"}
+                    label={
+                        <FieldTip
+                            label={"流程备注"}
+                            description={"对流程用途、规则的补充说明，可选填。"}
+                        />
+                    }
                 >
                     <Input.TextArea placeholder={"请输入流程备注"}/>
                 </CardForm.Item>
@@ -94,7 +105,12 @@ export const TabBase = () => {
 
                 <CardForm.Item
                     name={"code"}
-                    label={"流程编码"}
+                    label={
+                        <FieldTip
+                            label={"流程编码"}
+                            description={"流程的唯一编码，用于系统识别与接口调用。"}
+                        />
+                    }
                     rules={[
                         {
                             required: true,
@@ -113,7 +129,12 @@ export const TabBase = () => {
             >
                 <CardForm.Item
                     name={"operatorCreateScript"}
-                    label={"发起人范围"}
+                    label={
+                        <FieldTip
+                            label={"发起人范围"}
+                            description={"通过脚本限定有权发起该流程的人员范围。"}
+                        />
+                    }
                     rules={[
                         {
                             required: true,

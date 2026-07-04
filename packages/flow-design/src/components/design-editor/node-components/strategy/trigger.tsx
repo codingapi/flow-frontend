@@ -5,6 +5,7 @@ import { GroovyScriptPreview } from "@/script-components/components/groovy-scrip
 import { EditOutlined } from "@ant-design/icons";
 import { TriggerConfigModal } from "@/script-components/modal/trigger-config-modal";
 import { GroovyScriptLoaderContent, GroovyScriptLoader } from "@/script-components/components/groovy-script-loader";
+import {FieldTip} from "@/components/field-tip";
 
 
 const TriggerConfigContent: React.FC<GroovyScriptLoaderContent> = (props) => {
@@ -58,7 +59,12 @@ export const TriggerStrategy: React.FC = () => {
             layout="vertical"
         >
             <Form.Item
-                label={"触发表达式"}
+                label={
+                    <FieldTip
+                        label={"触发表达式"}
+                        description={"节点触发时执行的脚本，可用于动态计算或副作用处理。"}
+                    />
+                }
                 name={["TriggerStrategy", "script"]}
             >
                 <Field

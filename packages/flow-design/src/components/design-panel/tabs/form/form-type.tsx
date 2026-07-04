@@ -1,6 +1,7 @@
 import {Form, FormInstance, Select} from "antd";
 import React from "react";
 import {FormTypeContext} from "@coding-flow/flow-types";
+import {FieldTip} from "@/components/field-tip";
 
 
 interface FormTypeItemProps{
@@ -30,7 +31,12 @@ export const FormTypeItem:React.FC<FormTypeItemProps> = (props)=>{
     return (
         <Form.Item
             name={"type"}
-            label={"字段类型"}
+            label={
+                <FieldTip
+                    label={"字段类型"}
+                    description={"表单字段的数据类型与展示组件。"}
+                />
+            }
             labelCol={labelCol}
             rules={[
                 {

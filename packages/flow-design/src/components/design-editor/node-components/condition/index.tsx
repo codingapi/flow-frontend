@@ -6,6 +6,7 @@ import { EditOutlined } from "@ant-design/icons";
 import { ConditionConfigModal } from "@/script-components/modal/condition-config-modal";
 import { useScriptVariables } from "@/components/design-editor/hooks/use-script-variables";
 import { GroovyScriptLoaderContent, GroovyScriptLoader } from "@/script-components/components/groovy-script-loader";
+import {FieldTip} from "@/components/field-tip";
 
 
 const ConditionConfigContent: React.FC<GroovyScriptLoaderContent> = (props) => {
@@ -62,7 +63,12 @@ export const ConditionScript = () => {
             layout="vertical"
         >
             <Form.Item
-                label={"条件表达式"}
+                label={
+                    <FieldTip
+                        label={"条件表达式"}
+                        description={"条件分支的判断脚本，返回 true 时流程走该分支。"}
+                    />
+                }
                 name={"script"}
             >
                 <Field

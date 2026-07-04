@@ -6,6 +6,7 @@ import { GroovyScriptPreview } from "@/script-components/components/groovy-scrip
 import { NodeTitleConfigModal } from "@/script-components/modal/node-title-config-modal";
 import { useScriptVariables } from "@/components/design-editor/hooks/use-script-variables";
 import { GroovyScriptLoaderContent, GroovyScriptLoader } from '@/script-components/components/groovy-script-loader';
+import {FieldTip} from "@/components/field-tip";
 
 
 const NodeTitleConfigContent: React.FC<GroovyScriptLoaderContent> = (props) => {
@@ -52,7 +53,12 @@ export const NodeTitleStrategy: React.FC = () => {
     return (
         <>
             <Form style={{ width: '100%' }} layout="vertical">
-                <Form.Item label="节点标题">
+                <Form.Item label={
+                    <FieldTip
+                        label={"待办标题"}
+                        description={"通过脚本设置待办消息的展示标题。"}
+                    />
+                }>
                     <Field
                         name="NodeTitleStrategy.script"
                         render={(props: FieldRenderProps<any>) => {

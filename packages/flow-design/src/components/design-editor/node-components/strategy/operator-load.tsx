@@ -5,6 +5,7 @@ import { EditOutlined } from "@ant-design/icons";
 import { GroovyScriptPreview } from "@/script-components/components/groovy-script-preview";
 import { OperatorLoadConfigModal } from "@/script-components/modal/operator-load-config-modal";
 import { GroovyScriptLoaderContent, GroovyScriptLoader } from "@/script-components/components/groovy-script-loader";
+import {FieldTip} from "@/components/field-tip";
 
 const SELECT_TYPE_OPTIONS = [
     { label: '脚本指定', value: 'SCRIPT' },
@@ -67,9 +68,18 @@ export const OperatorLoadStrategy: React.FC = () => {
             layout="vertical"
         >
             <Form.Item
-                label={"操作人设定方式"}
+                label={
+                    <FieldTip
+                        label={"操作人设定方式"}
+                        description={"选择该节点操作人的指定方式。"}
+                        items={[
+                            {label: "脚本指定", detail: "通过脚本计算得出操作人。"},
+                            {label: "发起人设定", detail: "由发起人在提交时选择操作人。"},
+                            {label: "审批人设定", detail: "由上一审批人在审批时选择操作人。"},
+                        ]}
+                    />
+                }
                 name={["OperatorLoadStrategy", "selectType"]}
-                tooltip={"选择操作人的指定方式"}
             >
                 <Field
                     name="OperatorLoadStrategy.selectType"
@@ -90,9 +100,13 @@ export const OperatorLoadStrategy: React.FC = () => {
                     const isRangeMode = selectType === 'INITIATOR_SELECT' || selectType === 'APPROVER_SELECT';
                     return (
                         <Form.Item
-                            label={isRangeMode ? "设定人员范围" : "当前操作人"}
+                            label={
+                                <FieldTip
+                                    label={isRangeMode ? "设定人员范围" : "当前操作人"}
+                                    description={isRangeMode ? "设定可选人员范围，留空表示不限范围（可选任意人）。" : "通过脚本设定该节点的操作人。"}
+                                />
+                            }
                             name={["OperatorLoadStrategy", "script"]}
-                            tooltip={isRangeMode ? "设定可选人员范围，留空表示不限范围（可选任意人）" : "设定流程的审批人"}
                         >
                             <Field
                                 name="OperatorLoadStrategy.script"

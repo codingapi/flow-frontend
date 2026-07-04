@@ -55,7 +55,7 @@ export const SubProcessConfigModal: React.FC<SubProcessConfigModalProps> = (prop
             onCancel={props.onCancel}
             title="子流程配置"
             content={SubProcessConfigContent}
-            scriptKey={props.script}
+            scriptKey={props.scriptKey}
         />
     );
 }

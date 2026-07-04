@@ -1,5 +1,6 @@
 import React from "react";
 import {Form, FormInstance, Input, Modal} from "antd";
+import {FieldTip} from "@/components/field-tip";
 
 
 interface SubFormModalProps {
@@ -33,7 +34,12 @@ export const SubFormModal = (props: SubFormModalProps) => {
             >
                 <Form.Item
                     name={"name"}
-                    label={"子表名称"}
+                    label={
+                        <FieldTip
+                            label={"子表名称"}
+                            description={"子表的显示名称。"}
+                        />
+                    }
                     rules={[
                         {
                             required: true,
@@ -47,7 +53,12 @@ export const SubFormModal = (props: SubFormModalProps) => {
 
                 <Form.Item
                     name={"code"}
-                    label={"子表编码"}
+                    label={
+                        <FieldTip
+                            label={"子表编码"}
+                            description={"子表的唯一编码，用于系统识别与数据存取。"}
+                        />
+                    }
                     rules={[
                         {
                             required: true,

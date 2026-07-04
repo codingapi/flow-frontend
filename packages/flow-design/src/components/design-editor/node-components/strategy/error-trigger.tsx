@@ -5,6 +5,7 @@ import { GroovyScriptPreview } from "@/script-components/components/groovy-scrip
 import { EditOutlined } from "@ant-design/icons";
 import { ErrorTriggerConfigModal } from "@/script-components/modal/error-trigger-config-modal";
 import { GroovyScriptLoaderContent, GroovyScriptLoader } from "@/script-components/components/groovy-script-loader";
+import {FieldTip} from "@/components/field-tip";
 
 
 const ErrorTriggerConfigContent: React.FC<GroovyScriptLoaderContent> = (props) => {
@@ -59,9 +60,13 @@ export const ErrorTriggerStrategy: React.FC = () => {
             layout="vertical"
         >
             <Form.Item
-                label={"异常配置"}
+                label={
+                    <FieldTip
+                        label={"异常配置"}
+                        description={"当节点未能匹配到任何操作人时触发的脚本配置，可用于兜底处理。"}
+                    />
+                }
                 name={["ErrorTriggerStrategy", "script"]}
-                tooltip={"在没有匹配到操作人时触发的脚本配置"}
             >
                 <Field
                     name={"ErrorTriggerStrategy.script"}
