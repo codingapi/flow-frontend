@@ -62,6 +62,8 @@ export interface FlowNode {
     code?: string;
     // 节点视图
     view?: string;
+    // 视图标题
+    viewTitle?: string;
     // 流程展示节点
     display?: boolean;
 }
