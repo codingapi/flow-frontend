@@ -7,7 +7,6 @@ export const initialData: FlowDocumentJSON = {
             type: 'START',
             data: {
                 title: '开始节点',
-                viewTitle: '开始节点',
             }
         },
         {
