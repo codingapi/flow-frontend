@@ -4,7 +4,7 @@ import {PopupModal} from "@coding-flow/flow-mobile-ui";
 import {FlowActionProps} from "./type";
 import {ApprovalViewPluginAction, useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {SignKeyView} from "@/plugins/view/sign-key-view";
-import {EventBus, ViewBindPlugin} from "@coding-flow/flow-core";
+import {EventBus, ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 import {NodeOption} from "@coding-flow/flow-types";
 import {OperatorSelectView} from "@/plugins/view/operator-select-view";
 import {ManualView} from "@/plugins/view/manual-view";
@@ -72,7 +72,12 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                     setOptions(resOptions);
                     setResponseType(resType);
                 } else {
-                    Toast.show("操作成功");
+                    Toast.show(
+                        FlowMessageRegistry.getInstance().get(
+                            FlowMessageKey.APPROVAL_PASS,
+                            actionPresenter.buildActionContext(action.id)
+                        )
+                    );
                     setModalVisible(false);
                     context.close();
                 }

@@ -2,7 +2,7 @@ import React from "react";
 import {FlowActionProps} from "./type";
 import {Toast} from "antd-mobile";
 import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
-import {EventBus, ViewBindPlugin} from "@coding-flow/flow-core";
+import {EventBus, ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 import {APPROVAL_ACTION_SAVE_KEY} from "@/components/flow-approval";
 
 /**
@@ -20,7 +20,12 @@ export const SaveAction: React.FC<FlowActionProps> = (props) => {
         EventBus.getInstance().on(action.id, () => {
             actionPresenter.action(action.id).then((res) => {
                 if (res.success) {
-                    Toast.show("流程数据已保存");
+                    Toast.show(
+                        FlowMessageRegistry.getInstance().get(
+                            FlowMessageKey.APPROVAL_SAVE,
+                            actionPresenter.buildActionContext(action.id)
+                        )
+                    );
                 }
             });
         });

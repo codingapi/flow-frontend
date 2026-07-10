@@ -6,7 +6,7 @@ import { ActionSheet, Button, Space, Toast } from "antd-mobile";
 import { RevokeAction } from "@/components/flow-approval/components/action/revoke";
 import { UrgeAction } from "@/components/flow-approval/components/action/urge";
 import { ActionFactory } from "@/components/flow-approval/components/action/factory";
-import { EventBus, ObjectUtils } from "@coding-flow/flow-core";
+import { EventBus, ObjectUtils, FlowMessageKey, FlowMessageRegistry } from "@coding-flow/flow-core";
 import { useApprovalContext } from "@coding-flow/flow-approval-presenter";
 
 export const FlowApprovalActions = () => {
@@ -23,7 +23,7 @@ export const FlowApprovalActions = () => {
             const selectRecordIds = presenter.getSubmitRecordIds();
             const currentFormData = presenter.getCurrentFormData();
             if (ObjectUtils.isEmptyObject(currentFormData) && selectRecordIds.length == 0) {
-                Toast.show('请先选择审批流程.')
+                Toast.show(FlowMessageRegistry.getInstance().get(FlowMessageKey.APPROVAL_NO_SELECTED))
                 return;
             }
         }

@@ -5,7 +5,7 @@ import {ApprovalViewPluginAction, useApprovalContext} from "@coding-flow/flow-ap
 import {ReturnView} from "@/plugins/view/return-view";
 import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
 import {APPROVAL_ACTION_RETURN_KEY} from "@/components/flow-approval";
-import {ViewBindPlugin} from "@coding-flow/flow-core";
+import {ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 
 /**
  * 退回
@@ -40,7 +40,12 @@ export const ReturnAction: React.FC<FlowActionProps> = (props) => {
     const handleSubmit = (params?: any) => {
         actionPresenter.action(action.id, params).then((res) => {
             if (res.success) {
-                message.success("操作成功");
+                message.success(
+                    FlowMessageRegistry.getInstance().get(
+                        FlowMessageKey.APPROVAL_RETURN,
+                        actionPresenter.buildActionContext(action.id)
+                    )
+                );
                 setModalVisible(false);
                 context.close();
             }

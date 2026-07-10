@@ -4,7 +4,7 @@ import {Form, Input, message, Modal} from "antd";
 import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
 import {APPROVAL_ACTION_REJECT_KEY} from "@/components/flow-approval";
-import {ViewBindPlugin} from "@coding-flow/flow-core";
+import {ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 
 const {TextArea} = Input;
 
@@ -24,7 +24,12 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
     const handleSubmit = (params?: any) => {
         actionPresenter.action(action.id, params).then((res) => {
             if (res.success) {
-                message.success("操作成功");
+                message.success(
+                    FlowMessageRegistry.getInstance().get(
+                        FlowMessageKey.APPROVAL_REJECT,
+                        actionPresenter.buildActionContext(action.id)
+                    )
+                );
                 setModalVisible(false);
                 context.close();
             }

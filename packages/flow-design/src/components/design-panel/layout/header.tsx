@@ -3,7 +3,7 @@ import {Button, Form, Input, message, Popover, Space, Tabs} from "antd";
 import {LayoutHeaderHeight, TabPanelType} from "../types";
 import {useDesignContext} from "../hooks/use-design-context";
 import {CloseOutlined, DownloadOutlined, SaveOutlined} from "@ant-design/icons";
-import {EventBus} from "@coding-flow/flow-core";
+import {EventBus, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 import {exportWorkflow} from "@/api/workflow";
 
 const Left = () => {
@@ -41,7 +41,9 @@ const SaveAsButton = () => {
                             onFinish={(values)=>{
                                 context.save(values.name).then(()=>{
                                     setVisible(false);
-                                    message.success('版本已保存');
+                                    message.success(
+                                        FlowMessageRegistry.getInstance().get(FlowMessageKey.DESIGN_VERSION_SAVED)
+                                    );
 
                                     EventBus.getInstance().emit('VersionChangeEvent');
                                 });
@@ -111,7 +113,9 @@ const Right = () => {
                 loading={state.view.loading}
                 onClick={() => {
                     context.save().then(() => {
-                        message.success("流程已经保存.");
+                        message.success(
+                            FlowMessageRegistry.getInstance().get(FlowMessageKey.DESIGN_SAVE)
+                        );
                     });
                 }}
             >保存</Button>

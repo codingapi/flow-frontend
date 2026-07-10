@@ -5,7 +5,7 @@ import {ApprovalViewPluginAction, useApprovalContext} from "@coding-flow/flow-ap
 import {DelegateView} from "@/plugins/view/delegate-view";
 import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
 import {APPROVAL_ACTION_DELEGATE_KEY} from "@/components/flow-approval";
-import {ViewBindPlugin} from "@coding-flow/flow-core";
+import {ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 
 /**
  * 委派
@@ -39,7 +39,12 @@ export const DelegateAction: React.FC<FlowActionProps> = (props) => {
     const handleSubmit = (params?: any) => {
         actionPresenter.action(action.id, params).then((res) => {
             if (res.success) {
-                message.success("操作成功");
+                message.success(
+                    FlowMessageRegistry.getInstance().get(
+                        FlowMessageKey.APPROVAL_DELEGATE,
+                        actionPresenter.buildActionContext(action.id)
+                    )
+                );
                 setModalVisible(false);
                 context.close();
             }

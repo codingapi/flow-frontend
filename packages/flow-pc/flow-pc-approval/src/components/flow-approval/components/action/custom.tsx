@@ -2,7 +2,7 @@ import React from "react";
 import { FlowActionProps } from "./type";
 import { message } from "antd";
 import { useApprovalContext } from "@coding-flow/flow-approval-presenter";
-import { GroovyScriptConvertorUtil, ViewBindPlugin } from "@coding-flow/flow-core";
+import { GroovyScriptConvertorUtil, ViewBindPlugin, FlowMessageKey, FlowMessageRegistry } from "@coding-flow/flow-core";
 import { ActionFactory } from "@/components/flow-approval/components/action/factory";
 import { CustomStyleButton } from "@/components/flow-approval/components/custom-style-button";
 import { ActionType } from "@coding-flow/flow-types";
@@ -49,7 +49,12 @@ export const CustomAction: React.FC<FlowActionProps> = (props) => {
                         if (props.onClickCheck?.(action.id)) {
                             actionPresenter.action(action.id).then((res) => {
                                 if (res.success) {
-                                    message.success("操作成功");
+                                    message.success(
+                                        FlowMessageRegistry.getInstance().get(
+                                            FlowMessageKey.APPROVAL_CUSTOM,
+                                            actionPresenter.buildActionContext(action.id)
+                                        )
+                                    );
                                     context.close();
                                 }
                             });

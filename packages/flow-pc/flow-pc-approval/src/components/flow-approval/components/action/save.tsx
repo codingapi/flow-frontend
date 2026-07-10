@@ -4,7 +4,7 @@ import {message} from "antd";
 import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
 import {APPROVAL_ACTION_SAVE_KEY} from "@/components/flow-approval";
-import {ViewBindPlugin} from "@coding-flow/flow-core";
+import {ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 
 /**
  * 保存
@@ -34,7 +34,12 @@ export const SaveAction: React.FC<FlowActionProps> = (props) => {
                 if (props.onClickCheck?.(action.id)) {
                     actionPresenter.action(action.id).then((res) => {
                         if (res.success) {
-                            message.success("流程数据已保存");
+                            message.success(
+                                FlowMessageRegistry.getInstance().get(
+                                    FlowMessageKey.APPROVAL_SAVE,
+                                    actionPresenter.buildActionContext(action.id)
+                                )
+                            );
                         }
                     });
                 }

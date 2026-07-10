@@ -3,6 +3,7 @@ import {useService} from '@flowgram.ai/fixed-layout-editor';
 import {FlowDownloadFormat, FlowDownloadService} from '@flowgram.ai/export-plugin';
 import {Button, Dropdown, MenuProps, message, Tooltip} from "antd";
 import {DownloadOutlined} from "@ant-design/icons";
+import {FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 
 
 export const DownloadTool: FC = () => {
@@ -31,7 +32,12 @@ export const DownloadTool: FC = () => {
         await downloadService.download({
             format,
         });
-        message.success(`Download ${format} successfully`);
+        message.success(
+            FlowMessageRegistry.getInstance().get(
+                FlowMessageKey.DESIGN_DOWNLOAD_SUCCESS,
+                { format }
+            )
+        );
     };
 
 

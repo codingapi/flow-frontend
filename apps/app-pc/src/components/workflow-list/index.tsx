@@ -5,6 +5,7 @@ import {Button, message, Popconfirm, Space} from "antd";
 import {DesignImport, DesignPanel} from "@coding-flow/flow-design";
 import {changeState, list, remove} from "@/api/workflow.ts";
 import dayjs from "dayjs";
+import { FlowMessageKey, FlowMessageRegistry } from "@coding-flow/flow-core";
 
 export const WorkflowList = () => {
 
@@ -17,7 +18,9 @@ export const WorkflowList = () => {
     const handleChangeState = (id: any) => {
         changeState(id).then(res => {
             if (res.success) {
-                message.success('状态已变更');
+                message.success(
+                    FlowMessageRegistry.getInstance().get(FlowMessageKey.APP_WORKFLOW_STATUS_CHANGED)
+                );
                 actionType.current?.reload();
             }
         })
@@ -26,7 +29,9 @@ export const WorkflowList = () => {
     const handleRemove = (id: any) => {
         remove(id).then(res => {
             if (res.success) {
-                message.success('流程已删除');
+                message.success(
+                    FlowMessageRegistry.getInstance().get(FlowMessageKey.APP_WORKFLOW_DELETED)
+                );
                 actionType.current?.reload();
             }
         })

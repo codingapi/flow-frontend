@@ -47,6 +47,14 @@ Flow Frontend 是 Flow Engine 流程引擎的前端项目，提供完整的流�
 - **Flowgram.ai** - 流程图编辑器
 - **Groovy** - 脚本引擎支持
 
+## 文档
+
+| 文档 | 说明 |
+|------|------|
+| [集成手册](./docs/integration/) | 面向集成方的使用指南，包括插件定制机制、消息提示定制等 |
+| [能力目录](./docs/capabilities/) | 各模块已有能力的参考文档（PKR 知识管理体系） |
+| [开发规范](./docs/conventions/) | 编码规范与约定 |
+
 ## 外部依赖（非 workspace 包）
 
 | 依赖 | 版本 | 用途 | 被引用包 |

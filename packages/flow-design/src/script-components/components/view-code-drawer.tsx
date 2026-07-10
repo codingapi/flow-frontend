@@ -2,6 +2,7 @@ import { getScript, save } from "@/api/node-view";
 import { JavaScriptCodeEditor } from "@/components/js-code";
 import { Button, Drawer, message, Modal } from "antd";
 import React from "react";
+import { FlowMessageKey, FlowMessageRegistry } from "@coding-flow/flow-core";
 
 
 interface ViewCodeDrawerProps {
@@ -33,7 +34,9 @@ const JavaScriptCodeContent: React.FC<{ code: string }> = ({ code }) => {
             code,
             script: script,
         }).then((res: any) => {
-            message.success('保存成功');
+            message.success(
+                FlowMessageRegistry.getInstance().get(FlowMessageKey.DESIGN_VIEW_CODE_SAVE_SUCCESS)
+            );
         });
     };
 
