@@ -3,6 +3,7 @@ import {Badge, Input, message, Popconfirm, Space, Typography} from "antd";
 import {WorkflowVersion} from "@/components/design-editor/version/types";
 import dayjs from "dayjs";
 import {useDesignContext} from "@/components/design-panel/hooks/use-design-context";
+import {FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 
 const {Text} = Typography;
 
@@ -44,7 +45,9 @@ export const VersionItem: React.FC<VersionItemProps> = (props) => {
                         <a onClick={() => {
                             props.onUpdateVersionName(version.id, title).then(() => {
                                 setEditeVisible(false);
-                                message.success('保存成功')
+                            message.success(
+                                FlowMessageRegistry.getInstance().get(FlowMessageKey.DESIGN_VIEW_CODE_SAVE_SUCCESS)
+                            )
                             });
                         }}>确定</a>
                         <a onClick={() => {
@@ -87,7 +90,9 @@ export const VersionItem: React.FC<VersionItemProps> = (props) => {
                                 title={"确认要删除到该版本吗？"}
                                 onConfirm={async () => {
                                     props.onVersionRemove(version.id).then(() => {
-                                        message.success("版本已删除");
+                                        message.success(
+                                            FlowMessageRegistry.getInstance().get(FlowMessageKey.DESIGN_VERSION_DELETED)
+                                        );
                                     });
                                 }}
                             >

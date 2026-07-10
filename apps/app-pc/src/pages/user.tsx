@@ -2,6 +2,7 @@ import React from "react";
 import {type ActionType, Table, type TableProps} from "@coding-flow/flow-pc-ui";
 import {Button, Form, Input, message, Modal, Popconfirm, Space, Switch} from "antd";
 import {list, remove, save} from "@/api/user.ts";
+import { FlowMessageKey, FlowMessageRegistry } from "@coding-flow/flow-core";
 
 const UserPage = () => {
     const actionType = React.useRef<ActionType>(null);
@@ -56,7 +57,9 @@ const UserPage = () => {
                                 title={"确认要删除该用户吗？"}
                                 onConfirm={() => {
                                     remove(record.id).then(() => {
-                                        message.success("用户已删除");
+                                        message.success(
+                                            FlowMessageRegistry.getInstance().get(FlowMessageKey.APP_USER_DELETED)
+                                        );
                                         actionType.current?.reload();
                                     })
                                 }}
@@ -107,7 +110,9 @@ const UserPage = () => {
                     form={form}
                     onFinish={(values) => {
                         save(values).then(() => {
-                            message.success("用户已保存");
+                            message.success(
+                                FlowMessageRegistry.getInstance().get(FlowMessageKey.APP_USER_SAVED)
+                            );
                             actionType.current?.reload();
                             setVisible(false);
                         })

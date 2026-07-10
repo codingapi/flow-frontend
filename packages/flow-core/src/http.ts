@@ -1,6 +1,7 @@
 import axios, {AxiosInstance} from "axios";
 import {sleep} from "./sleep";
 import {Base64Utils} from "./base64";
+import {FlowMessageKey, FlowMessageRegistry} from "./message";
 
 export interface MessageBox {
     success: (msg: string) => void;
@@ -71,7 +72,7 @@ export class HttpClient {
                             const errMessage = response.data.errMessage;
                             const errCode = response.data.errCode;
                             if ("token.expire" === errCode || "token.error" === errCode) {
-                                this.messageBox.error('登录已过期，请退出再重新打开');
+                                this.messageBox.error(FlowMessageRegistry.getInstance().get(FlowMessageKey.HTTP_TOKEN_EXPIRED));
                                 await sleep(1500);
                                 localStorage.clear();
                                 window.location.href = '/#login';
@@ -83,7 +84,7 @@ export class HttpClient {
                             }
                         }
                     } else {
-                        this.messageBox.error('抱歉，该账户无权限访问');
+                        this.messageBox.error(FlowMessageRegistry.getInstance().get(FlowMessageKey.HTTP_NO_PERMISSION));
                     }
                 }
                 return response;

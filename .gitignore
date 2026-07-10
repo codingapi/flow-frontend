@@ -4,6 +4,7 @@
 
 # claude 
 .serena
+.workbuddy/
 
 # dependencies
 /node_modules

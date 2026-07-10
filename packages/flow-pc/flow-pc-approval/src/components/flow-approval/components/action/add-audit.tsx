@@ -4,7 +4,7 @@ import {Form, message, Modal} from "antd";
 import {ApprovalViewPluginAction, useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {AddAuditView} from "@/plugins/view/add-audit-view";
 import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
-import {ViewBindPlugin} from "@coding-flow/flow-core";
+import {ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 import {APPROVAL_ACTION_ADD_AUDIT_KEY} from "@/components/flow-approval";
 
 /**
@@ -39,7 +39,12 @@ export const AddAuditAction: React.FC<FlowActionProps> = (props) => {
     const handleSubmit = (params?: any) => {
         actionPresenter.action(action.id, params).then((res) => {
             if (res.success) {
-                message.success("操作成功");
+                message.success(
+                    FlowMessageRegistry.getInstance().get(
+                        FlowMessageKey.APPROVAL_ADD_AUDIT,
+                        actionPresenter.buildActionContext(action.id)
+                    )
+                );
                 setModalVisible(false);
                 context.close();
             }
