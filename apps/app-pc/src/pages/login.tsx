@@ -2,6 +2,7 @@ import { login } from "@/api/login";
 import { Button, Flex, Form, Input, message } from "antd";
 import React from "react";
 import { useNavigate } from "react-router";
+import { FlowMessageKey, FlowMessageRegistry } from "@coding-flow/flow-core";
 
 const LoginPage: React.FC = () => {
 
@@ -23,7 +24,9 @@ const LoginPage: React.FC = () => {
                             if (res.success) {
                                 const token = res.data.token;
                                 localStorage.setItem('token', token);
-                                message.success('login success');
+                                message.success(
+                                    FlowMessageRegistry.getInstance().get(FlowMessageKey.APP_LOGIN_SUCCESS)
+                                );
                                 navigate('/');
                             }else{
                                 message.error(res.errMessage);

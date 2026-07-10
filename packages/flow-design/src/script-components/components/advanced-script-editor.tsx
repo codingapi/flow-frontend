@@ -3,6 +3,7 @@ import { GroovyScriptContent } from "@/script-components/components/groovy-scrip
 import { GroovyCodeEditor } from '@/components/groovy-code';
 import { compile } from "@/api/script";
 import { message } from "antd";
+import { FlowMessageKey, FlowMessageRegistry } from "@coding-flow/flow-core";
 
 export const AdvancedScriptEditor: React.FC<GroovyScriptContent> = (props) => {
 
@@ -27,12 +28,21 @@ export const AdvancedScriptEditor: React.FC<GroovyScriptContent> = (props) => {
                 console.log('编译脚本:', code);
                 compile({ script: code }).then((res: any) => {
                     if (res.success) {
-                        message.success('脚本编译成功');
+                        message.success(
+                            FlowMessageRegistry.getInstance().get(FlowMessageKey.DESIGN_SCRIPT_COMPILE_SUCCESS)
+                        );
                     } else {
-                        message.error('脚本编译失败: ' + res.message);
+                        message.error(
+                            FlowMessageRegistry.getInstance().get(
+                                FlowMessageKey.DESIGN_SCRIPT_COMPILE_FAILED,
+                                { message: res.message }
+                            )
+                        );
                     }
                 }).catch(err => {
-                    message.error('脚本编译请求失败');
+                    message.error(
+                        FlowMessageRegistry.getInstance().get(FlowMessageKey.DESIGN_SCRIPT_COMPILE_ERROR)
+                    );
                 });
             }}
             toolbar={[

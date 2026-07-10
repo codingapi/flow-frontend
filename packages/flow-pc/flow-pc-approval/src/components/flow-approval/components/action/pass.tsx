@@ -8,7 +8,7 @@ import {NodeOption} from "@coding-flow/flow-types";
 import {OperatorSelectView} from "@/plugins/view/operator-select-view";
 import {ManualView} from "@/plugins/view/manual-view";
 import {APPROVAL_ACTION_PASS_KEY} from "@/components/flow-approval";
-import {ViewBindPlugin} from "@coding-flow/flow-core";
+import {ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 
 const {TextArea} = Input;
 
@@ -47,7 +47,12 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                     setOptions(resOptions);
                     setResponseType(resType);
                 } else {
-                    message.success("操作成功");
+                    message.success(
+                        FlowMessageRegistry.getInstance().get(
+                            FlowMessageKey.APPROVAL_PASS,
+                            actionPresenter.buildActionContext(action.id)
+                        )
+                    );
                     setModalVisible(false);
                     context.close();
                 }

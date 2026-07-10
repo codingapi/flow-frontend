@@ -2,6 +2,7 @@ import React from 'react';
 import { message } from 'antd';
 import { ScriptCodeEditor, ScriptMetadata, ToolbarItem } from '@coding-script/script-engine';
 import { getMetadata } from '@/api/script';
+import { FlowMessageKey, FlowMessageRegistry } from '@coding-flow/flow-core';
 
 interface GroovyCodeEditorProps {
     title?: string;
@@ -32,7 +33,9 @@ export const GroovyCodeEditor: React.FC<GroovyCodeEditorProps> = (props) => {
             getMetadata(props.scriptKey).then(res => {
                 setMetadata(res.data);
             }).catch(err => {
-                message.error('获取脚本元数据失败');
+                message.error(
+                    FlowMessageRegistry.getInstance().get(FlowMessageKey.DESIGN_GROOVY_META_FAILED)
+                );
             });
         }
     }, [props.scriptKey]);

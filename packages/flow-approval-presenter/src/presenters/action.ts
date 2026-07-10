@@ -89,6 +89,30 @@ export class FlowActionPresenter {
     }
 
 
+    /**
+     * 构建审批动作的上下文数据，供下游消息模板使用。
+     * 将所有可访问的状态打包为纯数据对象，下游自行决定如何组织提示信息。
+     */
+    public buildActionContext(actionId?: string) {
+        const flow = this.state.flow;
+        const action = actionId ? this.getAction(actionId) : null;
+        return {
+            flowName: flow?.workTitle ?? '',
+            workCode: flow?.workCode ?? '',
+            recordId: flow?.recordId ?? null,
+            isStartNode: !flow?.recordId,
+            actionName: action?.title ?? '',
+            nodeType: flow?.nodeType ?? '',
+            nodeName: flow?.nodeName ?? '',
+            currentOperator: flow?.currentOperator?.name ?? '',
+            createOperator: flow?.createOperator?.name ?? '',
+            flowState: flow?.flowState ?? 0,
+            recordState: flow?.recordState ?? 0,
+            title: flow?.title ?? '',
+        };
+    }
+
+
     private async submitAction(actionId: string, formData: any, params?: any) {
         const recordId = formData.recordId || this.state.flow?.recordId;
         const workCode = this.state.flow?.workCode || '';

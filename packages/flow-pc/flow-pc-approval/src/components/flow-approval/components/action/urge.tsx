@@ -2,7 +2,7 @@ import React from "react";
 import {Button, message, Popconfirm} from "antd";
 import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {APPROVAL_ACTION_URGE_KEY} from "@/components/flow-approval";
-import {ViewBindPlugin} from "@coding-flow/flow-core";
+import {ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 
 export const UrgeAction = () => {
 
@@ -26,7 +26,12 @@ export const UrgeAction = () => {
                     onConfirm={() => {
                         presenter.urge().then((res) => {
                             if (res.success) {
-                                message.success("已发送催办提醒.");
+                                message.success(
+                                    FlowMessageRegistry.getInstance().get(
+                                        FlowMessageKey.APPROVAL_URGE,
+                                        presenter.buildActionContext()
+                                    )
+                                );
                             }
                         })
                     }}

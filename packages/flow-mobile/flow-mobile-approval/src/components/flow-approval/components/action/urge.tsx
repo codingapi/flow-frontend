@@ -3,7 +3,7 @@ import {Button, Toast} from "antd-mobile";
 import {Popconfirm} from "@coding-flow/flow-mobile-ui";
 import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {APPROVAL_ACTION_URGE_KEY} from "@/components/flow-approval";
-import {ViewBindPlugin} from "@coding-flow/flow-core";
+import {ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 
 export const UrgeAction = () => {
 
@@ -29,7 +29,12 @@ export const UrgeAction = () => {
                     onConfirm={() => {
                         presenter.urge().then((res) => {
                             if (res.success) {
-                                Toast.show("已发送催办提醒.");
+                                Toast.show(
+                                    FlowMessageRegistry.getInstance().get(
+                                        FlowMessageKey.APPROVAL_URGE,
+                                        presenter.buildActionContext()
+                                    )
+                                );
                             }
                         })
                     }}

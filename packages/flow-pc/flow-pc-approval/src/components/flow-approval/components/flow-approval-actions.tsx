@@ -1,7 +1,7 @@
 import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import React from "react";
 import {message, Space} from "antd";
-import {ObjectUtils} from "@coding-flow/flow-core";
+import {ObjectUtils, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 import {ActionFactory} from "@/components/flow-approval/components/action/factory";
 import {UrgeAction} from "@/components/flow-approval/components/action/urge";
 import {RevokeAction} from "@/components/flow-approval/components/action/revoke";
@@ -20,7 +20,9 @@ export const FlowApprovalActions = () => {
             const selectRecordIds = presenter.getSubmitRecordIds();
             const currentFormData = presenter.getCurrentFormData();
             if (ObjectUtils.isEmptyObject(currentFormData) && selectRecordIds.length == 0) {
-                message.error('请先选择审批流程.')
+                message.error(
+                    FlowMessageRegistry.getInstance().get(FlowMessageKey.APPROVAL_NO_SELECTED)
+                )
                 return false;
             }
         }

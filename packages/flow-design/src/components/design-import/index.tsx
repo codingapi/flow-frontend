@@ -1,7 +1,8 @@
-import {Form, message, Modal } from "antd";
+import {Form, message, Modal} from "antd";
 import React from "react";
 import {Upload} from "./upload";
 import {importWorkflow} from "@/api/workflow";
+import {FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 
 
 interface DesignImportProps{
@@ -30,7 +31,9 @@ export const DesignImport:React.FC<DesignImportProps> = (props) => {
                 onFinish={(values)=>{
                     importWorkflow(values).then((res)=>{
                         if(res.success){
-                            message.success("流程已导入成功");
+                            message.success(
+                                FlowMessageRegistry.getInstance().get(FlowMessageKey.DESIGN_IMPORT_SUCCESS)
+                            );
                             props.onClose();
                         }
                     })

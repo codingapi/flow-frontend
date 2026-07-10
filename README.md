@@ -23,6 +23,8 @@
 
 Flow Frontend 是 Flow Engine 流程引擎的前端项目，提供完整的流程管理界面，包括可视化流程设计、动态表单配置、审批处理等功能。采用 monorepo 架构，支持 PC 端和移动端。
 
+> 后端代码见 https://github.com/codingapi/flow-engine
+
 ### 核心特性
 
 - **可视化流程设计器** - 基于 Flowgram.ai 的流程设计器，支持拖拽式节点配置
@@ -44,6 +46,22 @@ Flow Frontend 是 Flow Engine 流程引擎的前端项目，提供完整的流�
 - **CodeMirror 6** - 代码编辑器
 - **Flowgram.ai** - 流程图编辑器
 - **Groovy** - 脚本引擎支持
+
+## 文档
+
+| 文档 | 说明 |
+|------|------|
+| [集成手册](./docs/integration/) | 面向集成方的使用指南，包括插件定制机制、消息提示定制等 |
+| [能力目录](./docs/capabilities/) | 各模块已有能力的参考文档（PKR 知识管理体系） |
+| [开发规范](./docs/conventions/) | 编码规范与约定 |
+
+## 外部依赖（非 workspace 包）
+
+| 依赖 | 版本 | 用途 | 被引用包 |
+|------|------|------|----------|
+| `@coding-form/form-engine` | ^0.0.18 | 表单引擎（FormView、createFormInstance、registerFormItems） | flow-pc-form、flow-mobile-form、flow-pc-approval、flow-mobile-approval、app-pc、app-mobile |
+| `@coding-script/script-engine` | ^0.0.9 | 脚本引擎（GroovyScriptConvertorUtil） | flow-design |
+| `@flowgram.ai/fixed-layout-editor` | 1.0.8 | 流程编辑器（FlowNodeRegistry、FlowNodeEntity） | flow-design |
 
 ## 项目结构
 
@@ -170,24 +188,26 @@ flow-core (核心框架，无 UI)
 ### PC 端组件
 
 ```
-flow-core → flow-types → flow-icons → flow-pc-ui (基础 UI)
-                                     ↓
-                                flow-pc-form (表单)
-                                     ↓
-                                flow-pc-approval (审批)
-                                     ↓
-                                flow-design (流程设计器)
+flow-core ← flow-pc-ui (基础 UI)
+flow-core ← flow-types ← flow-pc-form (表单)
+                            flow-pc-approval (审批) ── 依赖 flow-pc-ui + flow-pc-form + flow-approval-presenter
+                                ↑
+                            flow-design (流程设计器) ── 依赖 flow-pc-ui
+                                ↑
+                            app-pc ── 依赖 flow-design + flow-pc-ui + flow-pc-form + flow-pc-approval
 ```
 
 ### 移动端组件
 
 ```
-flow-core → flow-types → flow-mobile-ui (基础 UI)
-                                ↓
-                           flow-mobile-form (表单)
-                                ↓
-                           flow-mobile-approval (审批)
+flow-core ← flow-mobile-ui (基础 UI)
+flow-core ← flow-types ← flow-mobile-form (表单)
+                            flow-mobile-approval (审批) ── 依赖 flow-mobile-ui + flow-mobile-form + flow-approval-presenter
+                                ↑
+                            app-mobile ── 依赖 flow-mobile-ui + flow-mobile-approval
 ```
+
+> 图中仅画出 @coding-flow workspace 内的直接依赖，省略各包对 flow-core / flow-types 的传递依赖。
 
 ### 依赖说明
 
@@ -197,13 +217,15 @@ flow-core → flow-types → flow-mobile-ui (基础 UI)
 | **flow-types** | 全局类型定义，包含流程审批相关的业务类型（PC 端和移动端共用） | flow-core |
 | **flow-icons** | 图标库 | flow-core |
 | **flow-approval-presenter** | 审批 Presenter 框架 | flow-core, flow-types |
-| **flow-pc-ui** | PC 端基础 UI 组件库，提供原子化组件 | flow-core, flow-types, flow-icons |
-| **flow-pc-form** | 表单相关功能，包含表单设计器、表单渲染器、字段权限管理 | flow-core, flow-types, flow-pc-ui |
-| **flow-pc-approval** | 审批页面功能，包含待办/已办列表、审批处理、流程追踪 | flow-core, flow-types, flow-pc-form |
+| **flow-pc-ui** | PC 端基础 UI 组件库，提供原子化组件 | flow-core |
+| **flow-pc-form** | 表单相关功能，包含表单设计器、表单渲染器、字段权限管理 | flow-core, flow-types |
+| **flow-pc-approval** | 审批页面功能，包含待办/已办列表、审批处理、流程追踪 | flow-core, flow-types, flow-icons, flow-approval-presenter, flow-pc-ui, flow-pc-form |
 | **flow-design** | 流程设计器功能，基于 Flowgram.ai 的可视化流程设计器 | flow-core, flow-types, flow-icons, flow-pc-ui |
-| **flow-mobile-ui** | 移动端基础 UI 组件库 | flow-core, flow-types, flow-icons |
-| **flow-mobile-form** | 移动端表单相关功能 | flow-core, flow-types, flow-mobile-ui |
-| **flow-mobile-approval** | 移动端审批页面功能 | flow-core, flow-types, flow-mobile-form |
+| **flow-mobile-ui** | 移动端基础 UI 组件库 | flow-core |
+| **flow-mobile-form** | 移动端表单相关功能 | flow-core, flow-types |
+| **flow-mobile-approval** | 移动端审批页面功能 | flow-core, flow-types, flow-icons, flow-approval-presenter, flow-mobile-ui, flow-mobile-form |
+| **app-pc** | PC 端示例应用 | flow-core, flow-types, flow-design, flow-pc-ui, flow-pc-form, flow-pc-approval |
+| **app-mobile** | 移动端示例应用 | flow-core, flow-types, flow-mobile-ui, flow-mobile-approval |
 
 ## 快速开始
 

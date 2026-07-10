@@ -3,7 +3,7 @@ import {FlowActionProps} from "./type";
 import {Form, TextArea, Toast} from "antd-mobile";
 import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {PopupModal} from "@coding-flow/flow-mobile-ui";
-import {EventBus, ViewBindPlugin} from "@coding-flow/flow-core";
+import {EventBus, ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 import {APPROVAL_ACTION_REJECT_KEY} from "@/components/flow-approval";
 
 /**
@@ -34,7 +34,12 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
     const handleSubmit = (params?: any) => {
         actionPresenter.action(action.id, params).then((res) => {
             if (res.success) {
-                Toast.show("操作成功");
+                Toast.show(
+                    FlowMessageRegistry.getInstance().get(
+                        FlowMessageKey.APPROVAL_REJECT,
+                        actionPresenter.buildActionContext(action.id)
+                    )
+                );
                 setModalVisible(false);
                 context.close();
             }
