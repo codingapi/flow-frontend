@@ -291,7 +291,7 @@ export interface FlowContent {
     // 视图代码
     code: string;
     // 视图标题
-    viewTitle: string;
+    viewTitle?: string;
     // 是否必填意见
     adviceRequired: boolean;
     // 是否必填签名

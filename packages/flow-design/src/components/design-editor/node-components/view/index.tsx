@@ -20,23 +20,6 @@ export const View = () => {
             <Form.Item
                 label={
                     <FieldTip
-                        label={"视图标题"}
-                        description={"节点视图的展示标题，用于审批页面或自定义视图展示。"}
-                    />
-                }
-                name={["viewTitle"]}
-            >
-                <Field
-                    name={"viewTitle"}
-                    render={({ field: { value, onChange } }: FieldRenderProps<any>) => (
-                        <Input value={value} onChange={onChange} placeholder={"请输入视图标题"} />
-                    )}
-                />
-            </Form.Item>
-
-            <Form.Item
-                label={
-                    <FieldTip
                         label={"视图名称"}
                         description={"节点绑定的展示视图，用于自定义该节点的表单或界面展示。"}
                     />
@@ -60,6 +43,23 @@ export const View = () => {
                                 </Button>
                             </Space.Compact>
                         </>
+                    )}
+                />
+            </Form.Item>
+
+            <Form.Item
+                label={
+                    <FieldTip
+                        label={"视图标题"}
+                        description={"节点视图的展示标题，用于审批页面或自定义视图展示。"}
+                    />
+                }
+                name={["viewTitle"]}
+            >
+                <Field
+                    name={"viewTitle"}
+                    render={({ field: { value, onChange } }: FieldRenderProps<any>) => (
+                        <Input value={value} onChange={onChange} placeholder={"请输入视图标题"} />
                     )}
                 />
             </Form.Item>
