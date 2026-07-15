@@ -13,6 +13,7 @@ const ScriptEditorContent: React.FC<GroovyScriptLoaderContent> = (props) => {
             <ActionCustomView
                 scriptKey={props.scriptKey}
                 value={props.value}
+                onChange={props.onChange}
             />
         </>
     )
