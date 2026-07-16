@@ -68,57 +68,50 @@ export class PromissionPresenter {
     }
 
     public initFormPromission() {
-        if (this.data && this.data.length > 0) {
-            return;
+        const data: FieldPermission[] = this.formList.flatMap(form =>
+            (form.fields || []).map(field => {
+                const permission = this.data.find(item =>
+                    item.formCode === form.code && item.fieldCode === field.code
+                );
+
+                return permission || {
+                    formCode: form.code,
+                    fieldCode: field.code,
+                    type: 'WRITE',
+                };
+            })
+        );
+
+        if (!this.isSameData(data)) {
+            this.onChange(data);
         }
-
-        const form = this.form;
-
-        let data: any[] = [];
-
-        const mainList = form.fields.map(field => {
-            return {
-                id: field.id,
-                fieldName: field.name,
-                fieldCode: field.code,
-                formCode: form.code,
-                type: 'WRITE',
-            }
-        });
-        data.push(...mainList);
-
-        if (form.subForms) {
-            for (const subForm of form.subForms || []) {
-                const list = subForm.fields.map(field => {
-                    return {
-                        id: field.id,
-                        formCode: subForm.code,
-                        fieldName: field.name,
-                        fieldCode: field.code,
-                        type: 'WRITE',
-                    }
-                });
-                data.push(...list);
-            }
-        }
-
-        this.onChange(data);
         this.data = data;
     }
 
 
-    private changeFieldValue(code: string, fieldCode: string, value: string) {
-        let newData: any[] = [];
-        for (const item of this.data) {
-            if (item['formCode'] === code && item['fieldCode'] === fieldCode) {
-                newData.push({
-                    ...item,
-                    type: value,
-                });
-            } else {
-                newData.push(item);
+    private isSameData(data: FieldPermission[]): boolean {
+        return this.data.length === data.length && this.data.every((item, index) => {
+            const target = data[index];
+            return item.formCode === target.formCode
+                && item.fieldCode === target.fieldCode
+                && item.type === target.type;
+        });
+    }
+
+    private changeFieldValue(code: string, fieldCode: string, value: FieldPermission['type']) {
+        let exist = false;
+        const newData = this.data.map(item => {
+            if (item.formCode === code && item.fieldCode === fieldCode) {
+                exist = true;
+                return {...item, type: value};
             }
+            return item;
+        });
+
+        if (!exist && this.getFormFields(code).some(field => field.code === fieldCode)) {
+            newData.push({formCode: code, fieldCode, type: value});
         }
+
         this.onChange(newData);
         this.data = newData;
     }
