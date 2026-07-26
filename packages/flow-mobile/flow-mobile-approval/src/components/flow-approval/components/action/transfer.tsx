@@ -15,10 +15,11 @@ import {APPROVAL_ACTION_TRANSFER_KEY} from "@/components/flow-approval";
 export const TransferAction: React.FC<FlowActionProps> = (props) => {
 
     const action = props.action;
-    const {context} = useApprovalContext();
+    const {state, context} = useApprovalContext();
     const [form] = Form.useForm();
 
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
+    const actionLoading = state.actionLoading ?? false;
 
     const [modalVisible, setModalVisible] = React.useState(false);
 
@@ -77,6 +78,7 @@ export const TransferAction: React.FC<FlowActionProps> = (props) => {
             <PopupModal
                 title={"转办审批"}
                 open={modalVisible}
+                loading={actionLoading}
                 onClose={() => setModalVisible(false)}
                 onOk={() => {
                     handlerOK();

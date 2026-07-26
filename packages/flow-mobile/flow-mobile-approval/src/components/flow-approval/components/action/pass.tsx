@@ -27,6 +27,7 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
     const [responseType, setResponseType] = React.useState<string | null>(null);
 
     const isStartNode = state.flow?.nodeType === 'START';
+    const actionLoading = state.actionLoading ?? false;
 
     const currentOperator = state.flow?.currentOperator;
 
@@ -106,6 +107,7 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
         <>
             <PopupModal
                 open={modalVisible}
+                loading={actionLoading}
                 onClose={() => {
                     setModalVisible(false)
                 }}

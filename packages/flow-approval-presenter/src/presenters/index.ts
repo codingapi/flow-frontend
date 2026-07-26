@@ -18,7 +18,13 @@ export class ApprovalPresenter {
         this.api = api;
         this.formActionContext = new FormActionContext();
         this.mockKey = mockKey;
-        this.flowActionPresenter = new FlowActionPresenter(state,api,this.formActionContext,mockKey);
+        this.flowActionPresenter = new FlowActionPresenter(
+            state,
+            api,
+            this.formActionContext,
+            mockKey,
+            (loading) => this.dispatch({ actionLoading: loading }),
+        );
     }
 
     public syncState(state: ApprovalState) {

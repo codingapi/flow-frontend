@@ -7,18 +7,21 @@ export class FlowActionPresenter {
     private readonly formActionContext: FormActionContext;
     private state: ApprovalState;
     private readonly mockKey: string;
+    private readonly setLoading: (loading: boolean) => void;
 
     private submitRecordIds: number[];
 
     constructor(state: ApprovalState,
         api: FlowApprovalApi,
         formActionContext: FormActionContext,
-        mockKey: string) {
+        mockKey: string,
+        setLoading: (loading: boolean) => void) {
         this.state = JSON.parse(JSON.stringify(state));
         this.api = api;
         this.formActionContext = formActionContext;
         this.submitRecordIds = [];
         this.mockKey = mockKey;
+        this.setLoading = setLoading;
     }
 
 
@@ -185,37 +188,52 @@ export class FlowActionPresenter {
     }
 
     public async revoke() {
-        const recordId = this.state.flow?.recordId;
-        if (recordId) {
-            return await this.api.revoke(recordId, this.mockKey);
+        this.setLoading(true);
+        try {
+            const recordId = this.state.flow?.recordId;
+            if (recordId) {
+                return await this.api.revoke(recordId, this.mockKey);
+            }
+        } finally {
+            this.setLoading(false);
         }
     }
 
     public async urge() {
-        const recordId = this.state.flow?.recordId;
-        if (recordId) {
-            return await this.api.urge(recordId, this.mockKey);
+        this.setLoading(true);
+        try {
+            const recordId = this.state.flow?.recordId;
+            if (recordId) {
+                return await this.api.urge(recordId, this.mockKey);
+            }
+        } finally {
+            this.setLoading(false);
         }
     }
 
     public async action(actionId: string, params?: any) {
-        // 流程合并审批
-        const mergeable = this.state.flow?.mergeable || false;
-        const submitRecordIds = this.submitRecordIds;
-        if (mergeable && submitRecordIds.length > 0) {
+        this.setLoading(true);
+        try {
+            // 流程合并审批
+            const mergeable = this.state.flow?.mergeable || false;
             const submitRecordIds = this.submitRecordIds;
-            for (const recordId of submitRecordIds) {
-                const formData = this.getFormDataByRecordId(recordId);
-                await this.submitAction(actionId, formData, params);
+            if (mergeable && submitRecordIds.length > 0) {
+                const submitRecordIds = this.submitRecordIds;
+                for (const recordId of submitRecordIds) {
+                    const formData = this.getFormDataByRecordId(recordId);
+                    await this.submitAction(actionId, formData, params);
+                }
+                this.clearSubmitRecordIds();
+                return new Promise((resolve) => {
+                    resolve({
+                        success: true,
+                    });
+                })
+            } else {
+                return await this.executeAction(actionId, params);
             }
-            this.clearSubmitRecordIds();
-            return new Promise((resolve) => {
-                resolve({
-                    success: true,
-                });
-            })
-        } else {
-            return await this.executeAction(actionId, params);
+        } finally {
+            this.setLoading(false);
         }
     }
 

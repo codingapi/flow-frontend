@@ -33,6 +33,8 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
 
     const isStartNode = state.flow?.nodeType === 'START';
 
+    const actionLoading = state.actionLoading ?? false;
+
     const currentOperator = state.flow?.currentOperator;
 
     const [form] = Form.useForm();
@@ -96,6 +98,8 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
         <>
             <CustomStyleButton
                 display={props.action.display}
+                loading={actionLoading}
+                disabled={actionLoading}
                 onClick={() => {
                     if (props.onClickCheck?.(action.id)) {
                         if (isStartNode) {
@@ -114,6 +118,7 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                 open={modalVisible}
                 destroyOnHidden
                 maskClosable={false}
+                confirmLoading={actionLoading}
                 mask={{
                     closable: false,
                 }}

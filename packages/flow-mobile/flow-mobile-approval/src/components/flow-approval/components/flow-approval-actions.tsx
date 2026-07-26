@@ -13,6 +13,7 @@ export const FlowApprovalActions = () => {
 
     const { state, context } = useApprovalContext();
     const presenter = useLayoutPresenter();
+    const actionLoading = state.actionLoading ?? false;
 
     const [moreVisible, setMoreVisible] = useState(false);
 
@@ -59,6 +60,8 @@ export const FlowApprovalActions = () => {
                     return (
                         <CustomStyleButton
                             key={index}
+                            loading={actionLoading}
+                            disabled={actionLoading}
                             onClick={() => {
                                 const triggerFrontEvent = action.triggerFrontEvent;
                                 if (triggerFrontEvent) {
@@ -76,6 +79,7 @@ export const FlowApprovalActions = () => {
 
             {!presenter.isReview() && presenter.hasMoreOptions() && (
                 <Button
+                    disabled={actionLoading}
                     onClick={() => setMoreVisible(true)}
                     style={{
                         width: '100%',

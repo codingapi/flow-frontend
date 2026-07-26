@@ -7,6 +7,8 @@ interface CustomStyleButtonProps {
     onClick: () => void;
     title: string;
     display: FlowActionDisplay;
+    loading?: boolean;
+    disabled?: boolean;
 }
 
 export const CustomStyleButton: React.FC<CustomStyleButtonProps> = (props) => {
@@ -41,6 +43,8 @@ export const CustomStyleButton: React.FC<CustomStyleButtonProps> = (props) => {
         <Button
             onClick={props.onClick}
             style={style}
+            loading={props.loading}
+            disabled={props.disabled}
             icon={display.icon?<Icon type={display.icon} />:undefined}
         >
             {title}

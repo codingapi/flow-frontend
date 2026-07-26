@@ -14,8 +14,9 @@ import {ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/
 export const SaveAction: React.FC<FlowActionProps> = (props) => {
 
     const action = props.action;
-    const {context} = useApprovalContext()
+    const {state, context} = useApprovalContext()
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
+    const actionLoading = state.actionLoading ?? false;
 
     const ActionView = ViewBindPlugin.getInstance().get(APPROVAL_ACTION_SAVE_KEY);
 
@@ -29,6 +30,8 @@ export const SaveAction: React.FC<FlowActionProps> = (props) => {
 
     return (
         <CustomStyleButton
+            loading={actionLoading}
+            disabled={actionLoading}
             display={props.action.display}
             onClick={() => {
                 if (props.onClickCheck?.(action.id)) {

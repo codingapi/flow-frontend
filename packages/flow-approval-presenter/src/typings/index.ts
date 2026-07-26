@@ -36,6 +36,8 @@ export interface ApprovalPanelProps {
 export type ApprovalState = {
     flow?: FlowContent;
     review?: boolean;
+    /** 审批操作请求进行中（action/revoke/urge），用于驱动按钮 loading 与禁用 */
+    actionLoading?: boolean;
 };
 
 
