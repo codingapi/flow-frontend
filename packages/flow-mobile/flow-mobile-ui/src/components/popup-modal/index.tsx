@@ -8,6 +8,7 @@ interface PopupModalProps {
     children?: React.ReactNode;
     onOk?: () => void;
     title?: string;
+    loading?: boolean;
 }
 
 export const PopupModal: React.FC<PopupModalProps> = (props) => {
@@ -43,8 +44,9 @@ export const PopupModal: React.FC<PopupModalProps> = (props) => {
                     }}>取消</a>
                     {props.title}
                     <a onClick={()=>{
+                        if (props.loading) return;
                         props.onOk?.();
-                    }}>确定</a>
+                    }}>{props.loading ? '提交中...' : '确定'}</a>
                 </div>
             </div>
             {props.children}

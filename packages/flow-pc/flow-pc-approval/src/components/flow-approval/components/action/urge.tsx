@@ -9,6 +9,7 @@ export const UrgeAction = () => {
     const {state, context} = useApprovalContext();
     const presenter = context.getPresenter().getFlowActionPresenter();
     const urge = state.flow?.urge || false;
+    const actionLoading = state.actionLoading ?? false;
 
     const ActionView = ViewBindPlugin.getInstance().get(APPROVAL_ACTION_URGE_KEY);
 
@@ -36,7 +37,7 @@ export const UrgeAction = () => {
                         })
                     }}
                 >
-                    <Button>
+                    <Button loading={actionLoading} disabled={actionLoading}>
                         催办
                     </Button>
                 </Popconfirm>

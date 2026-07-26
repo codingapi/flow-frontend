@@ -11,6 +11,7 @@ export const RevokeAction = () => {
     const presenter = context.getPresenter().getFlowActionPresenter();
 
     const revoke = state.flow?.revoke || false;
+    const actionLoading = state.actionLoading ?? false;
 
 
     const ActionView = ViewBindPlugin.getInstance().get(APPROVAL_ACTION_REVOKE_KEY);
@@ -41,7 +42,7 @@ export const RevokeAction = () => {
                         });
                     }}
                 >
-                    <Button>
+                    <Button loading={actionLoading} disabled={actionLoading}>
                         撤回
                     </Button>
                 </Popconfirm>

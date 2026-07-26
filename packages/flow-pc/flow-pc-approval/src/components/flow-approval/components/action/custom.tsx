@@ -19,8 +19,9 @@ export const CustomAction: React.FC<FlowActionProps> = (props) => {
     console.log('custom11:', props);
 
     const action = props.action;
-    const { context } = useApprovalContext()
+    const { state, context } = useApprovalContext()
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
+    const actionLoading = state.actionLoading ?? false;
 
     const triggerType = action.triggerType;
     const triggerFrontEvent = action.triggerFrontEvent;
@@ -41,6 +42,8 @@ export const CustomAction: React.FC<FlowActionProps> = (props) => {
     if (triggerFrontEvent) {
         return (
             <CustomStyleButton
+                loading={actionLoading}
+                disabled={actionLoading}
                 display={props.action.display}
                 onClick={() => {
                     if (triggerFrontEvent) {

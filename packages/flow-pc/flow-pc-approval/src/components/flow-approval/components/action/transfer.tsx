@@ -15,10 +15,11 @@ import {ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/
 export const TransferAction: React.FC<FlowActionProps> = (props) => {
 
     const action = props.action;
-    const {context} = useApprovalContext();
+    const {state, context} = useApprovalContext();
     const [form] = Form.useForm();
 
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
+    const actionLoading = state.actionLoading ?? false;
 
 
     const actionRef = React.useRef<ApprovalViewPluginAction>(null);
@@ -65,6 +66,8 @@ export const TransferAction: React.FC<FlowActionProps> = (props) => {
     return (
         <>
             <CustomStyleButton
+                loading={actionLoading}
+                disabled={actionLoading}
                 display={props.action.display}
                 onClick={() => {
                     if (props.onClickCheck?.(action.id)) {
@@ -78,6 +81,7 @@ export const TransferAction: React.FC<FlowActionProps> = (props) => {
             <Modal
                 title={"转办审批"}
                 open={modalVisible}
+                confirmLoading={actionLoading}
                 maskClosable={false}
                 mask={{
                     closable: false,

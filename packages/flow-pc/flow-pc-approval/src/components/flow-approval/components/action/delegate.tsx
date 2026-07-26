@@ -15,10 +15,11 @@ import {ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/
 export const DelegateAction: React.FC<FlowActionProps> = (props) => {
 
     const action = props.action;
-    const {context} = useApprovalContext();
+    const {state, context} = useApprovalContext();
     const [form] = Form.useForm();
 
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
+    const actionLoading = state.actionLoading ?? false;
 
     const [modalVisible, setModalVisible] = React.useState(false);
 
@@ -64,6 +65,8 @@ export const DelegateAction: React.FC<FlowActionProps> = (props) => {
     return (
         <>
             <CustomStyleButton
+                loading={actionLoading}
+                disabled={actionLoading}
                 display={props.action.display}
                 onClick={() => {
                     if(props.onClickCheck?.(action.id)) {
@@ -77,6 +80,7 @@ export const DelegateAction: React.FC<FlowActionProps> = (props) => {
             <Modal
                 title={"委派审批"}
                 open={modalVisible}
+                confirmLoading={actionLoading}
                 onCancel={() => setModalVisible(false)}
                 onOk={() => {
                     handlerOK();

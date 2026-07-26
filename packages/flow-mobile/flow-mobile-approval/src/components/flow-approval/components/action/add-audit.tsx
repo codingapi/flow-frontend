@@ -15,10 +15,11 @@ import {APPROVAL_ACTION_ADD_AUDIT_KEY} from "@/components/flow-approval";
 export const AddAuditAction: React.FC<FlowActionProps> = (props) => {
 
     const action = props.action;
-    const {context} = useApprovalContext();
+    const {state, context} = useApprovalContext();
     const [form] = Form.useForm();
 
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
+    const actionLoading = state.actionLoading ?? false;
 
     const [modalVisible, setModalVisible] = React.useState(false);
 
@@ -77,6 +78,7 @@ export const AddAuditAction: React.FC<FlowActionProps> = (props) => {
             <PopupModal
                 title={"加签审批"}
                 open={modalVisible}
+                loading={actionLoading}
                 onClose={() => setModalVisible(false)}
                 onOk={() => {
                     handlerOK();

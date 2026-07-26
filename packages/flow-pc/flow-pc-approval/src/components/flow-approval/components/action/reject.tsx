@@ -18,6 +18,7 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
     const action = props.action;
     const {state, context} = useApprovalContext()
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
+    const actionLoading = state.actionLoading ?? false;
     const [modalVisible, setModalVisible] = React.useState(false);
     const [form] = Form.useForm();
 
@@ -57,6 +58,8 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
     return (
         <>
             <CustomStyleButton
+                loading={actionLoading}
+                disabled={actionLoading}
                 display={props.action.display}
                 onClick={() => {
                     if (props.onClickCheck?.(action.id)) {
@@ -70,6 +73,7 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
             <Modal
                 title={"审批拒绝"}
                 open={modalVisible}
+                confirmLoading={actionLoading}
                 maskClosable={false}
                 mask={{
                     closable: false,
