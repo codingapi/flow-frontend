@@ -16,8 +16,6 @@ import { EventBus } from "@coding-flow/flow-core";
  */
 export const CustomAction: React.FC<FlowActionProps> = (props) => {
 
-    console.log('custom11:', props);
-
     const action = props.action;
     const { state, context } = useApprovalContext()
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
@@ -25,8 +23,6 @@ export const CustomAction: React.FC<FlowActionProps> = (props) => {
 
     const triggerType = action.triggerType;
     const triggerFrontEvent = action.triggerFrontEvent;
-
-
 
     const ActionView = ViewBindPlugin.getInstance().get(APPROVAL_ACTION_CUSTOM_KEY);
 
@@ -41,31 +37,37 @@ export const CustomAction: React.FC<FlowActionProps> = (props) => {
 
     if (triggerFrontEvent) {
         return (
-            <CustomStyleButton
-                loading={actionLoading}
-                disabled={actionLoading}
-                display={props.action.display}
-                onClick={() => {
-                    if (triggerFrontEvent) {
-                        EventBus.getInstance().emit(triggerFrontEvent);
-                    } else {
-                        if (props.onClickCheck?.(action.id)) {
-                            actionPresenter.action(action.id).then((res) => {
-                                if (res.success) {
-                                    message.success(
-                                        FlowMessageRegistry.getInstance().get(
-                                            FlowMessageKey.APPROVAL_CUSTOM,
-                                            actionPresenter.buildActionContext(action.id)
-                                        )
-                                    );
-                                    context.close();
+            <>
+                {
+                    !props.hidden && (
+                        <CustomStyleButton
+                            loading={actionLoading}
+                            disabled={actionLoading}
+                            display={props.action.display}
+                            onClick={() => {
+                                if (triggerFrontEvent) {
+                                    EventBus.getInstance().emit(triggerFrontEvent);
+                                } else {
+                                    if (props.onClickCheck?.(action.id)) {
+                                        actionPresenter.action(action.id).then((res) => {
+                                            if (res.success) {
+                                                message.success(
+                                                    FlowMessageRegistry.getInstance().get(
+                                                        FlowMessageKey.APPROVAL_CUSTOM,
+                                                        actionPresenter.buildActionContext(action.id)
+                                                    )
+                                                );
+                                                context.close();
+                                            }
+                                        });
+                                    }
                                 }
-                            });
-                        }
-                    }
-                }}
-                title={action.title}
-            />
+                            }}
+                            title={action.title}
+                        />
+                    )
+                }
+            </>
         )
     }
 
@@ -78,15 +80,20 @@ export const CustomAction: React.FC<FlowActionProps> = (props) => {
 
         if (FlowActionComponent) {
             return (
-                <FlowActionComponent
-                    action={action}
-                    onClickCheck={(actionId) => {
-                        if (props.onClickCheck) {
-                            return props.onClickCheck?.(actionId);
-                        }
-                        return false;
-                    }}
-                />
+                <>
+                    {!props.hidden && (
+                        <FlowActionComponent
+                            action={action}
+                            onClickCheck={(actionId) => {
+                                if (props.onClickCheck) {
+                                    return props.onClickCheck?.(actionId);
+                                }
+                                return false;
+                            }}
+                            hidden={props.hidden}
+                        />
+                    )}
+                </>
             )
         }
     }

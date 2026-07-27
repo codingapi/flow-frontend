@@ -302,8 +302,10 @@ export interface FlowContent {
     fieldPermissions: FieldPermission[];
     // 待办记录
     todos: FlowTodo[];
-    // 操作按钮
+    // 操作展示按钮
     actions: FlowAction[];
+    // 操作全部按钮
+    actionList:FlowAction[];
     // 是否合并
     mergeable: boolean;
     // 流程创建人

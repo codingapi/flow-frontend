@@ -1,12 +1,12 @@
 import React from "react";
-import {FlowActionProps} from "./type";
-import {Form, Input, message, Modal} from "antd";
-import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
-import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
-import {APPROVAL_ACTION_REJECT_KEY} from "@/components/flow-approval";
-import {ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
+import { FlowActionProps } from "./type";
+import { Form, Input, message, Modal } from "antd";
+import { useApprovalContext } from "@coding-flow/flow-approval-presenter";
+import { CustomStyleButton } from "@/components/flow-approval/components/custom-style-button";
+import { APPROVAL_ACTION_REJECT_KEY } from "@/components/flow-approval";
+import { ViewBindPlugin, FlowMessageKey, FlowMessageRegistry, EventBus } from "@coding-flow/flow-core";
 
-const {TextArea} = Input;
+const { TextArea } = Input;
 
 /**
  * 拒绝
@@ -16,7 +16,7 @@ const {TextArea} = Input;
 export const RejectAction: React.FC<FlowActionProps> = (props) => {
 
     const action = props.action;
-    const {state, context} = useApprovalContext()
+    const { state, context } = useApprovalContext()
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
     const actionLoading = state.actionLoading ?? false;
     const [modalVisible, setModalVisible] = React.useState(false);
@@ -36,6 +36,19 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
             }
         });
     }
+
+    React.useEffect(() => {
+        EventBus.getInstance().on(action.id, () => {
+            if (props.onClickCheck?.(action.id)) {
+                form.resetFields();
+                setModalVisible(true);
+            }
+        });
+
+        return () => {
+            EventBus.getInstance().off(action.id);
+        }
+    }, []);
 
     const adviceRules = state.flow?.adviceRequired ? [
         {
@@ -57,18 +70,22 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
 
     return (
         <>
-            <CustomStyleButton
-                loading={actionLoading}
-                disabled={actionLoading}
-                display={props.action.display}
-                onClick={() => {
-                    if (props.onClickCheck?.(action.id)) {
-                        form.resetFields();
-                        setModalVisible(true);
-                    }
-                }}
-                title={action.title}
-            />
+            {
+                !props.hidden && (
+                    <CustomStyleButton
+                        loading={actionLoading}
+                        disabled={actionLoading}
+                        display={props.action.display}
+                        onClick={() => {
+                            if (props.onClickCheck?.(action.id)) {
+                                form.resetFields();
+                                setModalVisible(true);
+                            }
+                        }}
+                        title={action.title}
+                    />
+                )
+            }
 
             <Modal
                 title={"审批拒绝"}
@@ -96,7 +113,7 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
                         required={state.flow?.adviceRequired}
                         rules={adviceRules}
                     >
-                        <TextArea placeholder={"请输入拒绝意见"}/>
+                        <TextArea placeholder={"请输入拒绝意见"} />
                     </Form.Item>
                 </Form>
             </Modal>

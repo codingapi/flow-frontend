@@ -8,13 +8,15 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 import "./index.css";
 import {registerFormTypes} from "@/hooks/register-form-types.tsx";
-import {registerImportFormView} from "@/hooks/register-import-form-view.tsx";
+import {registerFormView} from "@/hooks/register-form-view";
+import {registerPluginView} from "@/hooks/register-plugin-view";
 
 dayjs.locale('zh');
 
 const App = () => {
     registerFormTypes();
-    registerImportFormView();
+    registerPluginView();
+    registerFormView();
     return (
         <React.StrictMode>
             <ConfigProvider locale={zhCN}>

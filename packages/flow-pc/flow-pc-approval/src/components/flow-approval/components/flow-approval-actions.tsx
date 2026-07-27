@@ -10,15 +10,15 @@ import {CloseAction} from "@/components/flow-approval/components/action/close";
 export const FlowApprovalActions = () => {
 
     const {state, context} = useApprovalContext()
-    const actions = state.flow?.actions || [];
+    const actionList = state.flow?.actionList || [];
     const review = state?.review || false;
 
-    const handlerClickCheck = (id: string) => {
+   const actionPresenter = context.getPresenter().getFlowActionPresenter();
 
+    const handlerClickCheck = (id: string) => {
         if (state.flow?.mergeable) {
-            const presenter = context.getPresenter().getFlowActionPresenter();
-            const selectRecordIds = presenter.getSubmitRecordIds();
-            const currentFormData = presenter.getCurrentFormData();
+            const selectRecordIds = actionPresenter.getSubmitRecordIds();
+            const currentFormData = actionPresenter.getCurrentFormData();
             if (ObjectUtils.isEmptyObject(currentFormData) && selectRecordIds.length == 0) {
                 message.error(
                     FlowMessageRegistry.getInstance().get(FlowMessageKey.APPROVAL_NO_SELECTED)
@@ -32,12 +32,14 @@ export const FlowApprovalActions = () => {
 
     return (
         <Space size={8}>
-            {!review && actions.map((action) => {
+            {!review && actionList.map((action) => {
                 const FlowActionComponent = ActionFactory.getInstance().getFlowActionComponent(action);
                 if (FlowActionComponent) {
+                    const hidden = actionPresenter.hiddenAction(action.id);
                     return (
                         <FlowActionComponent
                             action={action}
+                            hidden={hidden}
                             onClickCheck={(actionId) => {
                                 return handlerClickCheck(actionId);
                             }}

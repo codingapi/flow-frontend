@@ -1,11 +1,11 @@
 import React from "react";
-import {FlowActionProps} from "./type";
-import {Form, message, Modal} from "antd";
-import {ApprovalViewPluginAction, useApprovalContext} from "@coding-flow/flow-approval-presenter";
-import {DelegateView} from "@/plugins/view/delegate-view";
-import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
-import {APPROVAL_ACTION_DELEGATE_KEY} from "@/components/flow-approval";
-import {ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
+import { FlowActionProps } from "./type";
+import { Form, message, Modal } from "antd";
+import { ApprovalViewPluginAction, useApprovalContext } from "@coding-flow/flow-approval-presenter";
+import { DelegateView } from "@/plugins/view/delegate-view";
+import { CustomStyleButton } from "@/components/flow-approval/components/custom-style-button";
+import { APPROVAL_ACTION_DELEGATE_KEY } from "@/components/flow-approval";
+import { ViewBindPlugin, FlowMessageKey, FlowMessageRegistry, EventBus } from "@coding-flow/flow-core";
 
 /**
  * 委派
@@ -15,7 +15,7 @@ import {ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/
 export const DelegateAction: React.FC<FlowActionProps> = (props) => {
 
     const action = props.action;
-    const {state, context} = useApprovalContext();
+    const { state, context } = useApprovalContext();
     const [form] = Form.useForm();
 
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
@@ -25,10 +25,10 @@ export const DelegateAction: React.FC<FlowActionProps> = (props) => {
 
     const actionRef = React.useRef<ApprovalViewPluginAction>(null);
 
-    const handlerOK = ()=>{
-        if(actionRef.current){
-            actionRef.current.onValidate().then(res=>{
-                if(res){
+    const handlerOK = () => {
+        if (actionRef.current) {
+            actionRef.current.onValidate().then(res => {
+                if (res) {
                     form.submit();
                 }
             })
@@ -52,6 +52,19 @@ export const DelegateAction: React.FC<FlowActionProps> = (props) => {
         });
     }
 
+    React.useEffect(() => {
+        EventBus.getInstance().on(action.id, () => {
+            if (props.onClickCheck?.(action.id)) {
+                form.resetFields();
+                setModalVisible(true);
+            }
+        });
+
+        return () => {
+            EventBus.getInstance().off(action.id);
+        }
+    }, []);
+
     const ActionView = ViewBindPlugin.getInstance().get(APPROVAL_ACTION_DELEGATE_KEY);
 
     if (ActionView) {
@@ -64,18 +77,20 @@ export const DelegateAction: React.FC<FlowActionProps> = (props) => {
 
     return (
         <>
-            <CustomStyleButton
-                loading={actionLoading}
-                disabled={actionLoading}
-                display={props.action.display}
-                onClick={() => {
-                    if(props.onClickCheck?.(action.id)) {
-                        form.resetFields();
-                        setModalVisible(true);
-                    }
-                }}
-                title={action.title}
-            />
+            {!props.hidden && (
+                <CustomStyleButton
+                    loading={actionLoading}
+                    disabled={actionLoading}
+                    display={props.action.display}
+                    onClick={() => {
+                        if (props.onClickCheck?.(action.id)) {
+                            form.resetFields();
+                            setModalVisible(true);
+                        }
+                    }}
+                    title={action.title}
+                />
+            )}
 
             <Modal
                 title={"委派审批"}
@@ -100,7 +115,7 @@ export const DelegateAction: React.FC<FlowActionProps> = (props) => {
                         rules={[
                             {
                                 required: true,
-                                message:'委派人员不能为空'
+                                message: '委派人员不能为空'
                             }
                         ]}
                     >

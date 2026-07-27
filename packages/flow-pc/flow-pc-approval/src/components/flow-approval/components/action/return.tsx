@@ -1,11 +1,11 @@
 import React from "react";
-import {FlowActionProps} from "./type";
-import {Form, message, Modal} from "antd";
-import {ApprovalViewPluginAction, useApprovalContext} from "@coding-flow/flow-approval-presenter";
-import {ReturnView} from "@/plugins/view/return-view";
-import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
-import {APPROVAL_ACTION_RETURN_KEY} from "@/components/flow-approval";
-import {ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
+import { FlowActionProps } from "./type";
+import { Form, message, Modal } from "antd";
+import { ApprovalViewPluginAction, useApprovalContext } from "@coding-flow/flow-approval-presenter";
+import { ReturnView } from "@/plugins/view/return-view";
+import { CustomStyleButton } from "@/components/flow-approval/components/custom-style-button";
+import { APPROVAL_ACTION_RETURN_KEY } from "@/components/flow-approval";
+import { ViewBindPlugin, FlowMessageKey, FlowMessageRegistry, EventBus } from "@coding-flow/flow-core";
 
 /**
  * 退回
@@ -15,7 +15,7 @@ import {ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/
 export const ReturnAction: React.FC<FlowActionProps> = (props) => {
 
     const action = props.action;
-    const {state, context} = useApprovalContext();
+    const { state, context } = useApprovalContext();
     const [form] = Form.useForm();
 
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
@@ -53,6 +53,19 @@ export const ReturnAction: React.FC<FlowActionProps> = (props) => {
         });
     }
 
+    React.useEffect(() => {
+        EventBus.getInstance().on(action.id, () => {
+            if (props.onClickCheck?.(action.id)) {
+                form.resetFields();
+                setModalVisible(true);
+            }
+        });
+
+        return () => {
+            EventBus.getInstance().off(action.id);
+        }
+    }, []);
+
     const ActionView = ViewBindPlugin.getInstance().get(APPROVAL_ACTION_RETURN_KEY);
 
     if (ActionView) {
@@ -65,18 +78,20 @@ export const ReturnAction: React.FC<FlowActionProps> = (props) => {
 
     return (
         <>
-            <CustomStyleButton
-                loading={actionLoading}
-                disabled={actionLoading}
-                display={props.action.display}
-                onClick={() => {
-                    if (props.onClickCheck?.(action.id)) {
-                        form.resetFields();
-                        setModalVisible(true);
-                    }
-                }}
-                title={action.title}
-            />
+            {!props.hidden && (
+                <CustomStyleButton
+                    loading={actionLoading}
+                    disabled={actionLoading}
+                    display={props.action.display}
+                    onClick={() => {
+                        if (props.onClickCheck?.(action.id)) {
+                            form.resetFields();
+                            setModalVisible(true);
+                        }
+                    }}
+                    title={action.title}
+                />
+            )}
 
             <Modal
                 title={"退回审批"}

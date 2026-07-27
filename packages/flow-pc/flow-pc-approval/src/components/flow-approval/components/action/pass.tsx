@@ -1,16 +1,16 @@
 import React from "react";
-import {FlowActionProps} from "./type";
-import {Form, Input, message, Modal} from "antd";
-import {ApprovalViewPluginAction, useApprovalContext} from "@coding-flow/flow-approval-presenter";
-import {SignKeyView} from "@/plugins/view/sign-key-view";
-import {CustomStyleButton} from "@/components/flow-approval/components/custom-style-button";
-import {NodeOption} from "@coding-flow/flow-types";
-import {OperatorSelectView} from "@/plugins/view/operator-select-view";
-import {ManualView} from "@/plugins/view/manual-view";
-import {APPROVAL_ACTION_PASS_KEY} from "@/components/flow-approval";
-import {ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
+import { FlowActionProps } from "./type";
+import { Form, Input, message, Modal } from "antd";
+import { ApprovalViewPluginAction, useApprovalContext } from "@coding-flow/flow-approval-presenter";
+import { SignKeyView } from "@/plugins/view/sign-key-view";
+import { CustomStyleButton } from "@/components/flow-approval/components/custom-style-button";
+import { NodeOption } from "@coding-flow/flow-types";
+import { OperatorSelectView } from "@/plugins/view/operator-select-view";
+import { ManualView } from "@/plugins/view/manual-view";
+import { APPROVAL_ACTION_PASS_KEY } from "@/components/flow-approval";
+import { ViewBindPlugin, FlowMessageKey, FlowMessageRegistry, EventBus } from "@coding-flow/flow-core";
 
-const {TextArea} = Input;
+const { TextArea } = Input;
 
 /**
  * 通过
@@ -20,7 +20,7 @@ const {TextArea} = Input;
 export const PassAction: React.FC<FlowActionProps> = (props) => {
 
     const action = props.action;
-    const {state, context} = useApprovalContext()
+    const { state, context } = useApprovalContext()
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
 
     const [modalVisible, setModalVisible] = React.useState(false);
@@ -62,6 +62,23 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
         });
     }
 
+    React.useEffect(() => {
+        EventBus.getInstance().on(action.id, () => {
+            if (props.onClickCheck?.(action.id)) {
+                if (isStartNode) {
+                    handleSubmit();
+                } else {
+                    form.resetFields();
+                    setModalVisible(true);
+                }
+            }
+        });
+
+        return () => {
+            EventBus.getInstance().off(action.id);
+        }
+    }, []);
+
     const actionRef = React.useRef<ApprovalViewPluginAction>(null);
 
     const handlerOK = () => {
@@ -96,22 +113,24 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
 
     return (
         <>
-            <CustomStyleButton
-                display={props.action.display}
-                loading={actionLoading}
-                disabled={actionLoading}
-                onClick={() => {
-                    if (props.onClickCheck?.(action.id)) {
-                        if (isStartNode) {
-                            handleSubmit();
-                        } else {
-                            form.resetFields();
-                            setModalVisible(true);
+            {!props.hidden && (
+                <CustomStyleButton
+                    display={props.action.display}
+                    loading={actionLoading}
+                    disabled={actionLoading}
+                    onClick={() => {
+                        if (props.onClickCheck?.(action.id)) {
+                            if (isStartNode) {
+                                handleSubmit();
+                            } else {
+                                form.resetFields();
+                                setModalVisible(true);
+                            }
                         }
-                    }
-                }}
-                title={action.title}
-            />
+                    }}
+                    title={action.title}
+                />
+            )}
 
             <Modal
                 title={"审批通过"}
@@ -142,7 +161,7 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                         required={state.flow?.adviceRequired}
                         rules={adviceRules}
                     >
-                        <TextArea placeholder={"请输入审批意见"}/>
+                        <TextArea placeholder={"请输入审批意见"} />
                     </Form.Item>
 
 

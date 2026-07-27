@@ -4,4 +4,6 @@ export interface FlowActionProps{
     action:FlowAction;
 
     onClickCheck?:(actionId:string) => boolean;
+
+    hidden:boolean;
 }

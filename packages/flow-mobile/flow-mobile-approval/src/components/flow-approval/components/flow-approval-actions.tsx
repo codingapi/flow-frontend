@@ -13,16 +13,18 @@ export const FlowApprovalActions = () => {
 
     const { state, context } = useApprovalContext();
     const presenter = useLayoutPresenter();
+    const actionPresenter = context.getPresenter().getFlowActionPresenter();
     const actionLoading = state.actionLoading ?? false;
+
+    const actionList = state.flow?.actionList || [];
 
     const [moreVisible, setMoreVisible] = useState(false);
 
     const handlerAction = (id: string) => {
-        const presenter = context.getPresenter().getFlowActionPresenter();
-        const action = presenter.getAction(id);
+        const action = actionPresenter.getAction(id);
         if (state.flow?.mergeable) {
-            const selectRecordIds = presenter.getSubmitRecordIds();
-            const currentFormData = presenter.getCurrentFormData();
+            const selectRecordIds = actionPresenter.getSubmitRecordIds();
+            const currentFormData = actionPresenter.getCurrentFormData();
             if (ObjectUtils.isEmptyObject(currentFormData) && selectRecordIds.length == 0) {
                 Toast.show(FlowMessageRegistry.getInstance().get(FlowMessageKey.APPROVAL_NO_SELECTED))
                 return;
@@ -51,7 +53,7 @@ export const FlowApprovalActions = () => {
                 alignItems: 'center',
             }}
         >
-            {presenter.getActions().map((action, index) => {
+            {actionList.map((action, index) => {                
                 return ActionFactory.getInstance().render(action);
             })}
 
