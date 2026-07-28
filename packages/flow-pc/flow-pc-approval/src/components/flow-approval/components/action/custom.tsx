@@ -46,7 +46,13 @@ export const CustomAction: React.FC<FlowActionProps> = (props) => {
                             display={props.action.display}
                             onClick={() => {
                                 if (triggerFrontEvent) {
-                                    EventBus.getInstance().emit(triggerFrontEvent);
+                                    // 前端触发事件不经过 action()，需手动执行拦截器：
+                                    // 全部放行后才派发事件，任一拦截器返回 false 则终止
+                                    actionPresenter.interceptAction(action.id).then((passed) => {
+                                        if (passed) {
+                                            EventBus.getInstance().emit(triggerFrontEvent);
+                                        }
+                                    });
                                 } else {
                                     if (props.onClickCheck?.(action.id)) {
                                         actionPresenter.action(action.id).then((res) => {

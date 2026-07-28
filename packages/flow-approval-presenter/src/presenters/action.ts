@@ -1,5 +1,6 @@
 import { ApprovalState, FlowApprovalApi } from "@/typings";
 import { FlowAction, FormActionContext } from "@coding-flow/flow-types";
+import { ActionInterceptor, ActionInterceptorManager } from "@/interceptor";
 
 export class FlowActionPresenter {
 
@@ -8,6 +9,7 @@ export class FlowActionPresenter {
     private state: ApprovalState;
     private readonly mockKey: string;
     private readonly setLoading: (loading: boolean) => void;
+    private readonly interceptorManager: ActionInterceptorManager;
 
     private submitRecordIds: number[];
     private actions: FlowAction[];
@@ -24,6 +26,34 @@ export class FlowActionPresenter {
         this.submitRecordIds = [];
         this.mockKey = mockKey;
         this.setLoading = setLoading;
+        this.interceptorManager = new ActionInterceptorManager();
+    }
+
+
+    /**
+     * 订阅审批操作拦截器。
+     *
+     * 所有审批操作按钮（通过/驳回/暂存/加签/委托/退回/转办/自定义）点击后、
+     * 真正提交前会依次执行已订阅的拦截器。拦截器支持异步，返回 true 放行、
+     * 返回 false 拦截（终止本次操作）。
+     *
+     * 自定义视图可通过
+     * `useApprovalContext().context.getPresenter().getFlowActionPresenter()`
+     * 获取本对象后订阅，并在组件卸载时调用返回的函数取消订阅。
+     *
+     * @param interceptor 拦截器函数
+     * @returns 取消订阅函数
+     */
+    public addActionInterceptor(interceptor: ActionInterceptor): () => void {
+        return this.interceptorManager.add(interceptor);
+    }
+
+    /**
+     * 移除指定审批操作拦截器
+     * @param interceptor 待移除的拦截器函数
+     */
+    public removeActionInterceptor(interceptor: ActionInterceptor): void {
+        this.interceptorManager.remove(interceptor);
     }
 
 
@@ -222,7 +252,36 @@ export class FlowActionPresenter {
         }
     }
 
+    /**
+     * 执行已订阅的审批操作拦截器。
+     *
+     * 按订阅顺序依次执行（支持异步），任一拦截器返回 false 即短路并返回 false。
+     * 除由 action() 在提交前自动调用外，不涉及服务端提交的操作入口
+     * （如配置了 triggerFrontEvent 的自定义按钮）也应手动调用本方法，
+     * 以保证「点击即拦截」的一致语义。
+     *
+     * @param actionId 动作 ID
+     * @param params 动作附加参数
+     * @returns 全部放行返回 true；任一拦截返回 false
+     */
+    public async interceptAction(actionId: string, params?: any): Promise<boolean> {
+        return await this.interceptorManager.intercept({
+            actionId,
+            action: this.getAction(actionId),
+            params,
+        });
+    }
+
     public async action(actionId: string, params?: any) {
+        // 提交前执行已订阅的拦截器，任一拦截器返回 false 则终止本次操作
+        const passed = await this.interceptAction(actionId, params);
+        if (!passed) {
+            return {
+                success: false,
+                intercepted: true,
+            };
+        }
+
         this.setLoading(true);
         try {
             // 流程合并审批
