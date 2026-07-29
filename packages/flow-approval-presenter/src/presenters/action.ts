@@ -1,5 +1,5 @@
 import { ApprovalState, FlowApprovalApi } from "@/typings";
-import { FlowAction, FormActionContext } from "@coding-flow/flow-types";
+import { FormActionContext } from "@coding-flow/flow-types";
 import { ActionInterceptor, ActionInterceptorManager } from "@/interceptor";
 
 export class FlowActionPresenter {
@@ -12,7 +12,6 @@ export class FlowActionPresenter {
     private readonly interceptorManager: ActionInterceptorManager;
 
     private submitRecordIds: number[];
-    private actions: FlowAction[];
 
     constructor(state: ApprovalState,
         api: FlowApprovalApi,
@@ -20,7 +19,6 @@ export class FlowActionPresenter {
         mockKey: string,
         setLoading: (loading: boolean) => void) {
         this.state = JSON.parse(JSON.stringify(state));
-        this.actions = this.state.flow?.actions || [];
         this.api = api;
         this.formActionContext = formActionContext;
         this.submitRecordIds = [];
@@ -75,7 +73,8 @@ export class FlowActionPresenter {
     }
 
     public hiddenAction(actionId: string) {
-        for (const action of this.actions) {
+        const actions = this.state.flow?.actions || [];
+        for (const action of actions) {
             if (action.id === actionId) {
                 return false;
             }
