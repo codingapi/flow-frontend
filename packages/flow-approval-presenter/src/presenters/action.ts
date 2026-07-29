@@ -1,5 +1,5 @@
 import { ApprovalState, FlowApprovalApi } from "@/typings";
-import { FormActionContext } from "@coding-flow/flow-types";
+import { FormActionContext, FlowAction } from "@coding-flow/flow-types";
 import { ActionInterceptor, ActionInterceptorManager } from "@/interceptor";
 
 export class FlowActionPresenter {
@@ -72,14 +72,21 @@ export class FlowActionPresenter {
         this.state = JSON.parse(JSON.stringify(state));
     }
 
-    public hiddenAction(actionId: string) {
-        const actions = this.state.flow?.actions || [];
-        for (const action of actions) {
-            if (action.id === actionId) {
-                return false;
-            }
-        }
-        return true;
+    /**
+     * 判断某个动作按钮是否应隐藏（纯函数，单一事实来源）。
+     *
+     * 规则：动作 id 命中「当前可见按钮集合 actions」则显示（返回 false），
+     * 否则隐藏（返回 true）。
+     *
+     * 视图层应在 render 阶段传入来自响应式 Redux state 的最新 `actions`
+     * （即 `state.flow?.actions`），而不是依赖 Presenter 内部快照，
+     * 以避免 syncState（effect 中执行）滞后于 render 导致的按钮整体不渲染问题。
+     *
+     * @param actions 当前可见的动作按钮集合
+     * @param actionId 待判断的动作 ID
+     */
+    public static isActionHidden(actions: FlowAction[], actionId: string): boolean {
+        return !actions.some((action) => action.id === actionId);
     }
 
     public async processNodes() {
