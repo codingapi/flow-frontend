@@ -169,18 +169,6 @@ import { SomeUtil } from '../../../packages/flow-core/src/...';
 - **Presenter / Manager / Convertor / Factory 等业务类**：使用 `class`，便于扩展和组合
 - **简单工具函数**：可用函数式（`export const fn = () => {}`）
 
-### Git 工作流
-
-**代码提交路径：**
-
-```
-feature/{task-name}  →  PR  →  dev  →  （用户审核）  →  main
-```
-
-- **禁止直接向 main 分支提交**，main 分支由用户手动合并管理
-- **dev 分支为集成分支**，所有 PR 的目标分支均为 dev
-- **所有代码开发必须在 git worktree 中进行**，不在主工作区直接改代码
-
 ### TDD 开发规范
 
 本项目采用 TDD 模式，基于 `@rstest/core` 测试框架（jsdom 环境，jest-dom matchers）。
