@@ -1,0 +1,49 @@
+// 节点配置面板 header：节点标题与节点 ID 同行展示
+// 标题区：占满剩余空间，标题过长时省略号截断，悬浮显示完整标题
+.titleGroup {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+}
+
+// 标题文本 + 编辑图标容器，需可收缩以触发内部文本省略
+.headerTitle {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 100%;
+}
+
+// 标题文本省略号截断
+.titleText {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+}
+
+// 右侧区：节点 ID 复制 + 关闭按钮，固定不收缩，保证 ID 始终完整可见
+.rightGroup {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: 0 0 auto;
+    margin-left: 8px;
+}
+
+// 节点 ID 只读文本，次要字号
+.nodeId {
+    font-size: 12px;
+    flex: 0 0 auto;
+}
+
+// 复制图标略放大，保证可点击与辨识度
+.nodeId :global(.ant-typography-copy) {
+    margin-inline-start: 4px;
+    font-size: 13px;
+}
