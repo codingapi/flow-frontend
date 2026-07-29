@@ -1,4 +1,4 @@
-import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
+import {useApprovalContext, FlowActionPresenter} from "@coding-flow/flow-approval-presenter";
 import React from "react";
 import {message, Space} from "antd";
 import {ObjectUtils, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
@@ -11,6 +11,7 @@ export const FlowApprovalActions = () => {
 
     const {state, context} = useApprovalContext()
     const actionList = state.flow?.actionList || [];
+    const visibleActions = state.flow?.actions || [];
     const review = state?.review || false;
 
    const actionPresenter = context.getPresenter().getFlowActionPresenter();
@@ -35,7 +36,7 @@ export const FlowApprovalActions = () => {
             {!review && actionList.map((action) => {
                 const FlowActionComponent = ActionFactory.getInstance().getFlowActionComponent(action);
                 if (FlowActionComponent) {
-                    const hidden = actionPresenter.hiddenAction(action.id);
+                    const hidden = FlowActionPresenter.isActionHidden(visibleActions, action.id);
                     return (
                         <FlowActionComponent
                             action={action}
