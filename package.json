@@ -57,6 +57,9 @@
     "test:flow-mobile-approval": "pnpm -F @coding-flow/flow-mobile-approval test",
     "test:flow-mobile": "pnpm run test:flow-mobile-ui && pnpm run test:flow-mobile-form && pnpm run test:flow-mobile-approval",
     "test": "pnpm run test:flow-core && pnpm run test:flow-design && pnpm run test:flow-pc && pnpm run test:flow-mobile",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "pnpm run build && changeset publish",
     "clean": "pnpm cleaninstall-node "
   },
   "keywords": [
@@ -90,6 +93,7 @@
     }
   },
   "devDependencies": {
+    "@changesets/cli": "^2.31.1",
     "@rsbuild/core": "^1.7.2",
     "@rsbuild/plugin-less": "^1.6.0",
     "@rsbuild/plugin-react": "^1.4.2",
