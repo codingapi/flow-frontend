@@ -35,7 +35,7 @@ jobs:
         uses: changesets/action@v1
         with:
           # 当 Version Packages PR 被合并后，自动执行 build + publish
-          publish: pnpm run release
+          publish: pnpm run push
           # PR 标题
           title: "chore: release packages"
           # PR 提交信息
