@@ -1,10 +1,12 @@
 import {createHashRouter} from "react-router";
-import LoginPage from "@/pages/login";
-import HomePage from "@/pages/home";
-import DesignPage from "@/pages/desgin";
-import TodoPage from "@/pages/todo";
-import UserPage from "@/pages/user";
-import MockPage from "@/pages/mock";
+import { lazy } from "react";
+
+const LoginPage = lazy(() => import("@/pages/login"));
+const HomePage = lazy(() => import("@/pages/home"));
+const DesignPage = lazy(() => import("@/pages/desgin"));
+const TodoPage = lazy(() => import("@/pages/todo"));
+const UserPage = lazy(() => import("@/pages/user"));
+const MockPage = lazy(() => import("@/pages/mock"));
 
 
 export const routers = [

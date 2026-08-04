@@ -1,4 +1,3 @@
-import React from "react";
 import {FormTypeContext} from "@coding-flow/flow-types";
 import {type FormType} from "@coding-flow/flow-types";
 import { registerFormItems } from "@coding-form/form-engine";
@@ -14,12 +13,14 @@ class RegisterRef{
 
 }
 
+// 模块级单例标记：注册逻辑可能在异步上下文中调用，不能使用 React.useRef
+let registerRef: RegisterRef | undefined;
+
 export const registerFormTypes = ()=>{
 
-    const ref = React.useRef<RegisterRef>(undefined);
+    if(!registerRef){
+        registerRef = new RegisterRef();
 
-    if(!ref.current){
-        ref.current = new RegisterRef();
 
         const types:FormType[] = [
             {
