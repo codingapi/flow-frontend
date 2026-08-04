@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "description": "flow-engine core lib framework ",
   "type": "module",
+  "sideEffects": [
+    "**/*.css",
+    "**/*.less",
+    "**/*.scss"
+  ],
   "keywords": [
     "coding-flow",
     "flow-engine"
