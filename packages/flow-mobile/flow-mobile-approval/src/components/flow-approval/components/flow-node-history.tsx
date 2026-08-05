@@ -2,7 +2,15 @@ import React from "react";
 import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {ProcessNode} from "@coding-flow/flow-types";
 import {Empty, Steps} from "antd-mobile";
-import {FlowOperatorItem, getNodeStatus} from "@/components/flow-approval/components/flow-time-node";
+import {
+    FlowOperatorItem,
+    getNodeStatus,
+    getProcessRecordSourceLabel,
+    getSubProcessInstanceName,
+    getSubProcessInstanceTitle,
+    getSubProcessSummary,
+} from "@/components/flow-approval/components/flow-time-node";
+import styles from "./flow_node_history.module.scss";
 
 const {Step} = Steps;
 
@@ -27,6 +35,16 @@ export const getOperatorTitle = (node: ProcessNode)=>{
         return node.nodeName;
     }
 }
+
+const getNodeTitle = (node: ProcessNode): React.ReactNode => {
+    const sourceLabel = getProcessRecordSourceLabel(node);
+    return (
+        <span className={styles.nodeTitle}>
+            <span>{node.nodeName}</span>
+            {sourceLabel && <span className={styles.sourceTag}>{sourceLabel}</span>}
+        </span>
+    );
+};
 
 export const FlowNodeHistory: React.FC<FlowNodeHistoryProps> = (props) => {
     const {context} = useApprovalContext();
@@ -61,14 +79,34 @@ export const FlowNodeHistory: React.FC<FlowNodeHistoryProps> = (props) => {
                     {processNodes.map(node => {
                         const operators = node.operators || [];
                         const operatorStatregy = node.operatorStrategy;
+                        if (node.subProcess) {
+                            return (
+                                <Step
+                                    key={node.id}
+                                    title={getNodeTitle(node)}
+                                    description={(
+                                        <div>
+                                            <div>{getSubProcessSummary(node)}</div>
+                                            {node.subProcess.instances.map((instance, index) => (
+                                                <div key={instance.processId}>
+                                                    {getSubProcessInstanceTitle(instance.state, index)} · {getSubProcessInstanceName(instance, index)}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                    status={getNodeStatus(node)}
+                                />
+                            );
+                        }
                         if(operatorStatregy === 'INITIATOR_SELECT' || operatorStatregy === 'APPROVER_SELECT' || operatorStatregy === 'NO_OPERATOR') {
                             return (
                                 <Step
-                                    title={node.nodeName}
+                                    key={node.id}
+                                    title={getNodeTitle(node)}
                                     description={(
-                                        <>
+                                        <div>
                                             {getOperatorTitle(node)}
-                                        </>
+                                        </div>
                                     )}
                                     status={getNodeStatus(node)}
                                 />
@@ -76,15 +114,16 @@ export const FlowNodeHistory: React.FC<FlowNodeHistoryProps> = (props) => {
                         }
                         return (
                             <Step
-                                title={node.nodeName}
+                                key={node.id}
+                                title={getNodeTitle(node)}
                                 description={(
-                                    <>
+                                    <div>
                                         {operators.map(operator => {
                                             return (
                                                 <FlowOperatorItem operator={operator} approveState={node.approveState}/>
                                             )
                                         })}
-                                    </>
+                                    </div>
                                 )}
                                 status={getNodeStatus(node)}
                             />

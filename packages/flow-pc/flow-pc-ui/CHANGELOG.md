@@ -1,5 +1,11 @@
 # @coding-flow/flow-pc-ui
 
+## 0.1.2
+
+### Patch Changes
+
+- @coding-flow/flow-core@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes

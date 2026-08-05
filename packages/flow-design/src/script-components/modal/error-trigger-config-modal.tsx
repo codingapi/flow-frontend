@@ -19,11 +19,17 @@ export interface ErrorTriggerConfigModalProps {
     onCancel: () => void;
     /** 确认回调 */
     onConfirm: (script: string) => void;
+    /** 是否仅允许配置节点跳转 */
+    nodeOnly?: boolean;
 }
 
 
 
-const ErrorTriggerConfigContent: React.FC<GroovyScriptContent> = (props) => {
+interface ErrorTriggerConfigContentProps extends GroovyScriptContent {
+    nodeOnly?: boolean;
+}
+
+const ErrorTriggerConfigContent: React.FC<ErrorTriggerConfigContentProps> = props => {
     const isAdvance = GroovyScriptConvertorUtil.isCustomScript(props.script);
 
     return (
@@ -37,7 +43,7 @@ const ErrorTriggerConfigContent: React.FC<GroovyScriptContent> = (props) => {
                 />
             )}
             {!isAdvance && (
-                <ErrorTriggerPluginView {...props} />
+                <ErrorTriggerPluginView {...props} nodeOnly={props.nodeOnly}/>
             )}
         </>
     );
@@ -54,7 +60,9 @@ export const ErrorTriggerConfigModal: React.FC<ErrorTriggerConfigModalProps> = (
             onConfirm={props.onConfirm}
             onCancel={props.onCancel}
             title="异常配置"
-            content={ErrorTriggerConfigContent}
+            content={contentProps => (
+                <ErrorTriggerConfigContent {...contentProps} nodeOnly={props.nodeOnly}/>
+            )}
             scriptKey={props.scriptKey}
         />
     );

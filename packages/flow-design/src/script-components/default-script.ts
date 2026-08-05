@@ -94,3 +94,12 @@ def run(request){
     return request.toCreateRequest() 
 }
 `
+
+// 子流程结果判定脚本，默认等待全部子流程结束
+export const SCRIPT_DEFAULT_SUB_PROCESS_RESULT =
+`// @SCRIPT_TITLE 全部子流程结束后继续
+def run(request){
+    return request.findSubProcessRecords(request.getCurrentNode().getId()).size()
+        == request.getSubProcessTotal();
+}
+`
