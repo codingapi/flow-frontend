@@ -8,8 +8,19 @@ export interface SubProcessViewProps {
     onChange: (value: string) => void;
 }
 
+export interface SubProcessConfig {
+    workId?: string;
+    actionId?: string;
+    operatorId?: string | number;
+    formData?: string;
+}
 
-export interface WorkflowMeta{
+export interface SubProcessFormValues {
+    processes: SubProcessConfig[];
+}
+
+
+export interface WorkflowMeta {
     workId:string;
     actions:ActionOption[];
     form:FlowForm

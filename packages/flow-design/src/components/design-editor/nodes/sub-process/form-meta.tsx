@@ -9,6 +9,7 @@ import {PanelLayout} from "@/components/design-editor/node-components/layout";
 import {SubProcessStrategy} from "@/components/design-editor/node-components/strategy/sub-process";
 import React from "react";
 import {NodeHint} from "@/components/design-editor/node-components/node-hint";
+import {ErrorTriggerStrategy} from "@/components/design-editor/node-components/strategy/error-trigger";
 
 export const renderForm = (data: FormRenderProps<FlowNodeJSON['data']>) => {
     const isSidebar = useIsSidebar();
@@ -18,6 +19,7 @@ export const renderForm = (data: FormRenderProps<FlowNodeJSON['data']>) => {
                 <NodeHeader/>
                 <PanelLayout>
                     <SubProcessStrategy/>
+                    <ErrorTriggerStrategy nodeOnly/>
                 </PanelLayout>
             </NodePanel>
         );

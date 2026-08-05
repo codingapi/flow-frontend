@@ -20,6 +20,8 @@ export enum ScriptType {
     ROUTER = 'ROUTER',
     /** 子流程节点脚本 */
     SUB_PROCESS = 'SUB_PROCESS',
+    /** 子流程结果判定脚本 */
+    SUB_PROCESS_RESULT = 'SUB_PROCESS_RESULT',
     /** 自定义操作 */
     CUSTOM_ACTION = 'CUSTOM_ACTION',
     /** 按钮展示条件 */
@@ -56,4 +58,3 @@ export enum VariableTag {
     WORKFLOW = '流程相关',
     FORM_FIELD = '表单字段',
 }
-

@@ -6,6 +6,8 @@ import { EditOutlined } from "@ant-design/icons";
 import { SubProcessConfigModal } from "@/script-components/modal/sub-process-config-modal";
 import { GroovyScriptLoader } from "@/script-components/components/groovy-script-loader";
 import {FieldTip} from "@/components/field-tip";
+import {SubProcessResultConfigModal} from "@/script-components/modal/sub_process_result_config_modal";
+import styles from "./sub_process.module.scss";
 
 
 
@@ -20,7 +22,7 @@ const SubProcessScriptContent: React.FC<SubProcessStrategyContentProps> = (props
     const value = props.value || '';
 
     return (
-        <Space.Compact style={{ width: '100%' }}>
+        <Space.Compact className={styles.scriptInput}>
             <GroovyScriptPreview
                 script={value}
             />
@@ -30,7 +32,7 @@ const SubProcessScriptContent: React.FC<SubProcessStrategyContentProps> = (props
                 onClick={() => {
                     setVisible(true);
                 }}
-                style={{ borderRadius: '0 6px 6px 0' }}
+                className={styles.editButton}
             >
                 编辑
             </Button>
@@ -48,6 +50,31 @@ const SubProcessScriptContent: React.FC<SubProcessStrategyContentProps> = (props
     )
 }
 
+const SubProcessResultScriptContent: React.FC<SubProcessStrategyContentProps> = props => {
+    const [visible, setVisible] = React.useState(false);
+    const value = props.value || '';
+
+    return (
+        <Space.Compact className={styles.scriptInput}>
+            <GroovyScriptPreview script={value}/>
+            <Button
+                icon={<EditOutlined/>}
+                className={styles.editButton}
+                onClick={() => setVisible(true)}
+            >
+                编辑
+            </Button>
+            <SubProcessResultConfigModal
+                open={visible}
+                onCancel={() => setVisible(false)}
+                onConfirm={script => props.onChange?.(script)}
+                script={value}
+                scriptKey={props.scriptKey}
+            />
+        </Space.Compact>
+    );
+};
+
 /**
  * 子流程任务策略
  * @constructor
@@ -59,9 +86,7 @@ export const SubProcessStrategy: React.FC = () => {
     return (
         <Form
             form={form}
-            style={{
-                width: '100%',
-            }}
+            className={styles.form}
             layout="vertical"
         >
             <Form.Item
@@ -75,9 +100,30 @@ export const SubProcessStrategy: React.FC = () => {
             >
                 <Field
                     name={"SubProcessStrategy.script"}
-                    render={({ field: { value, onChange } }: FieldRenderProps<any>) => (
+                    render={({ field: { value, onChange } }: FieldRenderProps<string>) => (
                         <GroovyScriptLoader
                             content={SubProcessScriptContent}
+                            value={value}
+                            onChange={onChange}
+                        />
+                    )}
+                />
+            </Form.Item>
+
+            <Form.Item
+                label={
+                    <FieldTip
+                        label={"结果判定脚本"}
+                        description={"每个子流程结束时执行；返回 true 则主流程继续，全部结束仍为 false 则执行异常跳转。"}
+                    />
+                }
+                name={["SubProcessStrategy", "resultScript"]}
+            >
+                <Field
+                    name={"SubProcessStrategy.resultScript"}
+                    render={({field: {value, onChange}}: FieldRenderProps<string>) => (
+                        <GroovyScriptLoader
+                            content={SubProcessResultScriptContent}
                             value={value}
                             onChange={onChange}
                         />
@@ -96,13 +142,13 @@ export const SubProcessStrategy: React.FC = () => {
             >
                 <Field
                     name={"SubProcessStrategy.submit"}
-                    render={({ field: { value, onChange } }: FieldRenderProps<any>) => (
+                    render={({ field: { value, onChange } }: FieldRenderProps<boolean>) => (
                         <>
-                            <Switch value={value} onChange={onChange} />
+                            <Switch value={value} onChange={onChange}/>
                         </>
                     )}
                 />
             </Form.Item>
         </Form>
-    )
-}
+    );
+};

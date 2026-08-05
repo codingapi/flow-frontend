@@ -9,6 +9,7 @@ import {useNodeRouterManager} from "@/components/design-panel/hooks/use-node-rou
 import {useNodeRenderContext} from "@/components/design-editor/hooks/use-node-render-context";
 import {ErrorTriggerScriptUtils} from "@/script-components/services/node-error-trigger";
 import {useScriptMetaData} from "@/script-components/hooks/use-script-meta-data";
+import styles from "./error_trigger_view.module.scss";
 
 /**
  *
@@ -38,29 +39,19 @@ export const ErrorTriggerPluginView: React.FC<ErrorTriggerViewPlugin> = (props) 
                     ...mappingData
                 }}
             >
-                <Form.Item
-                    name={"type"}
-                    label={"触发类型"}
-                >
-                    <Select
-                        options={[
-                            {
-                                label: '跳转节点',
-                                value: 'node'
-                            },
-                            {
-                                label: '跳转用户',
-                                value: 'user'
-                            }
-                        ]}
-                        onChange={(value) => {
-                            setType(value);
-                        }}
-                    />
+                {!props.nodeOnly && (
+                    <Form.Item name={"type"} label={"触发类型"}>
+                        <Select
+                            options={[
+                                {label: '跳转节点', value: 'node'},
+                                {label: '跳转用户', value: 'user'},
+                            ]}
+                            onChange={setType}
+                        />
+                    </Form.Item>
+                )}
 
-                </Form.Item>
-
-                {type === "node" && (
+                {(props.nodeOnly || type === "node") && (
                     <Form.Item
                         name={"node"}
                         label={"指定节点"}
@@ -75,16 +66,12 @@ export const ErrorTriggerPluginView: React.FC<ErrorTriggerViewPlugin> = (props) 
                     </Form.Item>
                 )}
 
-                {type === "user" && (
+                {!props.nodeOnly && type === "user" && (
                     <div>选择人员:暂不支持</div>
                 )}
             </Form>
 
-            <Space
-                style={{
-                    marginTop: 8
-                }}
-            >
+            <Space className={styles.actions}>
                 <Button
                     icon={<CodeOutlined/>}
                     onClick={() => {

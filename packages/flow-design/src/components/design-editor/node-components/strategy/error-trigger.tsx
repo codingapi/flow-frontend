@@ -1,64 +1,55 @@
 import React from "react";
-import { Button, Form, Space } from "antd";
-import { Field, FieldRenderProps } from "@flowgram.ai/fixed-layout-editor";
-import { GroovyScriptPreview } from "@/script-components/components/groovy-script-preview";
-import { EditOutlined } from "@ant-design/icons";
-import { ErrorTriggerConfigModal } from "@/script-components/modal/error-trigger-config-modal";
-import { GroovyScriptLoaderContent, GroovyScriptLoader } from "@/script-components/components/groovy-script-loader";
+import {EditOutlined} from "@ant-design/icons";
+import {Field, FieldRenderProps} from "@flowgram.ai/fixed-layout-editor";
+import {Button, Form, Space} from "antd";
 import {FieldTip} from "@/components/field-tip";
+import {GroovyScriptLoader, GroovyScriptLoaderContent} from "@/script-components/components/groovy-script-loader";
+import {GroovyScriptPreview} from "@/script-components/components/groovy-script-preview";
+import {ErrorTriggerConfigModal} from "@/script-components/modal/error-trigger-config-modal";
+import styles from "./error_trigger.module.scss";
 
+interface ErrorTriggerConfigContentProps extends GroovyScriptLoaderContent {
+    nodeOnly?: boolean;
+}
 
-const ErrorTriggerConfigContent: React.FC<GroovyScriptLoaderContent> = (props) => {
-
+const ErrorTriggerConfigContent: React.FC<ErrorTriggerConfigContentProps> = props => {
     const [visible, setVisible] = React.useState(false);
     const value = props.value || '';
 
-
     return (
-        <Space.Compact style={{ width: '100%' }}>
-            <GroovyScriptPreview
-                script={value}
-            />
-
+        <Space.Compact className={styles.scriptInput}>
+            <GroovyScriptPreview script={value}/>
             <Button
-                icon={<EditOutlined />}
-                onClick={() => {
-                    setVisible(true);
-                }}
-                style={{ borderRadius: '0 6px 6px 0' }}
+                icon={<EditOutlined/>}
+                className={styles.editButton}
+                onClick={() => setVisible(true)}
             >
                 编辑
             </Button>
-
             <ErrorTriggerConfigModal
                 open={visible}
-                onCancel={() => { setVisible(false); }}
-                onConfirm={(value) => { props.onChange?.(value) }}
+                onCancel={() => setVisible(false)}
+                onConfirm={script => props.onChange?.(script)}
                 script={value}
                 scriptKey={props.scriptKey}
+                nodeOnly={props.nodeOnly}
             />
         </Space.Compact>
-    )
+    );
+};
+
+export interface ErrorTriggerStrategyProps {
+    nodeOnly?: boolean;
 }
 
-
 /**
- * 错误触发策略配置(没有匹配到人时)
- * @constructor
+ * 错误触发策略配置。
  */
-export const ErrorTriggerStrategy: React.FC = () => {
-
+export const ErrorTriggerStrategy: React.FC<ErrorTriggerStrategyProps> = props => {
     const [form] = Form.useForm();
-    const [visible, setVisible] = React.useState(false);
 
     return (
-        <Form
-            form={form}
-            style={{
-                width: '100%',
-            }}
-            layout="vertical"
-        >
+        <Form form={form} className={styles.form} layout="vertical">
             <Form.Item
                 label={
                     <FieldTip
@@ -70,9 +61,11 @@ export const ErrorTriggerStrategy: React.FC = () => {
             >
                 <Field
                     name={"ErrorTriggerStrategy.script"}
-                    render={({ field: { value, onChange } }: FieldRenderProps<any>) => (
+                    render={({field: {value, onChange}}: FieldRenderProps<string>) => (
                         <GroovyScriptLoader
-                            content={ErrorTriggerConfigContent}
+                            content={contentProps => (
+                                <ErrorTriggerConfigContent {...contentProps} nodeOnly={props.nodeOnly}/>
+                            )}
                             value={value}
                             onChange={onChange}
                         />
@@ -80,5 +73,5 @@ export const ErrorTriggerStrategy: React.FC = () => {
                 />
             </Form.Item>
         </Form>
-    )
-}
+    );
+};

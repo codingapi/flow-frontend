@@ -2,7 +2,12 @@ import React from "react";
 import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {ProcessNode} from "@coding-flow/flow-types";
 import {Empty, Steps} from "antd-mobile";
-import {FlowOperatorItem, getNodeStatus} from "@/components/flow-approval/components/flow-time-node";
+import {
+    FlowOperatorItem,
+    getNodeStatus,
+    getSubProcessInstanceTitle,
+    getSubProcessSummary,
+} from "@/components/flow-approval/components/flow-time-node";
 
 const {Step} = Steps;
 
@@ -61,9 +66,29 @@ export const FlowNodeHistory: React.FC<FlowNodeHistoryProps> = (props) => {
                     {processNodes.map(node => {
                         const operators = node.operators || [];
                         const operatorStatregy = node.operatorStrategy;
+                        if (node.subProcess) {
+                            return (
+                                <Step
+                                    key={node.id}
+                                    title={node.nodeName}
+                                    description={(
+                                        <>
+                                            <div>{getSubProcessSummary(node)}</div>
+                                            {node.subProcess.instances.map((instance, index) => (
+                                                <div key={instance.processId}>
+                                                    {getSubProcessInstanceTitle(instance.state, index)} · {instance.processId}
+                                                </div>
+                                            ))}
+                                        </>
+                                    )}
+                                    status={getNodeStatus(node)}
+                                />
+                            );
+                        }
                         if(operatorStatregy === 'INITIATOR_SELECT' || operatorStatregy === 'APPROVER_SELECT' || operatorStatregy === 'NO_OPERATOR') {
                             return (
                                 <Step
+                                    key={node.id}
                                     title={node.nodeName}
                                     description={(
                                         <>
@@ -76,6 +101,7 @@ export const FlowNodeHistory: React.FC<FlowNodeHistoryProps> = (props) => {
                         }
                         return (
                             <Step
+                                key={node.id}
                                 title={node.nodeName}
                                 description={(
                                     <>

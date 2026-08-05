@@ -15,4 +15,6 @@ export interface ErrorTriggerViewPlugin {
     onChange: (script: string) => void;
     /** 动作控制 **/
     action?:React.Ref<DesignViewPluginAction>;
+    /** 是否仅允许选择跳转节点 */
+    nodeOnly?: boolean;
 }

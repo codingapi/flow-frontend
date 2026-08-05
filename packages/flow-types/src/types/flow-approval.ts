@@ -222,6 +222,36 @@ export interface FlowApprovalOperator {
     flowOperator: ProcessNodeOperator;
 }
 
+export type SubProcessState = 'WAITING' | 'PASSED' | 'ERROR';
+
+export type SubProcessInstanceState = 'RUNNING' | 'FINISHED' | 'TERMINATED';
+
+/**
+ * 子流程节点创建的单个流程实例。
+ */
+export interface ProcessNodeSubProcessInstance {
+    startRecordId: number;
+    processId: string;
+    finishRecordId: number;
+    state: SubProcessInstanceState;
+    finishTime: number;
+}
+
+/**
+ * 子流程节点的一次聚合执行信息。
+ */
+export interface ProcessNodeSubProcess {
+    recordId: number;
+    groupId: string;
+    parentRecordId: number;
+    totalCount: number;
+    finishedCount: number;
+    state: SubProcessState;
+    createTime: number;
+    finishTime: number;
+    instances: ProcessNodeSubProcessInstance[];
+}
+
 /**
  * 流程节点对象
  */
@@ -241,7 +271,9 @@ export interface ProcessNode {
     // 人员模式
     operatorStrategy: 'OPERATOR_LIST' | 'INITIATOR_SELECT' | 'APPROVER_SELECT' | 'NO_OPERATOR';
     // 审批人员
-    operators: FlowApprovalOperator[]
+    operators: FlowApprovalOperator[];
+    // 子流程执行信息，仅子流程节点实际执行后返回
+    subProcess?: ProcessNodeSubProcess;
 }
 
 /**

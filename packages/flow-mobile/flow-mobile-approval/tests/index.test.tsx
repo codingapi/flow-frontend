@@ -1,15 +1,57 @@
 import {afterEach, describe, expect, test} from "@rstest/core";
 import {cleanup} from "@testing-library/react";
+import {ProcessNode, SubProcessState} from "@coding-flow/flow-types";
+import {
+    getNodeStatus,
+    getSubProcessInstanceTitle,
+    getSubProcessSummary,
+} from "@/components/flow-approval/components/flow-time-node";
 
-describe.sequential('Demo', () => {
+const createSubProcessNode = (
+    state: SubProcessState,
+    approveState: ProcessNode['approveState'],
+): ProcessNode => ({
+    id: 'sub-process:1',
+    nodeId: 'sub-node',
+    nodeName: '子流程',
+    nodeType: 'SUB_PROCESS',
+    approveStrategy: 'SEQUENCE',
+    approveState,
+    operatorStrategy: 'NO_OPERATOR',
+    operators: [],
+    subProcess: {
+        recordId: 1,
+        groupId: 'group-1',
+        parentRecordId: 10,
+        totalCount: 3,
+        finishedCount: 2,
+        state,
+        createTime: 100,
+        finishTime: state === 'WAITING' ? 0 : 200,
+        instances: [],
+    },
+});
+
+describe.sequential('移动端子流程节点记录展示', () => {
 
     afterEach(() => {
         // 清理每一次测试产生的数据
         cleanup();
     });
 
-    test('add test', () => {
-        const value = 1 + 100;
-        expect(value).toEqual(101);
+    test('展示子流程确认进度和实例状态', () => {
+        const node = createSubProcessNode('PASSED', 'PASS');
+
+        expect(getNodeStatus(node)).toEqual('finish');
+        expect(getSubProcessSummary(node)).toEqual('子流程结果已确认（2/3）');
+        expect(getSubProcessInstanceTitle('RUNNING', 0)).toEqual('子流程 1：处理中');
+        expect(getSubProcessInstanceTitle('TERMINATED', 1)).toEqual('子流程 2：已终止');
+    });
+
+    test('子流程异常映射为步骤异常状态', () => {
+        const node = createSubProcessNode('ERROR', 'ERROR');
+
+        expect(getNodeStatus(node)).toEqual('error');
+        expect(getSubProcessSummary(node)).toEqual('子流程结果异常（2/3）');
     });
 });
