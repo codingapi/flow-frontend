@@ -232,6 +232,8 @@ export type SubProcessInstanceState = 'RUNNING' | 'FINISHED' | 'TERMINATED';
 export interface ProcessNodeSubProcessInstance {
     startRecordId: number;
     processId: string;
+    /** 子流程创建时的流程名称；历史数据可能缺省。 */
+    workTitle?: string;
     finishRecordId: number;
     state: SubProcessInstanceState;
     finishTime: number;
@@ -272,6 +274,8 @@ export interface ProcessNode {
     operatorStrategy: 'OPERATOR_LIST' | 'INITIATOR_SELECT' | 'APPROVER_SELECT' | 'NO_OPERATOR';
     // 审批人员
     operators: FlowApprovalOperator[];
+    // 是否为子流程详情中拼接的主流程历史记录
+    parentProcessRecord?: boolean;
     // 子流程执行信息，仅子流程节点实际执行后返回
     subProcess?: ProcessNodeSubProcess;
 }

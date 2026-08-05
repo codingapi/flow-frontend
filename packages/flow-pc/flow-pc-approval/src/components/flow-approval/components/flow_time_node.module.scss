@@ -1,0 +1,19 @@
+.node,
+.parentProcessNode {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.parentProcessNode {
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border-left: 3px solid #1677ff;
+  border-radius: 6px;
+  background: #f0f7ff;
+}
+
+.sourceTag {
+  margin: 0;
+}

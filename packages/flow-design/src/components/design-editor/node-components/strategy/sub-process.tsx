@@ -17,6 +17,8 @@ interface SubProcessStrategyContentProps {
     scriptKey: string;
 }
 
+export const normalizeShowParentProcessRecords = (value?: boolean): boolean => value === true;
+
 const SubProcessScriptContent: React.FC<SubProcessStrategyContentProps> = (props) => {
     const [visible, setVisible] = React.useState(false);
     const value = props.value || '';
@@ -146,6 +148,26 @@ export const SubProcessStrategy: React.FC = () => {
                         <>
                             <Switch value={value} onChange={onChange}/>
                         </>
+                    )}
+                />
+            </Form.Item>
+
+            <Form.Item
+                label={
+                    <FieldTip
+                        label={"展示主流程记录"}
+                        description={"开启后，子流程参与人可在节点记录中查看进入当前子流程前的主流程实际历史，包括审批人和审批意见；默认关闭。"}
+                    />
+                }
+                name={["SubProcessStrategy", "showParentProcessRecords"]}
+            >
+                <Field
+                    name={"SubProcessStrategy.showParentProcessRecords"}
+                    render={({ field: { value, onChange } }: FieldRenderProps<boolean | undefined>) => (
+                        <Switch
+                            value={normalizeShowParentProcessRecords(value)}
+                            onChange={onChange}
+                        />
                     )}
                 />
             </Form.Item>

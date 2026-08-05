@@ -1,8 +1,13 @@
 import {CheckCircleFilled, ClockCircleOutlined, CloseCircleFilled, SyncOutlined} from "@ant-design/icons";
 import {Tag, Typography} from "antd";
 import React from "react";
-import {FlowApprovalOperator, ProcessNode} from "@coding-flow/flow-types";
+import {
+    FlowApprovalOperator,
+    ProcessNode,
+    ProcessNodeSubProcessInstance,
+} from "@coding-flow/flow-types";
 import dayjs from "dayjs";
+import styles from "./flow_time_node.module.scss";
 
 const {Text} = Typography;
 
@@ -80,6 +85,10 @@ export const getNodeStatusLabel = (node: ProcessNode): string => {
     return getStatusConfig(getNodeStatus(node)).label;
 };
 
+export const getProcessRecordSourceLabel = (node: ProcessNode): string | undefined => (
+    node.parentProcessRecord === true ? '主流程记录' : undefined
+);
+
 const getSubProcessInstanceTitle = (
     state: 'RUNNING' | 'FINISHED' | 'TERMINATED',
     index: number,
@@ -87,6 +96,11 @@ const getSubProcessInstanceTitle = (
     const stateLabel = state === 'RUNNING' ? '处理中' : state === 'FINISHED' ? '已完成' : '已终止';
     return `子流程 ${index + 1}：${stateLabel}`;
 };
+
+export const getSubProcessInstanceName = (
+    instance: ProcessNodeSubProcessInstance,
+    index: number,
+): string => instance.workTitle?.trim() || `子流程 ${index + 1}`;
 
 
 export const getOperatorTitle = (node: ProcessNode)=>{
@@ -158,11 +172,14 @@ export const FlowTimeNode: React.FC<FlowTimeNodeProps> = (props) => {
     const node = props.node;
     const operators = node.operators || [];
     const operatorStatregy = node.operatorStrategy;
+    const sourceLabel = getProcessRecordSourceLabel(node);
+    const nodeClassName = node.parentProcessRecord ? styles.parentProcessNode : styles.node;
     if(operatorStatregy === 'INITIATOR_SELECT' || operatorStatregy === 'APPROVER_SELECT' || operatorStatregy === 'NO_OPERATOR') {
         return (
-            <div style={{display: 'flex', flexDirection: 'column', gap: 4, width: '100%'}}>
+            <div className={nodeClassName}>
                 <div style={{display: 'flex', alignItems: 'center', gap: 8}}>
                     <Text strong style={{fontSize: 14}}>{node.nodeName}</Text>
+                    {sourceLabel && <Tag color="blue" className={styles.sourceTag}>{sourceLabel}</Tag>}
                     <Tag color={getStatusConfig(getNodeStatus(node)).color} style={{margin: 0}}>
                         {getNodeStatusLabel(node)}
                     </Tag>
@@ -172,7 +189,7 @@ export const FlowTimeNode: React.FC<FlowTimeNodeProps> = (props) => {
                 </Text>
                 {node.subProcess?.instances.map((instance, index) => (
                     <Text key={instance.processId} type="secondary">
-                        {getSubProcessInstanceTitle(instance.state, index)} · {instance.processId}
+                        {getSubProcessInstanceTitle(instance.state, index)} · {getSubProcessInstanceName(instance, index)}
                     </Text>
                 ))}
             </div>
@@ -180,9 +197,10 @@ export const FlowTimeNode: React.FC<FlowTimeNodeProps> = (props) => {
     }
     
     return (
-        <div style={{display: 'flex', flexDirection: 'column', gap: 4, width: '100%'}}>
+        <div className={nodeClassName}>
             <div style={{display: 'flex', alignItems: 'center', gap: 8}}>
                 <Text strong style={{fontSize: 14}}>{node.nodeName}</Text>
+                {sourceLabel && <Tag color="blue" className={styles.sourceTag}>{sourceLabel}</Tag>}
                 <Tag color={getStatusConfig(getNodeStatus(node)).color} style={{margin: 0}}>
                     {getNodeStatusLabel(node)}
                 </Tag>

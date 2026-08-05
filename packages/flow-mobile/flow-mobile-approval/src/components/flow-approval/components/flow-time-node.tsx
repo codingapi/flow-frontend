@@ -1,5 +1,9 @@
 import React from "react";
-import {FlowApprovalOperator, ProcessNode} from "@coding-flow/flow-types";
+import {
+    FlowApprovalOperator,
+    ProcessNode,
+    ProcessNodeSubProcessInstance,
+} from "@coding-flow/flow-types";
 import dayjs from "dayjs";
 
 // 获取节点状态
@@ -32,6 +36,10 @@ export const getSubProcessSummary = (node: ProcessNode): string | undefined => {
     return `子流程处理中（${progress}）`;
 };
 
+export const getProcessRecordSourceLabel = (node: ProcessNode): string | undefined => (
+    node.parentProcessRecord === true ? '主流程记录' : undefined
+);
+
 export const getSubProcessInstanceTitle = (
     state: 'RUNNING' | 'FINISHED' | 'TERMINATED',
     index: number,
@@ -39,6 +47,11 @@ export const getSubProcessInstanceTitle = (
     const stateLabel = state === 'RUNNING' ? '处理中' : state === 'FINISHED' ? '已完成' : '已终止';
     return `子流程 ${index + 1}：${stateLabel}`;
 };
+
+export const getSubProcessInstanceName = (
+    instance: ProcessNodeSubProcessInstance,
+    index: number,
+): string => instance.workTitle?.trim() || `子流程 ${index + 1}`;
 
 interface FlowOperatorItemProps {
     operator: FlowApprovalOperator;

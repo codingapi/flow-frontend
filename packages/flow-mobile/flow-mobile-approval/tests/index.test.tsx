@@ -3,6 +3,8 @@ import {cleanup} from "@testing-library/react";
 import {ProcessNode, SubProcessState} from "@coding-flow/flow-types";
 import {
     getNodeStatus,
+    getProcessRecordSourceLabel,
+    getSubProcessInstanceName,
     getSubProcessInstanceTitle,
     getSubProcessSummary,
 } from "@/components/flow-approval/components/flow-time-node";
@@ -53,5 +55,31 @@ describe.sequential('移动端子流程节点记录展示', () => {
 
         expect(getNodeStatus(node)).toEqual('error');
         expect(getSubProcessSummary(node)).toEqual('子流程结果异常（2/3）');
+    });
+
+    test('子流程实例优先展示流程名称并兼容历史数据', () => {
+        expect(getSubProcessInstanceName({
+            startRecordId: 1,
+            processId: 'child-code',
+            workTitle: '采购审批子流程',
+            finishRecordId: 0,
+            state: 'RUNNING',
+            finishTime: 0,
+        }, 0)).toEqual('采购审批子流程');
+        expect(getSubProcessInstanceName({
+            startRecordId: 2,
+            processId: 'legacy-child-code',
+            finishRecordId: 0,
+            state: 'RUNNING',
+            finishTime: 0,
+        }, 1)).toEqual('子流程 2');
+    });
+
+    test('主流程历史节点展示来源标识', () => {
+        const parentNode = {...createSubProcessNode('WAITING', 'PROCESSING'), parentProcessRecord: true};
+
+        expect(getProcessRecordSourceLabel(parentNode)).toEqual('主流程记录');
+        expect(getProcessRecordSourceLabel(createSubProcessNode('WAITING', 'PROCESSING')))
+            .toBeUndefined();
     });
 });
