@@ -37,7 +37,7 @@ export const getSubProcessSummary = (node: ProcessNode): string | undefined => {
 };
 
 export const getProcessRecordSourceLabel = (node: ProcessNode): string | undefined => (
-    node.parentProcessRecord === true ? '主流程记录' : undefined
+    node.parentProcessRecord === true ? '主流程' : undefined
 );
 
 export const getSubProcessInstanceTitle = (

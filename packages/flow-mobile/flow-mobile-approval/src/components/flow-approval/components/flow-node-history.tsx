@@ -46,10 +46,6 @@ const getNodeTitle = (node: ProcessNode): React.ReactNode => {
     );
 };
 
-const getDescriptionClassName = (node: ProcessNode): string | undefined => (
-    node.parentProcessRecord ? styles.parentProcessRecord : undefined
-);
-
 export const FlowNodeHistory: React.FC<FlowNodeHistoryProps> = (props) => {
     const {context} = useApprovalContext();
     const [processNodes, setProcessNodes] = React.useState<ProcessNode[]>([]);
@@ -89,7 +85,7 @@ export const FlowNodeHistory: React.FC<FlowNodeHistoryProps> = (props) => {
                                     key={node.id}
                                     title={getNodeTitle(node)}
                                     description={(
-                                        <div className={getDescriptionClassName(node)}>
+                                        <div>
                                             <div>{getSubProcessSummary(node)}</div>
                                             {node.subProcess.instances.map((instance, index) => (
                                                 <div key={instance.processId}>
@@ -108,7 +104,7 @@ export const FlowNodeHistory: React.FC<FlowNodeHistoryProps> = (props) => {
                                     key={node.id}
                                     title={getNodeTitle(node)}
                                     description={(
-                                        <div className={getDescriptionClassName(node)}>
+                                        <div>
                                             {getOperatorTitle(node)}
                                         </div>
                                     )}
@@ -121,7 +117,7 @@ export const FlowNodeHistory: React.FC<FlowNodeHistoryProps> = (props) => {
                                 key={node.id}
                                 title={getNodeTitle(node)}
                                 description={(
-                                    <div className={getDescriptionClassName(node)}>
+                                    <div>
                                         {operators.map(operator => {
                                             return (
                                                 <FlowOperatorItem operator={operator} approveState={node.approveState}/>
