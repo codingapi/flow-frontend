@@ -332,6 +332,8 @@ export interface FlowContent {
     adviceRequired: boolean;
     // 是否必填签名
     signRequired: boolean;
+    // 是否隐藏审批意见（开启后审批时不展示审批意见输入框）
+    adviceHidden?: boolean;
     // 表单元数据
     form: FlowForm;
     /** 表单字段权限*/

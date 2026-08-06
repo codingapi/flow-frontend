@@ -122,14 +122,16 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                         handleSubmit(values);
                     }}
                 >
-                    <Form.Item
-                        name={"advice"}
-                        label={"审批意见"}
-                        required={state.flow?.adviceRequired}
-                        rules={adviceRules}
-                    >
-                        <TextArea placeholder={"请输入审批意见"}/>
-                    </Form.Item>
+                    {!state.flow?.adviceHidden && (
+                        <Form.Item
+                            name={"advice"}
+                            label={"审批意见"}
+                            required={state.flow?.adviceRequired}
+                            rules={adviceRules}
+                        >
+                            <TextArea placeholder={"请输入审批意见"}/>
+                        </Form.Item>
+                    )}
 
                     {state.flow?.signRequired && currentOperator && (
                         <Form.Item

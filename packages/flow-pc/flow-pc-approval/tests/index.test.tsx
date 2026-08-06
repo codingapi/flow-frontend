@@ -86,7 +86,7 @@ describe.sequential('子流程节点记录展示', () => {
     test('主流程历史节点展示来源标识', () => {
         const parentNode = {...createSubProcessNode('WAITING', 'PROCESSING'), parentProcessRecord: true};
 
-        expect(getProcessRecordSourceLabel(parentNode)).toEqual('主流程记录');
+        expect(getProcessRecordSourceLabel(parentNode)).toEqual('主流程');
         expect(getProcessRecordSourceLabel(createSubProcessNode('WAITING', 'PROCESSING')))
             .toBeUndefined();
     });
