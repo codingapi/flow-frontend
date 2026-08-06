@@ -10,7 +10,6 @@ export const StartNodeRegistry: FlowNodeRegistry = {
         copyDisable: true, // Start node cannot copy
         expandable: false, // disable expanded
         addDisable: true, // Start Node cannot be added
-        editTitleDisable: true, // Start Node title cannot be edited,
     },
     info: {
         icon: 'START',
