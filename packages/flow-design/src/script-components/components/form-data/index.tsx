@@ -2,7 +2,7 @@ import React from "react";
 import {FlowForm} from "@coding-flow/flow-types";
 import {FormDataList} from "./components/list";
 import {Provider} from "react-redux";
-import {formDataStore} from "./store";
+import {createFormDataStore, FormDataStore} from "./store";
 import {FormDataContext} from "@/script-components/components/form-data/context";
 import {
     createFormDataContext,
@@ -47,8 +47,13 @@ const FormDataContextContent:React.FC<FormDataContentProps> = (props) => {
 }
 
 const FormDataReduxContent: React.FC<FormDataContentProps> = (props) => {
+    // 每个 FormDataView 实例持有独立 store，避免多实例共享状态互相覆盖
+    const storeRef = React.useRef<FormDataStore | undefined>(undefined);
+    if (!storeRef.current) {
+        storeRef.current = createFormDataStore();
+    }
     return (
-        <Provider store={formDataStore}>
+        <Provider store={storeRef.current}>
             <FormDataContextContent {...props} />
         </Provider>
     )
