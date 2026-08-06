@@ -1,5 +1,18 @@
 # @coding-flow/flow-pc-form
 
+## 0.1.3
+
+### Patch Changes
+
+- - feat: 节点级隐藏审批意见能力（前端）
+  - feat: 流程设计支持修改开始节点标题
+  - feat: 流程更多参数增加最大嵌套深度配置（循环防护）
+  - feat: 子流程视角主流程历史记录统一展示为已完成（对号）
+  - fix: 优化子流程配置界面输入体验
+- Updated dependencies
+  - @coding-flow/flow-core@0.1.3
+  - @coding-flow/flow-types@0.1.3
+
 ## 0.1.2
 
 ### Patch Changes
