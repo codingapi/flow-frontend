@@ -37,6 +37,8 @@ export interface Workflow {
     strategies?: any[];
     // 流程节点
     nodes?: FlowNode[];
+    // 最大嵌套深度（子流程嵌套层数上限，运行期循环防护）
+    maxNestDepth?: number;
 }
 
 
