@@ -44,6 +44,14 @@ export const getStatusConfig = (status: 'completed' | 'current' | 'pending' | 'e
 
 // 获取节点状态
 export const getNodeStatus = (node: ProcessNode): 'completed' | 'current' | 'pending' | 'error' => {
+    // 主流程历史记录统一展示为已完成（对号）：子流程视角下主流程已执行到子流程聚合节点，
+    // 避免与子流程当前处理中的节点产生"两个运行中"的歧义；处理中语义由节点 tag 表达
+    if (node.parentProcessRecord === true) {
+        if (node.approveState === 'ERROR') {
+            return 'error';
+        }
+        return 'completed';
+    }
     if (node.approveState === 'PASS') {
         return 'completed';
     }

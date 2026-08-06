@@ -90,4 +90,15 @@ describe.sequential('子流程节点记录展示', () => {
         expect(getProcessRecordSourceLabel(createSubProcessNode('WAITING', 'PROCESSING')))
             .toBeUndefined();
     });
+
+    test('主流程历史记录统一展示为已完成（对号）', () => {
+        // 主流程子流程聚合节点即使处于 PROCESSING，在子流程视角也应展示为已完成，
+        // 避免与子流程当前处理中的节点产生"两个运行中"的歧义
+        const parentNode = {...createSubProcessNode('WAITING', 'PROCESSING'), parentProcessRecord: true};
+        expect(getNodeStatus(parentNode)).toEqual('completed');
+        expect(getNodeStatusLabel(parentNode)).toEqual('处理中');
+        // 主流程异常记录仍展示错误状态
+        const errorParentNode = {...createSubProcessNode('ERROR', 'ERROR'), parentProcessRecord: true};
+        expect(getNodeStatus(errorParentNode)).toEqual('error');
+    });
 });
