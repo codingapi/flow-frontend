@@ -57,6 +57,25 @@ export const AdviceStrategy: React.FC = () => {
                     )}
                 />
             </Form.Item>
+
+            <Form.Item
+                label={
+                    <FieldTip
+                        label={"隐藏审批意见"}
+                        description={"开启后，审批时不展示审批意见输入框，仅弹框确认。"}
+                    />
+                }
+                name={["AdviceStrategy","adviceHidden"]}
+            >
+                <Field
+                    name="AdviceStrategy.adviceHidden"
+                    render={({ field: { value, onChange } }: FieldRenderProps<any>) => (
+                        <>
+                            <Switch value={value} onChange={onChange} />
+                        </>
+                    )}
+                />
+            </Form.Item>
         </Form>
     )
 }

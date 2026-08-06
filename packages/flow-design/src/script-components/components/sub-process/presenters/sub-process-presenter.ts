@@ -10,8 +10,28 @@ export class SubProcessPresenter {
 
     private readonly props: SubProcessViewProps;
 
+    /**
+     * 自身最后一次生成的脚本。
+     * 用于区分"自身编辑触发的脚本变更"与"外部脚本变更"，
+     * 避免编辑回填表单后再次重置表单，导致输入时表单自动刷新。
+     */
+    private lastEmittedScript?: string;
+
     constructor(props: SubProcessViewProps) {
         this.props = props;
+    }
+
+    /**
+     * 判断脚本变更是否来自外部（非自身编辑产生）。
+     * 仅外部变更才需要将脚本解析结果回填到表单。
+     *
+     * @param value 当前脚本内容
+     */
+    public isExternalChange(value: string | undefined): boolean {
+        if (!value) {
+            return false;
+        }
+        return value !== this.lastEmittedScript;
     }
 
     public parserScript(value: string): SubProcessFormValues {
@@ -32,7 +52,9 @@ export class SubProcessPresenter {
     }
 
     public updateScript(values: SubProcessFormValues) {
-        this.props.onChange(this.toScript(values));
+        const script = this.toScript(values);
+        this.lastEmittedScript = script;
+        this.props.onChange(script);
     }
 
     private toFormData(config: SubProcessConfig): string {

@@ -89,7 +89,9 @@ export const SubProcessView: React.FC<SubProcessViewProps> = (props) => {
     const subProcessPresenter = useSubProcessPresenter(props);
 
     React.useEffect(() => {
-        if (props.value) {
+        // 仅外部脚本变更（加载、切换节点等）才重置并回填表单；
+        // 自身编辑触发的变更跳过，避免输入时表单被重置导致自动刷新（issue #183）
+        if (subProcessPresenter.isExternalChange(props.value)) {
             const data = subProcessPresenter.parserScript(props.value);
             form.resetFields();
             form.setFieldsValue({
