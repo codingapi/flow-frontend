@@ -59,7 +59,7 @@ Flow Frontend 是 Flow Engine 流程引擎的前端项目，提供完整的流�
 
 | 依赖 | 版本 | 用途 | 被引用包 |
 |------|------|------|----------|
-| `@coding-form/form-engine` | ^0.0.18 | 表单引擎（FormView、createFormInstance、registerFormItems） | flow-pc-form、flow-mobile-form、flow-pc-approval、flow-mobile-approval、app-pc、app-mobile |
+| `@coding-form/form-engine` | ^0.0.19 | 表单引擎（FormView、createFormInstance、registerFormItems） | flow-pc-form、flow-mobile-form、flow-pc-approval、flow-mobile-approval、app-pc、app-mobile |
 | `@coding-script/script-engine` | ^0.0.9 | 脚本引擎（GroovyScriptConvertorUtil） | flow-design |
 | `@flowgram.ai/fixed-layout-editor` | 1.0.8 | 流程编辑器（FlowNodeRegistry、FlowNodeEntity） | flow-design |
 

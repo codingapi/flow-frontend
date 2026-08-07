@@ -63,7 +63,7 @@ app-mobile (依赖 flow-mobile-ui + flow-mobile-approval)
 
 ### 外部依赖（非 workspace 包）
 
-- `@coding-form/form-engine` ^0.0.18 — 表单引擎（FormView、createFormInstance、registerFormItems）
+- `@coding-form/form-engine` ^0.0.19 — 表单引擎（FormView、createFormInstance、registerFormItems）
 - `@coding-script/script-engine` ^0.0.9 — 脚本引擎（GroovyScriptConvertorUtil）
 - `@flowgram.ai/fixed-layout-editor` 1.0.8 — 流程编辑器（FlowNodeRegistry、FlowNodeEntity）
 

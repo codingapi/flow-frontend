@@ -6,7 +6,7 @@ status: 已实现
 scope: 前端
 source: 框架:Form Engine
 import: "@coding-form/form-engine"
-framework_version: "^0.0.18"
+framework_version: "^0.0.19"
 ---
 
 ## 解决什么问题
@@ -17,6 +17,7 @@ framework_version: "^0.0.18"
 - `createFormInstance`：创建表单实例（用于编程式操作）
 - `registerFormItems`：注册自定义表单项组件
 - `FormItemProps`：表单项属性类型定义
+- `readOnly`：表单项字段级只读属性（v0.0.19 起为 `FormItemProps` 标准属性，用于 READ 字段权限）
 
 ## 如何使用
 
@@ -59,6 +60,20 @@ import type { FormItemProps } from "@coding-form/form-engine";
 const MyFormItem = ({ field, value, onChange }: FormItemProps) => {
     return <input value={value} onChange={e => onChange(e.target.value)} />;
 };
+```
+
+### 5. 字段级只读（v0.0.19）
+
+字段权限为 `READ`（只读）时，在字段元数据上设置 `readOnly: true` 即可（`FormItemProps` 标准属性）。参考实现见 `flow-approval-presenter` 的 `MetaService.mapFormField`：
+
+```typescript
+if (permission.type === 'READ') {
+    return {
+        ...field,
+        readOnly: true,   // 表单引擎 FormItemProps 的标准只读属性
+        required: false,
+    }
+}
 ```
 
 ## 使用实例
