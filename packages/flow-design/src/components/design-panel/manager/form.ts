@@ -1,4 +1,5 @@
 import { FlowForm, FormField } from "@coding-flow/flow-types";
+import {generateUUID} from "@/utils/uuid";
 
 export class WorkflowFormManager {
 
@@ -65,7 +66,7 @@ export class WorkflowFormManager {
         if (!exist) {
             list.push({
                 ...values,
-                id: crypto.randomUUID(),
+                id: generateUUID(),
             });
         }
         const mainCode = this.form.code;
