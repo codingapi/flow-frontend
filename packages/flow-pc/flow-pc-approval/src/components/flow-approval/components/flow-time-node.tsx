@@ -138,9 +138,19 @@ interface FlowOperatorItemProps {
     approveState: string;
 }
 
-const FlowOperatorItem: React.FC<FlowOperatorItemProps> = (props) => {
+export const FlowOperatorItem: React.FC<FlowOperatorItemProps> = (props) => {
     const operator = props.operator;
     const approveState = props.approveState;
+
+    // 自动跳过：多人审批（或签/并签）节点完成后，未实际审批的候选人待办被自动置为已办，
+    // 展示为"自动跳过"，不展示审批时间/动作/意见
+    if (operator.autoSkip === true) {
+        return (
+            <Text type="secondary" style={{ fontSize: 12 }}>
+                自动跳过: {operator.flowOperator.name}
+            </Text>
+        )
+    }
 
     if (approveState === 'PASS') {
         return (
