@@ -8,9 +8,11 @@ Flow Engine 的 PC 端流程管理应用。
 
 ### 核心依赖
 
-- `@coding-flow/flow-pc-design` - 流程设计器组件库
+- `@coding-flow/flow-design` - 流程设计器组件库
 - `@coding-flow/flow-pc-approval` - 审批页面组件库
 - `@coding-flow/flow-pc-ui` - 基础 UI 组件库
+- `@coding-flow/flow-pc-form` - 表单组件库
+- `@coding-flow/flow-approval-presenter` - 审批展示器框架
 - `@coding-flow/flow-core` - 核心 API 库
 - `@coding-flow/flow-types` - TypeScript 类型定义
 - `antd` - Ant Design 组件库
@@ -51,7 +53,7 @@ pnpm run preview
 ### 流程设计
 
 - 可视化流程设计器
-- 15 种节点类型支持
+- 19 种节点类型支持
 - 节点配置面板
 - 表单设计
 - 高级设置

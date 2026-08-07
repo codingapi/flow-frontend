@@ -41,10 +41,10 @@ const ViewComponent = plugin.get('condition-view');
 
 ### 3. 在项目中的典型用法
 
-项目通过 `*-view-type.ts` 定义注册逻辑，`*-view.tsx` 实现具体视图，在插件初始化时自动注册。
+`*-view-type.ts` 定义视图键（`VIEW_KEY`）与参数接口，`*-view.tsx` 通过 `ViewBindPlugin.get(VIEW_KEY)` 获取下游注册的组件并在未注册时回退默认实现；真正执行 `ViewBindPlugin.getInstance().register()` 注册自定义视图的是下游 App 层（如 `apps/app-pc/src/hooks/register-plugin-view.tsx`）。
 
 ## 使用实例
 
 flow-design 中的插件体系：
-- `ConditionViewPlugin` / `RouterViewPlugin` / `SubProcessViewPlugin` 等使用 ViewBindPlugin 注册设计器视图
-- `ApprovalViewPluginAction` 使用 ViewBindPlugin 注册审批动作视图
+- `ConditionViewPlugin` / `RouterViewPlugin` / `SubProcessViewPlugin` 等定义视图键与参数接口，视图组件通过 `ViewBindPlugin.get()` 获取下游注册的实现并回退内置默认视图
+- 审批动作视图（add-audit/delegate/return/transfer 等）通过 `ViewBindPlugin.get()` 获取下游注册的视图组件

@@ -72,3 +72,5 @@ type Dispatch<T> = (updater: ((prevState: T) => T) | T) => void;
 - `ApprovalPresenter`（flow-approval-presenter）：审批状态管理
 - `Presenter`（flow-design/design-panel）：设计面板状态管理
 - `Presenter`（flow-design/condition）：条件编辑器状态管理
+
+以上 Presenter 类均为各包自建 class，遵循 state + dispatch + model 设计模式，但未直接继承 `BasePresenter`，也未使用 `PresenterHooks`（框架类仅由 flow-core 包自身定义与使用）。

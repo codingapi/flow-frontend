@@ -1,19 +1,21 @@
-# Flow Engine 移动端应用
+# @coding-flow/flow-mobile-form
 
-Flow Engine 的移动端流程管理应用（开发中）。
+Flow Engine 移动端表单组件库，提供动态表单渲染与表单字段组件。
 
 ## 简介
 
-`app-mobile` 是 Flow Engine 的移动端 Web 应用，将提供简化的移动操作界面。
+`flow-mobile-form` 是 Flow Engine 移动端的表单相关组件库，提供：
 
-> **注意**: 此应用目前处于开发阶段，功能尚未完整实现。
+- 动态表单渲染（基于 `@coding-form/form-engine`）
+- 表单字段组件
+- 表单验证规则
+- 表单权限控制
 
-### 核心依赖
+基于 Ant Design Mobile 组件库构建，提供统一的设计风格。
 
-- `@coding-flow/flow-core` - 核心 API 库
-- `@coding-flow/flow-types` - TypeScript 类型定义
-- `antd` - Ant Design 组件库（移动端适配）
-- `react-router` + `react-router-dom` - 路由管理
+### 依赖关系
+
+- **依赖**: `@coding-flow/flow-core`、`@coding-flow/flow-types`、`@coding-form/form-engine`、`antd-mobile`
 
 ## Setup
 
@@ -25,43 +27,12 @@ pnpm install
 
 ## 开发
 
-启动开发服务器，应用将在 [http://localhost:3000](http://localhost:3000) 访问。
-
-```bash
-pnpm run dev
-```
-
-## 构建
-
-构建生产版本:
+构建组件库:
 
 ```bash
 pnpm run build
 ```
 
-预览生产构建:
-
-```bash
-pnpm run preview
-```
-
-## 计划功能
-
-### 移动端优化
-
-- 响应式设计适配移动设备
-- 触摸优化的交互体验
-- 简化的流程处理界面
-
-### 核心功能
-
-- 待办任务列表
-- 流程审批操作
-- 流程进度查看
-- 消息通知
-
 ## Learn more
 
-- [Rsbuild documentation](https://rsbuild.rs) - Rsbuild 特性和 API
-- [Rspack documentation](https://rspack.rs) - 底层打包工具
 - [Flow Engine Docs](https://github.com/codingapi/flow-engine) - 完整文档

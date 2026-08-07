@@ -16,7 +16,7 @@ Flow Frontend 框架通过 **8 类插件机制** 实现了高度的可定制性�
 | 替换设计器的脚本编辑器、节点标题等视图 | ViewBindPlugin | 编辑器视图级 |
 | 替换后端指定的动态表单视图 | ViewBindPlugin | 表单级 |
 | 监听和触发前端事件 | EventBus | 事件级 |
-| 自定义审批动作的执行逻辑 | EventBus + CustomStyleButton | 动作级 |
+| 自定义审批动作的执行逻辑 | EventBus（triggerFrontEvent）+ triggerType 转发 | 动作级 |
 | 向审批框架注入自定义表单数据 | FormActionContext | 数据级 |
 | 替换后端 API 调用 | FlowApprovalApi 接口 | 接口级 |
 | 替换 HTTP 层的消息提示实现 | HttpClient.setMessageBox | 通知级 |
@@ -87,9 +87,11 @@ ViewBindPlugin.getInstance().register(APPROVAL_HEADER_VIEW_KEY, MyCustomHeader);
 | `APPROVAL_ACTION_REVOKE_KEY` | `"APPROVAL_ACTION_REVOKE_KEY"` | 撤回 |
 | `APPROVAL_ACTION_URGE_KEY` | `"APPROVAL_ACTION_URGE_KEY"` | 催办 |
 | `APPROVAL_ACTION_CUSTOM_KEY` | `"APPROVAL_ACTION_CUSTOM_KEY"` | 自定义动作 |
-| `APPROVAL_ACTION_CLOSE_KEY` | `"APPROVAL_ACTION_CLOSE_KEY"` | 关闭 |
+| `APPROVAL_ACTION_CLOSE_KEY` | `"APPROVAL_ACTION_CLOSE_KEY"` | 关闭（仅 PC 端） |
 
 > **重要提示**：当替换审批动作按钮时，自定义组件会完全接管该按钮的渲染和交互逻辑。建议参考默认实现中的 action 执行流程（调用 `actionPresenter.action()` 后处理 `res.success`）。
+>
+> **注意**：`APPROVAL_ACTION_CLOSE_KEY`（关闭）为 PC 端专属按钮，移动端无关闭动作。
 
 #### 审批子视图（弹窗 / 选择器）
 
@@ -251,7 +253,7 @@ class FormActionContext {
 import { useApprovalContext } from "@coding-flow/flow-approval-presenter";
 
 const MyCustomFormView = () => {
-    const context = useApprovalContext();
+    const { context } = useApprovalContext();
     const formActionContext = context.getPresenter().getFormActionContext();
 
     useEffect(() => {
@@ -513,7 +515,7 @@ registerFormItems(Form, [
   ViewBindPlugin（完全替换）
     → triggerFrontEvent（EventBus 事件触发）
     → triggerType（转发为其他动作类型）
-    → 默认
+    → 均未配置时无渲染
 
 审批布局渲染优先级：
   ViewBindPlugin（完全替换）

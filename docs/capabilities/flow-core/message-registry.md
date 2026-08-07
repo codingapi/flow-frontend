@@ -57,7 +57,7 @@ content_hash: 7d8f2a1b3c4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a
 
 ### 1. 在 App 入口注册自定义消息
 
-框架内置了所有默认消息（与改造前硬编码内容一致）。**不做任何注册就不影响现有行为**。
+框架内置了所有默认消息，不做任何注册即按默认文案展示。
 
 需要定制时，在 App 初始化阶段调用 `register()` 或 `registerAll()`：
 
@@ -152,7 +152,7 @@ Toast.show(registry.get(FlowMessageKey.APPROVAL_SAVE, actionCtx));
 
 设计器组件调用 `registry.get()` 时直接传入裸对象，不需要 Presenter。常用键的数据格式：
 
-- `DESIGN_DOWNLOAD_SUCCESS` — 传入 `{ format: 'JSON' | 'SVG' | 'PNG' }`
+- `DESIGN_DOWNLOAD_SUCCESS` — 传入 `{ format: 'PNG' | 'JPEG' }`（下载菜单仅支持 PNG、JPEG）
 - `DESIGN_SCRIPT_COMPILE_FAILED` — 传入 `{ message: string }`（后端错误信息）
 
 其他设计器消息键（`DESIGN_SAVE`、`DESIGN_VERSION_SAVED` 等）均为静态字符串，无需传 data。
@@ -232,7 +232,7 @@ Toast.show(registry.get(FlowMessageKey.APPROVAL_SAVE, actionCtx));
 
 项目中所有消息提示均已通过 FlowMessageRegistry 管理：
 
-- **审批组件（PC/移动）**：`flow-pc-approval/components/action/*.tsx`、`flow-mobile-approval/components/action/*.tsx` 中的 save/pass/reject/delegate/transfer/return/revoke/urge/custom/add-audit 共 11 种动作
+- **审批组件（PC/移动）**：`flow-pc-approval/components/action/*.tsx`、`flow-mobile-approval/components/action/*.tsx` 中的 save/pass/reject/delegate/transfer/return/revoke/urge/custom/add-audit 共 10 种动作
 - **流程设计器**：`flow-design` 中的 header 保存、版本管理、导入、下载、脚本编译、代码视图等
 - **HTTP 拦截器**：`flow-core/src/http.ts` 中 token 过期和权限不足的自动提示
 - **示例 App**：`app-pc` 中登录、用户管理、工作流管理的提示

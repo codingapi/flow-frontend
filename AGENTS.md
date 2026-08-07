@@ -31,7 +31,7 @@ pnpm run test:flow-pc     # 运行 PC 端所有测试
 pnpm run test:flow-mobile # 运行移动端所有测试
 
 # 运行单个测试文件
-cd packages/flow-core && npx rstest tests/unit/xxx.test.ts
+cd packages/flow-core && npx rstest tests/groovy.test.ts
 ```
 
 ## 架构
