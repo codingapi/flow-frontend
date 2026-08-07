@@ -1,7 +1,8 @@
 import React from "react";
 import {OperatorSelectViewPlugin, OperatorSelectViewPluginKey} from "@coding-flow/flow-approval-presenter";
 import {ViewBindPlugin} from "@coding-flow/flow-core";
-import {Modal, Form, Input} from "antd";
+import {ResizableModal} from "@/components/flow-approval/components/resizable-modal";
+import {Form, Input} from "antd";
 
 export const OperatorSelectView: React.FC<OperatorSelectViewPlugin> = (props) => {
 
@@ -46,9 +47,8 @@ export const OperatorSelectView: React.FC<OperatorSelectViewPlugin> = (props) =>
     }, {});
 
     return (
-        <Modal
+        <ResizableModal
             title={"请选择操作人"}
-            width={"40%"}
             open={visible}
             destroyOnHidden
             onCancel={() => {
@@ -87,6 +87,6 @@ export const OperatorSelectView: React.FC<OperatorSelectViewPlugin> = (props) =>
                     );
                 })}
             </Form>
-        </Modal>
+        </ResizableModal>
     )
 }

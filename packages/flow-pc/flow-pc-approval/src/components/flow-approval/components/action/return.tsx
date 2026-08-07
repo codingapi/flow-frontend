@@ -1,11 +1,12 @@
 import React from "react";
 import { FlowActionProps } from "./type";
-import { Form, message, Modal } from "antd";
+import { Form, message } from "antd";
 import { ApprovalViewPluginAction, useApprovalContext } from "@coding-flow/flow-approval-presenter";
 import { ReturnView } from "@/plugins/view/return-view";
 import { CustomStyleButton } from "@/components/flow-approval/components/custom-style-button";
 import { APPROVAL_ACTION_RETURN_KEY } from "@/components/flow-approval";
 import { ViewBindPlugin, FlowMessageKey, FlowMessageRegistry, EventBus } from "@coding-flow/flow-core";
+import { ResizableModal } from "@/components/flow-approval/components/resizable-modal";
 
 /**
  * 退回
@@ -93,7 +94,7 @@ export const ReturnAction: React.FC<FlowActionProps> = (props) => {
                 />
             )}
 
-            <Modal
+            <ResizableModal
                 title={"退回审批"}
                 open={modalVisible}
                 confirmLoading={actionLoading}
@@ -129,7 +130,7 @@ export const ReturnAction: React.FC<FlowActionProps> = (props) => {
                         />
                     </Form.Item>
                 </Form>
-            </Modal>
+            </ResizableModal>
         </>
     )
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { FlowActionProps } from "./type";
-import { Form, Input, message, Modal } from "antd";
+import { Form, Input, message } from "antd";
 import { ApprovalViewPluginAction, useApprovalContext } from "@coding-flow/flow-approval-presenter";
 import { SignKeyView } from "@/plugins/view/sign-key-view";
 import { CustomStyleButton } from "@/components/flow-approval/components/custom-style-button";
@@ -9,6 +9,7 @@ import { OperatorSelectView } from "@/plugins/view/operator-select-view";
 import { ManualView } from "@/plugins/view/manual-view";
 import { APPROVAL_ACTION_PASS_KEY } from "@/components/flow-approval";
 import { ViewBindPlugin, FlowMessageKey, FlowMessageRegistry, EventBus } from "@coding-flow/flow-core";
+import { ResizableModal } from "@/components/flow-approval/components/resizable-modal";
 
 const { TextArea } = Input;
 
@@ -132,7 +133,7 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                 />
             )}
 
-            <Modal
+            <ResizableModal
                 title={"审批通过"}
                 open={modalVisible}
                 destroyOnHidden
@@ -187,7 +188,7 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                     )}
                 </Form>
 
-            </Modal>
+            </ResizableModal>
 
             {options && options.length > 0 && responseType === 'OPERATOR_SELECT' && (
                 <OperatorSelectView
