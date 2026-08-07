@@ -53,7 +53,8 @@ export class MetaService {
             if (permission.type === 'READ') {
                 return {
                     ...field,
-                    readonly: true,
+                    // 表单引擎 FormItemProps 的标准只读属性（大写 R）
+                    readOnly: true,
                     required: false,
                 }
             }
