@@ -1,6 +1,6 @@
 ---
 name: flow-approval-presenter/action-factory
-module: flow-approval-presenter
+module: flow-pc-approval / flow-mobile-approval / flow-design（跨包能力）
 description: 动作工厂（单例模式），按 ActionType 注册并渲染对应的审批动作组件（Pass/Reject/Save/AddAudit/Delegate/Return/Transfer/Custom）
 status: 已实现
 scope: 前端
@@ -62,4 +62,4 @@ const FormComponent = factory.getActionForm(actionType);
 ## 使用实例
 
 - `FlowApprovalActions` 组件通过 ActionFactory 遍历流程节点的动作列表，逐个渲染对应的动作组件
-- `CustomAction` 组件通过 ActionFactory 获取自定义动作的表单配置
+- `CustomAction` 组件通过 ActionFactory（`getFlowActionComponent`）获取 `triggerType` 对应的动作组件

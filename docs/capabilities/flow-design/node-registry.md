@@ -38,7 +38,7 @@ content_hash: 70fe2634bcad42dd771697ff9f520999b4bb6b28cff8f92691fb94aa0fe65666
 
 - 每种节点类型通过统一的接口定义元数据
 - 注册到 Flowgram 编辑器的 fixed-layout 系统
-- 支持节点（node）和分支块（block）两种扩展类型
+- 支持节点（end）、分支块（block）和可分裂节点（dynamicSplit）三种扩展类型
 
 ## 如何使用
 
@@ -50,17 +50,30 @@ import { FlowNodeRegistry } from "@flowgram.ai/fixed-layout-editor";
 // 定义节点注册配置
 const MyNodeRegistry: FlowNodeRegistry = {
     type: 'MY_NODE_TYPE',        // 节点类型标识
-    extend: 'end' | 'block',     // 扩展类型
+    extend: 'end' | 'block' | 'dynamicSplit',     // 扩展类型
+    info: {                      // 本地扩展必填：图标与描述
+        icon: string,
+        description: string,
+    },
     meta: {
         isStart: boolean,        // 是否为起始节点
         isNodeEnd: boolean,      // 是否为结束节点
         deleteDisable: boolean,  // 禁止删除
         copyDisable: boolean,    // 禁止复制
         addDisable: boolean,     // 禁止添加
-        expandDisable: boolean,  // 禁止展开
+        expandable: boolean,     // 是否可展开（start 节点为 false）
+        sidebarDisable: boolean,   // 项目扩展：禁止侧栏
+        editTitleDisable: boolean, // 项目扩展：禁止编辑标题
     },
+    canAdd: (ctx, from) => boolean,      // 项目扩展：是否允许添加
+    canDelete: (ctx, from) => boolean,   // 项目扩展：是否允许删除
+    onAdd: (ctx, from) => FlowNodeJSON,  // 项目扩展：添加时的自定义处理
 };
 ```
+
+项目本地接口（`typings/node.tsx`）在 Flowgram 原生字段基础上要求必填 `info: { icon, description }`，并在 `meta` 上扩展 `sidebarDisable` / `style` / `editTitleDisable`，同时在注册表上扩展 `canAdd` / `canDelete` / `onAdd` 钩子（如 router 的 `canAdd`、manual-branch 的 `onAdd`）。
+
+`extend` 取值中 `dynamicSplit`（`FlowNodeSplitType.DYNAMIC_SPLIT`）用于可分裂节点（CONDITION / PARALLEL / INCLUSIVE / MANUAL）；END / ROUTER 使用 `extend: 'end'`，分支块使用 `extend: 'block'`。
 
 ### 2. 节点类型分类
 
@@ -100,4 +113,4 @@ const props = useEditorProps(initialData, nodeRegistries);
 
 ## 使用实例
 
-每个节点目录下有独立的 `index.ts` 文件定义 Registry 配置，以及 `form-meta.tsx` 定义节点的表单元数据（策略配置项）。设计器通过 `useEditorProps` 将所有 Registry 注册到 Flowgram 编辑器。
+每个节点目录下有独立的 `index.ts` 或 `index.tsx` 文件定义 Registry 配置（approval、delay、handle、notify、sub-process、trigger 六个目录为 `index.tsx`，其余为 `index.ts`），以及 `form-meta.tsx` 定义节点的表单元数据（策略配置项）。设计器通过 `useEditorProps` 将所有 Registry 注册到 Flowgram 编辑器。

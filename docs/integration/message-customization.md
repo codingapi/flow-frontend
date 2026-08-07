@@ -4,9 +4,7 @@
 
 ## 背景
 
-Flow Frontend 框架内置了大量消息提示（如"操作成功""流程已保存""脚本编译成功"等）。过去这些文案硬编码在各组件内部，集成方无法修改。
-
-现在框架通过 `FlowMessageRegistry` 将消息内容与框架代码解耦，所有提示文案均可在 App 层面自由定制，无需修改框架源码。
+Flow Frontend 框架内置了大量消息提示（如"操作成功""流程已保存""脚本编译成功"等），统一由 `FlowMessageRegistry` 管理。所有提示文案均可在 App 层面自由定制，无需修改框架源码。
 
 ## 快速开始
 
@@ -138,13 +136,15 @@ registry.register(FlowMessageKey.DESIGN_SCRIPT_COMPILE_FAILED, (data) =>
 | 键 | 默认值 | 触发时机 |
 |------|------|------|
 | `http.token.expired` | `登录已过期，请退出再重新打开` | token 失效 |
-| `http.no_permission` | `抱歉，该账户无权限访问` | 403 / 无权限 |
+| `http.no_permission` | `抱歉，该账户无权限访问` | HTTP 200 响应无 data 数据 |
+
+> **注意**：HTTP 拦截器在 `403` 状态码分支中硬编码了文案 `抱歉，该账户无权限访问`，不走 `FlowMessageRegistry` 注册键，因此定制 `http.no_permission` 不会影响 403 提示。
 
 ### 审批动作消息
 
 | 键 | 默认值 | 说明 |
 |------|------|------|
-| `approval.save` | 函数模板 | 含 `isStartNode`，可区分节点 |
+| `approval.save` | 函数模板 | 上下文含 `isStartNode`，下游自定义模板可自行区分 |
 | `approval.pass` | `操作成功` | 审批通过 |
 | `approval.reject` | `操作成功` | 审批驳回 |
 | `approval.delegate` | `操作成功` | 委托 |
@@ -223,9 +223,9 @@ i18n.init().then(() => {
 
 ```typescript
 // FlowMessageRegistry 当前未暴露 keys() 方法。
-// 可通过以下方式确认某条消息是否已注册：
+// 可通过以下方式确认某条消息是否已被覆盖：
 const msg = registry.get(FlowMessageKey.APPROVAL_PASS);
-// 如果返回的仍是键名 "approval.pass"，说明未注册或注册失败
+// 如果返回的是框架默认文案（如 "操作成功"），说明该消息未被覆盖
 ```
 
 ## 注意事项

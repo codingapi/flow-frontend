@@ -1,10 +1,11 @@
 import React from "react";
 import { FlowActionProps } from "./type";
-import { Form, Input, message, Modal } from "antd";
+import { Form, Input, message } from "antd";
 import { useApprovalContext } from "@coding-flow/flow-approval-presenter";
 import { CustomStyleButton } from "@/components/flow-approval/components/custom-style-button";
 import { APPROVAL_ACTION_REJECT_KEY } from "@/components/flow-approval";
 import { ViewBindPlugin, FlowMessageKey, FlowMessageRegistry, EventBus } from "@coding-flow/flow-core";
+import { ResizableModal } from "@/components/flow-approval/components/resizable-modal";
 
 const { TextArea } = Input;
 
@@ -87,7 +88,7 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
                 )
             }
 
-            <Modal
+            <ResizableModal
                 title={"审批拒绝"}
                 open={modalVisible}
                 confirmLoading={actionLoading}
@@ -118,7 +119,7 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
                         </Form.Item>
                     )}
                 </Form>
-            </Modal>
+            </ResizableModal>
         </>
     )
 }

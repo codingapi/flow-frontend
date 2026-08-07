@@ -59,7 +59,7 @@ Flow Frontend 是 Flow Engine 流程引擎的前端项目，提供完整的流�
 
 | 依赖 | 版本 | 用途 | 被引用包 |
 |------|------|------|----------|
-| `@coding-form/form-engine` | ^0.0.18 | 表单引擎（FormView、createFormInstance、registerFormItems） | flow-pc-form、flow-mobile-form、flow-pc-approval、flow-mobile-approval、app-pc、app-mobile |
+| `@coding-form/form-engine` | ^0.0.19 | 表单引擎（FormView、createFormInstance、registerFormItems） | flow-pc-form、flow-mobile-form、flow-pc-approval、flow-mobile-approval、app-pc、app-mobile |
 | `@coding-script/script-engine` | ^0.0.9 | 脚本引擎（GroovyScriptConvertorUtil） | flow-design |
 | `@flowgram.ai/fixed-layout-editor` | 1.0.8 | 流程编辑器（FlowNodeRegistry、FlowNodeEntity） | flow-design |
 
@@ -93,10 +93,12 @@ flow-frontend/
 │   │       └── types/                       # 业务类型定义
 │   │           ├── flow-approval.ts         # 流程审批类型
 │   │           ├── flow-design.ts           # 流程设计类型
+│   │           ├── form-action.ts           # 表单动作类型
 │   │           ├── form-instance.ts         # 表单实例类型
 │   │           ├── form-type.ts             # 表单类型
 │   │           ├── form-view.ts             # 表单视图类型
-│   │           └── icons.ts                 # 图标类型
+│   │           ├── icons.ts                 # 图标类型
+│   │           └── index.ts                 # 类型统一导出
 │   ├── flow-icons/                          # 图标库
 │   │   └── src/
 │   │       ├── icons/                       # 图标定义
@@ -194,7 +196,7 @@ flow-core ← flow-types ← flow-pc-form (表单)
                                 ↑
                             flow-design (流程设计器) ── 依赖 flow-pc-ui
                                 ↑
-                            app-pc ── 依赖 flow-design + flow-pc-ui + flow-pc-form + flow-pc-approval
+                            app-pc ── 依赖 flow-design + flow-pc-ui + flow-pc-form + flow-pc-approval + flow-approval-presenter
 ```
 
 ### 移动端组件
@@ -224,7 +226,7 @@ flow-core ← flow-types ← flow-mobile-form (表单)
 | **flow-mobile-ui** | 移动端基础 UI 组件库 | flow-core |
 | **flow-mobile-form** | 移动端表单相关功能 | flow-core, flow-types |
 | **flow-mobile-approval** | 移动端审批页面功能 | flow-core, flow-types, flow-icons, flow-approval-presenter, flow-mobile-ui, flow-mobile-form |
-| **app-pc** | PC 端示例应用 | flow-core, flow-types, flow-design, flow-pc-ui, flow-pc-form, flow-pc-approval |
+| **app-pc** | PC 端示例应用 | flow-core, flow-types, flow-design, flow-pc-ui, flow-pc-form, flow-pc-approval, flow-approval-presenter |
 | **app-mobile** | 移动端示例应用 | flow-core, flow-types, flow-mobile-ui, flow-mobile-approval |
 
 ## 快速开始

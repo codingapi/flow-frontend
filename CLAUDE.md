@@ -31,7 +31,7 @@ pnpm run test:flow-pc     # 运行 PC 端所有测试
 pnpm run test:flow-mobile # 运行移动端所有测试
 
 # 运行单个测试文件
-cd packages/flow-core && npx rstest tests/unit/xxx.test.ts
+cd packages/flow-core && npx rstest tests/groovy.test.ts
 ```
 
 ## 架构
@@ -63,7 +63,7 @@ app-mobile (依赖 flow-mobile-ui + flow-mobile-approval)
 
 ### 外部依赖（非 workspace 包）
 
-- `@coding-form/form-engine` ^0.0.18 — 表单引擎（FormView、createFormInstance、registerFormItems）
+- `@coding-form/form-engine` ^0.0.19 — 表单引擎（FormView、createFormInstance、registerFormItems）
 - `@coding-script/script-engine` ^0.0.9 — 脚本引擎（GroovyScriptConvertorUtil）
 - `@flowgram.ai/fixed-layout-editor` 1.0.8 — 流程编辑器（FlowNodeRegistry、FlowNodeEntity）
 
@@ -168,6 +168,18 @@ import { SomeUtil } from '../../../packages/flow-core/src/...';
 - **Hooks**：函数式定义，遵循 React Hooks 规范
 - **Presenter / Manager / Convertor / Factory 等业务类**：使用 `class`，便于扩展和组合
 - **简单工具函数**：可用函数式（`export const fn = () => {}`）
+
+### Git 工作流
+
+**代码提交路径：**
+
+```
+feature/{task-name}  →  PR  →  dev  →  （用户审核）  →  main
+```
+
+- **禁止直接向 main 分支提交**，main 分支由用户手动合并管理
+- **dev 分支为集成分支**，所有 PR 的目标分支均为 dev
+- **所有代码开发必须在 git worktree 中进行**，不在主工作区直接改代码
 
 ### TDD 开发规范
 

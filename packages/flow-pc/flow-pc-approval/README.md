@@ -15,7 +15,7 @@ Flow Engine PC 端审批组件库，提供待办/已办/审批处理等功能。
 
 ### 依赖关系
 
-- **依赖**: `@coding-flow/flow-pc-design`, `@coding-flow/flow-pc-ui`
+- **依赖**: `@coding-flow/flow-core`、`@coding-flow/flow-types`、`@coding-flow/flow-icons`、`@coding-flow/flow-approval-presenter`、`@coding-flow/flow-pc-ui`、`@coding-flow/flow-pc-form`
 
 ## Setup
 

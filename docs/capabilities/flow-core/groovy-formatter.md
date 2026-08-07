@@ -80,5 +80,5 @@ const expr = GroovyScriptConvertorUtil.getReturnScript(script);
 
 ## 使用实例
 
-- flow-design 中的脚本编辑器使用 `GroovyFormatter` 实时格式化用户输入
+- flow-design 通过 `GroovyScriptConvertorUtil.formatScript`（内部委托 `GroovyFormatter.formatScript`）调用格式化能力，生成标准化脚本
 - 条件脚本、操作人脚本、节点标题脚本均通过 `GroovyScriptConvertorUtil` 管理标记和元数据

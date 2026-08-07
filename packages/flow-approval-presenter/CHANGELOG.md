@@ -1,5 +1,17 @@
 # @coding-flow/flow-approval-presenter
 
+## 0.1.4
+
+### Patch Changes
+
+- - fix: 审批记录操作人展示自动跳过(autoSkip)标记
+  - fix: 统一审批弹框大小并支持拖拽调整宽高
+  - fix: 修复表单字段保存时 crypto.randomUUID 不可用报错
+  - fix: 审批节点字段只读权限不生效（READ 权限使用表单引擎标准 readOnly 属性）
+  - chore: 升级 @coding-form/form-engine 至 0.0.19 支持字段级只读
+  - @coding-flow/flow-core@0.1.4
+  - @coding-flow/flow-types@0.1.4
+
 ## 0.1.3
 
 ### Patch Changes

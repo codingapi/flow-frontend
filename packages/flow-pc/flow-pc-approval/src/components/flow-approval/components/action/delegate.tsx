@@ -1,11 +1,12 @@
 import React from "react";
 import { FlowActionProps } from "./type";
-import { Form, message, Modal } from "antd";
+import { Form, message } from "antd";
 import { ApprovalViewPluginAction, useApprovalContext } from "@coding-flow/flow-approval-presenter";
 import { DelegateView } from "@/plugins/view/delegate-view";
 import { CustomStyleButton } from "@/components/flow-approval/components/custom-style-button";
 import { APPROVAL_ACTION_DELEGATE_KEY } from "@/components/flow-approval";
 import { ViewBindPlugin, FlowMessageKey, FlowMessageRegistry, EventBus } from "@coding-flow/flow-core";
+import { ResizableModal } from "@/components/flow-approval/components/resizable-modal";
 
 /**
  * 委派
@@ -92,7 +93,7 @@ export const DelegateAction: React.FC<FlowActionProps> = (props) => {
                 />
             )}
 
-            <Modal
+            <ResizableModal
                 title={"委派审批"}
                 open={modalVisible}
                 confirmLoading={actionLoading}
@@ -124,7 +125,7 @@ export const DelegateAction: React.FC<FlowActionProps> = (props) => {
                         />
                     </Form.Item>
                 </Form>
-            </Modal>
+            </ResizableModal>
         </>
     )
 }

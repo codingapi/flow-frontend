@@ -1,10 +1,11 @@
 import React from "react";
 import { FlowActionProps } from "./type";
-import { Form, message, Modal } from "antd";
+import { Form, message } from "antd";
 import { ApprovalViewPluginAction, useApprovalContext } from "@coding-flow/flow-approval-presenter";
 import { AddAuditView } from "@/plugins/view/add-audit-view";
 import { CustomStyleButton } from "@/components/flow-approval/components/custom-style-button";
 import { ViewBindPlugin, FlowMessageKey, FlowMessageRegistry, EventBus } from "@coding-flow/flow-core";
+import { ResizableModal } from "@/components/flow-approval/components/resizable-modal";
 import { APPROVAL_ACTION_ADD_AUDIT_KEY } from "@/components/flow-approval";
 
 /**
@@ -93,7 +94,7 @@ export const AddAuditAction: React.FC<FlowActionProps> = (props) => {
                 />
             )}
 
-            <Modal
+            <ResizableModal
                 title={"加签审批"}
                 open={modalVisible}
                 confirmLoading={actionLoading}
@@ -129,7 +130,7 @@ export const AddAuditAction: React.FC<FlowActionProps> = (props) => {
                         />
                     </Form.Item>
                 </Form>
-            </Modal>
+            </ResizableModal>
         </>
     )
 }

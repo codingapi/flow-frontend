@@ -31,7 +31,7 @@ pnpm run test:flow-pc     # 运行 PC 端所有测试
 pnpm run test:flow-mobile # 运行移动端所有测试
 
 # 运行单个测试文件
-cd packages/flow-core && npx rstest tests/unit/xxx.test.ts
+cd packages/flow-core && npx rstest tests/groovy.test.ts
 ```
 
 ## 架构
@@ -63,7 +63,7 @@ app-mobile (依赖 flow-mobile-ui + flow-mobile-approval)
 
 ### 外部依赖（非 workspace 包）
 
-- `@coding-form/form-engine` ^0.0.18 — 表单引擎（FormView、createFormInstance、registerFormItems）
+- `@coding-form/form-engine` ^0.0.19 — 表单引擎（FormView、createFormInstance、registerFormItems）
 - `@coding-script/script-engine` ^0.0.9 — 脚本引擎（GroovyScriptConvertorUtil）
 - `@flowgram.ai/fixed-layout-editor` 1.0.8 — 流程编辑器（FlowNodeRegistry、FlowNodeEntity）
 

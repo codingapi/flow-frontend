@@ -59,27 +59,43 @@ const renderItem = convertor.toItemRender(apiNodeData);
 
 // 渲染数据 → API 数据
 const apiData = convertor.toData(renderNodes);
-
-// 策略渲染数据转换
-const strategyData = convertor.toStrategyRender(node);
 ```
+
+策略渲染数据转换由 `toItemRender()` 内部自动完成，无需外部显式调用。
 
 ### 3. NodeRouterManager
 
 ```typescript
 const routerManager = new NodeRouterManager(workflowNodes);
 
-// 获取所有节点列表
+// 获取所有可选节点列表
 const nodes = routerManager.getNodes();
 
-// 获取展示节点类型
-const types = routerManager.displayNodeTypes;
-
-// 获取返回节点列表
+// 获取可退回节点列表
 const backNodes = routerManager.getBackNodes();
 ```
 
-### 4. WorkflowStrategyManager
+展示节点类型（`displayNodeTypes`）为内部状态，外部通过 `getNodes()` / `getBackNodes()` 查询。
+
+### 4. NodeManger
+
+```typescript
+const nodeManager = new NodeManger(workflowNodes);
+
+// 按 id 获取节点
+const node = nodeManager.getNode(nodeId);
+
+// 按类型获取节点
+const nodeByType = nodeManager.getNodeByType('APPROVAL');
+
+// 获取可以退回的节点列表
+const backNodes = nodeManager.getBackNodes(nodeId);
+
+// 获取节点数量
+const size = nodeManager.getSize();
+```
+
+### 5. WorkflowStrategyManager
 
 ```typescript
 const strategyManager = new WorkflowStrategyManager();
@@ -89,6 +105,8 @@ const strategyManager = new WorkflowStrategyManager();
 ## 使用实例
 
 `Presenter`（flow-design/design-panel）在 save/load/create 操作中组合使用这些管理器：
-- save 时通过 `NodeConvertorManager.toData()` 转换节点 + `WorkflowConvertor.toApi()` 生成 API 数据
-- load 时通过 `WorkflowConvertor.toRender()` + `NodeConvertorManager.toItemRender()` 渲染节点
+- save 时通过 `WorkflowConvertor.toApi()` 生成 API 数据提交
+- 画布节点数据同步通过 `NodeConvertorManager.toData()` 完成
+- loadDesign()/createDesign() 通过 `WorkflowConvertor.toRender()` 渲染工作流
+- createNode() 通过 `NodeConvertorManager.toItemRender()` 生成新节点渲染数据，并用 `NodeManger.getNode()` 定位父节点
 - 表单操作全部委托给 `WorkflowFormManager`

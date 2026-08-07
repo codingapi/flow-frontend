@@ -1,7 +1,8 @@
 import React from "react";
 import {ManualViewPlugin, ManualViewPluginKey} from "@coding-flow/flow-approval-presenter"
 import {ViewBindPlugin} from "@coding-flow/flow-core";
-import {Modal, Select, Form} from "antd";
+import {ResizableModal} from "@/components/flow-approval/components/resizable-modal";
+import {Select, Form} from "antd";
 import {ApprovalViewPluginAction} from "@coding-flow/flow-approval-presenter";
 
 
@@ -39,9 +40,8 @@ export const ManualView: React.FC<ManualViewPlugin> = (props) => {
         );
     }
     return (
-        <Modal
+        <ResizableModal
             title={"请选择下级节点"}
-            width={"40%"}
             open={visible}
             destroyOnHidden
             onCancel={() => setVisible(false)}
@@ -70,6 +70,6 @@ export const ManualView: React.FC<ManualViewPlugin> = (props) => {
                 </Form.Item>
             </Form>
 
-        </Modal>
+        </ResizableModal>
     )
 }

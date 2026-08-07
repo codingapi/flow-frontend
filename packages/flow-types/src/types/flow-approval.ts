@@ -220,6 +220,9 @@ export interface FlowApprovalOperator {
     actionType: string;
     // 审批人
     flowOperator: ProcessNodeOperator;
+    // 是否自动跳过（未实际审批）：多人审批（或签/并签）场景下，节点完成后
+    // 其他候选人的待办被自动置为已办，由后端依据记录状态判定；旧数据缺省理解为 false
+    autoSkip?: boolean;
 }
 
 export type SubProcessState = 'WAITING' | 'PASSED' | 'ERROR';
