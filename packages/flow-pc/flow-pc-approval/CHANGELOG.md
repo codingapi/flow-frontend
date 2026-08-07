@@ -1,5 +1,17 @@
 # @coding-flow/flow-pc-approval
 
+## 0.1.4
+
+### Patch Changes
+
+- Updated dependencies
+  - @coding-flow/flow-approval-presenter@0.1.4
+  - @coding-flow/flow-core@0.1.4
+  - @coding-flow/flow-icons@0.1.4
+  - @coding-flow/flow-pc-form@0.1.4
+  - @coding-flow/flow-pc-ui@0.1.4
+  - @coding-flow/flow-types@0.1.4
+
 ## 0.1.3
 
 ### Patch Changes
