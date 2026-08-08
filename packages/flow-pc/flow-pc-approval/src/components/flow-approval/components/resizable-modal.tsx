@@ -7,13 +7,13 @@ import {Modal, ModalProps} from "antd";
  * 右下角拖拽调整宽高，解决审批意见框与人员选择框大小不一致、无法调整的问题。
  * <p>resize 作用于最外层弹框元素（antd 6 中持有内联宽度的 .ant-modal），
  * 拖拽改变整体尺寸后保持原有居中定位，不产生偏移。
- * <p>可通过 height 指定初始高度（默认由内容自适应）。用于顺序弹出两个弹框时
- * （如审批意见框 → 操作人选择框）以不同高度区分层级，避免视觉上完全重合。
+ * <p>可通过 antd 原生 height prop 指定初始高度（默认由内容自适应）。用于顺序弹出
+ * 两个弹框时（如审批意见框 → 操作人选择框）以不同高度区分层级，避免视觉上完全重合。
+ * <p>height 直接透传给 antd Modal（rc-dialog 原生支持，作用于 .ant-modal 高度），
+ * 不能依赖 style 内联样式 —— Panel 内部 contentStyle.height 会覆盖 style 中的 height。
  */
-type ResizableModalProps = ModalProps & { height?: number };
-
-export const ResizableModal: React.FC<ResizableModalProps> = (props) => {
-    const {width = 640, height, style, ...rest} = props;
+export const ResizableModal: React.FC<ModalProps> = (props) => {
+    const {width = 640, style, ...rest} = props;
     return (
         <Modal
             {...rest}
@@ -27,7 +27,6 @@ export const ResizableModal: React.FC<ResizableModalProps> = (props) => {
                 minHeight: 320,
                 maxWidth: 'calc(100vw - 48px)',
                 maxHeight: 'calc(100vh - 48px)',
-                ...(height ? {height} : {}),
             }}
         />
     )
