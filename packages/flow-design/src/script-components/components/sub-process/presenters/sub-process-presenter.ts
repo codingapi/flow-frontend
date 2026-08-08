@@ -74,6 +74,10 @@ export class SubProcessPresenter {
         const meta = JSON.stringify(values);
         const requests = values.processes.map(config => {
             const formData = this.toFormData(config);
+            // 配置了子流程标题时生成 5 参调用；未配置时保持 4 参，兼容旧后端
+            if (config.workTitle) {
+                return `request.toCreateRequest('${config.workId}', ${config.operatorId}, '${config.actionId}', '${formData}', '${this.escapeSingleQuotes(config.workTitle)}')`;
+            }
             return `request.toCreateRequest('${config.workId}', ${config.operatorId}, '${config.actionId}', '${formData}')`;
         }).join(',\n            ');
         return `
@@ -84,6 +88,13 @@ export class SubProcessPresenter {
                 ${requests}
             ];
         }`;
+    }
+
+    /**
+     * 转义 Groovy 字符串字面量中的单引号，防止用户输入破坏脚本。
+     */
+    private escapeSingleQuotes(value: string): string {
+        return value.replace(/'/g, "\\'");
     }
 
     private isRecord(value: unknown): value is Record<string, unknown> {
@@ -97,6 +108,7 @@ export class SubProcessPresenter {
             && (value.operatorId === undefined
                 || typeof value.operatorId === 'string'
                 || typeof value.operatorId === 'number')
-            && (value.formData === undefined || typeof value.formData === 'string');
+            && (value.formData === undefined || typeof value.formData === 'string')
+            && (value.workTitle === undefined || typeof value.workTitle === 'string');
     };
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import {SubProcessFormValues, SubProcessViewProps} from "./typings";
-import {Button, Card, Form, FormInstance, Select, Space} from "antd";
+import {Button, Card, Form, FormInstance, Input, Select, Space} from "antd";
 import {useTargetWorkflowPresenter} from "./hooks/use-target-workflow-presenter";
 import {SubProcessOperatorPluginView} from "@/plugins/view/sub-process-opreator-view";
 import {FormDataView} from "../form-data";
@@ -77,6 +77,14 @@ const SubProcessConfigItem: React.FC<SubProcessConfigItemProps> = ({form, index,
 
             <Form.Item name={[index, "formData"]} label={"流程数据"}>
                 <FormDataView form={state.form}/>
+            </Form.Item>
+
+            <Form.Item
+                name={[index, "workTitle"]}
+                label={"子流程标题"}
+                tooltip={"不填写时子流程使用流程定义标题；填写后该实例以自定义标题展示（issue #197）"}
+            >
+                <Input placeholder={"不填则使用流程定义标题"}/>
             </Form.Item>
         </Card>
     );
