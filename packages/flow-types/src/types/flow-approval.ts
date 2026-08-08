@@ -117,6 +117,8 @@ export interface FlowAction {
     enable: boolean;
     // 自定义脚本key
     script?: string;
+    // 最大可选人数，-1 表示不限制，正整数表示可选人员的最大数（转办/委托/加签选人时使用）
+    maxOperatorCount?: number;
     // 触发类型，自定义脚本使用
     triggerType?:string;
     // 前端触发事件，自定义脚本使用
@@ -297,6 +299,8 @@ export interface NodeOption {
     display: boolean;
     // 可选人员范围（发起人/审批人设定时返回）；为空或缺省表示不限范围，可选任意人
     operators?: ProcessNodeOperator[];
+    // 最大可选人数，-1 或缺省表示不限制，正整数表示可选人员的最大数
+    maxOperatorCount?: number;
 }
 
 /**

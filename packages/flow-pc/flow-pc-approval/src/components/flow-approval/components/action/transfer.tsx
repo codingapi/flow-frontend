@@ -127,6 +127,7 @@ export const TransferAction: React.FC<FlowActionProps> = (props) => {
                     >
                         <TransferView
                             action={actionRef}
+                            maxOperatorCount={action.maxOperatorCount}
                         />
                     </Form.Item>
                 </Form>

@@ -147,15 +147,21 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                     handlerOK();
                 }}
             >
-                <Form
-                    form={form}
-                    layout="vertical"
-                    onFinish={(values) => {
-                        handleSubmit(values);
+                {/* 审批意见框通过内容 padding 撑高，与后续弹出的节点选择框形成层级区分，
+                    避免被完全遮挡。padding 只增加少量高度，内容依旧紧凑，不会像
+                    minHeight 固定高度那样在内容不满时产生大片空白。 */}
+                <div
+                    style={{
+                        padding: 16,
                     }}
                 >
-
-
+                    <Form
+                        form={form}
+                        layout="vertical"
+                        onFinish={(values) => {
+                            handleSubmit(values);
+                        }}
+                >
                     {!state.flow?.adviceHidden && (
                         <Form.Item
                             name={"advice"}
@@ -166,7 +172,6 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                             <TextArea placeholder={"请输入审批意见"} />
                         </Form.Item>
                     )}
-
 
                     {state.flow?.signRequired && currentOperator && (
                         <Form.Item
@@ -187,6 +192,7 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                         </Form.Item>
                     )}
                 </Form>
+                </div>
 
             </ResizableModal>
 

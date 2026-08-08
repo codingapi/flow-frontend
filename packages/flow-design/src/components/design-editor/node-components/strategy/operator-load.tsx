@@ -5,6 +5,7 @@ import { EditOutlined } from "@ant-design/icons";
 import { GroovyScriptPreview } from "@/script-components/components/groovy-script-preview";
 import { OperatorLoadConfigModal } from "@/script-components/modal/operator-load-config-modal";
 import { GroovyScriptLoaderContent, GroovyScriptLoader } from "@/script-components/components/groovy-script-loader";
+import { MaxOperatorCountInput } from "@/script-components/components/action/components/max-operator-count";
 import {FieldTip} from "@/components/field-tip";
 
 const SELECT_TYPE_OPTIONS = [
@@ -96,29 +97,49 @@ export const OperatorLoadStrategy: React.FC = () => {
             <Field
                 name="OperatorLoadStrategy.selectType"
                 render={({ field: { value: selectType } }: FieldRenderProps<any>) => {
-                    // 发起人/审批人设定模式下，复用脚本配置能力设定「可选人员范围」（留空表示不限范围）
+                    // 发起人/审批人设定模式下，复用脚本配置能力设定「可选人员范围」与「最大可选人数」
                     const isRangeMode = selectType === 'INITIATOR_SELECT' || selectType === 'APPROVER_SELECT';
                     return (
-                        <Form.Item
-                            label={
-                                <FieldTip
-                                    label={isRangeMode ? "设定人员范围" : "当前操作人"}
-                                    description={isRangeMode ? "设定可选人员范围，留空表示不限范围（可选任意人）。" : "通过脚本设定该节点的操作人。"}
-                                />
-                            }
-                            name={["OperatorLoadStrategy", "script"]}
-                        >
-                            <Field
-                                name="OperatorLoadStrategy.script"
-                                render={({ field: { value, onChange } }: FieldRenderProps<any>) => (
-                                   <GroovyScriptLoader
-                                        content={OperatorLoadScriptContent}
-                                        value={value}
-                                        onChange={onChange}
+                        <>
+                            <Form.Item
+                                label={
+                                    <FieldTip
+                                        label={isRangeMode ? "设定人员范围" : "当前操作人"}
+                                        description={isRangeMode ? "设定可选人员范围，留空表示不限范围（可选任意人）。" : "通过脚本设定该节点的操作人。"}
                                     />
-                                )}
-                            />
-                        </Form.Item>
+                                }
+                                name={["OperatorLoadStrategy", "script"]}
+                            >
+                                <Field
+                                    name="OperatorLoadStrategy.script"
+                                    render={({ field: { value, onChange } }: FieldRenderProps<any>) => (
+                                       <GroovyScriptLoader
+                                            content={OperatorLoadScriptContent}
+                                            value={value}
+                                            onChange={onChange}
+                                        />
+                                    )}
+                                />
+                            </Form.Item>
+                            {isRangeMode && (
+                                <Form.Item
+                                    label={
+                                        <FieldTip
+                                            label="最大可选人数"
+                                            description="限制发起人/审批人可选人数的最大值，-1 表示不限制；固定为 1 时即为单选。"
+                                        />
+                                    }
+                                    name={["OperatorLoadStrategy", "maxOperatorCount"]}
+                                >
+                                    <Field
+                                        name="OperatorLoadStrategy.maxOperatorCount"
+                                        render={({ field: { value, onChange } }: FieldRenderProps<any>) => (
+                                            <MaxOperatorCountInput value={value} onChange={onChange} />
+                                        )}
+                                    />
+                                </Form.Item>
+                            )}
+                        </>
                     );
                 }}
             />
