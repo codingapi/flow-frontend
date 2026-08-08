@@ -13,6 +13,10 @@ export interface SubProcessConfig {
     actionId?: string;
     operatorId?: string | number;
     formData?: string;
+    /**
+     * 子流程标题；不填则子流程回落流程定义标题（issue #197）
+     */
+    workTitle?: string;
 }
 
 export interface SubProcessFormValues {
