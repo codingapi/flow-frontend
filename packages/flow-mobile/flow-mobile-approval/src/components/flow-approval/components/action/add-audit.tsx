@@ -104,6 +104,7 @@ export const AddAuditAction: React.FC<FlowActionProps> = (props) => {
                     >
                         <AddAuditView
                             action={actionRef}
+                            maxOperatorCount={action.maxOperatorCount}
                         />
                     </Form.Item>
                 </Form>

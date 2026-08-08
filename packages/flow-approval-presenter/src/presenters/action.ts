@@ -13,6 +13,17 @@ export class FlowActionPresenter {
 
     private submitRecordIds: number[];
 
+    /**
+     * 发起流程（create）成功后创建的记录 ID。
+     *
+     * 背景：发起流程时前端先 create 再立即 action。若仅修改 presenter 内部快照
+     * （this.state.flow.recordId），后续 Redux state 变化触发的 syncState 会用
+     * 未含 recordId 的 Redux state 覆盖内部快照，导致选人后再次提交时重复走
+     * create 分支，产生重复的流程记录（issue-195 双待办问题）。
+     * 该字段为 presenter 实例级持久状态，不受 syncState 覆盖影响。
+     */
+    private createdRecordId: number | null = null;
+
     constructor(state: ApprovalState,
         api: FlowApprovalApi,
         formActionContext: FormActionContext,
@@ -164,7 +175,7 @@ export class FlowActionPresenter {
 
 
     private async submitAction(actionId: string, formData: any, params?: any) {
-        const recordId = formData.recordId || this.state.flow?.recordId;
+        const recordId = formData.recordId || this.createdRecordId || this.state.flow?.recordId;
         const workCode = this.state.flow?.workCode || '';
 
         if (formData.recordId) {
@@ -190,6 +201,8 @@ export class FlowActionPresenter {
             const recordId = await this.api.create(createRequest, this.mockKey);
             console.log('create recordId:', recordId);
             if (recordId) {
+                // 记录到实例字段，避免 syncState 覆盖内部快照后重复 create（issue-195）
+                this.createdRecordId = recordId;
                 if (this.state.flow) {
                     this.state.flow.recordId = recordId;
                 }

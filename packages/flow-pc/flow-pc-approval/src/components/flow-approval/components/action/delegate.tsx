@@ -122,6 +122,7 @@ export const DelegateAction: React.FC<FlowActionProps> = (props) => {
                     >
                         <DelegateView
                             action={actionRef}
+                            maxOperatorCount={action.maxOperatorCount}
                         />
                     </Form.Item>
                 </Form>

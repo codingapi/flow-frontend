@@ -10,4 +10,6 @@ export interface DelegateViewPlugin {
     value?: string|string[];
     /** 动作控制 **/
     action?:React.Ref<ApprovalViewPluginAction>;
+    /** 最大可选人数，-1 或缺省表示不限制，正整数表示可选人员的最大数 */
+    maxOperatorCount?: number;
 }
