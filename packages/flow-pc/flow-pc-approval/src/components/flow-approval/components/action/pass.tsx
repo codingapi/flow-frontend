@@ -142,6 +142,8 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                 mask={{
                     closable: false,
                 }}
+                // 审批意见框保持较高高度，与后续弹出的节点选择框形成层级区分
+                height={480}
                 onCancel={() => setModalVisible(false)}
                 onOk={() => {
                     handlerOK();
