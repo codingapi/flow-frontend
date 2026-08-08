@@ -1,5 +1,16 @@
 # @coding-flow/flow-mobile-ui
 
+## 0.1.5
+
+### Patch Changes
+
+- **feat**: 审批节点支持操作人最大可选人数限制（maxOperatorCount）。节点配置可选操作人范围与最大数量后，审批挑选操作人时按限制自动适配单选 / 多选 / 文本输入，并校验数量不超限
+- **fix**: 审批意见弹框与节点选择弹框重合时高度区分。审批意见框内容区增加 padding 撑高，避免被后续弹出的节点选择框完全遮挡
+
+### Patch Changes
+
+- @coding-flow/flow-core@0.1.5
+
 ## 0.1.4
 
 ### Patch Changes

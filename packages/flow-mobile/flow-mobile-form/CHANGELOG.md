@@ -1,5 +1,13 @@
 # @coding-flow/flow-mobile-form
 
+## 0.1.5
+
+### Patch Changes
+
+- Updated dependencies
+  - @coding-flow/flow-types@0.1.5
+  - @coding-flow/flow-core@0.1.5
+
 ## 0.1.4
 
 ### Patch Changes
