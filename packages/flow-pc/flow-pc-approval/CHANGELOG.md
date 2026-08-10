@@ -1,5 +1,18 @@
 # @coding-flow/flow-pc-approval
 
+## 0.1.6
+
+### Patch Changes
+
+- 发布 0.1.6 补丁版本：与后端 flow-engine 0.1.6 版本对齐
+- Updated dependencies
+  - @coding-flow/flow-approval-presenter@0.1.6
+  - @coding-flow/flow-core@0.1.6
+  - @coding-flow/flow-icons@0.1.6
+  - @coding-flow/flow-types@0.1.6
+  - @coding-flow/flow-pc-form@0.1.6
+  - @coding-flow/flow-pc-ui@0.1.6
+
 ## 0.1.5
 
 ### Patch Changes

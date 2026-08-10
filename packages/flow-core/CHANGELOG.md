@@ -1,5 +1,11 @@
 # @coding-flow/flow-core
 
+## 0.1.6
+
+### Patch Changes
+
+- 发布 0.1.6 补丁版本：与后端 flow-engine 0.1.6 版本对齐
+
 ## 0.1.5
 
 ## 0.1.4
