@@ -1,5 +1,17 @@
 # @coding-flow/flow-pc-approval
 
+## 0.1.7
+
+### Patch Changes
+
+- **fix**: 待办记录列表将流程编码改为实例编码，避免误导。app-pc 与 flow-pc mock 的 processId 列标题由「流程编码」改为「实例编码」，app-mobile 待办列表新增展示实例编码（processId）。流程设计列表展示的 code 为真正的流程编码，保持不变。
+  - @coding-flow/flow-approval-presenter@0.1.7
+  - @coding-flow/flow-core@0.1.7
+  - @coding-flow/flow-icons@0.1.7
+  - @coding-flow/flow-pc-form@0.1.7
+  - @coding-flow/flow-pc-ui@0.1.7
+  - @coding-flow/flow-types@0.1.7
+
 ## 0.1.6
 
 ### Patch Changes
