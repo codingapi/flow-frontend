@@ -1,6 +1,6 @@
 {
   "name": "@coding-flow/flow-pc-form",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "flow-engine pc form engine",
   "type": "module",
   "sideEffects": [

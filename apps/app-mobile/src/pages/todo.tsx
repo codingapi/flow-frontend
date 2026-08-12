@@ -66,7 +66,8 @@ const TodoList: React.FC<TodoListProps> = ({type}) => {
                     )}
                     description={(
                         <>
-                            {record.nodeName} {record.workTitle}
+                            <div>{record.nodeName} {record.workTitle}</div>
+                            <div>实例编码：{record.processId}</div>
                         </>
                     )}
                     extra={

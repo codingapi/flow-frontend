@@ -1,5 +1,16 @@
 # @coding-flow/flow-mobile-approval
 
+## 0.1.7
+
+### Patch Changes
+
+- @coding-flow/flow-approval-presenter@0.1.7
+- @coding-flow/flow-core@0.1.7
+- @coding-flow/flow-icons@0.1.7
+- @coding-flow/flow-mobile-form@0.1.7
+- @coding-flow/flow-mobile-ui@0.1.7
+- @coding-flow/flow-types@0.1.7
+
 ## 0.1.6
 
 ### Patch Changes
