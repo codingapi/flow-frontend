@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, Popconfirm, Space, Switch } from "antd";
+import { Button, Form, Popconfirm, Space, Switch, Typography } from "antd";
 import { Table } from "@coding-flow/flow-pc-ui";
 import { useNodeRenderContext } from "@/components/design-editor/hooks/use-node-render-context";
 import { PlusOutlined } from "@ant-design/icons";
@@ -23,10 +23,18 @@ export const ActionTable: React.FC<ActionTableProps> = (props) => {
     const columns = React.useCallback(() => {
         return [
             {
-                title: 'id',
+                title: 'ID',
                 dataIndex: 'id',
                 key: 'id',
-                hidden: true,
+                render: (value: string) => {
+                    return (
+                        <Typography.Text
+                            copyable={{ text: value, tooltips: ["复制按钮 ID", "已复制"] }}
+                        >
+                            {value}
+                        </Typography.Text>
+                    )
+                }
             },
             {
                 title: '标题',

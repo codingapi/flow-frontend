@@ -1,7 +1,7 @@
 import React from "react";
 import {FlowActionProps} from "./type";
 import {Form, Toast} from "antd-mobile";
-import {ApprovalViewPluginAction, useApprovalContext} from "@coding-flow/flow-approval-presenter";
+import {ApprovalViewPluginAction, DialogContent, useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {DelegateView} from "@/plugins/view/delegate-view";
 import {EventBus, ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 import {PopupModal} from "@coding-flow/flow-mobile-ui";
@@ -22,10 +22,24 @@ export const DelegateAction: React.FC<FlowActionProps> = (props) => {
     const actionLoading = state.actionLoading ?? false;
 
     const [modalVisible, setModalVisible] = React.useState(false);
+    const [dialogContent, setDialogContent] = React.useState<DialogContent | null>(null);
 
     const actionRef = React.useRef<ApprovalViewPluginAction>(null);
 
+    /** 打开弹框：解析自定义弹框内容（标题/中间内容），并重置表单 */
+    const openModal = () => {
+        form.resetFields();
+        setDialogContent(null);
+        actionPresenter.resolveDialogContent(action.id).then(setDialogContent);
+        setModalVisible(true);
+    }
+
     const handlerOK = ()=>{
+        // 自定义弹框内容时退化为纯确认框，直接提交（无表单可校验）
+        if(dialogContent?.content){
+            handleSubmit();
+            return;
+        }
         if(actionRef.current){
             actionRef.current.onValidate().then(res=>{
                 if(res){
@@ -54,8 +68,7 @@ export const DelegateAction: React.FC<FlowActionProps> = (props) => {
 
     React.useEffect(()=>{
         EventBus.getInstance().on(action.id,()=>{
-            form.resetFields();
-            setModalVisible(true);
+            openModal();
         });
 
         return () => {
@@ -76,7 +89,7 @@ export const DelegateAction: React.FC<FlowActionProps> = (props) => {
     return (
         <>
             <PopupModal
-                title={"委派审批"}
+                title={dialogContent?.title ?? "委派审批"}
                 open={modalVisible}
                 loading={actionLoading}
                 onClose={() => setModalVisible(false)}
@@ -84,6 +97,9 @@ export const DelegateAction: React.FC<FlowActionProps> = (props) => {
                     handlerOK();
                 }}
             >
+                {dialogContent?.content ? (
+                    dialogContent.content
+                ) : (
                 <Form
                     form={form}
                     layout="vertical"
@@ -108,6 +124,7 @@ export const DelegateAction: React.FC<FlowActionProps> = (props) => {
                         />
                     </Form.Item>
                 </Form>
+                )}
             </PopupModal>
         </>
     )

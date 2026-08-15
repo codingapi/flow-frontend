@@ -2,7 +2,7 @@ import React from "react";
 import {Form, TextArea, Toast} from "antd-mobile";
 import {PopupModal} from "@coding-flow/flow-mobile-ui";
 import {FlowActionProps} from "./type";
-import {ApprovalViewPluginAction, useApprovalContext} from "@coding-flow/flow-approval-presenter";
+import {ApprovalViewPluginAction, DialogContent, useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {SignKeyView} from "@/plugins/view/sign-key-view";
 import {EventBus, ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 import {NodeOption} from "@coding-flow/flow-types";
@@ -22,6 +22,7 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
 
     const [modalVisible, setModalVisible] = React.useState(false);
+    const [dialogContent, setDialogContent] = React.useState<DialogContent | null>(null);
     const [options, setOptions] = React.useState<NodeOption[]>([]);
     const [request, setRequest] = React.useState<any>({});
     const [responseType, setResponseType] = React.useState<string | null>(null);
@@ -33,13 +34,20 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
 
     const [form] = Form.useForm();
 
+    /** 打开弹框：解析自定义弹框内容（标题/中间内容），并重置表单 */
+    const openModal = () => {
+        form.resetFields();
+        setDialogContent(null);
+        actionPresenter.resolveDialogContent(action.id).then(setDialogContent);
+        setModalVisible(true);
+    }
+
     React.useEffect(() => {
         EventBus.getInstance().on(action.id, () => {
             if (isStartNode) {
                 handleSubmit();
             } else {
-                form.resetFields();
-                setModalVisible(true);
+                openModal();
             }
         });
 
@@ -51,6 +59,11 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
     const actionRef = React.useRef<ApprovalViewPluginAction>(null);
 
     const handlerOK = () => {
+        // 自定义弹框内容时退化为纯确认框，直接提交（无表单可校验）
+        if (dialogContent?.content) {
+            handleSubmit();
+            return;
+        }
         if (actionRef.current) {
             actionRef.current.onValidate().then(res => {
                 if (res) {
@@ -106,6 +119,7 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
     return (
         <>
             <PopupModal
+                title={dialogContent?.title}
                 open={modalVisible}
                 loading={actionLoading}
                 // 审批意见框保持较高高度，与后续弹出的节点选择框形成层级区分
@@ -117,6 +131,9 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                     handlerOK();
                 }}
             >
+                {dialogContent?.content ? (
+                    dialogContent.content
+                ) : (
                 <Form
                     form={form}
                     layout="vertical"
@@ -154,6 +171,7 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                         </Form.Item>
                     )}
                 </Form>
+                )}
             </PopupModal>
 
             {options && options.length > 0 && responseType === 'OPERATOR_SELECT' && (

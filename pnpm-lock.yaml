@@ -69,6 +69,9 @@ importers:
 
   apps/app-mobile:
     dependencies:
+      '@coding-flow/flow-approval-presenter':
+        specifier: workspace:*
+        version: link:../../packages/flow-approval-presenter
       '@coding-flow/flow-core':
         specifier: workspace:*
         version: link:../../packages/flow-core
