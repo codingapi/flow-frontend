@@ -1,5 +1,12 @@
 # @coding-flow/flow-pc-form
 
+## 0.1.8
+
+### Patch Changes
+
+- @coding-flow/flow-core@0.1.8
+- @coding-flow/flow-types@0.1.8
+
 ## 0.1.7
 
 ### Patch Changes
