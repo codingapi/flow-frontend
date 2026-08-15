@@ -10,6 +10,6 @@ let registerRef: RegisterRef | undefined;
 export const registerFormView = () => {
     if (!registerRef) {
         registerRef = new RegisterRef();
-        ViewBindPlugin.getInstance().register('default', FlowView);
+        // ViewBindPlugin.getInstance().register('default', FlowView);
     }
 }
