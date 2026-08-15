@@ -1,7 +1,7 @@
 import React from "react";
 import { FlowActionProps } from "./type";
 import { Form, message } from "antd";
-import { ApprovalViewPluginAction, useApprovalContext } from "@coding-flow/flow-approval-presenter";
+import { ApprovalViewPluginAction, DialogContent, useApprovalContext } from "@coding-flow/flow-approval-presenter";
 import { TransferView } from "@/plugins/view/transfer-view";
 import { CustomStyleButton } from "@/components/flow-approval/components/custom-style-button";
 import { APPROVAL_ACTION_TRANSFER_KEY } from "@/components/flow-approval";
@@ -25,7 +25,22 @@ export const TransferAction: React.FC<FlowActionProps> = (props) => {
 
     const actionRef = React.useRef<ApprovalViewPluginAction>(null);
 
+    const [dialogContent, setDialogContent] = React.useState<DialogContent | null>(null);
+
+    /** 打开弹框：解析自定义弹框内容（标题/中间内容），并重置表单 */
+    const openModal = () => {
+        form.resetFields();
+        setDialogContent(null);
+        actionPresenter.resolveDialogContent(action.id).then(setDialogContent);
+        setModalVisible(true);
+    }
+
     const handlerOK = () => {
+        // 自定义弹框内容时退化为纯确认框，直接提交（无表单可校验）
+        if (dialogContent?.content) {
+            handleSubmit();
+            return;
+        }
         if (actionRef.current) {
             actionRef.current.onValidate().then(res => {
                 if (res) {
@@ -57,8 +72,7 @@ export const TransferAction: React.FC<FlowActionProps> = (props) => {
     React.useEffect(() => {
         EventBus.getInstance().on(action.id, () => {
             if (props.onClickCheck?.(action.id)) {
-                form.resetFields();
-                setModalVisible(true);
+                openModal();
             }
         });
 
@@ -86,8 +100,7 @@ export const TransferAction: React.FC<FlowActionProps> = (props) => {
                     display={props.action.display}
                     onClick={() => {
                         if (props.onClickCheck?.(action.id)) {
-                            form.resetFields();
-                            setModalVisible(true);
+                            openModal();
                         }
                     }}
                     title={action.title}
@@ -95,7 +108,7 @@ export const TransferAction: React.FC<FlowActionProps> = (props) => {
             )}
 
             <ResizableModal
-                title={"转办审批"}
+                title={dialogContent?.title ?? "转办审批"}
                 open={modalVisible}
                 confirmLoading={actionLoading}
                 maskClosable={false}
@@ -107,6 +120,9 @@ export const TransferAction: React.FC<FlowActionProps> = (props) => {
                     handlerOK();
                 }}
             >
+                {dialogContent?.content ? (
+                    dialogContent.content
+                ) : (
                 <Form
                     form={form}
                     layout="vertical"
@@ -131,6 +147,7 @@ export const TransferAction: React.FC<FlowActionProps> = (props) => {
                         />
                     </Form.Item>
                 </Form>
+                )}
             </ResizableModal>
         </>
     )

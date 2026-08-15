@@ -1,6 +1,6 @@
 import { ApprovalState, FlowApprovalApi } from "@/typings";
 import { FormActionContext, FlowAction } from "@coding-flow/flow-types";
-import { ActionInterceptor, ActionInterceptorManager } from "@/interceptor";
+import { ActionInterceptor, ActionInterceptorManager, DialogContent, DialogContentManager, DialogContentProvider } from "@/interceptor";
 
 export class FlowActionPresenter {
 
@@ -10,6 +10,7 @@ export class FlowActionPresenter {
     private readonly mockKey: string;
     private readonly setLoading: (loading: boolean) => void;
     private readonly interceptorManager: ActionInterceptorManager;
+    private readonly dialogContentManager: DialogContentManager;
 
     private submitRecordIds: number[];
 
@@ -36,6 +37,7 @@ export class FlowActionPresenter {
         this.mockKey = mockKey;
         this.setLoading = setLoading;
         this.interceptorManager = new ActionInterceptorManager();
+        this.dialogContentManager = new DialogContentManager();
     }
 
 
@@ -63,6 +65,49 @@ export class FlowActionPresenter {
      */
     public removeActionInterceptor(interceptor: ActionInterceptor): void {
         this.interceptorManager.remove(interceptor);
+    }
+
+    /**
+     * 订阅审批弹框内容提供器。
+     *
+     * 各审批操作按钮弹框渲染时，会通过 {@link resolveDialogContent} 触发已订阅的提供器，
+     * 首个返回非 null 内容的提供器命中，用于覆盖弹框标题与中间内容
+     * （典型场景：隐藏审批意见后弹框退化为确认框，定制确认文案）。
+     *
+     * 自定义视图可通过
+     * `useApprovalContext().context.getPresenter().getFlowActionPresenter()`
+     * 获取本对象后订阅，并在组件卸载时调用返回的函数取消订阅。
+     *
+     * @param provider 内容提供器函数
+     * @returns 取消订阅函数
+     */
+    public addDialogContentProvider(provider: DialogContentProvider): () => void {
+        return this.dialogContentManager.add(provider);
+    }
+
+    /**
+     * 移除指定审批弹框内容提供器
+     * @param provider 待移除的内容提供器函数
+     */
+    public removeDialogContentProvider(provider: DialogContentProvider): void {
+        this.dialogContentManager.remove(provider);
+    }
+
+    /**
+     * 解析指定动作的弹框内容。
+     *
+     * 按订阅顺序执行内容提供器，首个命中者返回；未命中返回 null（使用默认渲染）。
+     * 上下文携带 actionId 与 action 对象（含 type），由提供器内部选择过滤键。
+     *
+     * @param actionId 动作 ID
+     * @returns 命中的弹框内容；未命中返回 null
+     */
+    public async resolveDialogContent(actionId: string): Promise<DialogContent | null> {
+        const action = this.getAction(actionId);
+        return await this.dialogContentManager.resolve({
+            actionId,
+            action,
+        });
     }
 
 

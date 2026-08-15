@@ -1,7 +1,7 @@
 import React from "react";
 import { FlowActionProps } from "./type";
 import { Form, Input, message } from "antd";
-import { ApprovalViewPluginAction, useApprovalContext } from "@coding-flow/flow-approval-presenter";
+import { ApprovalViewPluginAction, DialogContent, useApprovalContext } from "@coding-flow/flow-approval-presenter";
 import { SignKeyView } from "@/plugins/view/sign-key-view";
 import { CustomStyleButton } from "@/components/flow-approval/components/custom-style-button";
 import { NodeOption } from "@coding-flow/flow-types";
@@ -26,6 +26,8 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
 
     const [modalVisible, setModalVisible] = React.useState(false);
 
+    const [dialogContent, setDialogContent] = React.useState<DialogContent | null>(null);
+
     const [options, setOptions] = React.useState<NodeOption[]>([]);
 
     const [request, setRequest] = React.useState<any>({});
@@ -39,6 +41,14 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
     const currentOperator = state.flow?.currentOperator;
 
     const [form] = Form.useForm();
+
+    /** 打开弹框：解析自定义弹框内容（标题/中间内容），并重置表单 */
+    const openModal = () => {
+        form.resetFields();
+        setDialogContent(null);
+        actionPresenter.resolveDialogContent(action.id).then(setDialogContent);
+        setModalVisible(true);
+    }
 
     const handleSubmit = (params?: any) => {
         actionPresenter.action(action.id, params).then((res) => {
@@ -69,8 +79,7 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                 if (isStartNode) {
                     handleSubmit();
                 } else {
-                    form.resetFields();
-                    setModalVisible(true);
+                    openModal();
                 }
             }
         });
@@ -83,6 +92,11 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
     const actionRef = React.useRef<ApprovalViewPluginAction>(null);
 
     const handlerOK = () => {
+        // 自定义弹框内容时退化为纯确认框，直接提交（无表单可校验）
+        if (dialogContent?.content) {
+            handleSubmit();
+            return;
+        }
         if (actionRef.current) {
             actionRef.current.onValidate().then(res => {
                 if (res) {
@@ -124,8 +138,7 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                             if (isStartNode) {
                                 handleSubmit();
                             } else {
-                                form.resetFields();
-                                setModalVisible(true);
+                                openModal();
                             }
                         }
                     }}
@@ -134,7 +147,7 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
             )}
 
             <ResizableModal
-                title={"审批通过"}
+                title={dialogContent?.title ?? "审批通过"}
                 open={modalVisible}
                 destroyOnHidden
                 maskClosable={false}
@@ -155,6 +168,9 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                         padding: 16,
                     }}
                 >
+                    {dialogContent?.content ? (
+                        dialogContent.content
+                    ) : (
                     <Form
                         form={form}
                         layout="vertical"
@@ -192,6 +208,7 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                         </Form.Item>
                     )}
                 </Form>
+                    )}
                 </div>
 
             </ResizableModal>

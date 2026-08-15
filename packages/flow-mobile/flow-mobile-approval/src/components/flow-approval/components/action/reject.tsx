@@ -1,7 +1,7 @@
 import React from "react";
 import {FlowActionProps} from "./type";
 import {Form, TextArea, Toast} from "antd-mobile";
-import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
+import {DialogContent, useApprovalContext} from "@coding-flow/flow-approval-presenter";
 import {PopupModal} from "@coding-flow/flow-mobile-ui";
 import {EventBus, ViewBindPlugin, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 import {APPROVAL_ACTION_REJECT_KEY} from "@/components/flow-approval";
@@ -18,13 +18,20 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
     const actionLoading = state.actionLoading ?? false;
     const [modalVisible, setModalVisible] = React.useState(false);
+    const [dialogContent, setDialogContent] = React.useState<DialogContent | null>(null);
     const [form] = Form.useForm();
 
+    /** 打开弹框：解析自定义弹框内容（标题/中间内容），并重置表单 */
+    const openModal = () => {
+        form.resetFields();
+        setDialogContent(null);
+        actionPresenter.resolveDialogContent(action.id).then(setDialogContent);
+        setModalVisible(true);
+    }
 
     React.useEffect(() => {
         EventBus.getInstance().on(action.id, () => {
-            form.resetFields();
-            setModalVisible(true);
+            openModal();
         });
 
         return () => {
@@ -67,14 +74,22 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
     return (
         <>
             <PopupModal
-                title={"审批拒绝"}
+                title={dialogContent?.title ?? "审批拒绝"}
                 open={modalVisible}
                 loading={actionLoading}
                 onClose={() => setModalVisible(false)}
                 onOk={() => {
+                    // 自定义弹框内容时退化为纯确认框，直接提交（无表单可校验）
+                    if (dialogContent?.content) {
+                        handleSubmit();
+                        return;
+                    }
                     form.submit();
                 }}
             >
+                {dialogContent?.content ? (
+                    dialogContent.content
+                ) : (
                 <Form
                     form={form}
                     layout="vertical"
@@ -93,6 +108,7 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
                         </Form.Item>
                     )}
                 </Form>
+                )}
             </PopupModal>
         </>
     )

@@ -1,5 +1,12 @@
 # @coding-flow/flow-mobile-ui
 
+## 0.1.8
+
+### Patch Changes
+
+- 审批弹框标题/内容自定义能力（DialogContentProvider）+ 设计器按钮 ID 可复制
+  - @coding-flow/flow-core@0.1.8
+
 ## 0.1.7
 
 ### Patch Changes

@@ -7,7 +7,7 @@ interface PopupModalProps {
     onClose?: () => void;
     children?: React.ReactNode;
     onOk?: () => void;
-    title?: string;
+    title?: React.ReactNode;
     loading?: boolean;
     /** 弹层高度，默认 40vh。用于顺序弹出多个弹层时以不同高度区分层级 */
     height?: string;
