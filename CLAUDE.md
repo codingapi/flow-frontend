@@ -84,6 +84,11 @@ app-mobile (依赖 flow-mobile-ui + flow-mobile-approval)
 - 单例模式，按 ActionType（PASS/REJECT/SAVE/ADD_AUDIT/DELEGATE/RETURN/TRANSFER/CUSTOM）注册对应 React 组件
 - PC 端和移动端各自实现不同的组件
 
+**ActionInterceptor / DialogContentProvider** — 审批交互扩展钩子（flow-approval-presenter，经 `FlowActionPresenter` 订阅）：
+- `addActionInterceptor()` 订阅审批操作拦截器，所有按钮提交前（含 triggerFrontEvent 派发前，框架自动执行）依次运行，任一返回 false 即拦截
+- `addDialogContentProvider()` 订阅审批弹框内容提供器，首个命中者覆盖弹框标题与中间内容（content 整块替换默认表单，确定直接提交）
+- 二者返回的取消函数都必须在组件卸载时调用，避免重复订阅
+
 **FlowNodeRegistry** — 节点注册机制（flow-design）：
 - 19 种节点类型通过 `FlowNodeRegistry` 接口定义元数据并注册到 Flowgram 编辑器
 - 主体节点（Start/End/Approval/Handle/Router/Condition/Parallel 等 13 种）+ 分支节点（block 类型 6 种）

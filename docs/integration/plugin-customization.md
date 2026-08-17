@@ -27,6 +27,7 @@
 | 审批领域层 | flow-approval-presenter | FlowApprovalApi 接口 | 替换审批后端 API 实现 |
 | 审批领域层 | flow-approval-presenter | 7 个子视图插件 | 替换选人/签名/节点选择视图 |
 | 审批领域层 | flow-approval-presenter | ActionInterceptor | 审批动作拦截器（提交前拦截） |
+| 审批领域层 | flow-approval-presenter | DialogContentProvider | 审批弹框标题与中间内容自定义 |
 | 审批领域层 | flow-approval-presenter | FlowMockContext / mockKey | Mock 模式支持 |
 | 审批领域层 | flow-approval-presenter | operator-count 工具 | 选人数量限制适配 |
 | 审批领域层 | flow-types | FormActionContext | 自定义表单数据注入 |
@@ -444,7 +445,7 @@ ViewBindPlugin.getInstance().register(SignKeyViewPluginKey, MySignatureView);
 
 ### 3.4 maxOperatorCount — 选人数量限制能力
 
-**背景**：issue-195 引入的能力。人员限制不仅作用于业务层，且 `maxOperatorCount` 会传递到前端组件，使前端据此适配组件呈现（单选 / 多选上限 / 不限制）。
+**说明**：`maxOperatorCount` 不仅作用于业务层，还会传递到前端组件，使前端据此适配组件呈现（单选 / 多选上限 / 不限制）。
 
 **取值语义**（全框架统一）：
 
@@ -518,7 +519,7 @@ public async action(actionId: string, params?: any): Promise<any>;            //
 ```
 
 - `action()` 提交前自动调用 `interceptAction(actionId, params)`，被拦截时返回 `{ success: false, intercepted: true }`。
-- 配置了 `triggerFrontEvent` 的自定义按钮不会走 `action()`，需在自定义组件中手动调用 `interceptAction` 保持「点击即拦截」语义。
+- 配置了 `triggerFrontEvent` 的自定义按钮不经过 `action()`，但框架默认路径**已在派发事件前自动执行拦截器**：PC 端 `custom.tsx` 与移动端 `dispatchApprovalFrontEvent`（`flow-approval-actions.tsx` 的 `handlerAction` / footer / 更多按钮）都先调用 `interceptAction`，全部放行后才 `emit`。仅当集成方用 ViewBindPlugin **完全替换**整个自定义按钮并自行处理 `emit` 时，才需在自定义组件内手动调用 `interceptAction` 以保持「点击即拦截」语义。
 
 **使用方式**：
 
@@ -599,6 +600,58 @@ import { FlowMockContext } from "@coding-flow/flow-approval-presenter";
 ```
 
 集成方可直接使用框架导出的 `FlowMock` 组件（PC 端）快速搭建 mock 流程；mock 数据通过 `/api/cmd/workflow/mock` 创建、`/api/cmd/workflow/cleanMock` 清理。
+
+### 3.8 DialogContentProvider — 审批弹框内容自定义
+
+**源码**：`packages/flow-approval-presenter/src/interceptor/dialog-content.ts`、`packages/flow-approval-presenter/src/presenters/action.ts`
+
+通过订阅「弹框内容提供器」，可自定义各审批动作弹框的**标题**与**中间内容**，用于隐藏审批意见框、定制确认文案等场景，无需替换整个动作按钮。
+
+```typescript
+export interface DialogContent {
+    title?: React.ReactNode;       // 弹框标题（缺省用动作组件默认标题，如「审批通过」）
+    content?: React.ReactNode;     // 弹框中间内容（提供后整块替换默认表单区域，确定按钮直接提交）
+}
+export interface DialogContentProviderContext {
+    actionId: string;
+    action: FlowAction | null;
+}
+export type DialogContentProvider = (
+    context: DialogContentProviderContext
+) => DialogContent | null | undefined | Promise<DialogContent | null | undefined>;
+```
+
+`DialogContentManager` 按订阅顺序依次执行提供器，**首个返回非 null（或 resolve 非 null）内容者命中并短路**；全部未命中返回 null（使用默认标题/表单）。支持基于 `actionId` 精确到单个按钮，或基于 `context.action?.type` 批量作用于某类按钮。
+
+**注入入口** — `FlowActionPresenter`：
+
+```typescript
+public addDialogContentProvider(provider: DialogContentProvider): () => void;    // 订阅，返回取消订阅函数
+public removeDialogContentProvider(provider: DialogContentProvider): void;       // 取消
+public async resolveDialogContent(actionId: string): Promise<DialogContent | null>; // 动作弹框打开时调用
+```
+
+**使用方式**（`apps/app-mobile/src/components/flow-view/index.tsx` 真实示例，按 actionId 定制）：
+
+```tsx
+const MyFlowView = () => {
+    const { context } = useApprovalContext();
+    useEffect(() => {
+        const unsubscribe = context.getPresenter()
+            .getFlowActionPresenter()
+            .addDialogContentProvider(({ actionId }) => {
+                if (actionId === 'KYykw8pigO') {
+                    return { title: '确认小额审批？', content: '提交后不可撤回' };
+                }
+                return null;
+            });
+        return unsubscribe;   // 卸载时务必取消订阅
+    }, []);
+    return null;
+};
+```
+
+> **注意**：返回 `content` 后会整块替换弹框中间区域（含审批意见框/表单），此时确定按钮直接提交（无表单可校验）；组件卸载时务必调用订阅返回的取消函数，避免 StrictMode 或重复挂载导致提供器重复添加。
 
 ---
 
@@ -739,7 +792,7 @@ interface FlowActionProps {
 
 ```text
 ViewBindPlugin.get(APPROVAL_ACTION_CUSTOM_KEY) 命中 → 渲染自定义组件
-  → 配置了 triggerFrontEvent → EventBus.emit(triggerFrontEvent)（PC 端先 interceptAction 再 emit）
+  → 配置了 triggerFrontEvent → 先 interceptAction 放行后再 emit（PC custom.tsx 与移动端 dispatchApprovalFrontEvent 处理方式一致）
   → 配置了 triggerType → ActionFactory 复用对应类型组件（如 triggerType='PASS' 渲染通过组件）
   → 均未配置 → 无渲染
 ```
@@ -1093,7 +1146,7 @@ const MyTodoList = () => {
 
 自定义动作分发优先级（CustomAction 内部）：
   ViewBindPlugin（完全替换）
-    → triggerFrontEvent（EventBus 事件触发）
+    → triggerFrontEvent（框架先 interceptAction 放行后再 emit）
     → triggerType（转发为其他动作类型）
     → 均未配置时无渲染
 
@@ -1111,6 +1164,11 @@ const MyTodoList = () => {
 
 审批动作提交拦截：
   按 addActionInterceptor 订阅顺序依次执行，任一返回 false 短路
+  （triggerFrontEvent 按钮同样先拦截再 emit）
+
+审批弹框渲染优先级：
+  DialogContentManager（首个返回非 null 者命中短路）
+    → 未命中 → 动作组件默认标题 + 默认表单（审批意见框/签名等）
 
 消息提示优先级：
   FlowMessageRegistry.register()（完全覆盖）
