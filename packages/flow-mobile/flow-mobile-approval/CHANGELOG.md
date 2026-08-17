@@ -1,5 +1,17 @@
 # @coding-flow/flow-mobile-approval
 
+## 0.2.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @coding-flow/flow-core@0.2.0
+  - @coding-flow/flow-approval-presenter@0.2.0
+  - @coding-flow/flow-icons@0.2.0
+  - @coding-flow/flow-mobile-form@0.2.0
+  - @coding-flow/flow-mobile-ui@0.2.0
+  - @coding-flow/flow-types@0.2.0
+
 ## 0.1.9
 
 ### Patch Changes

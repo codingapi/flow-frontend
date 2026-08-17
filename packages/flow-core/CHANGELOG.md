@@ -1,5 +1,14 @@
 # @coding-flow/flow-core
 
+## 0.2.0
+
+### Minor Changes
+
+- feat: 接口请求超时时间支持通过 localStorage 动态配置，未配置时回退默认值（issue #211）
+
+  - 新增 `resolveHttpTimeout()` / `FLOW_HTTP_TIMEOUT_KEY`，从 localStorage 读取超时配置
+  - 各调用点（PC/移动端审批、设计器、示例应用）去除写死的 10000ms 硬编码
+
 ## 0.1.9
 
 ## 0.1.8
