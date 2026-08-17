@@ -1,3 +1,5 @@
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/codingapi/flow-frontend/blob/main/LICENSE)
+[![Build](https://img.shields.io/github/actions/workflow/status/codingapi/flow-frontend/ci.yml?label=Build&logo=github)](https://github.com/codingapi/flow-frontend/actions)
 # Flow Frontend
 
 > Flow Engine 企业级流程引擎前端 - 基于 React 18、TypeScript、Rsbuild 的可视化流程设计与审批系统
