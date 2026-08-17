@@ -82,6 +82,7 @@ export const TransferAction: React.FC<FlowActionProps> = (props) => {
     if (ActionView) {
         return (
             <ActionView
+                {...props}
             />
         )
     }

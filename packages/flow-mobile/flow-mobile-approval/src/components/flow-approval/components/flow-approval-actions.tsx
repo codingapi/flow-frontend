@@ -6,6 +6,7 @@ import { ActionSheet, Button, Space, Toast } from "antd-mobile";
 import { RevokeAction } from "@/components/flow-approval/components/action/revoke";
 import { UrgeAction } from "@/components/flow-approval/components/action/urge";
 import { ActionFactory } from "@/components/flow-approval/components/action/factory";
+import { dispatchApprovalFrontEvent } from "@/components/flow-approval/components/action-front-event";
 import { EventBus, ObjectUtils, FlowMessageKey, FlowMessageRegistry } from "@coding-flow/flow-core";
 import { useApprovalContext } from "@coding-flow/flow-approval-presenter";
 
@@ -33,7 +34,8 @@ export const FlowApprovalActions = () => {
         if (action) {
             const triggerFrontEvent = action.triggerFrontEvent;
             if (triggerFrontEvent) {
-                EventBus.getInstance().emit(triggerFrontEvent);
+                // 前端触发事件不经过 action()，需手动执行拦截器：全部放行后才派发事件
+                dispatchApprovalFrontEvent(actionPresenter, id, triggerFrontEvent);
             } else {
                 EventBus.getInstance().emit(id);
             }
@@ -67,7 +69,7 @@ export const FlowApprovalActions = () => {
                             onClick={() => {
                                 const triggerFrontEvent = action.triggerFrontEvent;
                                 if (triggerFrontEvent) {
-                                    EventBus.getInstance().emit(triggerFrontEvent);
+                                    dispatchApprovalFrontEvent(actionPresenter, action.id, triggerFrontEvent);
                                 } else {
                                     handlerAction(action.id);
                                 }
