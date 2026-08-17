@@ -8,6 +8,29 @@ export interface MessageBox {
     error: (msg: string) => void;
 }
 
+/**
+ * 接口请求超时时间（毫秒）在 localStorage 中的配置键。
+ * 未配置时使用默认值 {@link DEFAULT_HTTP_TIMEOUT}。
+ */
+export const FLOW_HTTP_TIMEOUT_KEY = 'flow_http_timeout';
+
+/** 默认接口请求超时时间（毫秒），未配置 localStorage 时生效。 */
+const DEFAULT_HTTP_TIMEOUT = 10000;
+
+/**
+ * 解析接口请求超时时间（毫秒）。
+ * 优先读取 localStorage 中 {@link FLOW_HTTP_TIMEOUT_KEY} 对应的配置，
+ * 未配置或配置值非法（非正数）时回退到默认值。
+ */
+export function resolveHttpTimeout(): number {
+    const raw = localStorage.getItem(FLOW_HTTP_TIMEOUT_KEY);
+    if (!raw) {
+        return DEFAULT_HTTP_TIMEOUT;
+    }
+    const value = Number(raw);
+    return Number.isFinite(value) && value > 0 ? value : DEFAULT_HTTP_TIMEOUT;
+}
+
 export type Response = {
     success: boolean;
     errCode?: string;
