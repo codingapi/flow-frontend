@@ -1,5 +1,17 @@
 # @coding-flow/flow-mobile-approval
 
+## 0.1.9
+
+### Patch Changes
+
+- 789fa8c: 修复移动端转办（transfer）动作渲染覆盖视图时未透传 props 导致选人弹框 `action` 丢失崩溃；并为 `triggerFrontEvent` 自定义按钮补齐审批操作拦截器（先执行 `interceptAction`，全部放行后才派发事件，与 PC 语义对齐）。
+  - @coding-flow/flow-approval-presenter@0.1.9
+  - @coding-flow/flow-core@0.1.9
+  - @coding-flow/flow-icons@0.1.9
+  - @coding-flow/flow-mobile-form@0.1.9
+  - @coding-flow/flow-mobile-ui@0.1.9
+  - @coding-flow/flow-types@0.1.9
+
 ## 0.1.8
 
 ### Patch Changes
