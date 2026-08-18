@@ -1,5 +1,11 @@
 # @coding-flow/flow-core
 
+## 0.2.3
+
+### Patch Changes
+
+- 版本升级至 0.2.3（配合后端 springboot-framework 升级至 17.3.0，仅版本号升级，无功能变更）
+
 ## 0.2.2
 
 ### Patch Changes
