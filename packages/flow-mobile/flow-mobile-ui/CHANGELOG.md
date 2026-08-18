@@ -1,5 +1,11 @@
 # @coding-flow/flow-mobile-ui
 
+## 0.2.2
+
+### Patch Changes
+
+- 版本升级至 0.2.2（仅版本号升级，无功能变更）
+
 ## 0.2.0
 
 ### Patch Changes
