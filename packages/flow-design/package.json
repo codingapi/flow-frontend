@@ -1,6 +1,6 @@
 {
   "name": "@coding-flow/flow-design",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "flow-engine design components ",
   "type": "module",
   "sideEffects": [

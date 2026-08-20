@@ -1,5 +1,12 @@
 # @coding-flow/flow-approval-presenter
 
+## 0.2.4
+
+### Patch Changes
+
+- @coding-flow/flow-core@0.2.4
+- @coding-flow/flow-types@0.2.4
+
 ## 0.2.3
 
 ### Patch Changes

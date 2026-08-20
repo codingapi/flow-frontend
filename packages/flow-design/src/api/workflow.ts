@@ -61,7 +61,15 @@ export const exportWorkflow = (id:string) => {
     return httpClient.download('/api/cmd/workflow/export?id='+id,filename);
 }
 
-export const importWorkflow = (file:string) => {
-    return httpClient.post('/api/cmd/workflow/import',file);
+export interface WorkflowImportRequest {
+    file: string;
+    mode: 'REPLACE' | 'INCREMENTAL';
 }
 
+export const importWorkflow = (request: WorkflowImportRequest) => {
+    return httpClient.post('/api/cmd/workflow/import',request);
+}
+
+export const workflowCodeExists = (code: string) => {
+    return httpClient.get('/api/cmd/workflow/exists', {code});
+}
