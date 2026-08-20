@@ -1,10 +1,11 @@
 import React from "react";
-import {Button, Form, Input, message, Popover, Space, Tabs} from "antd";
+import {Button, Divider, Form, Input, message, Popover, Space, Tabs} from "antd";
 import {LayoutHeaderHeight, TabPanelType} from "../types";
 import {useDesignContext} from "../hooks/use-design-context";
-import {CloseOutlined, DownloadOutlined, SaveOutlined} from "@ant-design/icons";
+import {CloseOutlined, ExportOutlined, ImportOutlined, SaveOutlined} from "@ant-design/icons";
 import {EventBus, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 import {exportWorkflow} from "@/api/workflow";
+import {DesignImport} from "@/components/design-import";
 
 const Left = () => {
     return (
@@ -101,12 +102,27 @@ const SaveAsButton = () => {
 
 const Right = () => {
     const {state,context} = useDesignContext();
+    const [resetImportVisible, setResetImportVisible] = React.useState(false);
 
     return (
-        <Space style={{
-            marginRight: 20
-        }}>
+        <>
+            <Space style={{
+                marginRight: 20
+            }}>
 
+            <Button
+                icon={<ExportOutlined />}
+                onClick={() => {
+                     exportWorkflow(state.workflow.id);
+                }}
+            >导出流程</Button>
+            <Button
+                icon={<ImportOutlined />}
+                onClick={() => {
+                    setResetImportVisible(true);
+                }}
+            >重置流程</Button>
+            <Divider type="vertical" />
             <Button
                 icon={<SaveOutlined/>}
                 type="primary"
@@ -121,18 +137,24 @@ const Right = () => {
             >保存</Button>
             <SaveAsButton/>
             <Button
-                icon={<DownloadOutlined />}
-                onClick={() => {
-                     exportWorkflow(state.workflow.id);
-                }}
-            >导出</Button>
-            <Button
                 icon={<CloseOutlined/>}
                 onClick={() => {
                     context.close();
                 }}
             >关闭</Button>
-        </Space>
+            </Space>
+            <DesignImport
+                open={resetImportVisible}
+                scene="RESET"
+                currentWorkflowCode={state.workflow.code}
+                onImported={(workId) => {
+                    context.getPresenter().loadDesign(workId);
+                }}
+                onClose={() => {
+                    setResetImportVisible(false);
+                }}
+            />
+        </>
     )
 }
 

@@ -1,5 +1,15 @@
 # @coding-flow/flow-design
 
+## 0.2.4
+
+### Patch Changes
+
+- 优化流程导入与导出交互：导入文件后展示流程名称和编码，仅在编码冲突时确认创建新流程；设计器新增带编码校验和覆盖确认的重置流程入口，并调整导入导出按钮的名称、图标与布局。
+  - @coding-flow/flow-core@0.2.4
+  - @coding-flow/flow-icons@0.2.4
+  - @coding-flow/flow-pc-ui@0.2.4
+  - @coding-flow/flow-types@0.2.4
+
 ## 0.2.3
 
 ### Patch Changes

@@ -22,11 +22,14 @@ export const Upload:React.FC<UploadProps> = (props)=>{
         <AntdUpload
             maxCount={1}
             accept=".json,application/json"
+            onRemove={() => {
+                props.onChange?.('');
+                return true;
+            }}
             customRequest={async ({file, onSuccess}) => {
                 const currentFile = file as RcFile;
                 const base64 = await fileToBase64(currentFile);
                 props.onChange?.(base64);
-                const filename = currentFile.name;
                 const url = URL.createObjectURL(currentFile);
                 // @ts-ignore
                 onSuccess({
