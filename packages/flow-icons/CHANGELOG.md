@@ -1,5 +1,11 @@
 # @coding-flow/flow-icons
 
+## 0.2.5
+
+### Patch Changes
+
+- 版本升级至 0.2.5（配合子流程数据重置能力发布，本包无功能变更）
+
 ## 0.2.4
 
 ### Patch Changes

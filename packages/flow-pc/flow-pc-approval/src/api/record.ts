@@ -30,6 +30,11 @@ export const urge = (id:any,mockKey?:string) => {
     return httpClient.post('/api/cmd/record/urge?mockKey='+key,{id});
 }
 
+export const resetSubProcess = (body:any,mockKey?:string) => {
+    const key = mockKey?mockKey:'';
+    return httpClient.post('/api/cmd/record/subProcess/reset?mockKey='+key,body);
+}
+
 export const list = (request: any,mockKey?:string) => {
     const key = mockKey?mockKey:'';
     return httpClient.page('/api/query/record/list?mockKey='+key, request, {}, {}, []);

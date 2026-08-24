@@ -1,5 +1,13 @@
 # @coding-flow/flow-mobile-approval
 
+## 0.2.5
+
+### Patch Changes
+
+- 新增子流程数据重置接口 `/api/cmd/record/subProcess/reset`，接入审批上下文（FlowApprovalApi 实现），可经上下文获取该能力（issue #219）
+- @coding-flow/flow-approval-presenter@0.2.5
+- @coding-flow/flow-types@0.2.5
+
 ## 0.2.4
 
 ### Patch Changes

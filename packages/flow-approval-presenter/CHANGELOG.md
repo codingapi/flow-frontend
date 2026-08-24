@@ -1,5 +1,11 @@
 # @coding-flow/flow-approval-presenter
 
+## 0.2.5
+
+### Patch Changes
+
+- FlowApprovalApi 审批接口新增 `resetSubProcess` 子流程数据重置方法（独立接口，非审批动作）（issue #219）
+
 ## 0.2.4
 
 ### Patch Changes

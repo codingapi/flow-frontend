@@ -1,5 +1,5 @@
 import {FlowApprovalApi} from "@coding-flow/flow-approval-presenter";
-import {action as actionRecord, create as createRecord, processNodes as postProcessNodes,revoke as revokeRecord,urge as urgeRecord} from "@/api/record";
+import {action as actionRecord, create as createRecord, processNodes as postProcessNodes,revoke as revokeRecord,urge as urgeRecord,resetSubProcess as resetSubProcessRecord} from "@/api/record";
 
 export class FlowApprovalApiImpl implements FlowApprovalApi {
 
@@ -28,6 +28,10 @@ export class FlowApprovalApiImpl implements FlowApprovalApi {
 
     urge =async (id:any,mockKey:string)=> {
         return await urgeRecord(id,mockKey);
+    }
+
+    resetSubProcess =async (body:Record<string, any>,mockKey:string)=> {
+        return await resetSubProcessRecord(body,mockKey);
     }
 
 }
