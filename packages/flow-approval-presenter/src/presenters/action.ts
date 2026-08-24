@@ -1,5 +1,5 @@
 import { ApprovalState, FlowApprovalApi } from "@/typings";
-import { FormActionContext, FlowAction } from "@coding-flow/flow-types";
+import { FormActionContext, FlowAction, FlowSubProcessResetRequest } from "@coding-flow/flow-types";
 import { ActionInterceptor, ActionInterceptorManager, DialogContent, DialogContentManager, DialogContentProvider } from "@/interceptor";
 
 export class FlowActionPresenter {
@@ -310,6 +310,28 @@ export class FlowActionPresenter {
             const recordId = this.state.flow?.recordId;
             if (recordId) {
                 return await this.api.urge(recordId, this.mockKey);
+            }
+        } finally {
+            this.setLoading(false);
+        }
+    }
+
+    /**
+     * 子流程数据重置（独立能力，非审批动作）。
+     *
+     * 仅当详情数据 `resetSubProcess` 标识为 true 时可调用：将选中实例流程id对应的
+     * 已完成子流程聚合组重置，主流程退回子流程节点重新等待。
+     *
+     * @param resetInstanceProcessIds 选中重建的子流程实例流程id列表
+     * @param advice 重置说明（可选）
+     */
+    public async resetSubProcess(resetInstanceProcessIds: string[], advice?: string) {
+        this.setLoading(true);
+        try {
+            const recordId = this.state.flow?.recordId;
+            if (recordId) {
+                const body: FlowSubProcessResetRequest = { recordId, resetInstanceProcessIds, advice };
+                return await this.api.resetSubProcess(body, this.mockKey);
             }
         } finally {
             this.setLoading(false);

@@ -3,6 +3,7 @@
 ## 0.2.6
 
 ### Patch Changes
+- 子流程节点视图类型同步后端新增字段：聚合组 `superseded`、实例 `inherited`/`sourceProcessId`（codingapi/flow-engine#219）
 
 - 版本升级至 0.2.6（仅版本号升级，无功能变更）
 
