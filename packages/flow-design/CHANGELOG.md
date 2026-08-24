@@ -1,5 +1,11 @@
 # @coding-flow/flow-design
 
+## 0.2.6
+
+### Patch Changes
+
+- 子流程节点配置面板新增「允许重置子流程」开关（`SubProcessStrategy.resettable`，默认关闭），历史节点未配置时按关闭处理（codingapi/flow-engine#219）
+
 ## 0.2.5
 
 ### Patch Changes

@@ -19,6 +19,8 @@ interface SubProcessStrategyContentProps {
 
 export const normalizeShowParentProcessRecords = (value?: boolean): boolean => value === true;
 
+export const normalizeResettable = (value?: boolean): boolean => value === true;
+
 const SubProcessScriptContent: React.FC<SubProcessStrategyContentProps> = (props) => {
     const [visible, setVisible] = React.useState(false);
     const value = props.value || '';
@@ -166,6 +168,26 @@ export const SubProcessStrategy: React.FC = () => {
                     render={({ field: { value, onChange } }: FieldRenderProps<boolean | undefined>) => (
                         <Switch
                             value={normalizeShowParentProcessRecords(value)}
+                            onChange={onChange}
+                        />
+                    )}
+                />
+            </Form.Item>
+
+            <Form.Item
+                label={
+                    <FieldTip
+                        label={"允许重置子流程"}
+                        description={"开启后，子流程汇聚完成且主流程停在下游时，可在锁定合并节点的待办上重置选中的子流程实例并从头重走，主流程重新等待子流程结果；默认关闭。"}
+                    />
+                }
+                name={["SubProcessStrategy", "resettable"]}
+            >
+                <Field
+                    name={"SubProcessStrategy.resettable"}
+                    render={({ field: { value, onChange } }: FieldRenderProps<boolean | undefined>) => (
+                        <Switch
+                            value={normalizeResettable(value)}
                             onChange={onChange}
                         />
                     )}
