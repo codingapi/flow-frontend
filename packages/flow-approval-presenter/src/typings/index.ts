@@ -54,4 +54,11 @@ export interface FlowApprovalApi {
     revoke(id: any, mockKey: string): Promise<any>;
 
     urge(id: any, mockKey: string): Promise<any>;
+
+    /**
+     * 子流程数据重置（独立接口，不属于常规审批动作）。
+     * 仅当详情数据 resetSubProcess 标识为 true 时可调用，
+     * 请求体为 FlowSubProcessResetRequest（recordId + resetInstanceProcessIds + advice）。
+     */
+    resetSubProcess(body: Record<string, any>, mockKey: string): Promise<any>;
 }

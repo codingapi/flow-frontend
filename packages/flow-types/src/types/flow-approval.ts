@@ -369,4 +369,20 @@ export interface FlowContent {
     revoke: boolean;
     // 支持催办
     urge: boolean;
+    // 支持子流程数据重置（独立能力，非审批动作）：
+    // 当前待办位于开启重置能力、且已汇聚完成的子流程的锁定合并节点上时为 true，
+    // 可据此调用 /api/cmd/record/subProcess/reset 接口，呈现方式由使用方自行决定
+    resetSubProcess: boolean;
+}
+
+/**
+ * 子流程数据重置请求（独立接口，不属于常规审批动作）
+ */
+export interface FlowSubProcessResetRequest {
+    // 当前操作的主流程记录id（执行重置的待办记录）
+    recordId: number;
+    // 选中重建的子流程实例流程id列表（须同属一个已放行且未取代的聚合组）
+    resetInstanceProcessIds: string[];
+    // 重置说明（可选，记录在被作废的当前记录上供审计追溯）
+    advice?: string;
 }

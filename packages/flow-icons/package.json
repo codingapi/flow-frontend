@@ -1,6 +1,6 @@
 {
   "name": "@coding-flow/flow-icons",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "flow-engine icons ",
   "type": "module",
   "sideEffects": [

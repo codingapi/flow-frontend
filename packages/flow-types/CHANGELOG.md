@@ -1,5 +1,11 @@
 # @coding-flow/flow-types
 
+## 0.2.5
+
+### Patch Changes
+
+- FlowContent 详情新增 `resetSubProcess` 子流程重置能力标识，新增 `FlowSubProcessResetRequest` 重置请求类型（issue #219）
+
 ## 0.2.4
 
 ### Patch Changes
