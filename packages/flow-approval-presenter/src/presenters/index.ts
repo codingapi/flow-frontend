@@ -49,4 +49,14 @@ export class ApprovalPresenter {
         return this.flowActionPresenter.processNodes();
     }
 
+    /**
+     * 子流程数据重置（独立能力，非审批动作），仅当详情数据 resetSubProcess 标识为 true 时可调用。
+     *
+     * @param resetInstanceProcessIds 选中重建的子流程实例流程id列表
+     * @param advice 重置说明（可选）
+     */
+    public resetSubProcess(resetInstanceProcessIds: string[], advice?: string) {
+        return this.flowActionPresenter.resetSubProcess(resetInstanceProcessIds, advice);
+    }
+
 }

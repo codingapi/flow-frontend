@@ -1,7 +1,7 @@
 ---
 name: flow-design/sub-process-config
 module: flow-design
-description: 子流程节点的多实例创建、结果判定脚本和异常节点跳转配置
+description: 子流程节点的多实例创建、结果判定脚本、异常节点跳转与重置能力开关配置
 status: 已实现
 scope: 前端
 source: 项目自有

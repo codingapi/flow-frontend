@@ -3,6 +3,7 @@
 ## 0.2.6
 
 ### Patch Changes
+- 审批上下文可直达子流程重置能力：ApprovalPresenter/FlowActionPresenter 暴露 `resetSubProcess`（codingapi/flow-engine#219）
 
 - 版本升级至 0.2.6（仅版本号升级，无功能变更）
 

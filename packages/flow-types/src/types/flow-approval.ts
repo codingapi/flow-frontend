@@ -242,6 +242,10 @@ export interface ProcessNodeSubProcessInstance {
     finishRecordId: number;
     state: SubProcessInstanceState;
     finishTime: number;
+    /** 是否为继承实例：重置时未被选中重置的实例沿用原结果，未重新执行。 */
+    inherited?: boolean;
+    /** 重建实例替换的旧实例流程id；继承实例与常规实例为 undefined。 */
+    sourceProcessId?: string;
 }
 
 /**
@@ -257,6 +261,8 @@ export interface ProcessNodeSubProcess {
     createTime: number;
     finishTime: number;
     instances: ProcessNodeSubProcessInstance[];
+    /** 是否已被重置取代（历史聚合组，仅保留审计用途）。 */
+    superseded?: boolean;
 }
 
 /**

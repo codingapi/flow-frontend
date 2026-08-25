@@ -17,7 +17,7 @@
 | [flow-core/message-registry](./flow-core/message-registry.md) | flow-core | 流程消息注册表（单例模式），将所有消息提示从硬编码中解耦，支持下游 App 通过字符串模板或函数模板自定义消息内容，运行时上下文数据由 Presenter 自动注入 | 前端 | 项目自有 |
 | [flow-design/manager-group](./flow-design/manager-group.md) | flow-design | 设计面板管理器组，包含表单字段管理、节点转换管理、路由节点管理和工作流策略管理 | 前端 | 项目自有 |
 | [flow-design/node-registry](./flow-design/node-registry.md) | flow-design | 流程节点注册机制，通过 FlowNodeRegistry 接口定义 19 种节点类型并注册到 Flowgram 固定布局编辑器 | 前端 | 项目自有 |
-| [flow-design/sub-process-config](./flow-design/sub-process-config.md) | flow-design | 子流程节点的多实例创建、结果判定脚本和异常节点跳转配置 | 前端 | 项目自有 |
+| [flow-design/sub-process-config](./flow-design/sub-process-config.md) | flow-design | 子流程节点的多实例创建、结果判定脚本、异常节点跳转与重置能力开关配置 | 前端 | 项目自有 |
 | [flowgram/flowgram](./flowgram/flowgram.md) | flowgram | Flowgram 固定布局流程编辑器，提供可视化节点编辑、连线、迷你地图等能力 | 前端 | 框架:Flowgram |
 | [form-engine/form-engine](./form-engine/form-engine.md) | form-engine | 外部表单引擎，提供表单渲染、表单项注册、表单实例创建等能力 | 前端 | 框架:Form Engine |
 | [react/react](./react/react.md) | react | React UI 框架，提供组件化渲染、Hooks 响应式状态管理、虚拟 DOM 等核心能力 | 前端 | 框架:React |
