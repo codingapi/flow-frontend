@@ -1,5 +1,11 @@
 # @coding-flow/flow-mobile-form
 
+## 0.2.7
+
+### Patch Changes
+
+- 修复合并待办列表“发起人/提交人”字段映射颠倒：“发起人”改取 `createdOperatorName`、“提交人”取 `submitOperatorName`，与后端语义及 PC 端展示保持一致（codingapi/flow-frontend#57）
+
 ## 0.2.6
 
 ### Patch Changes
