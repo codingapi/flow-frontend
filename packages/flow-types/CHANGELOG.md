@@ -1,5 +1,11 @@
 # @coding-flow/flow-types
 
+## 0.2.8
+
+### Patch Changes
+
+- 版本升级至 0.2.8（配合 flow-engine 后端 issue #226 相同人员自动通过记录留痕修复发布，本包无功能变更）
+
 ## 0.2.7
 
 ### Patch Changes
