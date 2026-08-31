@@ -89,8 +89,8 @@ export const FlowMultipleList: React.FC<FlowMultipleListProps> = (props) => {
                             value={item.recordId}
                             description={(
                                 <Space>
-                                    <span>发起人: {item.submitOperatorName}</span>
-                                    <span>提交人: {item.createdOperatorName}</span>
+                                    <span>发起人: {item.createdOperatorName}</span>
+                                    <span>提交人: {item.submitOperatorName}</span>
                                     <span>时间: {dayjs(item.createTime).format('YYYY-DD-MM HH:mm:ss')}</span>
                                 </Space>
                             )}

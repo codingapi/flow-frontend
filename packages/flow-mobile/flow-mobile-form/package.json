@@ -1,6 +1,6 @@
 {
   "name": "@coding-flow/flow-mobile-form",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "flow-engine mobile form engine",
   "type": "module",
   "sideEffects": [
