@@ -1,5 +1,11 @@
 # @coding-flow/flow-mobile-approval
 
+## 0.2.9
+
+### Patch Changes
+
+- 版本升级至 0.2.9（配合 flow-design 路由节点摆放限制取消发布，本包无功能变更）
+
 ## 0.2.8
 
 ### Patch Changes
