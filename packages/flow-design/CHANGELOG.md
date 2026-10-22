@@ -1,5 +1,11 @@
 # @coding-flow/flow-design
 
+## 0.2.10
+
+### Patch Changes
+
+- 取消路由节点仅可添加到条件分支的限制：路由节点现可在主流程、条件分支等任意可添加节点处添加（codingapi/flow-engine#230）
+
 ## 0.2.9
 
 ### Patch Changes
