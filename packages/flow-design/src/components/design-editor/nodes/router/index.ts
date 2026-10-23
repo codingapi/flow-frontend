@@ -13,16 +13,8 @@ export const RouterNodeRegistry: FlowNodeRegistry = {
         icon: 'ROUTER',
         description: '路由节点',
     },
-    canAdd(ctx, from) {
-        // 上级节点是 CONDITION_BRANCH 则可以添加 ROUTER 节点
-        while (from.parent) {
-            if (from.parent.flowNodeType === 'CONDITION_BRANCH'|| from.parent.flowNodeType === 'CONDITION_ELSE_BRANCH') {
-                return true;
-            }
-            from = from.parent;
-        }
-        return false;
-    },
+    // 路由节点不限制摆放位置（issue #230）：可添加在主流程、条件分支等任意可添加节点处。
+    // canAdd 缺省即为允许，因此不再实现该方法。
     /**
      * Render node via formMeta
      */
