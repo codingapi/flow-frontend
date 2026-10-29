@@ -1,5 +1,11 @@
 # @coding-flow/flow-design
 
+## 0.2.13
+
+### Patch Changes
+
+- 修复拒绝动作的脚本存储：动作 script 字段保存脚本 key，脚本正文由脚本接口按 key 加载与保存，兼容历史内联脚本（codingapi/flow-engine#235）
+
 ## 0.2.11
 
 ### Patch Changes
