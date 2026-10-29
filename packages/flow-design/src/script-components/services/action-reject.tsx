@@ -54,6 +54,19 @@ export class ActionRejectScriptUtils {
     }
 
 
+    /**
+     * 判断脚本字段中存放的是脚本正文而非脚本key。
+     * <p>
+     * 旧版设计器会把脚本正文直接写入动作的 script 字段，后端在保存流程时会将其
+     * 归一化为脚本key；此处用于兼容此类历史数据的回显与编辑。
+     */
+    public static isInlineScript(value?: string) {
+        if (!value) {
+            return false;
+        }
+        return value.includes('def run') || value.includes('\n') || value.includes('\r');
+    }
+
     public static getType(script?: string) {
         if (script) {
             const meta = GroovyScriptConvertorUtil.getScriptMeta(script);
