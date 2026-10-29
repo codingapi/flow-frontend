@@ -1,5 +1,11 @@
 # @coding-flow/flow-pc-ui
 
+## 0.2.13
+
+### Patch Changes
+
+- 版本升级至 0.2.13（配合 flow-design 拒绝脚本 key 存储修复发布，本包无功能变更）
+
 ## 0.2.11
 
 ### Patch Changes
