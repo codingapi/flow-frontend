@@ -1,5 +1,11 @@
 # @coding-flow/flow-core
 
+## 0.2.14
+
+### Patch Changes
+
+- 版本升级至 0.2.14（配合 flow-engine 后端版本升级，本包无功能变更）
+
 ## 0.2.13
 
 ### Patch Changes
