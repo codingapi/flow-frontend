@@ -1,5 +1,13 @@
 # @coding-flow/flow-pc-form
 
+## 0.2.15
+
+### Patch Changes
+
+- Updated dependencies
+  - @coding-flow/flow-core@0.2.15
+  - @coding-flow/flow-types@0.2.15
+
 ## 0.2.14
 
 ### Patch Changes
