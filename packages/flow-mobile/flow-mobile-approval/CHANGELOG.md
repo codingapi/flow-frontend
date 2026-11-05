@@ -1,5 +1,17 @@
 # @coding-flow/flow-mobile-approval
 
+## 0.2.17
+
+### Patch Changes
+
+- 修复审批按钮样式不生效：按 `display.style` 渲染背景色、边框色、圆角与边框大小，颜色自动补全 `#` 且不重复补全，样式数据非法时降级为默认样式（codingapi/flow-engine#244）
+- 审批按钮名称优先取动作标题，与 PC 端保持一致
+- @coding-flow/flow-approval-presenter@0.2.17
+- @coding-flow/flow-icons@0.2.17
+- @coding-flow/flow-mobile-form@0.2.17
+- @coding-flow/flow-mobile-ui@0.2.17
+- @coding-flow/flow-types@0.2.17
+
 ## 0.2.16
 
 ### Patch Changes
