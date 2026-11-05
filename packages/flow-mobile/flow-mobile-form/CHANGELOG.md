@@ -1,5 +1,12 @@
 # @coding-flow/flow-mobile-form
 
+## 0.2.16
+
+### Patch Changes
+
+- @coding-flow/flow-core@0.2.16
+- @coding-flow/flow-types@0.2.16
+
 ## 0.2.15
 
 ### Patch Changes

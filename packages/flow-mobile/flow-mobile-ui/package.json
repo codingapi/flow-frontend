@@ -1,6 +1,6 @@
 {
   "name": "@coding-flow/flow-mobile-ui",
-  "version": "0.2.15",
+  "version": "0.2.16",
   "description": "flow-engine mobile ui components",
   "type": "module",
   "sideEffects": [

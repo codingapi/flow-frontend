@@ -1,5 +1,11 @@
 # @coding-flow/flow-icons
 
+## 0.2.16
+
+### Patch Changes
+
+- @coding-flow/flow-core@0.2.16
+
 ## 0.2.15
 
 ### Patch Changes
