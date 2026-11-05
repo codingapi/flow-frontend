@@ -1,17 +1,16 @@
 import React from "react";
 import { FlowActionProps } from "./type";
-import { Form, Input, message } from "antd";
-import { ApprovalViewPluginAction, DialogContent, ResolvedAdvicePolicy, useApprovalContext } from "@coding-flow/flow-approval-presenter";
+import { Form, message } from "antd";
+import { ApprovalViewPluginAction, DialogContent, useApprovalContext } from "@coding-flow/flow-approval-presenter";
 import { SignKeyView } from "@/plugins/view/sign-key-view";
 import { CustomStyleButton } from "@/components/flow-approval/components/custom-style-button";
 import { NodeOption } from "@coding-flow/flow-types";
 import { OperatorSelectView } from "@/plugins/view/operator-select-view";
 import { ManualView } from "@/plugins/view/manual-view";
-import { APPROVAL_ACTION_PASS_KEY, APPROVAL_ADVICE_VIEW_KEY } from "@/components/flow-approval";
+import { APPROVAL_ACTION_PASS_KEY } from "@/components/flow-approval";
+import { AdviceField, useAdvicePolicy } from "@/components/flow-approval/components/advice-field";
 import { ViewBindPlugin, FlowMessageKey, FlowMessageRegistry, EventBus } from "@coding-flow/flow-core";
 import { ResizableModal } from "@/components/flow-approval/components/resizable-modal";
-
-const { TextArea } = Input;
 
 /**
  * 通过
@@ -28,11 +27,8 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
 
     const [dialogContent, setDialogContent] = React.useState<DialogContent | null>(null);
 
-    /** 生效的审批意见策略（节点策略 + 宿主策略合并结果） */
-    const [advicePolicy, setAdvicePolicy] = React.useState<ResolvedAdvicePolicy | null>(null);
-
-    /** 提交链路通过 ref 读取策略，避免 EventBus 监听器闭包捕获旧值 */
-    const advicePolicyRef = React.useRef<ResolvedAdvicePolicy | null>(null);
+    /** 审批意见策略（节点策略 + 宿主策略合并结果），通过动作保持「未隐藏即展示」 */
+    const advice = useAdvicePolicy(action.id, true);
 
     const [options, setOptions] = React.useState<NodeOption[]>([]);
 
@@ -52,15 +48,12 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
     const openModal = () => {
         form.resetFields();
         setDialogContent(null);
-        setAdvicePolicy(null);
-        advicePolicyRef.current = null;
+        advice.resetPolicy();
         Promise.all([
             actionPresenter.resolveDialogContent(action.id),
-            actionPresenter.resolveAdvicePolicy(action.id),
-        ]).then(([content, policy]) => {
+            advice.resolvePolicy(),
+        ]).then(([content]) => {
             setDialogContent(content);
-            advicePolicyRef.current = policy;
-            setAdvicePolicy(policy);
             setModalVisible(true);
         }).catch(() => {
             setModalVisible(true);
@@ -69,36 +62,13 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
 
     /** 预填策略默认意见：仅在意见框为空时写入，避免覆盖用户已输入内容 */
     React.useEffect(() => {
-        if (modalVisible && advicePolicy?.defaultContent) {
-            const current = form.getFieldValue('advice');
-            if (!current) {
-                form.setFieldsValue({ advice: advicePolicy.defaultContent });
-            }
+        if (modalVisible) {
+            advice.applyDefaultAdvice(form);
         }
-    }, [modalVisible, advicePolicy]);
-
-    /**
-     * 补充策略默认意见。
-     *
-     * 意见框隐藏（或发起节点未弹窗）时表单不会产生 advice 字段，
-     * 此处以策略默认内容补齐，避免命中服务端意见必填校验。
-     */
-    const withAdvicePolicy = (params?: any) => {
-        if (params?.advice != null) {
-            return params;
-        }
-        const defaultContent = advicePolicyRef.current?.defaultContent;
-        if (!defaultContent) {
-            return params;
-        }
-        return {
-            ...(params || {}),
-            advice: defaultContent,
-        };
-    }
+    }, [modalVisible, advice.policy]);
 
     const handleSubmit = (params?: any) => {
-        actionPresenter.action(action.id, withAdvicePolicy(params)).then((res) => {
+        actionPresenter.action(action.id, advice.withDefaultAdvice(params)).then((res) => {
             if (res.success) {
                 const resOptions = res.data?.options || [];
                 if (resOptions.length > 0) {
@@ -120,15 +90,32 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
         });
     }
 
+    /**
+     * 点击动作按钮。
+     *
+     * 发起节点默认不弹窗直接提交；但节点策略或宿主策略要求意见必填时必须弹窗，
+     * 否则用户没有输入入口，服务端会抛 advice required。
+     */
+    const handleActionClick = () => {
+        if (!props.onClickCheck?.(action.id)) {
+            return;
+        }
+        if (!isStartNode) {
+            openModal();
+            return;
+        }
+        advice.resolvePolicy().then((policy) => {
+            if (policy.required) {
+                openModal();
+            } else {
+                handleSubmit();
+            }
+        });
+    }
+
     React.useEffect(() => {
         EventBus.getInstance().on(action.id, () => {
-            if (props.onClickCheck?.(action.id)) {
-                if (isStartNode) {
-                    handleSubmit();
-                } else {
-                    openModal();
-                }
-            }
+            handleActionClick();
         });
 
         return () => {
@@ -155,21 +142,7 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
         form.submit();
     }
 
-    const adviceRequired = advicePolicy?.required ?? state.flow?.adviceRequired ?? false;
-
-    const adviceHidden = advicePolicy?.hidden ?? state.flow?.adviceHidden ?? false;
-
-    const adviceRules = adviceRequired ? [
-        {
-            required: true,
-            message: '请输入审批意见'
-        }
-    ] : [];
-
-
     const ActionView = ViewBindPlugin.getInstance().get(APPROVAL_ACTION_PASS_KEY);
-
-    const AdviceView = ViewBindPlugin.getInstance().get(APPROVAL_ADVICE_VIEW_KEY);
 
     if (ActionView) {
         return (
@@ -186,15 +159,7 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                     display={props.action.display}
                     loading={actionLoading}
                     disabled={actionLoading}
-                    onClick={() => {
-                        if (props.onClickCheck?.(action.id)) {
-                            if (isStartNode) {
-                                handleSubmit();
-                            } else {
-                                openModal();
-                            }
-                        }
-                    }}
+                    onClick={handleActionClick}
                     title={action.title}
                 />
             )}
@@ -231,21 +196,6 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                             handleSubmit(values);
                         }}
                 >
-                    {!adviceHidden && (
-                        <Form.Item
-                            name={"advice"}
-                            label={"审批意见"}
-                            required={adviceRequired}
-                            rules={adviceRules}
-                        >
-                            {AdviceView ? (
-                                <AdviceView action={action} policy={advicePolicy} />
-                            ) : (
-                                <TextArea placeholder={"请输入审批意见"} />
-                            )}
-                        </Form.Item>
-                    )}
-
                     {state.flow?.signRequired && currentOperator && (
                         <Form.Item
                             name={"signKey"}
@@ -264,6 +214,14 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
                             />
                         </Form.Item>
                     )}
+                    <AdviceField
+                        action={action}
+                        policy={advice.policy}
+                        visible={advice.visible}
+                        required={advice.required}
+                        label={"审批意见"}
+                        placeholder={"请输入审批意见"}
+                    />
                 </Form>
                     )}
                 </div>

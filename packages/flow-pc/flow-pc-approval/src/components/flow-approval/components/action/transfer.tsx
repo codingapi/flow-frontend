@@ -5,6 +5,7 @@ import { ApprovalViewPluginAction, DialogContent, useApprovalContext } from "@co
 import { TransferView } from "@/plugins/view/transfer-view";
 import { CustomStyleButton } from "@/components/flow-approval/components/custom-style-button";
 import { APPROVAL_ACTION_TRANSFER_KEY } from "@/components/flow-approval";
+import { AdviceField, useAdvicePolicy } from "@/components/flow-approval/components/advice-field";
 import { ViewBindPlugin, FlowMessageKey, FlowMessageRegistry, EventBus } from "@coding-flow/flow-core";
 import { ResizableModal } from "@/components/flow-approval/components/resizable-modal";
 
@@ -27,12 +28,23 @@ export const TransferAction: React.FC<FlowActionProps> = (props) => {
 
     const [dialogContent, setDialogContent] = React.useState<DialogContent | null>(null);
 
-    /** 打开弹框：解析自定义弹框内容（标题/中间内容），并重置表单 */
+    /** 审批意见策略（节点策略 + 宿主策略合并结果） */
+    const advice = useAdvicePolicy(action.id);
+
+    /** 打开弹框：先解析自定义弹框内容（标题/中间内容）与意见策略，再渲染，避免意见框闪烁 */
     const openModal = () => {
         form.resetFields();
         setDialogContent(null);
-        actionPresenter.resolveDialogContent(action.id).then(setDialogContent);
-        setModalVisible(true);
+        advice.resetPolicy();
+        Promise.all([
+            actionPresenter.resolveDialogContent(action.id),
+            advice.resolvePolicy(),
+        ]).then(([content]) => {
+            setDialogContent(content);
+            setModalVisible(true);
+        }).catch(() => {
+            setModalVisible(true);
+        });
     }
 
     const handlerOK = () => {
@@ -54,8 +66,15 @@ export const TransferAction: React.FC<FlowActionProps> = (props) => {
 
     const [modalVisible, setModalVisible] = React.useState(false);
 
+    /** 预填策略默认意见：仅在意见框为空时写入，避免覆盖用户已输入内容 */
+    React.useEffect(() => {
+        if (modalVisible) {
+            advice.applyDefaultAdvice(form);
+        }
+    }, [modalVisible, advice.policy]);
+
     const handleSubmit = (params?: any) => {
-        actionPresenter.action(action.id, params).then((res) => {
+        actionPresenter.action(action.id, advice.withDefaultAdvice(params)).then((res) => {
             if (res.success) {
                 message.success(
                     FlowMessageRegistry.getInstance().get(
@@ -146,6 +165,15 @@ export const TransferAction: React.FC<FlowActionProps> = (props) => {
                             maxOperatorCount={action.maxOperatorCount}
                         />
                     </Form.Item>
+
+                    <AdviceField
+                        action={action}
+                        policy={advice.policy}
+                        visible={advice.visible}
+                        required={advice.required}
+                        label={"审批意见"}
+                        placeholder={"请输入审批意见"}
+                    />
                 </Form>
                 )}
             </ResizableModal>

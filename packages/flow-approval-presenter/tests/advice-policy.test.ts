@@ -3,7 +3,9 @@ import {
     AdvicePolicyManager,
     AdvicePolicyProvider,
     DEFAULT_ADVICE_MAX_LENGTH,
+    isAdviceVisible,
     mergeAdvicePolicy,
+    withDefaultAdvice,
 } from "@/interceptor/advice-policy";
 import { FlowActionPresenter } from "@/presenters/action";
 import { ApprovalState, FlowApprovalApi } from "@/typings";
@@ -237,5 +239,45 @@ describe.sequential('FlowActionPresenter 意见策略集成', () => {
             action: expect.objectContaining({ id: 'pass-1', type: 'PASS' }),
             flow: expect.objectContaining({ nodeType: 'START' }),
         }));
+    });
+});
+
+describe.sequential('isAdviceVisible 意见框展示规则', () => {
+
+    it('通过 / 拒绝动作未隐藏即展示', () => {
+        expect(isAdviceVisible({ always: true })).toBe(true);
+    });
+
+    it('隐藏时一律不展示', () => {
+        expect(isAdviceVisible({ hidden: true, always: true })).toBe(false);
+        expect(isAdviceVisible({ hidden: true, required: true })).toBe(false);
+    });
+
+    it('退回 / 转办等动作仅在必填或宿主提供策略时展示', () => {
+        expect(isAdviceVisible({})).toBe(false);
+        expect(isAdviceVisible({ required: true })).toBe(true);
+        expect(isAdviceVisible({ hasPolicy: true })).toBe(true);
+    });
+});
+
+describe.sequential('withDefaultAdvice 默认意见补齐', () => {
+
+    it('表单已提交意见时保持原值', () => {
+        const params = { advice: '用户输入' };
+        expect(withDefaultAdvice(params, '同意')).toBe(params);
+    });
+
+    it('无意见且提供默认内容时补齐', () => {
+        expect(withDefaultAdvice(undefined, '同意')).toEqual({ advice: '同意' });
+        expect(withDefaultAdvice({ backNodeId: 'n1' }, '同意')).toEqual({ backNodeId: 'n1', advice: '同意' });
+    });
+
+    it('无默认内容时保持原样', () => {
+        expect(withDefaultAdvice(undefined, '')).toBeUndefined();
+        expect(withDefaultAdvice({ backNodeId: 'n1' })).toEqual({ backNodeId: 'n1' });
+    });
+
+    it('空字符串意见视为用户显式清空，不被默认值覆盖', () => {
+        expect(withDefaultAdvice({ advice: '' }, '同意')).toEqual({ advice: '' });
     });
 });

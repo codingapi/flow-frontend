@@ -106,11 +106,13 @@ export const FlowView: React.FC<FormViewProps> = (props) => {
         // - 配置只在宿主侧生效，不写入流程定义，因此存量流程行为不受影响；
         // - 未返回策略（null）时沿用服务端下发的节点策略（adviceRequired / adviceHidden）；
         // - 隐藏意见时必填自动放宽，若节点要求必填，请同时给出 defaultContent 以便静默提交。
-        const unsubscribe = actionPresenter.addAdvicePolicyProvider(({ action }) => {
+        const unsubscribe = actionPresenter.addAdvicePolicyProvider(({ action, flow }) => {
+                // 流程内容上下文：flow.workCode / flow.workTitle 可用于区分不同流程的策略与模板
+                const workCode = flow?.workCode ?? '';
                 switch (action?.type) {
                     case 'PASS':
-                        // 通过：不展示意见框，静默提交「同意」
-                        return {hidden: true, defaultContent: '同意'};
+                        // 通过：不展示意见框，静默提交「同意」（可按流程定制默认文案）
+                        return {hidden: true, defaultContent: workCode === 'expense' ? '同意报销' : '同意'};
                     case 'REJECT':
                         // 拒绝：必填 + 快捷意见模板
                         return {

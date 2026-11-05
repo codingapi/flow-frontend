@@ -722,6 +722,23 @@ const MyFlowView = () => {
 
 > **隐藏 ≠ 不提交**：服务端仅在节点级 `adviceHidden=true` 时放宽意见必填。若节点配置了意见必填而宿主隐藏了意见框，请同时提供 `defaultContent`，框架会以该内容静默提交，否则会命中服务端 `advice required` 校验。
 
+**上下文能力**：`AdvicePolicyContext.flow` 即流程内容（`FlowContent`），包含 `workCode`（流程设计编码）、`workTitle`、`nodeType`、`nodeId` 等字段。同一套审批页面服务多个流程时，可据此为不同流程配置不同策略：
+
+```tsx
+addAdvicePolicyProvider(({ action, flow }) => {
+    if (flow?.workCode === 'expense' && action?.type === 'REJECT') {
+        return { required: true, templates: ['发票信息不完整，请补充'] };
+    }
+    return null;
+});
+```
+
+**生效范围**（0.2.16）：通过、拒绝始终按「未隐藏即展示」渲染意见框；退回、转办、委派在**节点要求必填**或**宿主提供策略**时展示意见框（避免对存量用户凭空多出输入框）；发起节点在意见必填时会弹窗收集，不再直接提交导致服务端报 `advice required`。
+
+> 加签（ADD_AUDIT）暂不提供默认意见框：该动作当前不持久化执行人意见，即使采集也会被丢弃，待后续版本评估再行支持（宿主可通过动作 key 自行覆盖视图）。
+
+**长度上限**：默认 500 字符（`DEFAULT_ADVICE_MAX_LENGTH`），服务端在 `FlowAdviceBody#verify()` 同样以 500 字符校验，超长会返回校验错误。
+
 ### 3.10 `APPROVAL_ADVICE_VIEW_KEY` — 仅替换审批意见输入框
 
 **源码**：`flow-pc-approval` / `flow-mobile-approval` 各自 `src/components/flow-approval/typings/plugin-type.ts`，消费点 `action/pass.tsx`、`action/reject.tsx`
@@ -766,6 +783,8 @@ ViewBindPlugin.getInstance().register(APPROVAL_ADVICE_VIEW_KEY, AdviceInput);
 > 完整示例见 `apps/app-pc/src/components/flow-view/advice-view.tsx`（含策略模板与宿主用户级常用意见的合并展示），注册位置 `apps/app-pc/src/hooks/register-plugin-view.tsx`。
 
 > 模板数据来源由宿主决定（用户级常用意见接口、前端配置等均可）。框架只提供渲染插槽与 `policy.templates` 透传，不存储任何业务文案。
+>
+> 需要在组件内区分流程时，可直接使用上下文：`const { state } = useApprovalContext(); state.flow?.workCode / state.flow?.workTitle`，按流程编码加载不同模板集合（示例见 `apps/app-pc/src/components/flow-view/advice-view.tsx`）。
 
 ---
 

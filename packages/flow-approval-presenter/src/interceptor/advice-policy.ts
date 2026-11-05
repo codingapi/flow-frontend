@@ -104,6 +104,55 @@ export const mergeAdvicePolicy = (
 };
 
 /**
+ * 判断意见输入框是否展示。
+ *
+ * - `always=true`（通过 / 拒绝）：保持原有行为，只要未隐藏即展示；
+ * - `always=false`（退回 / 转办 / 委派 / 加签）：仅在节点要求必填或宿主提供策略时展示，
+ *   避免对存量用户凭空多出一个输入框。
+ *
+ * @param state 展示判定所需的策略信息
+ * @returns 是否展示意见输入框
+ */
+export const isAdviceVisible = (state: {
+    /** 是否隐藏（节点策略或宿主策略） */
+    hidden?: boolean;
+    /** 是否必填（节点策略或宿主策略） */
+    required?: boolean;
+    /** 宿主是否提供了策略 */
+    hasPolicy?: boolean;
+    /** 是否保持「未隐藏即展示」的默认行为 */
+    always?: boolean;
+}): boolean => {
+    if (state.hidden) {
+        return false;
+    }
+    return !!state.always || !!state.required || !!state.hasPolicy;
+};
+
+/**
+ * 提交参数补默认意见。
+ *
+ * 意见框隐藏（或发起节点未弹窗）时表单不会产生 advice 字段，
+ * 此处以策略默认内容补齐，避免命中服务端意见必填校验。
+ *
+ * @param params 原始提交参数
+ * @param defaultContent 策略默认意见
+ * @returns 补齐后的提交参数
+ */
+export const withDefaultAdvice = (params: any, defaultContent?: string): any => {
+    if (params?.advice != null) {
+        return params;
+    }
+    if (!defaultContent) {
+        return params;
+    }
+    return {
+        ...(params || {}),
+        advice: defaultContent,
+    };
+};
+
+/**
  * 审批意见策略提供器管理器。
  *
  * 通过订阅方式注册提供器，按订阅顺序依次执行，首个返回非 null 策略者命中并短路。

@@ -1,13 +1,12 @@
 import React from "react";
 import { FlowActionProps } from "./type";
-import { Form, Input, message } from "antd";
-import { DialogContent, ResolvedAdvicePolicy, useApprovalContext } from "@coding-flow/flow-approval-presenter";
+import { Form, message } from "antd";
+import { DialogContent, useApprovalContext } from "@coding-flow/flow-approval-presenter";
 import { CustomStyleButton } from "@/components/flow-approval/components/custom-style-button";
-import { APPROVAL_ACTION_REJECT_KEY, APPROVAL_ADVICE_VIEW_KEY } from "@/components/flow-approval";
+import { APPROVAL_ACTION_REJECT_KEY } from "@/components/flow-approval";
+import { AdviceField, useAdvicePolicy } from "@/components/flow-approval/components/advice-field";
 import { ViewBindPlugin, FlowMessageKey, FlowMessageRegistry, EventBus } from "@coding-flow/flow-core";
 import { ResizableModal } from "@/components/flow-approval/components/resizable-modal";
-
-const { TextArea } = Input;
 
 /**
  * 拒绝
@@ -23,11 +22,8 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
     const [modalVisible, setModalVisible] = React.useState(false);
     const [dialogContent, setDialogContent] = React.useState<DialogContent | null>(null);
 
-    /** 生效的审批意见策略（节点策略 + 宿主策略合并结果） */
-    const [advicePolicy, setAdvicePolicy] = React.useState<ResolvedAdvicePolicy | null>(null);
-
-    /** 提交链路通过 ref 读取策略，避免 EventBus 监听器闭包捕获旧值 */
-    const advicePolicyRef = React.useRef<ResolvedAdvicePolicy | null>(null);
+    /** 审批意见策略（节点策略 + 宿主策略合并结果），拒绝动作保持「未隐藏即展示」 */
+    const advice = useAdvicePolicy(action.id, true);
 
     const [form] = Form.useForm();
 
@@ -35,15 +31,12 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
     const openModal = () => {
         form.resetFields();
         setDialogContent(null);
-        setAdvicePolicy(null);
-        advicePolicyRef.current = null;
+        advice.resetPolicy();
         Promise.all([
             actionPresenter.resolveDialogContent(action.id),
-            actionPresenter.resolveAdvicePolicy(action.id),
-        ]).then(([content, policy]) => {
+            advice.resolvePolicy(),
+        ]).then(([content]) => {
             setDialogContent(content);
-            advicePolicyRef.current = policy;
-            setAdvicePolicy(policy);
             setModalVisible(true);
         }).catch(() => {
             setModalVisible(true);
@@ -52,36 +45,13 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
 
     /** 预填策略默认意见：仅在意见框为空时写入，避免覆盖用户已输入内容 */
     React.useEffect(() => {
-        if (modalVisible && advicePolicy?.defaultContent) {
-            const current = form.getFieldValue('advice');
-            if (!current) {
-                form.setFieldsValue({ advice: advicePolicy.defaultContent });
-            }
+        if (modalVisible) {
+            advice.applyDefaultAdvice(form);
         }
-    }, [modalVisible, advicePolicy]);
-
-    /**
-     * 补充策略默认意见。
-     *
-     * 意见框隐藏时表单不会产生 advice 字段，此处以策略默认内容补齐，
-     * 避免命中服务端意见必填校验。
-     */
-    const withAdvicePolicy = (params?: any) => {
-        if (params?.advice != null) {
-            return params;
-        }
-        const defaultContent = advicePolicyRef.current?.defaultContent;
-        if (!defaultContent) {
-            return params;
-        }
-        return {
-            ...(params || {}),
-            advice: defaultContent,
-        };
-    }
+    }, [modalVisible, advice.policy]);
 
     const handleSubmit = (params?: any) => {
-        actionPresenter.action(action.id, withAdvicePolicy(params)).then((res) => {
+        actionPresenter.action(action.id, advice.withDefaultAdvice(params)).then((res) => {
             if (res.success) {
                 message.success(
                     FlowMessageRegistry.getInstance().get(
@@ -95,11 +65,16 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
         });
     }
 
+    const handleActionClick = () => {
+        if (!props.onClickCheck?.(action.id)) {
+            return;
+        }
+        openModal();
+    }
+
     React.useEffect(() => {
         EventBus.getInstance().on(action.id, () => {
-            if (props.onClickCheck?.(action.id)) {
-                openModal();
-            }
+            handleActionClick();
         });
 
         return () => {
@@ -107,21 +82,7 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
         }
     }, []);
 
-    const adviceRequired = advicePolicy?.required ?? state.flow?.adviceRequired ?? false;
-
-    const adviceHidden = advicePolicy?.hidden ?? state.flow?.adviceHidden ?? false;
-
-    const adviceRules = adviceRequired ? [
-        {
-            required: true,
-            message: '请输入审批意见'
-        }
-    ] : [];
-
-
     const ActionView = ViewBindPlugin.getInstance().get(APPROVAL_ACTION_REJECT_KEY);
-
-    const AdviceView = ViewBindPlugin.getInstance().get(APPROVAL_ADVICE_VIEW_KEY);
 
     if (ActionView) {
         return (
@@ -139,11 +100,7 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
                         loading={actionLoading}
                         disabled={actionLoading}
                         display={props.action.display}
-                        onClick={() => {
-                            if (props.onClickCheck?.(action.id)) {
-                                openModal();
-                            }
-                        }}
+                        onClick={handleActionClick}
                         title={action.title}
                     />
                 )
@@ -177,20 +134,14 @@ export const RejectAction: React.FC<FlowActionProps> = (props) => {
                         handleSubmit(values);
                     }}
                 >
-                    {!adviceHidden && (
-                        <Form.Item
-                            name={"advice"}
-                            label={"拒绝意见"}
-                            required={adviceRequired}
-                            rules={adviceRules}
-                        >
-                            {AdviceView ? (
-                                <AdviceView action={action} policy={advicePolicy} />
-                            ) : (
-                                <TextArea placeholder={"请输入拒绝意见"} />
-                            )}
-                        </Form.Item>
-                    )}
+                    <AdviceField
+                        action={action}
+                        policy={advice.policy}
+                        visible={advice.visible}
+                        required={advice.required}
+                        label={"拒绝意见"}
+                        placeholder={"请输入拒绝意见"}
+                    />
                 </Form>
                 )}
             </ResizableModal>

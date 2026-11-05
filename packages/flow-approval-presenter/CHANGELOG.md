@@ -10,6 +10,9 @@
   - `APPROVAL_ADVICE_VIEW_KEY`：仅替换审批意见输入框（受控组件，保留提交、校验、签名、选人等默认逻辑）。
   - PC / 移动端的通过、驳回动作视图接入上述扩展点。
   - 示例：`apps/app-pc` 新增自定义意见输入框与策略配置示例。
+  - 新增 `isAdviceVisible` / `withDefaultAdvice` 纯函数，统一意见框展示规则与默认意见补齐逻辑。
+  - `AdvicePolicyContext.flow` 可读取 `workCode` / `workTitle`，用于按流程区分模板与策略。
+  - 默认意见长度上限 500 字符（`DEFAULT_ADVICE_MAX_LENGTH`），与后端校验保持一致。
   - @coding-flow/flow-core@0.2.16
   - @coding-flow/flow-types@0.2.16
 

@@ -1,18 +1,25 @@
 import React from "react";
 import { Input, Space, Tag, Typography } from "antd";
 import type { FlowAction } from "@coding-flow/flow-types";
-import type { ResolvedAdvicePolicy } from "@coding-flow/flow-approval-presenter";
+import { ResolvedAdvicePolicy, useApprovalContext } from "@coding-flow/flow-approval-presenter";
 
 const { TextArea } = Input;
 
 /**
- * 用户级常用意见（示例数据）。
+ * 按流程编码区分的常用意见（示例数据）。
  *
+ * workCode 即流程设计编码（流程内容 FlowContent.workCode），不同流程可配置各自的模板；
  * 实际接入时替换为宿主自己的接口，例如：
- * GET /api/host/flow-advice-templates?operatorId=xxx
- * 引擎不存储用户偏好，只负责渲染插槽与透传策略。
+ * GET /api/host/flow-advice-templates?workCode=xxx&operatorId=xxx
+ * 引擎不存储用户偏好与业务文案，只负责渲染插槽与透传策略。
  */
-const USER_ADVICE_TEMPLATES = [
+const WORKFLOW_ADVICE_TEMPLATES: Record<string, string[]> = {
+    leave: ['同意，准假', '请补充请假事由', '假期余额不足，建议调整'],
+    expense: ['金额已核对，同意报销', '发票信息不完整，请补充', '超出预算标准，请说明'],
+};
+
+/** 未匹配到流程编码时的兜底常用意见 */
+const DEFAULT_ADVICE_TEMPLATES = [
     '同意，按计划执行',
     '已核实，同意',
     '请补充相关材料',
@@ -37,19 +44,26 @@ export interface AdviceViewProps {
  *
  * 快捷意见来源：
  * 1. policy.templates —— 由 AdvicePolicyProvider 按动作类型下发；
- * 2. USER_ADVICE_TEMPLATES —— 宿主侧的用户级常用意见。
+ * 2. 宿主常用意见 —— 按流程编码（workCode）区分，未命中时使用兜底模板。
  */
 export const AdviceView: React.FC<AdviceViewProps> = (props) => {
 
     const { value, onChange, action, policy } = props;
 
+    const { state } = useApprovalContext();
+
+    // 流程编码 / 流程标题：同一套引擎页面服务多个流程时，据此区分模板
+    const workCode = state.flow?.workCode ?? '';
+    const flowTitle = state.flow?.workTitle ?? '';
+
     const templates = React.useMemo(() => {
+        const hostTemplates = WORKFLOW_ADVICE_TEMPLATES[workCode] ?? DEFAULT_ADVICE_TEMPLATES;
         const merged = [
             ...(policy?.templates ?? []),
-            ...USER_ADVICE_TEMPLATES,
+            ...hostTemplates,
         ];
         return Array.from(new Set(merged));
-    }, [policy?.templates]);
+    }, [policy?.templates, workCode]);
 
     return (
         <div>
@@ -63,7 +77,7 @@ export const AdviceView: React.FC<AdviceViewProps> = (props) => {
             />
             <div style={{ marginTop: 8 }}>
                 <Typography.Text type="secondary" style={{ marginRight: 8 }}>
-                    常用意见{action?.type ? `（${action.type}）` : ''}
+                    常用意见（{flowTitle || workCode || '通用'} · {action?.type ?? '-'}）
                 </Typography.Text>
                 <Space size={[4, 4]} wrap>
                     {templates.map((template) => (
