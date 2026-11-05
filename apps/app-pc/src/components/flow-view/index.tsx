@@ -100,6 +100,41 @@ export const FlowView: React.FC<FormViewProps> = (props) => {
 
     }, []);
 
+    React.useEffect(() => {
+        // 审批意见策略：按动作类型决定意见框行为（隐藏 / 必填 / 默认意见 / 快捷模板）
+        //
+        // - 配置只在宿主侧生效，不写入流程定义，因此存量流程行为不受影响；
+        // - 未返回策略（null）时沿用服务端下发的节点策略（adviceRequired / adviceHidden）；
+        // - 隐藏意见时必填自动放宽，若节点要求必填，请同时给出 defaultContent 以便静默提交。
+        const unsubscribe = actionPresenter.addAdvicePolicyProvider(({ action }) => {
+                switch (action?.type) {
+                    case 'PASS':
+                        // 通过：不展示意见框，静默提交「同意」
+                        return {hidden: true, defaultContent: '同意'};
+                    case 'REJECT':
+                        // 拒绝：必填 + 快捷意见模板
+                        return {
+                            required: true,
+                            templates: ['材料不全，请补充后重新提交', '不符合规定，不予通过'],
+                        };
+                    case 'RETURN':
+                        // 退回：预填默认意见（审批人可修改），限制长度
+                        return {defaultContent: '请补充材料后重新提交', maxLength: 200};
+                    default:
+                        return null;
+                }
+            }
+        );
+
+        console.log('advice policy unsubscribe:', unsubscribe);
+
+        return () => {
+            // 组件卸载时取消订阅，避免重复添加提供器
+            unsubscribe();
+        };
+
+    }, []);
+
     return (
         <>
             <FormView

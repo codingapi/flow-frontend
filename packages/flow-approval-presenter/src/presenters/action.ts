@@ -1,6 +1,16 @@
 import { ApprovalState, FlowApprovalApi } from "@/typings";
 import { FormActionContext, FlowAction, FlowSubProcessResetRequest } from "@coding-flow/flow-types";
-import { ActionInterceptor, ActionInterceptorManager, DialogContent, DialogContentManager, DialogContentProvider } from "@/interceptor";
+import {
+    ActionInterceptor,
+    ActionInterceptorManager,
+    AdvicePolicyManager,
+    AdvicePolicyProvider,
+    DialogContent,
+    DialogContentManager,
+    DialogContentProvider,
+    mergeAdvicePolicy,
+    ResolvedAdvicePolicy,
+} from "@/interceptor";
 
 export class FlowActionPresenter {
 
@@ -11,6 +21,7 @@ export class FlowActionPresenter {
     private readonly setLoading: (loading: boolean) => void;
     private readonly interceptorManager: ActionInterceptorManager;
     private readonly dialogContentManager: DialogContentManager;
+    private readonly advicePolicyManager: AdvicePolicyManager;
 
     private submitRecordIds: number[];
 
@@ -38,6 +49,7 @@ export class FlowActionPresenter {
         this.setLoading = setLoading;
         this.interceptorManager = new ActionInterceptorManager();
         this.dialogContentManager = new DialogContentManager();
+        this.advicePolicyManager = new AdvicePolicyManager();
     }
 
 
@@ -108,6 +120,58 @@ export class FlowActionPresenter {
             actionId,
             action,
         });
+    }
+
+
+    /**
+     * 订阅审批意见策略提供器。
+     *
+     * 各审批动作弹框打开前会通过 {@link resolveAdvicePolicy} 触发已订阅的提供器，
+     * 宿主可据此按动作类型决定：是否隐藏意见框、是否必填、默认意见与快捷模板。
+     * 首个返回非 null 策略的提供器命中，未命中时沿用节点策略
+     * （服务端下发的 adviceRequired / adviceHidden）。
+     *
+     * 自定义视图可通过
+     * `useApprovalContext().context.getPresenter().getFlowActionPresenter()`
+     * 获取本对象后订阅，并在组件卸载时调用返回的函数取消订阅。
+     *
+     * @param provider 策略提供器函数
+     * @returns 取消订阅函数
+     */
+    public addAdvicePolicyProvider(provider: AdvicePolicyProvider): () => void {
+        return this.advicePolicyManager.add(provider);
+    }
+
+    /**
+     * 移除指定审批意见策略提供器
+     * @param provider 待移除的策略提供器函数
+     */
+    public removeAdvicePolicyProvider(provider: AdvicePolicyProvider): void {
+        this.advicePolicyManager.remove(provider);
+    }
+
+    /**
+     * 解析指定动作的生效意见策略。
+     *
+     * 节点策略（adviceRequired / adviceHidden）与宿主策略合并：
+     * 宿主策略优先，但隐藏意见时必填恒为 false，避免用户无输入入口却被服务端拦截。
+     * 未订阅提供器时直接返回节点策略对应的结果。
+     *
+     * @param actionId 动作 ID
+     * @returns 生效的意见策略
+     */
+    public async resolveAdvicePolicy(actionId: string): Promise<ResolvedAdvicePolicy> {
+        const action = this.getAction(actionId);
+        const flow = this.state.flow;
+        const policy = await this.advicePolicyManager.resolve({
+            actionId,
+            action,
+            flow,
+        });
+        return mergeAdvicePolicy({
+            hidden: flow?.adviceHidden ?? false,
+            required: flow?.adviceRequired ?? false,
+        }, policy);
     }
 
 

@@ -16,3 +16,11 @@ export const APPROVAL_ACTION_SAVE_KEY = 'APPROVAL_ACTION_SAVE_KEY';
 export const APPROVAL_ACTION_TRANSFER_KEY = 'APPROVAL_ACTION_TRANSFER_KEY';
 export const APPROVAL_ACTION_URGE_KEY = 'APPROVAL_ACTION_URGE_KEY';
 
+/**
+ * 审批意见输入框视图（PC / 移动端通用）。
+ *
+ * 注册后仅替换意见输入框本身，其余逻辑（提交、必填校验、签名、选人）保持不变。
+ * 自定义组件通过 Form.Item 注入的 value / onChange 受控，并接收 action 与 policy。
+ */
+export const APPROVAL_ADVICE_VIEW_KEY = 'APPROVAL_ADVICE_VIEW_KEY';
+

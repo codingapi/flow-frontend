@@ -28,11 +28,13 @@
 | 审批领域层 | flow-approval-presenter | 7 个子视图插件 | 替换选人/签名/节点选择视图 |
 | 审批领域层 | flow-approval-presenter | ActionInterceptor | 审批动作拦截器（提交前拦截） |
 | 审批领域层 | flow-approval-presenter | DialogContentProvider | 审批弹框标题与中间内容自定义 |
+| 审批领域层 | flow-approval-presenter | AdvicePolicyProvider | 审批意见策略（按动作隐藏/必填/默认意见/快捷模板） |
 | 审批领域层 | flow-approval-presenter | FlowMockContext / mockKey | Mock 模式支持 |
 | 审批领域层 | flow-approval-presenter | operator-count 工具 | 选人数量限制适配 |
 | 审批领域层 | flow-types | FormActionContext | 自定义表单数据注入 |
 | 表面层(P端) | flow-pc-approval | 布局/动作 key + ActionFactory | 替换审批页布局与按钮 |
 | 表面层(移动端) | flow-mobile-approval | 布局/动作 key + ActionFactory | 同上（移动端实现） |
+| 表面层 | flow-pc-approval / flow-mobile-approval | `APPROVAL_ADVICE_VIEW_KEY` | 仅替换审批意见输入框 |
 | 表面层 | flow-pc-approval / flow-mobile-approval | registerFormItems | 注册自定义表单字段类型 |
 | 设计器 | flow-design | FlowNodeRegistry | 节点类型注册（19 种内置） |
 | 设计器 | flow-design | 11 个视图插件 key | 替换脚本编辑器/导入视图等 |
@@ -653,6 +655,118 @@ const MyFlowView = () => {
 
 > **注意**：返回 `content` 后会整块替换弹框中间区域（含审批意见框/表单），此时确定按钮直接提交（无表单可校验）；组件卸载时务必调用订阅返回的取消函数，避免 StrictMode 或重复挂载导致提供器重复添加。
 
+### 3.9 AdvicePolicyProvider — 审批意见策略
+
+**源码**：`packages/flow-approval-presenter/src/interceptor/advice-policy.ts`、`packages/flow-approval-presenter/src/presenters/action.ts`
+
+用于在不修改流程定义的前提下，由宿主按**动作类型**决定审批意见的行为：是否隐藏、是否必填、默认意见、快捷模板、最大长度。适用于「同意时不展示意见并默认填『同意』」「驳回时提供常用意见」等业务个性化场景。
+
+```typescript
+export interface AdvicePolicy {
+    hidden?: boolean;          // 是否隐藏意见输入框
+    required?: boolean;        // 意见是否必填（隐藏时不生效）
+    defaultContent?: string;   // 默认意见（预填；隐藏时作为静默提交内容）
+    templates?: string[];      // 快捷意见模板
+    maxLength?: number;        // 意见最大长度，缺省 500
+}
+export interface AdvicePolicyContext {
+    actionId: string;
+    action: FlowAction | null;
+    flow?: FlowContent | null;   // 当前流程内容（可读 nodeType 区分发起/审批节点）
+}
+export type AdvicePolicyProvider = (
+    context: AdvicePolicyContext
+) => AdvicePolicy | null | undefined | Promise<AdvicePolicy | null | undefined>;
+```
+
+**合并规则**（节点策略来自服务端下发的 `adviceRequired` / `adviceHidden`）：
+
+1. `hidden` 宿主优先，未提供时沿用节点策略；
+2. `required` 宿主优先，但**隐藏意见时恒为 false**，避免用户无输入入口却被拦截；
+3. `defaultContent` / `templates` / `maxLength` 仅在宿主提供时生效，`templates` 自动去重。
+
+**注入入口** — `FlowActionPresenter`：
+
+```typescript
+public addAdvicePolicyProvider(provider: AdvicePolicyProvider): () => void;              // 订阅，返回取消函数
+public removeAdvicePolicyProvider(provider: AdvicePolicyProvider): void;                 // 取消
+public async resolveAdvicePolicy(actionId: string): Promise<ResolvedAdvicePolicy>;       // 动作弹框打开前解析
+```
+
+**使用方式**（`useApprovalContext` 中订阅，按 `action.type` 配置；示例工程见 `apps/app-pc/src/components/flow-view/index.tsx`）：
+
+```tsx
+const MyFlowView = () => {
+    const { context } = useApprovalContext();
+    useEffect(() => {
+        const unsubscribe = context.getPresenter()
+            .getFlowActionPresenter()
+            .addAdvicePolicyProvider(({ action, flow }) => {
+                switch (action?.type) {
+                    case 'PASS':
+                        // 通过时隐藏意见框，静默提交「同意」
+                        return { hidden: true, defaultContent: '同意' };
+                    case 'REJECT':
+                        return { required: true, templates: ['材料不全', '不符合规定'] };
+                    case 'RETURN':
+                        return { defaultContent: '请补充材料后重新提交' };
+                    default:
+                        return null;   // 不覆盖，沿用节点策略
+                }
+            });
+        return unsubscribe;
+    }, []);
+    return null;
+};
+```
+
+> **隐藏 ≠ 不提交**：服务端仅在节点级 `adviceHidden=true` 时放宽意见必填。若节点配置了意见必填而宿主隐藏了意见框，请同时提供 `defaultContent`，框架会以该内容静默提交，否则会命中服务端 `advice required` 校验。
+
+### 3.10 `APPROVAL_ADVICE_VIEW_KEY` — 仅替换审批意见输入框
+
+**源码**：`flow-pc-approval` / `flow-mobile-approval` 各自 `src/components/flow-approval/typings/plugin-type.ts`，消费点 `action/pass.tsx`、`action/reject.tsx`
+
+与 §4.3 的动作按钮 key 不同，该 key **只替换意见输入框本身**，提交链路、必填校验、签名、选人、发起节点等逻辑全部保持默认实现。自定义组件由 `Form.Item` 注入 `value` / `onChange` 受控，并额外接收 `action` 与 `policy`：
+
+```tsx
+import { Tag, Input } from 'antd';
+import { ViewBindPlugin } from '@coding-flow/flow-core';
+import { APPROVAL_ADVICE_VIEW_KEY } from '@coding-flow/flow-pc-approval';
+
+const { TextArea } = Input;
+
+const AdviceInput: React.FC<{
+    value?: string;
+    onChange?: (value: string) => void;
+    action?: FlowAction;
+    policy?: ResolvedAdvicePolicy | null;
+}> = ({ value, onChange, policy }) => (
+    <>
+        <TextArea
+            rows={4}
+            showCount
+            maxLength={policy?.maxLength}
+            value={value}
+            onChange={(e) => onChange?.(e.target.value)}
+            placeholder="请输入审批意见"
+        />
+        <div style={{ marginTop: 8 }}>
+            {(policy?.templates ?? []).map((tpl) => (
+                <Tag key={tpl} style={{ cursor: 'pointer', marginTop: 4 }} onClick={() => onChange?.(tpl)}>
+                    {tpl}
+                </Tag>
+            ))}
+        </div>
+    </>
+);
+
+ViewBindPlugin.getInstance().register(APPROVAL_ADVICE_VIEW_KEY, AdviceInput);
+```
+
+> 完整示例见 `apps/app-pc/src/components/flow-view/advice-view.tsx`（含策略模板与宿主用户级常用意见的合并展示），注册位置 `apps/app-pc/src/hooks/register-plugin-view.tsx`。
+
+> 模板数据来源由宿主决定（用户级常用意见接口、前端配置等均可）。框架只提供渲染插槽与 `policy.templates` 透传，不存储任何业务文案。
+
 ---
 
 ## 4. PC / 移动端审批扩展点
@@ -741,6 +855,8 @@ import { ApprovalPanel } from "@coding-flow/flow-mobile-approval";
 | `APPROVAL_ACTION_CLOSE_KEY` | ✅ | ❌ | 关闭（仅 PC） |
 
 > 动作按钮的 key 值即常量名本身（如 `'APPROVAL_ACTION_PASS_KEY'`）。替换时自定义组件会**完全接管**该按钮的渲染与交互，建议参考默认实现中的 `actionPresenter.action()` 提交流程。
+>
+> 若只想替换**审批意见输入框**（保留按钮、签名、选人等默认逻辑），请使用 §3.10 的 `APPROVAL_ADVICE_VIEW_KEY`，配合 §3.9 的 `AdvicePolicyProvider` 实现按动作的默认意见与快捷模板。
 
 ### 4.4 ActionFactory — 动作组件工厂
 
