@@ -13,6 +13,18 @@ interface ActionTableProps {
     onChange: (data: any[]) => void;
 }
 
+/**
+ * 编辑动作时回填表单数据。
+ * <p>
+ * 按钮图标在后端模型中保存在 display.icon 上，表单字段为顶层 icon，需要回填才能正确回显。
+ */
+const toFormValues = (action: any) => {
+    return {
+        ...action,
+        icon: action.icon || action.display?.icon,
+    }
+}
+
 export const ActionTable: React.FC<ActionTableProps> = (props) => {
     const { node } = useNodeRenderContext();
     const presenter = new FlowActionListPresenter(props.value, props.onChange);
@@ -77,7 +89,7 @@ export const ActionTable: React.FC<ActionTableProps> = (props) => {
                                 <a
                                     onClick={() => {
                                         form.resetFields();
-                                        form.setFieldsValue(record);
+                                        form.setFieldsValue(toFormValues(record));
                                         setVisible(true);
                                     }}
                                 >
@@ -128,7 +140,7 @@ export const ActionTable: React.FC<ActionTableProps> = (props) => {
                             createCustomAction().then(res => {
                                 if (res.success) {
                                     const data = res.data;
-                                    form.setFieldsValue(data);
+                                    form.setFieldsValue(toFormValues(data));
                                     setVisible(true);
                                 }
                             })
