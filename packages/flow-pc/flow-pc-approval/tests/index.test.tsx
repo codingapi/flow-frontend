@@ -91,6 +91,57 @@ describe.sequential('子流程节点记录展示', () => {
             .toBeUndefined();
     });
 
+    test('拒绝产生的记录展示为已拒绝，不展示为已审批', () => {
+        // 拒绝记录与通过记录同为已办（approveState=PASS），需依赖 rejected 标记区分
+        const node: ProcessNode = {
+            id: '1',
+            nodeId: 'node-b',
+            nodeName: '审批节点',
+            nodeType: 'APPROVAL',
+            approveStrategy: 'SEQUENCE',
+            approveState: 'PASS',
+            rejected: true,
+            operatorStrategy: 'OPERATOR_LIST',
+            operators: [],
+        };
+
+        expect(getNodeStatus(node)).toEqual('rejected');
+        expect(getNodeStatusLabel(node)).toEqual('已拒绝');
+    });
+
+    test('拒绝终止后结束节点展示为已终止', () => {
+        const node: ProcessNode = {
+            id: 'end',
+            nodeId: 'end',
+            nodeName: '结束节点',
+            nodeType: 'END',
+            approveStrategy: 'SEQUENCE',
+            approveState: 'PASS',
+            terminated: true,
+            operatorStrategy: 'OPERATOR_LIST',
+            operators: [],
+        };
+
+        expect(getNodeStatus(node)).toEqual('terminated');
+        expect(getNodeStatusLabel(node)).toEqual('已终止');
+    });
+
+    test('审批通过时仍展示为已审批', () => {
+        const node: ProcessNode = {
+            id: '2',
+            nodeId: 'node-b',
+            nodeName: '审批节点',
+            nodeType: 'APPROVAL',
+            approveStrategy: 'SEQUENCE',
+            approveState: 'PASS',
+            operatorStrategy: 'OPERATOR_LIST',
+            operators: [],
+        };
+
+        expect(getNodeStatus(node)).toEqual('completed');
+        expect(getNodeStatusLabel(node)).toEqual('已审批');
+    });
+
     test('主流程历史记录统一展示为已完成（对号）', () => {
         // 主流程子流程聚合节点即使处于 PROCESSING，在子流程视角也应展示为已完成，
         // 避免与子流程当前处理中的节点产生"两个运行中"的歧义

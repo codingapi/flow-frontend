@@ -4,6 +4,7 @@ import {ProcessNode} from "@coding-flow/flow-types";
 import {Empty, Steps} from "antd-mobile";
 import {
     FlowOperatorItem,
+    getNodeStateLabel,
     getNodeStatus,
     getProcessRecordSourceLabel,
     getSubProcessInstanceName,
@@ -38,10 +39,13 @@ export const getOperatorTitle = (node: ProcessNode)=>{
 
 const getNodeTitle = (node: ProcessNode): React.ReactNode => {
     const sourceLabel = getProcessRecordSourceLabel(node);
+    // 拒绝 / 终止：Steps 只有 finish|process|wait|error 四种状态，文案通过标题标签表达
+    const stateLabel = getNodeStateLabel(node);
     return (
         <span className={styles.nodeTitle}>
             <span>{node.nodeName}</span>
             {sourceLabel && <span className={styles.sourceTag}>{sourceLabel}</span>}
+            {stateLabel && <span className={styles.stateTag}>{stateLabel}</span>}
         </span>
     );
 };

@@ -4,6 +4,7 @@
 
 ### Patch Changes
 
+- `ProcessNode` 新增 `rejected` / `terminated` 可选字段：用于区分「审批通过」与「拒绝终止」，旧版后端不返回时前端行为保持不变。
 - @coding-flow/flow-core@0.2.16
 
 ## 0.2.15

@@ -12,7 +12,7 @@ import styles from "./flow_time_node.module.scss";
 const { Text } = Typography;
 
 // 获取状态配置
-export const getStatusConfig = (status: 'completed' | 'current' | 'pending' | 'error') => {
+export const getStatusConfig = (status: 'completed' | 'current' | 'pending' | 'error' | 'rejected' | 'terminated') => {
     switch (status) {
         case 'completed':
             return {
@@ -32,6 +32,20 @@ export const getStatusConfig = (status: 'completed' | 'current' | 'pending' | 'e
                 label: '未执行',
                 icon: <ClockCircleOutlined style={{ color: '#d9d9d9', fontSize: 16 }} />
             };
+        case 'rejected':
+            // 拒绝产生的记录与通过同为已办，但语义是「已拒绝」，不能展示成「已审批」
+            return {
+                color: 'error',
+                label: '已拒绝',
+                icon: <CloseCircleFilled style={{ color: '#ff4d4f', fontSize: 16 }} />
+            };
+        case 'terminated':
+            // 拒绝终止 / 异常结束：流程非正常结束
+            return {
+                color: 'error',
+                label: '已终止',
+                icon: <CloseCircleFilled style={{ color: '#ff4d4f', fontSize: 16 }} />
+            };
         case 'error':
             return {
                 color: 'error',
@@ -43,7 +57,7 @@ export const getStatusConfig = (status: 'completed' | 'current' | 'pending' | 'e
 
 
 // 获取节点状态
-export const getNodeStatus = (node: ProcessNode): 'completed' | 'current' | 'pending' | 'error' => {
+export const getNodeStatus = (node: ProcessNode): 'completed' | 'current' | 'pending' | 'error' | 'rejected' | 'terminated' => {
     // 主流程历史记录统一展示为已完成（对号）：子流程视角下主流程已执行到子流程聚合节点，
     // 避免与子流程当前处理中的节点产生"两个运行中"的歧义；处理中语义由节点 tag 表达
     if (node.parentProcessRecord === true) {
@@ -51,6 +65,14 @@ export const getNodeStatus = (node: ProcessNode): 'completed' | 'current' | 'pen
             return 'error';
         }
         return 'completed';
+    }
+    // 结束节点的非正常结束优先展示「已终止」
+    if (node.terminated === true) {
+        return 'terminated';
+    }
+    // 拒绝记录：已办但动作为拒绝
+    if (node.rejected === true) {
+        return 'rejected';
     }
     if (node.approveState === 'PASS') {
         return 'completed';

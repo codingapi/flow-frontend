@@ -16,6 +16,10 @@ export const getNodeStatus = (node: ProcessNode): 'finish' | 'process' | 'wait' 
         }
         return 'finish';
     }
+    // 拒绝记录 / 终止结束：以错误态展示，具体文案由 {@link getNodeStateLabel} 表达
+    if (node.terminated === true || node.rejected === true) {
+        return 'error';
+    }
     if (node.approveState === 'PASS') {
         return 'finish';
     }
@@ -27,6 +31,22 @@ export const getNodeStatus = (node: ProcessNode): 'finish' | 'process' | 'wait' 
         return 'process';
     }
     return 'wait';
+};
+
+/**
+ * 节点状态文案（拒绝 / 终止）。
+ *
+ * @param node 流程节点
+ * @returns 拒绝或终止文案；普通节点返回 undefined
+ */
+export const getNodeStateLabel = (node: ProcessNode): string | undefined => {
+    if (node.terminated === true) {
+        return '已终止';
+    }
+    if (node.rejected === true) {
+        return '已拒绝';
+    }
+    return undefined;
 };
 
 export const getSubProcessSummary = (node: ProcessNode): string | undefined => {

@@ -287,6 +287,10 @@ export interface ProcessNode {
     operators: FlowApprovalOperator[];
     // 是否为子流程详情中拼接的主流程历史记录
     parentProcessRecord?: boolean;
+    // 是否为拒绝动作产生的记录（与通过同为已办，需单独标记）
+    rejected?: boolean;
+    // 流程是否非正常结束（拒绝终止等），仅结束节点返回
+    terminated?: boolean;
     // 子流程执行信息，仅子流程节点实际执行后返回
     subProcess?: ProcessNodeSubProcess;
 }

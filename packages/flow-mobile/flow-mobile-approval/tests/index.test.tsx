@@ -2,6 +2,7 @@ import {afterEach, describe, expect, test} from "@rstest/core";
 import {cleanup} from "@testing-library/react";
 import {ProcessNode, SubProcessState} from "@coding-flow/flow-types";
 import {
+    getNodeStateLabel,
     getNodeStatus,
     getProcessRecordSourceLabel,
     getSubProcessInstanceName,
@@ -81,6 +82,40 @@ describe.sequential('移动端子流程节点记录展示', () => {
         expect(getProcessRecordSourceLabel(parentNode)).toEqual('主流程');
         expect(getProcessRecordSourceLabel(createSubProcessNode('WAITING', 'PROCESSING')))
             .toBeUndefined();
+    });
+
+    test('拒绝记录展示为异常步骤并标注已拒绝', () => {
+        const node: ProcessNode = {
+            id: '1',
+            nodeId: 'node-b',
+            nodeName: '审批节点',
+            nodeType: 'APPROVAL',
+            approveStrategy: 'SEQUENCE',
+            approveState: 'PASS',
+            rejected: true,
+            operatorStrategy: 'OPERATOR_LIST',
+            operators: [],
+        };
+
+        expect(getNodeStatus(node)).toEqual('error');
+        expect(getNodeStateLabel(node)).toEqual('已拒绝');
+    });
+
+    test('拒绝终止后结束节点标注已终止', () => {
+        const node: ProcessNode = {
+            id: 'end',
+            nodeId: 'end',
+            nodeName: '结束节点',
+            nodeType: 'END',
+            approveStrategy: 'SEQUENCE',
+            approveState: 'PASS',
+            terminated: true,
+            operatorStrategy: 'OPERATOR_LIST',
+            operators: [],
+        };
+
+        expect(getNodeStatus(node)).toEqual('error');
+        expect(getNodeStateLabel(node)).toEqual('已终止');
     });
 
     test('主流程历史记录统一展示为已完成（对号）', () => {
