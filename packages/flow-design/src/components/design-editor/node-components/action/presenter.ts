@@ -57,6 +57,13 @@ export class FlowActionListPresenter {
 
         const actionIdList = this.data.map(action => action.id);
 
+        // 按钮名称、图标在后端模型中只存在于 display 上，表单编辑的是顶层字段，此处同步回 display
+        const display = {
+            ...action.display,
+            title: action.title || action.display?.title,
+            icon: action.icon || action.display?.icon,
+        };
+
         if (actionIdList.includes(actionId)) {
             const data = this.data.map(item => {
                 if (item.id === actionId) {
@@ -65,7 +72,7 @@ export class FlowActionListPresenter {
                         ...action,
                         display: {
                             ...item.display,
-                            ...action.display,
+                            ...display,
                         }
                     }
                 }
@@ -75,6 +82,7 @@ export class FlowActionListPresenter {
         } else {
             this.onChange([...this.data, {
                 ...action,
+                display,
                 type: "CUSTOM"
             }]);
         }

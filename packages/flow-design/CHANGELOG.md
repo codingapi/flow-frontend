@@ -1,5 +1,15 @@
 # @coding-flow/flow-design
 
+## 0.2.17
+
+### Patch Changes
+
+- 修复动作按钮样式保存不生效：背景色、边框色、圆角、边框大小统一保存到 `display.style`，并兼容历史平铺数据，重新进入设计器后可正确回显（codingapi/flow-engine#244）
+- 修复动作按钮图标保存不生效：图标写入 `display.icon` 并在编辑弹窗回显，修改按钮名称时同步 `display.title`（codingapi/flow-engine#244）
+- @coding-flow/flow-icons@0.2.17
+- @coding-flow/flow-pc-ui@0.2.17
+- @coding-flow/flow-types@0.2.17
+
 ## 0.2.16
 
 ### Patch Changes
