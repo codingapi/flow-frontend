@@ -332,6 +332,31 @@ export class FlowActionPresenter {
         return this.formActionContext.save();
     }
 
+    /**
+     * 校验指定动作的业务表单。
+     *
+     * 通过动作（PASS 及其 triggerType = PASS 的自定义动作）提交前会校验表单必填项，
+     * 与 {@link executeAction} 的提交校验保持一致；其他动作不校验表单字段
+     * （服务端也仅对 PassAction 做表单校验），直接放行。
+     *
+     * 视图层应在打开审批意见框之前调用本方法做预校验，避免「先弹框、填完意见后
+     * 才提示表单必填」的交互错位（issue-246）；自定义拦截器也可据此手动触发校验。
+     *
+     * @param actionId 动作 ID
+     * @returns 校验通过（或该动作无需校验）返回 true；校验失败返回 false
+     */
+    public async validateActionForm(actionId: string): Promise<boolean> {
+        if (!this.isPassAction(actionId)) {
+            return true;
+        }
+        try {
+            await this.formActionContext.validate();
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
     private async executeAction(actionId: string, params?: any) {
         let formData;
         if (this.isPassAction(actionId)) {
