@@ -517,10 +517,13 @@ export class ActionInterceptorManager {
 public addActionInterceptor(interceptor: ActionInterceptor): () => void;      // 订阅
 public removeActionInterceptor(interceptor: ActionInterceptor): void;        // 取消
 public async interceptAction(actionId: string, params?: any): Promise<boolean>; // 手动触发拦截
+public async validateActionForm(actionId: string): Promise<boolean>;         // 手动触发通过动作的业务表单校验
 public async action(actionId: string, params?: any): Promise<any>;            // 提交（自动先拦截）
 ```
 
 - `action()` 提交前自动调用 `interceptAction(actionId, params)`，被拦截时返回 `{ success: false, intercepted: true }`。
+- `validateActionForm()` 仅对通过动作（PASS 及其 triggerType = PASS 的自定义动作）校验业务表单，其他动作直接返回 `true`；点击「通过」时框架会在打开审批意见框**之前**调用它，校验失败由表单展示错误且不弹框（issue-246）。自定义拦截器可用同一方法手动触发表单校验。
+- 拦截器与业务表单校验的相对顺序不变：拦截器仍在**提交阶段**的 `FormActionContext.validate()` 之前执行。
 - 配置了 `triggerFrontEvent` 的自定义按钮不经过 `action()`，但框架默认路径**已在派发事件前自动执行拦截器**：PC 端 `custom.tsx` 与移动端 `dispatchApprovalFrontEvent`（`flow-approval-actions.tsx` 的 `handlerAction` / footer / 更多按钮）都先调用 `interceptAction`，全部放行后才 `emit`。仅当集成方用 ViewBindPlugin **完全替换**整个自定义按钮并自行处理 `emit` 时，才需在自定义组件内手动调用 `interceptAction` 以保持「点击即拦截」语义。
 
 **使用方式**：
@@ -584,7 +587,7 @@ const MyCustomFormView = () => {
 };
 ```
 
-> **关键点**：`FlowActionPresenter.action()` 内，通过动作（PASS 及其 triggerType = PASS 的自定义动作）会先 `FormActionContext.validate()` 再提交；其他动作 `save()` 直接提交。组件卸载时务必 `removeAction()` 清理。
+> **关键点**：`FlowActionPresenter.action()` 内，通过动作（PASS 及其 triggerType = PASS 的自定义动作）会先 `FormActionContext.validate()` 再提交；其他动作 `save()` 直接提交。点击「通过」时，视图层还会在打开审批意见框前调用 `validateActionForm()` 做一次预校验，避免「先弹意见框、后提示表单必填」的交互错位（issue-246）；提交阶段的校验继续保留，防止弹框期间表单被修改。组件卸载时务必 `removeAction()` 清理。
 
 ### 3.7 FlowMockContext / mockKey — Mock 模式
 

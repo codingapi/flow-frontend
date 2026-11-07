@@ -95,22 +95,28 @@ export const PassAction: React.FC<FlowActionProps> = (props) => {
      *
      * 发起节点默认不弹窗直接提交；但节点策略或宿主策略要求意见必填时必须弹窗，
      * 否则用户没有输入入口，服务端会抛 advice required。
+     *
+     * 弹框前先校验业务表单（issue-246）：校验失败时由表单直接展示错误并终止，
+     * 避免用户填完审批意见后才被提示表单必填项缺失。
      */
-    const handleActionClick = () => {
+    const handleActionClick = async () => {
         if (!props.onClickCheck?.(action.id)) {
+            return;
+        }
+        const formValid = await actionPresenter.validateActionForm(action.id);
+        if (!formValid) {
             return;
         }
         if (!isStartNode) {
             openModal();
             return;
         }
-        advice.resolvePolicy().then((policy) => {
-            if (policy.required) {
-                openModal();
-            } else {
-                handleSubmit();
-            }
-        });
+        const policy = await advice.resolvePolicy();
+        if (policy.required) {
+            openModal();
+        } else {
+            handleSubmit();
+        }
     }
 
     React.useEffect(() => {
