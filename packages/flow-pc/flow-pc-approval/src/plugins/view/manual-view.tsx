@@ -44,7 +44,12 @@ export const ManualView: React.FC<ManualViewPlugin> = (props) => {
             title={"请选择下级节点"}
             open={visible}
             destroyOnHidden
-            onCancel={() => setVisible(false)}
+            onCancel={() => {
+                setVisible(false);
+                // 取消时回调空值，通知父组件清空可选节点并卸载本组件；
+                // 否则组件常驻、visible 停留在 false，再次点击「通过」时弹窗无法重新弹出（issue #247）
+                props.onChange('');
+            }}
             onOk={() => {
                 handlerOK();
             }}
