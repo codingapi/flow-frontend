@@ -37,6 +37,7 @@ export const FlowSingleList: React.FC<FlowSingleListProps> = (props) => {
                             color="default"
                             size="small"
                             onClick={() => {
+                                props.onMergeRecordView?.(undefined);
                                 setCurrentForm(undefined);
                             }}
                         >
@@ -49,6 +50,8 @@ export const FlowSingleList: React.FC<FlowSingleListProps> = (props) => {
                     {!currentForm && (
                         <a
                             onClick={() => {
+                                // 切回批量模式，按钮/选人范围恢复为合并待办口径
+                                props.onMergeRecordView?.(undefined);
                                 props.onChangeMode?.();
                             }}
 
@@ -76,6 +79,8 @@ export const FlowSingleList: React.FC<FlowSingleListProps> = (props) => {
                         return (
                             <List.Item
                                 onClick={() => {
+                                    // 通知宿主当前查看的单条流程，按钮/选人范围需要切换到这条记录
+                                    props.onMergeRecordView?.(item.recordId);
                                     const form = presenter.getFormDataByRecordId(item.recordId);
                                     if (form) {
                                         setCurrentForm(form);

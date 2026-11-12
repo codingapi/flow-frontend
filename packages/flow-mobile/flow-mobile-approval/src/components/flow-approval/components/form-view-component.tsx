@@ -1,8 +1,10 @@
 import React from "react";
-import { useApprovalContext } from "@coding-flow/flow-approval-presenter";
+import { useApprovalContext, useMockContext } from "@coding-flow/flow-approval-presenter";
 import { ViewBindPlugin } from "@coding-flow/flow-core";
 import { FlowFormView } from "@coding-flow/flow-mobile-form";
 import { createFormInstance } from "@coding-form/form-engine";
+import { detail } from "@/api/record";
+import type { FlowContent } from "@coding-flow/flow-types";
 
 interface FormViewComponentProps {
     onValuesChange?: (values: any) => void;
@@ -69,6 +71,51 @@ export const FormViewComponent: React.FC<FormViewComponentProps> = (props) => {
         context.getPresenter().getFlowActionPresenter().setSubmitRecordIds(recordIds);
     }
 
+    const mockKey = useMockContext();
+
+    // 合并审批进入单条流程前保存的原始按钮/选人范围，返回合并列表时恢复
+    const mergeOriginFlow = React.useRef<FlowContent>();
+
+    /**
+     * 合并审批中查看单条流程。
+     *
+     * 合并列表的按钮与候选人来自「打开详情的那条记录」，查看某一条流程时必须切换成
+     * 该记录自己的 actions / currentNodeOperators，否则减签等按流程实例计算的动作无法操作。
+     */
+    const handleMergeRecordView = (recordId?: number) => {
+        const presenter = context.getPresenter();
+        if (!recordId) {
+            if (mergeOriginFlow.current) {
+                presenter.updateState({
+                    flow: mergeOriginFlow.current,
+                    mergeSingleRecordId: undefined,
+                });
+                mergeOriginFlow.current = undefined;
+            }
+            return;
+        }
+        const currentFlow = presenter.getState().flow;
+        if (!mergeOriginFlow.current) {
+            mergeOriginFlow.current = currentFlow;
+        }
+        detail(recordId + '', mockKey).then((res) => {
+            if (res.success && res.data) {
+                const single = res.data as FlowContent;
+                const latestFlow = presenter.getState().flow || currentFlow;
+                presenter.updateState({
+                    mergeSingleRecordId: recordId,
+                    flow: {
+                        ...(latestFlow as FlowContent),
+                        recordId: single.recordId,
+                        actions: single.actions,
+                        actionList: single.actionList,
+                        currentNodeOperators: single.currentNodeOperators,
+                    },
+                });
+            }
+        });
+    }
+
     if (ViewComponent && formMeta) {
         if (mergeable) {
             return (
@@ -81,6 +128,7 @@ export const FormViewComponent: React.FC<FormViewComponentProps> = (props) => {
                     formList={formList as any}
                     onValuesChange={props.onValuesChange}
                     onMergeRecordIdsSelected={handleMergeRecordIdsSelected}
+                    onMergeRecordView={handleMergeRecordView}
                     viewCode={viewCode}
                 />
             )

@@ -11,8 +11,17 @@ export class LayoutPresenter {
 
     constructor(state: ApprovalState) {
         this.state = state;
-        this.actions = state.flow?.actions || [];
-        this.actionList = state.flow?.actionList || [];
+        // 合并列表（未进入单条流程）只保留支持批量的动作；
+        // 减签等按流程实例计算的动作需进入单条流程后操作
+        const mergedList = (state.flow?.mergeable || false) && state.mergeSingleRecordId == null;
+        const filterActions = (items: FlowAction[]) => {
+            if (!mergedList) {
+                return items;
+            }
+            return items.filter(action => action.batchable !== false);
+        };
+        this.actions = filterActions(state.flow?.actions || []);
+        this.actionList = filterActions(state.flow?.actionList || []);
         this.review = state.review || false;
     }
 

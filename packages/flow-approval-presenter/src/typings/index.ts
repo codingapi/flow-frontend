@@ -38,6 +38,13 @@ export type ApprovalState = {
     review?: boolean;
     /** 审批操作请求进行中（action/revoke/urge），用于驱动按钮 loading 与禁用 */
     actionLoading?: boolean;
+    /**
+     * 合并审批中当前正在查看的单条流程记录id。
+     *
+     * 设置后表示已从合并列表进入单条流程：动作、选人范围与提交目标都按该条记录计算，
+     * 不支持批量的动作（如减签）只有在此状态下才允许操作。
+     */
+    mergeSingleRecordId?: number;
 };
 
 

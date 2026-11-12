@@ -37,12 +37,32 @@ export class ApprovalPresenter {
         return this.formActionContext;
     }
 
+    /**
+     * 获取 presenter 内部的最新状态快照。
+     */
+    public getState(): ApprovalState {
+        return this.state;
+    }
+
     public getFlowActionPresenter() {
         return this.flowActionPresenter;
     }
 
     public initialState(state: ApprovalState) {
         this.dispatch(state);
+    }
+
+    /**
+     * 局部更新审批状态。
+     *
+     * 合并审批从列表进入单条流程时，用它切换当前记录的按钮与选人范围；
+     * 返回列表时再恢复原状态。
+     */
+    public updateState(partial: Partial<ApprovalState>) {
+        this.initialState({
+            ...this.state,
+            ...partial,
+        });
     }
 
     public processNodes(){

@@ -24,6 +24,8 @@ export const FlowTable: React.FC<FlowTableProps> = (props) => {
                 return (
                     <a
                         onClick={() => {
+                            // 通知宿主当前查看的单条流程，按钮/选人范围需要切换到这条记录
+                            props.onMergeRecordView?.(record.recordId);
                             const formData = presenter.getFormDataByRecordId(record.recordId);
                             if (formData) {
                                 setCurrentForm(formData);
@@ -86,6 +88,8 @@ export const FlowTable: React.FC<FlowTableProps> = (props) => {
                             <Button
                                 icon={<CaretLeftOutlined/>}
                                 onClick={() => {
+                                    // 返回合并列表，按钮/选人范围恢复为合并待办口径
+                                    props.onMergeRecordView?.(undefined);
                                     setCurrentForm(undefined);
                                 }}
                             >返回</Button>

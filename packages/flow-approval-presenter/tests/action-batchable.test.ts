@@ -25,13 +25,13 @@ const buildMergeState = (actions: FlowAction[]): ApprovalState => ({
     },
 } as unknown as ApprovalState);
 
-/** 表单上下文固定返回记录 2 的数据，用于验证非批量动作仍提交当前详情记录 */
-const buildFormContext = () => {
+/** 表单上下文固定返回指定记录的表单数据，用于验证提交目标的优先级 */
+const buildFormContext = (recordId = 2) => {
     const formContext = new FormActionContext();
     formContext.addAction({
-        save: () => ({ recordId: 2, name: 'b' }),
+        save: () => ({ recordId, name: 'b' }),
         key: () => 'view-form',
-        validate: async () => ({ recordId: 2, name: 'b' }),
+        validate: async () => ({ recordId, name: 'b' }),
     });
     return formContext;
 };
@@ -91,6 +91,30 @@ describe.sequential('FlowActionPresenter 合并批量提交（batchable）', () 
         expect(request.recordId).toBe(1);
         expect(request.advice.forwardOperatorIds).toEqual([3]);
         // 勾选记录保持不变，用户仍可用于通过等其他批量动作
+        expect(presenter.getSubmitRecordIds()).toEqual([1, 2]);
+    });
+
+    it('从合并列表进入单条流程后，所有动作只提交该条记录', async () => {
+        const passAction = buildAction('pass-1', 'PASS');
+        const api = buildApi();
+        const state = {
+            ...buildMergeState([passAction]),
+            mergeSingleRecordId: 2,
+        } as ApprovalState;
+        const presenter = new FlowActionPresenter(
+            state,
+            api,
+            buildFormContext(1),
+            'mockKey',
+            () => {},
+        );
+        presenter.setSubmitRecordIds([1, 2]);
+
+        await presenter.action('pass-1');
+
+        // 不再循环合并勾选，表单数据中的记录 1 也让位于当前查看的记录 2
+        expect(api.action).toHaveBeenCalledTimes(1);
+        expect(api.action.mock.calls[0][0].recordId).toBe(2);
         expect(presenter.getSubmitRecordIds()).toEqual([1, 2]);
     });
 

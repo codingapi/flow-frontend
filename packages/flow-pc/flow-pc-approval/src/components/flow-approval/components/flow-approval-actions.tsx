@@ -10,7 +10,13 @@ import {CloseAction} from "@/components/flow-approval/components/action/close";
 export const FlowApprovalActions = () => {
 
     const {state, context} = useApprovalContext()
-    const actionList = state.flow?.actionList || [];
+    const mergeable = state.flow?.mergeable || false;
+    // 已从合并列表进入单条流程：按钮与提交目标都按该条记录计算
+    const singleRecordView = state.mergeSingleRecordId != null;
+    // 合并列表状态下只保留支持批量的动作（减签等按流程实例计算的动作需进入单条流程后操作）
+    const actionList = (state.flow?.actionList || []).filter((action) => {
+        return !(mergeable && !singleRecordView && action.batchable === false);
+    });
     const visibleActions = state.flow?.actions || [];
     const review = state?.review || false;
 
@@ -20,8 +26,8 @@ export const FlowApprovalActions = () => {
         // 合并待办（多条记录合并成一条 todo）必须先显式选择要处理的流程记录。
         // 不能以「表单已有数据」代替选择：表单数据只代表当前展示的记录，
         // 未选择时提交会落到默认记录上（issue-72 测试反馈）
-        // 不支持批量的动作（如减签）只作用于当前记录，不要求勾选合并流程
-        if (state.flow?.mergeable && actionPresenter.isBatchable(id)) {
+        // 单条流程查看状态与不支持批量的动作（如减签）都不要求勾选合并流程
+        if (state.flow?.mergeable && !singleRecordView && actionPresenter.isBatchable(id)) {
             const todoCount = state.flow?.todos?.length ?? 0;
             const selectRecordIds = actionPresenter.getSubmitRecordIds();
             if (todoCount > 1 && selectRecordIds.length == 0) {

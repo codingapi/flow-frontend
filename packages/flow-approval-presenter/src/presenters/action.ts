@@ -207,6 +207,13 @@ export class FlowActionPresenter {
     }
 
     /**
+     * 获取 presenter 内部的最新状态快照（用于异步回调中基于最新状态做更新）。
+     */
+    public getState(): ApprovalState {
+        return this.state;
+    }
+
+    /**
      * 判断某个动作按钮是否应隐藏（纯函数，单一事实来源）。
      *
      * 规则：动作 id 命中「当前可见按钮集合 actions」则显示（返回 false），
@@ -298,7 +305,8 @@ export class FlowActionPresenter {
 
 
     private async submitAction(actionId: string, formData: any, params?: any, fixedRecordId?: number) {
-        const recordId = fixedRecordId || formData.recordId || this.createdRecordId || this.state.flow?.recordId;
+        // 合并审批中已进入单条流程时，提交目标固定为该条记录
+        const recordId = fixedRecordId || this.state.mergeSingleRecordId || formData.recordId || this.createdRecordId || this.state.flow?.recordId;
         const workCode = this.state.flow?.workCode || '';
 
         if (formData.recordId) {
@@ -477,6 +485,10 @@ export class FlowActionPresenter {
             const mergeable = this.state.flow?.mergeable || false;
             const batchable = this.isBatchable(actionId);
             const submitRecordIds = this.submitRecordIds;
+            if (mergeable && this.state.mergeSingleRecordId != null) {
+                // 已从合并列表进入单条流程：所有动作都只提交这条记录（submitAction 内部取 mergeSingleRecordId）
+                return await this.executeAction(actionId, params);
+            }
             if (mergeable && !batchable) {
                 // 不支持批量的动作（如减签）只提交当前详情的记录，忽略合并勾选
                 return await this.executeAction(actionId, params, this.state.flow?.recordId);
