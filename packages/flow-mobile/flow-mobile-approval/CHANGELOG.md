@@ -5,6 +5,9 @@
 ### Patch Changes
 
 - 版本升级至 0.2.20（配合 flow-engine 后端版本升级，本包无功能变更）
+- fix: 合并审批查看非首条流程后提交表单数据为空——新增 ActiveFormAction，让表单保存/校验动作跟随当前查看或提交的记录切换，并按待办记录复用表单实例，修复减签等动作被 formData 必填校验拦截
+- feat: 支持减签动作 REDUCE_AUDIT（PC / 移动端 / 设计器），新增 ReduceAuditViewPlugin 扩展点
+- fix: 合并审批必须先勾选流程记录才能提交；设计器「相同人员提交配置」未配置时默认展示手动审批
 
 ## 0.2.17
 
