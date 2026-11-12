@@ -13,9 +13,15 @@ export const FlowApprovalActions = () => {
     const mergeable = state.flow?.mergeable || false;
     // 已从合并列表进入单条流程：按钮与提交目标都按该条记录计算
     const singleRecordView = state.mergeSingleRecordId != null;
-    // 合并列表状态下只保留支持批量的动作（减签等按流程实例计算的动作需进入单条流程后操作）
+    /**
+     * 合并待办列表：确实有多条流程合并成一条 todo 时才隐藏不支持批量的动作（如减签）。
+     *
+     * 注意 mergeable 只是节点的记录合并策略开关，单条记录时同样为 true，此时不存在批量语义，
+     * 所有动作都应正常展示。
+     */
+    const mergedTodoList = mergeable && !singleRecordView && (state.flow?.todos?.length ?? 0) > 1;
     const actionList = (state.flow?.actionList || []).filter((action) => {
-        return !(mergeable && !singleRecordView && action.batchable === false);
+        return !(mergedTodoList && action.batchable === false);
     });
     const visibleActions = state.flow?.actions || [];
     const review = state?.review || false;

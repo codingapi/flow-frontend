@@ -17,8 +17,10 @@ export const FlowApprovalActions = () => {
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
     const actionLoading = state.actionLoading ?? false;
 
-    // 合并列表（未进入单条流程）只保留支持批量的动作
-    const mergedList = (state.flow?.mergeable || false) && state.mergeSingleRecordId == null;
+    // 合并列表（确实有多条流程合并、且未进入单条流程）只保留支持批量的动作
+    const mergedList = (state.flow?.mergeable || false)
+        && state.mergeSingleRecordId == null
+        && (state.flow?.todos?.length ?? 0) > 1;
     const actionList = (state.flow?.actionList || []).filter(action => {
         return !(mergedList && action.batchable === false);
     });
