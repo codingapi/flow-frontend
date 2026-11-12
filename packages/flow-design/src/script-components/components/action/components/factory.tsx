@@ -3,6 +3,7 @@ import {ActionFormProps} from "@/script-components/typings";
 import {ActionType} from "@coding-flow/flow-types";
 import {CustomActionForm} from "@/script-components/components/action/components/custom";
 import {AddAuditActionForm} from "@/script-components/components/action/components/add-audit";
+import {ReduceAuditActionForm} from "@/script-components/components/action/components/reduce-audit";
 import {DelegateActionForm} from "@/script-components/components/action/components/delegate";
 import {RejectActionForm} from "@/script-components/components/action/components/reject";
 import {TransferActionForm} from "@/script-components/components/action/components/transfer";
@@ -18,6 +19,7 @@ export class ActionFactory{
 
     private initialize():void{
         this.actions.set('ADD_AUDIT',AddAuditActionForm);
+        this.actions.set('REDUCE_AUDIT',ReduceAuditActionForm);
         this.actions.set('CUSTOM',CustomActionForm);
         this.actions.set('DELEGATE',DelegateActionForm);
         this.actions.set('REJECT',RejectActionForm);
