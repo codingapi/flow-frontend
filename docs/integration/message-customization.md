@@ -149,6 +149,7 @@ registry.register(FlowMessageKey.DESIGN_SCRIPT_COMPILE_FAILED, (data) =>
 | `approval.reject` | `操作成功` | 审批驳回 |
 | `approval.delegate` | `操作成功` | 委托 |
 | `approval.add_audit` | `操作成功` | 加签 |
+| `approval.reduce_audit` | `操作成功` | 减签 |
 | `approval.transfer` | `操作成功` | 转交 |
 | `approval.return` | `操作成功` | 退回 |
 | `approval.revoke` | `流程已撤回` | 撤回 |

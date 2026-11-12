@@ -25,7 +25,7 @@
 | 内核层 | flow-core | FlowMessageRegistry / FlowMessageKey | 全局消息文案 |
 | 内核层 | flow-core | GroovyScriptConvertorUtil | Groovy 脚本解析工具 |
 | 审批领域层 | flow-approval-presenter | FlowApprovalApi 接口 | 替换审批后端 API 实现 |
-| 审批领域层 | flow-approval-presenter | 7 个子视图插件 | 替换选人/签名/节点选择视图 |
+| 审批领域层 | flow-approval-presenter | 8 个子视图插件 | 替换选人/减签/签名/节点选择视图 |
 | 审批领域层 | flow-approval-presenter | ActionInterceptor | 审批动作拦截器（提交前拦截） |
 | 审批领域层 | flow-approval-presenter | DialogContentProvider | 审批弹框标题与中间内容自定义 |
 | 审批领域层 | flow-approval-presenter | AdvicePolicyProvider | 审批意见策略（按动作隐藏/必填/默认意见/快捷模板） |
@@ -229,7 +229,7 @@ httpClient.setMessageBox(myMessageBox);
 
 **源码**：`packages/flow-core/src/message.ts`
 
-框架所有消息提示（HTTP 错误、审批成功/失败、设计器编译等）的文案都通过 `FlowMessageRegistry` 管理。`FlowMessageKey` 约 27 个常量，如：
+框架所有消息提示（HTTP 错误、审批成功/失败、设计器编译等）的文案都通过 `FlowMessageRegistry` 管理。`FlowMessageKey` 共 29 个常量，如：
 
 - `FlowMessageKey.HTTP_TOKEN_EXPIRED`（`'http.token.expired'`）
 - `FlowMessageKey.APPROVAL_PASS`（`'approval.pass'`）
@@ -300,6 +300,7 @@ export interface FlowApprovalApi {
     action(body: Record<string, any>, mockKey: string): Promise<any>;
     revoke(id: any, mockKey: string): Promise<any>;
     urge(id: any, mockKey: string): Promise<any>;
+    resetSubProcess(body: Record<string, any>, mockKey: string): Promise<any>;
 }
 ```
 
@@ -314,6 +315,7 @@ const myApi: FlowApprovalApi = {
     action: async (body, mockKey) => { /* ... */ },
     revoke: async (id, mockKey) => { /* ... */ },
     urge: async (id, mockKey) => { /* ... */ },
+    resetSubProcess: async (body, mockKey) => { /* 子流程数据重置 */ },
 };
 
 // 在 React 组件中（不能脱离组件调用）：
@@ -332,7 +334,7 @@ const { state, context } = createApprovalContext(props, myApi);
 // 审批上下文：state 为 Redux 响应式状态，context 为 ContextScope（含 Presenter 访问入口）
 export const useApprovalContext = () => {
     // 返回 { state, context }
-    // state: ApprovalState = { flow?: FlowContent; review?: boolean; actionLoading?: boolean }
+    // state: ApprovalState = { flow?: FlowContent; review?: boolean; actionLoading?: boolean; mergeSingleRecordId?: number }
     // context.getPresenter().getFlowActionPresenter() / getFormActionContext() 等
 }
 
@@ -354,7 +356,7 @@ const MyCustomView = () => {
 };
 ```
 
-### 3.3 审批子视图插件（7 个）
+### 3.3 审批子视图插件（8 个）
 
 **源码**：`packages/flow-approval-presenter/src/plugins/*-type.ts`（key 常量与 Props 接口）、`flow-pc-approval/src/plugins/view/*.tsx` 与 `flow-mobile-approval/src/plugins/view/*.tsx`（默认实现）
 
@@ -363,6 +365,7 @@ const MyCustomView = () => {
 | key 常量（导出名） | key 值 | 默认 UI（PC） | 默认 UI（移动端） | 使用位置 |
 |---|---|---|---|---|
 | `AddAuditViewPluginKey` | `'AddAuditViewPlugin'` | antd Select | antd-mobile Selector | 加签动作 |
+| `ReduceAuditViewPluginKey` | `'ReduceAuditViewPlugin'` | antd Select（候选人来自 `currentNodeOperators`） | antd-mobile Selector | 减签动作 |
 | `DelegateViewPluginKey` | `'DelegateViewPlugin'` | antd Select | Selector | 委托动作 |
 | `TransferViewPluginKey` | `'TransferViewPlugin'` | antd Select | Selector | 转办动作 |
 | `ReturnViewPluginKey` | `'ReturnViewPlugin'` | antd Select（退回节点） | Selector | 退回动作 |
@@ -379,6 +382,13 @@ interface AddAuditViewPlugin {   // DelegateViewPlugin / TransferViewPlugin 同�
     value?: string | string[];
     action?: React.Ref<ApprovalViewPluginAction>;    // 动作控制
     maxOperatorCount?: number;                       // 最大可选人数，-1/缺省=不限制
+}
+
+// 减签（候选人为详情响应的 currentNodeOperators）
+interface ReduceAuditViewPlugin {
+    onChange?: (value: string | string[]) => void;
+    value?: string | string[];
+    action?: React.Ref<ApprovalViewPluginAction>;
 }
 
 // 退回节点选择（无 maxOperatorCount）
@@ -492,7 +502,7 @@ const MyUserSelect: React.FC<AddAuditViewPlugin> = (props) => {
 
 **源码**：`packages/flow-approval-presenter/src/interceptor/action-interceptor.ts`、`packages/flow-approval-presenter/src/presenters/action.ts`
 
-所有审批操作按钮（通过/驳回/暂存/加签/委托/退回/转办/自定义）点击后、真正提交前会按订阅顺序执行拦截器。**任一拦截器返回 `false` 即短路**，终止本次操作。
+所有审批操作按钮（通过/驳回/暂存/加签/减签/委托/退回/转办/自定义）点击后、真正提交前会按订阅顺序执行拦截器。**任一拦截器返回 `false` 即短路**，终止本次操作。
 
 ```typescript
 export interface ActionInterceptorContext {
@@ -519,6 +529,9 @@ public removeActionInterceptor(interceptor: ActionInterceptor): void;        // 
 public async interceptAction(actionId: string, params?: any): Promise<boolean>; // 手动触发拦截
 public async validateActionForm(actionId: string): Promise<boolean>;         // 手动触发通过动作的业务表单校验
 public async action(actionId: string, params?: any): Promise<any>;            // 提交（自动先拦截）
+public setSubmitRecordIds(recordIds: number[]): void;                        // 合并审批：勾选的流程记录
+public getSubmitRecordIds(): number[];                                       // 合并审批：读取勾选
+public isBatchable(actionId: string): boolean;                               // 动作是否支持合并批量提交
 ```
 
 - `action()` 提交前自动调用 `interceptAction(actionId, params)`，被拦截时返回 `{ success: false, intercepted: true }`。
@@ -789,6 +802,34 @@ ViewBindPlugin.getInstance().register(APPROVAL_ADVICE_VIEW_KEY, AdviceInput);
 >
 > 需要在组件内区分流程时，可直接使用上下文：`const { state } = useApprovalContext(); state.flow?.workCode / state.flow?.workTitle`，按流程编码加载不同模板集合（示例见 `apps/app-pc/src/components/flow-view/advice-view.tsx`）。
 
+### 3.11 合并审批 — 多记录与单条流程
+
+**源码**：`flow-approval-presenter/src/presenters/action.ts`、`flow-pc-approval/.../form-view-component.tsx`、`flow-mobile-approval/.../form-view-component.tsx`
+
+`detail` 返回 `mergeable=true` 表示该待办属于记录合并组，`todos` 为组内流程记录；`todos.length > 1` 才是真正的批量场景。
+
+| 场景 | 判定 | 按钮 | 提交目标 |
+|---|---|---|---|
+| 合并列表 | `mergeable && todos.length > 1` | 隐藏 `batchable=false` 的动作（减签） | 勾选的记录逐条提交 |
+| 进入单条流程 | 已设置 `mergeSingleRecordId` | 按该记录的 `actions` 展示（含减签） | 固定为该记录 |
+| 普通待办 | `todos.length <= 1` | 全量动作 | 当前记录 |
+
+| 交互入口 | PC | 移动端 |
+|---|---|---|
+| 查看单条 | 合并表格「查看」 | 单条列表点击条目 |
+| 返回合并 | 「返回」 | 「返回列表」/「批量审批」 |
+| 回调 | `FormViewProps.onMergeRecordView(recordId?)` | 同左 |
+| 勾选回调 | `FormViewProps.onMergeRecordIdsSelected(recordIds)` | 同左 |
+
+| 关键状态/方法 | 说明 |
+|---|---|
+| `ApprovalState.mergeSingleRecordId` | 当前查看的单条流程记录 id |
+| `ApprovalPresenter.getState()/updateState(partial)` | 读取/局部更新审批状态（进入/返回单条流程） |
+| `FlowContent.currentNodeOperators` | 当前节点待审批人，减签候选人来源 |
+| `FlowAction.batchable` | 动作是否支持合并批量提交 |
+
+> 切换逐条/批量模式时会清空勾选，避免旧勾选被带到下一次提交。
+
 ---
 
 ## 4. PC / 移动端审批扩展点
@@ -868,6 +909,7 @@ import { ApprovalPanel } from "@coding-flow/flow-mobile-approval";
 | `APPROVAL_ACTION_REJECT_KEY` | ✅ | ✅ | 驳回 |
 | `APPROVAL_ACTION_SAVE_KEY` | ✅ | ✅ | 保存 |
 | `APPROVAL_ACTION_ADD_AUDIT_KEY` | ✅ | ✅ | 加签 |
+| `APPROVAL_ACTION_REDUCE_AUDIT_KEY` | ✅ | ✅ | 减签 |
 | `APPROVAL_ACTION_DELEGATE_KEY` | ✅ | ✅ | 委托 |
 | `APPROVAL_ACTION_RETURN_KEY` | ✅ | ✅ | 退回 |
 | `APPROVAL_ACTION_TRANSFER_KEY` | ✅ | ✅ | 转办 |
@@ -884,14 +926,14 @@ import { ApprovalPanel } from "@coding-flow/flow-mobile-approval";
 
 **源码**：`flow-pc-approval/src/components/flow-approval/components/action/factory.tsx`、`flow-mobile-approval/.../action/factory.tsx`
 
-`ActionFactory` 是单例，按 `ActionType` 注册 8 种动作组件。**注意：工厂没有公开的 register 方法**，动作替换一律通过 ViewBindPlugin 的 key 完成（见 §4.3）。
+`ActionFactory` 是单例，按 `ActionType` 注册 9 种动作组件。**注意：工厂没有公开的 register 方法**，动作替换一律通过 ViewBindPlugin 的 key 完成（见 §4.3）。
 
 ```typescript
 // ActionType（flow-types/src/types/flow-design.ts）
-type ActionType = 'SAVE' | 'PASS' | 'REJECT' | 'ADD_AUDIT' | 'DELEGATE' | 'RETURN' | 'TRANSFER' | 'CUSTOM';
+type ActionType = 'SAVE' | 'PASS' | 'REJECT' | 'ADD_AUDIT' | 'REDUCE_AUDIT' | 'DELEGATE' | 'RETURN' | 'TRANSFER' | 'CUSTOM';
 
 // 工厂内部注册表（两包一致）
-// ADD_AUDIT → AddAuditAction、CUSTOM → CustomAction、DELEGATE → DelegateAction、
+// ADD_AUDIT → AddAuditAction、REDUCE_AUDIT → ReduceAuditAction、CUSTOM → CustomAction、DELEGATE → DelegateAction、
 // PASS → PassAction、REJECT → RejectAction、RETURN → ReturnAction、
 // SAVE → SaveAction、TRANSFER → TransferAction
 
@@ -1000,6 +1042,7 @@ export interface FlowAction {
     maxOperatorCount?: number;       // 最大可选人数，-1=不限制，正整数=上限（转办/委托/加签选人时使用）
     triggerType?: string;            // 触发类型，自定义脚本使用（转发为其他动作类型）
     triggerFrontEvent?: string;      // 前端触发事件（点击时 EventBus.emit）
+    batchable?: boolean;             // 是否支持合并批量提交，缺省 true；减签为 false
 }
 ```
 
@@ -1113,7 +1156,7 @@ export interface DesignViewPluginAction {
 export class ActionFactory {
     public static getInstance(): ActionFactory;
     public getActionForm(type: ActionType): React.ComponentType<ActionFormProps> | undefined;
-    // 内部注册：ADD_AUDIT / CUSTOM / DELEGATE / REJECT / TRANSFER（SAVE/PASS/RETURN 无专属表单）
+    // 内部注册：ADD_AUDIT / REDUCE_AUDIT / CUSTOM / DELEGATE / REJECT / TRANSFER（SAVE/PASS/RETURN 无专属表单）
 }
 ```
 
