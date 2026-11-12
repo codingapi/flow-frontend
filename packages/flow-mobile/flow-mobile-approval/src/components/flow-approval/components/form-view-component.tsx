@@ -1,10 +1,10 @@
 import React from "react";
-import { useApprovalContext, useMockContext } from "@coding-flow/flow-approval-presenter";
+import { ActiveFormAction, useApprovalContext, useMockContext } from "@coding-flow/flow-approval-presenter";
 import { ViewBindPlugin } from "@coding-flow/flow-core";
 import { FlowFormView } from "@coding-flow/flow-mobile-form";
 import { createFormInstance } from "@coding-form/form-engine";
 import { detail } from "@/api/record";
-import type { FlowContent } from "@coding-flow/flow-types";
+import type { FlowContent, FlowTodo } from "@coding-flow/flow-types";
 
 interface FormViewComponentProps {
     onValuesChange?: (values: any) => void;
@@ -26,45 +26,61 @@ export const FormViewComponent: React.FC<FormViewComponentProps> = (props) => {
     // 是否可合并审批
     const mergeable = state.flow?.mergeable || false;
     const todos = state.flow?.todos || [];
-    const formList = todos.length > 0 ? todos.map(item => {
-        return {
-            form: createFormInstance(flowForm as any),
-            data: item,
+
+    /**
+     * 每条待办记录对应一个表单实例。
+     *
+     * 必须按待办记录记忆化：合并审批查看单条流程会刷新按钮/候选人并触发重渲染，
+     * 若每次渲染都重建表单实例，被查看记录的表单初始数据会丢失（初始值只写入一次），
+     * 提交时取到的是空表单。
+     */
+    const formList = React.useMemo(() => {
+        const createItem = (item?: FlowTodo) => {
+            const values = {
+                ...context.getInitData(),
+                ...item?.data,
+                recordId: item?.recordId,
+            };
+            return {
+                form: createFormInstance(flowForm as any),
+                data: item,
+                values,
+                initialized: false,
+            }
         }
-    }) : [
-        {
-            form: createFormInstance(flowForm as any),
-            data: undefined,
-        }
-    ]
+        return todos.length > 0 ? todos.map(item => createItem(item)) : [createItem(undefined)];
+    }, [flowForm, todos]);
+
+    /**
+     * 表单动作（保存/校验）跟随「当前查看或提交的记录」。
+     *
+     * FormActionContext 以固定 key 只保留一个动作，不能逐条记录注册（后注册的会被丢弃），
+     * 也不能恒定读取第一条记录的表单实例：合并审批查看第二条记录时，第一条记录的表单已卸载，
+     * getFieldsValue() 返回 {}，提交会因 formData 为空被服务端拒绝。
+     */
+    const activeForm = React.useRef<ActiveFormAction>();
+
+    React.useEffect(() => {
+        const formAction = new ActiveFormAction(context.getPresenter().getFormActionContext());
+        activeForm.current = formAction;
+        formAction.register();
+        return () => formAction.unregister();
+    }, []);
 
     React.useEffect(() => {
         formList.forEach(item => {
-            const formInstance = item.form;
-            const formRecord = item.data?.data;
-            context.getPresenter().getFormActionContext().addAction({
-                save: () => {
-                    return formInstance.getFieldsValue();
-                },
-                key: () => {
-                    return 'view-form'
-                },
-                validate: () => {
-                    return new Promise((resolve, reject) => {
-                        formInstance.validateFields()
-                            .then(resolve)
-                            .catch(reject)
-                    })
-                }
-            });
-            formInstance.resetFields();
-            formInstance.setFieldsValue({
-                ...context.getInitData(),
-                ...formRecord,
-                recordId: item.data?.recordId,
-            });
+            if (item.initialized) {
+                return;
+            }
+            item.initialized = true;
+            item.form.resetFields();
+            item.form.setFieldsValue(item.values);
         });
-    }, []);
+        // 默认提交「打开详情的那条记录」；合并审批查看单条流程时由 handleMergeRecordView 切换
+        activeForm.current?.switchTo(
+            formList.find(item => item.data?.recordId === state.flow?.recordId) || formList[0]
+        );
+    }, [formList, state.flow?.recordId]);
 
     const handleMergeRecordIdsSelected = (recordIds: number[]) => {
         // 提交所选的流程记录Ids
@@ -94,6 +110,8 @@ export const FormViewComponent: React.FC<FormViewComponentProps> = (props) => {
             }
             return;
         }
+        // 同步切换提交所用的表单实例（详情刷新是异步的，期间提交不能落到上一条记录的表单上）
+        activeForm.current?.switchTo(formList.find(item => item.data?.recordId === recordId));
         const currentFlow = presenter.getState().flow;
         if (!mergeOriginFlow.current) {
             mergeOriginFlow.current = currentFlow;
