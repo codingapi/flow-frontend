@@ -1,7 +1,7 @@
 import {useApprovalContext, FlowActionPresenter} from "@coding-flow/flow-approval-presenter";
 import React from "react";
 import {message, Space} from "antd";
-import {ObjectUtils, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
+import {FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 import {ActionFactory} from "@/components/flow-approval/components/action/factory";
 import {UrgeAction} from "@/components/flow-approval/components/action/urge";
 import {RevokeAction} from "@/components/flow-approval/components/action/revoke";
@@ -17,10 +17,13 @@ export const FlowApprovalActions = () => {
    const actionPresenter = context.getPresenter().getFlowActionPresenter();
 
     const handlerClickCheck = (id: string) => {
+        // 合并待办（多条记录合并成一条 todo）必须先显式选择要处理的流程记录。
+        // 不能以「表单已有数据」代替选择：表单数据只代表当前展示的记录，
+        // 未选择时提交会落到默认记录上（issue-72 测试反馈）
         if (state.flow?.mergeable) {
+            const todoCount = state.flow?.todos?.length ?? 0;
             const selectRecordIds = actionPresenter.getSubmitRecordIds();
-            const currentFormData = actionPresenter.getCurrentFormData();
-            if (ObjectUtils.isEmptyObject(currentFormData) && selectRecordIds.length == 0) {
+            if (todoCount > 1 && selectRecordIds.length == 0) {
                 message.error(
                     FlowMessageRegistry.getInstance().get(FlowMessageKey.APPROVAL_NO_SELECTED)
                 )

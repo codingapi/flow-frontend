@@ -38,11 +38,11 @@ export const FlowTable: React.FC<FlowTableProps> = (props) => {
         return [...columns, option];
     }, []);
 
-    // 回掉登记当前选中中的合并流程
+    // 回掉登记当前选中中的合并流程。
+    // 取消选择时必须同步空数组，否则 presenter 会残留上一次的选择，
+    // 导致「未勾选任何流程」也能提交（issue-72 测试反馈）
     React.useEffect(() => {
-        if (recordIdList.length > 0) {
-            props.onMergeRecordIdsSelected?.(recordIdList);
-        }
+        props.onMergeRecordIdsSelected?.(recordIdList);
     }, [recordIdList]);
 
     // 切换是触发右侧节点列表的筛选
