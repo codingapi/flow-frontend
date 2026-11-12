@@ -119,6 +119,8 @@ export interface FlowAction {
     script?: string;
     // 最大可选人数，-1 表示不限制，正整数表示可选人员的最大数（转办/委托/加签选人时使用）
     maxOperatorCount?: number;
+    // 是否支持合并批量提交，由服务端声明；缺省视为支持（减签等目标按流程实例隔离的动作为 false）
+    batchable?: boolean;
     // 触发类型，自定义脚本使用
     triggerType?:string;
     // 前端触发事件，自定义脚本使用

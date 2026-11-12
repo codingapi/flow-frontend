@@ -20,7 +20,8 @@ export const FlowApprovalActions = () => {
         // 合并待办（多条记录合并成一条 todo）必须先显式选择要处理的流程记录。
         // 不能以「表单已有数据」代替选择：表单数据只代表当前展示的记录，
         // 未选择时提交会落到默认记录上（issue-72 测试反馈）
-        if (state.flow?.mergeable) {
+        // 不支持批量的动作（如减签）只作用于当前记录，不要求勾选合并流程
+        if (state.flow?.mergeable && actionPresenter.isBatchable(id)) {
             const todoCount = state.flow?.todos?.length ?? 0;
             const selectRecordIds = actionPresenter.getSubmitRecordIds();
             if (todoCount > 1 && selectRecordIds.length == 0) {
