@@ -1,7 +1,7 @@
 import {useApprovalContext, FlowActionPresenter} from "@coding-flow/flow-approval-presenter";
 import React from "react";
 import {message, Space} from "antd";
-import {ObjectUtils, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
+import {FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 import {ActionFactory} from "@/components/flow-approval/components/action/factory";
 import {UrgeAction} from "@/components/flow-approval/components/action/urge";
 import {RevokeAction} from "@/components/flow-approval/components/action/revoke";
@@ -10,17 +10,33 @@ import {CloseAction} from "@/components/flow-approval/components/action/close";
 export const FlowApprovalActions = () => {
 
     const {state, context} = useApprovalContext()
-    const actionList = state.flow?.actionList || [];
+    const mergeable = state.flow?.mergeable || false;
+    // 已从合并列表进入单条流程：按钮与提交目标都按该条记录计算
+    const singleRecordView = state.mergeSingleRecordId != null;
+    /**
+     * 合并待办列表：确实有多条流程合并成一条 todo 时才隐藏不支持批量的动作（如减签）。
+     *
+     * 注意 mergeable 只是节点的记录合并策略开关，单条记录时同样为 true，此时不存在批量语义，
+     * 所有动作都应正常展示。
+     */
+    const mergedTodoList = mergeable && !singleRecordView && (state.flow?.todos?.length ?? 0) > 1;
+    const actionList = (state.flow?.actionList || []).filter((action) => {
+        return !(mergedTodoList && action.batchable === false);
+    });
     const visibleActions = state.flow?.actions || [];
     const review = state?.review || false;
 
    const actionPresenter = context.getPresenter().getFlowActionPresenter();
 
     const handlerClickCheck = (id: string) => {
-        if (state.flow?.mergeable) {
+        // 合并待办（多条记录合并成一条 todo）必须先显式选择要处理的流程记录。
+        // 不能以「表单已有数据」代替选择：表单数据只代表当前展示的记录，
+        // 未选择时提交会落到默认记录上（issue-72 测试反馈）
+        // 单条流程查看状态与不支持批量的动作（如减签）都不要求勾选合并流程
+        if (state.flow?.mergeable && !singleRecordView && actionPresenter.isBatchable(id)) {
+            const todoCount = state.flow?.todos?.length ?? 0;
             const selectRecordIds = actionPresenter.getSubmitRecordIds();
-            const currentFormData = actionPresenter.getCurrentFormData();
-            if (ObjectUtils.isEmptyObject(currentFormData) && selectRecordIds.length == 0) {
+            if (todoCount > 1 && selectRecordIds.length == 0) {
                 message.error(
                     FlowMessageRegistry.getInstance().get(FlowMessageKey.APPROVAL_NO_SELECTED)
                 )

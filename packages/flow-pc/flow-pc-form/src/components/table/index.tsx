@@ -24,6 +24,8 @@ export const FlowTable: React.FC<FlowTableProps> = (props) => {
                 return (
                     <a
                         onClick={() => {
+                            // 通知宿主当前查看的单条流程，按钮/选人范围需要切换到这条记录
+                            props.onMergeRecordView?.(record.recordId);
                             const formData = presenter.getFormDataByRecordId(record.recordId);
                             if (formData) {
                                 setCurrentForm(formData);
@@ -38,11 +40,11 @@ export const FlowTable: React.FC<FlowTableProps> = (props) => {
         return [...columns, option];
     }, []);
 
-    // 回掉登记当前选中中的合并流程
+    // 回掉登记当前选中中的合并流程。
+    // 取消选择时必须同步空数组，否则 presenter 会残留上一次的选择，
+    // 导致「未勾选任何流程」也能提交（issue-72 测试反馈）
     React.useEffect(() => {
-        if (recordIdList.length > 0) {
-            props.onMergeRecordIdsSelected?.(recordIdList);
-        }
+        props.onMergeRecordIdsSelected?.(recordIdList);
     }, [recordIdList]);
 
     // 切换是触发右侧节点列表的筛选
@@ -86,6 +88,8 @@ export const FlowTable: React.FC<FlowTableProps> = (props) => {
                             <Button
                                 icon={<CaretLeftOutlined/>}
                                 onClick={() => {
+                                    // 返回合并列表，按钮/选人范围恢复为合并待办口径
+                                    props.onMergeRecordView?.(undefined);
                                     setCurrentForm(undefined);
                                 }}
                             >返回</Button>

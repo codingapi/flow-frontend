@@ -188,8 +188,29 @@ export class FlowActionPresenter {
         return this.submitRecordIds;
     }
 
+    /**
+     * 动作是否支持合并批量提交。
+     *
+     * 由服务端 detail 响应的 `action.batchable` 声明，缺省视为支持（兼容旧版本服务端）。
+     * 减签等「目标按流程实例隔离」的动作声明为 false：合并审批时不循环提交多个勾选记录，
+     * 只提交当前打开详情的那条流程记录，避免把 A 流程的候选人错配到 B 流程。
+     *
+     * @param actionId 动作 ID
+     */
+    public isBatchable(actionId: string): boolean {
+        const action = this.getAction(actionId);
+        return action?.batchable !== false;
+    }
+
     public syncState(state: ApprovalState) {
         this.state = JSON.parse(JSON.stringify(state));
+    }
+
+    /**
+     * 获取 presenter 内部的最新状态快照（用于异步回调中基于最新状态做更新）。
+     */
+    public getState(): ApprovalState {
+        return this.state;
     }
 
     /**
@@ -283,8 +304,9 @@ export class FlowActionPresenter {
     }
 
 
-    private async submitAction(actionId: string, formData: any, params?: any) {
-        const recordId = formData.recordId || this.createdRecordId || this.state.flow?.recordId;
+    private async submitAction(actionId: string, formData: any, params?: any, fixedRecordId?: number) {
+        // 合并审批中已进入单条流程时，提交目标固定为该条记录
+        const recordId = fixedRecordId || this.state.mergeSingleRecordId || formData.recordId || this.createdRecordId || this.state.flow?.recordId;
         const workCode = this.state.flow?.workCode || '';
 
         if (formData.recordId) {
@@ -357,14 +379,14 @@ export class FlowActionPresenter {
         }
     }
 
-    private async executeAction(actionId: string, params?: any) {
+    private async executeAction(actionId: string, params?: any, fixedRecordId?: number) {
         let formData;
         if (this.isPassAction(actionId)) {
             formData = await this.formActionContext.validate();
         } else {
             formData = this.formActionContext.save();
         }
-        return await this.submitAction(actionId, formData, params);
+        return await this.submitAction(actionId, formData, params, fixedRecordId);
     }
 
 
@@ -461,7 +483,16 @@ export class FlowActionPresenter {
         try {
             // 流程合并审批
             const mergeable = this.state.flow?.mergeable || false;
+            const batchable = this.isBatchable(actionId);
             const submitRecordIds = this.submitRecordIds;
+            if (mergeable && this.state.mergeSingleRecordId != null) {
+                // 已从合并列表进入单条流程：所有动作都只提交这条记录（submitAction 内部取 mergeSingleRecordId）
+                return await this.executeAction(actionId, params);
+            }
+            if (mergeable && !batchable) {
+                // 不支持批量的动作（如减签）只提交当前详情的记录，忽略合并勾选
+                return await this.executeAction(actionId, params, this.state.flow?.recordId);
+            }
             if (mergeable && submitRecordIds.length > 0) {
                 const submitRecordIds = this.submitRecordIds;
                 for (const recordId of submitRecordIds) {

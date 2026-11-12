@@ -15,4 +15,6 @@ export interface FlowTableProps {
     review: boolean;
     /** 当合并流程选中了流程记录的回掉 **/
     onMergeRecordIdsSelected?: (recordIds: number[]) => void;
+    /** 合并审批中查看单条流程记录（recordId 为空表示返回合并列表） **/
+    onMergeRecordView?: (recordId?: number) => void;
 }

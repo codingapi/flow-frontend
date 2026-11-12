@@ -11,8 +11,20 @@ export class LayoutPresenter {
 
     constructor(state: ApprovalState) {
         this.state = state;
-        this.actions = state.flow?.actions || [];
-        this.actionList = state.flow?.actionList || [];
+        // 合并列表（确实有多条流程合并、且未进入单条流程）只保留支持批量的动作；
+        // 减签等按流程实例计算的动作需进入单条流程后操作。
+        // mergeable 只是节点合并策略开关，单条记录时同样为 true，不能作为隐藏依据。
+        const mergedList = (state.flow?.mergeable || false)
+            && state.mergeSingleRecordId == null
+            && (state.flow?.todos?.length ?? 0) > 1;
+        const filterActions = (items: FlowAction[]) => {
+            if (!mergedList) {
+                return items;
+            }
+            return items.filter(action => action.batchable !== false);
+        };
+        this.actions = filterActions(state.flow?.actions || []);
+        this.actionList = filterActions(state.flow?.actionList || []);
         this.review = state.review || false;
     }
 

@@ -7,7 +7,7 @@ import { RevokeAction } from "@/components/flow-approval/components/action/revok
 import { UrgeAction } from "@/components/flow-approval/components/action/urge";
 import { ActionFactory } from "@/components/flow-approval/components/action/factory";
 import { dispatchApprovalFrontEvent } from "@/components/flow-approval/components/action-front-event";
-import { EventBus, ObjectUtils, FlowMessageKey, FlowMessageRegistry } from "@coding-flow/flow-core";
+import { EventBus, FlowMessageKey, FlowMessageRegistry } from "@coding-flow/flow-core";
 import { useApprovalContext } from "@coding-flow/flow-approval-presenter";
 
 export const FlowApprovalActions = () => {
@@ -17,16 +17,25 @@ export const FlowApprovalActions = () => {
     const actionPresenter = context.getPresenter().getFlowActionPresenter();
     const actionLoading = state.actionLoading ?? false;
 
-    const actionList = state.flow?.actionList || [];
+    // 合并列表（确实有多条流程合并、且未进入单条流程）只保留支持批量的动作
+    const mergedList = (state.flow?.mergeable || false)
+        && state.mergeSingleRecordId == null
+        && (state.flow?.todos?.length ?? 0) > 1;
+    const actionList = (state.flow?.actionList || []).filter(action => {
+        return !(mergedList && action.batchable === false);
+    });
 
     const [moreVisible, setMoreVisible] = useState(false);
 
     const handlerAction = (id: string) => {
         const action = actionPresenter.getAction(id);
-        if (state.flow?.mergeable) {
+        // 合并待办必须先显式选择要处理的流程记录，不能以「表单已有数据」代替选择
+        // （未选择时提交会落到默认记录上，issue-72 测试反馈）
+        // 单条流程查看状态与不支持批量的动作（如减签）都不要求勾选合并流程
+        if (state.flow?.mergeable && state.mergeSingleRecordId == null && actionPresenter.isBatchable(id)) {
+            const todoCount = state.flow?.todos?.length ?? 0;
             const selectRecordIds = actionPresenter.getSubmitRecordIds();
-            const currentFormData = actionPresenter.getCurrentFormData();
-            if (ObjectUtils.isEmptyObject(currentFormData) && selectRecordIds.length == 0) {
+            if (todoCount > 1 && selectRecordIds.length == 0) {
                 Toast.show(FlowMessageRegistry.getInstance().get(FlowMessageKey.APPROVAL_NO_SELECTED))
                 return;
             }

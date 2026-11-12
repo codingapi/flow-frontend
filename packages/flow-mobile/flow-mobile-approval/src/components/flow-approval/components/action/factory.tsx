@@ -3,6 +3,7 @@ import {FlowActionProps} from "./type";
 import {FlowAction} from "@coding-flow/flow-types";
 import {PassAction} from "@/components/flow-approval/components/action/pass";
 import {AddAuditAction} from "@/components/flow-approval/components/action/add-audit";
+import {ReduceAuditAction} from "@/components/flow-approval/components/action/reduce-audit";
 import {CustomAction} from "@/components/flow-approval/components/action/custom";
 import {DelegateAction} from "@/components/flow-approval/components/action/delegate";
 import {RejectAction} from "@/components/flow-approval/components/action/reject";
@@ -28,6 +29,7 @@ export class ActionFactory {
 
     private initActions() {
         this.cache.set("ADD_AUDIT", AddAuditAction);
+        this.cache.set("REDUCE_AUDIT", ReduceAuditAction);
         this.cache.set("CUSTOM", CustomAction);
         this.cache.set("DELEGATE", DelegateAction);
         this.cache.set("PASS", PassAction);

@@ -8,7 +8,7 @@
 |------|------|------|------|------|
 | [antd/antd](./antd/antd.md) | antd | Ant Design (PC) / Ant Design Mobile (移动端) UI 组件库，提供丰富的预置组件 | 前端 | 框架:Ant Design |
 | [flow-approval/sub-process-record](./flow-approval/sub-process-record.md) | flow-approval | PC 与移动端审批时间线中的子流程聚合状态、完成进度和实例明细展示 | 前端 | 项目自有 |
-| [flow-approval-presenter/action-factory](./flow-approval-presenter/action-factory.md) | flow-approval-presenter | 动作工厂（单例模式），按 ActionType 注册并渲染对应的审批动作组件（Pass/Reject/Save/AddAudit/Delegate/Ret... | 前端 | 项目自有 |
+| [flow-approval-presenter/action-factory](./flow-approval-presenter/action-factory.md) | flow-approval-presenter | 动作工厂（单例模式），按 ActionType 注册并渲染审批动作组件（9 种，含减签） | 前端 | 项目自有 |
 | [flow-core/event-bus](./flow-core/event-bus.md) | flow-core | 全局事件总线（单例模式），提供 on/emit/off 发布订阅通信能力 | 前端 | 项目自有 |
 | [flow-core/groovy-formatter](./flow-core/groovy-formatter.md) | flow-core | Groovy 脚本格式化与转换工具，提供脚本格式化、标记管理、元数据提取、return 表达式解析等能力 | 前端 | 项目自有 |
 | [flow-core/http-client](./flow-core/http-client.md) | flow-core | 基于 axios 封装的 HTTP 客户端，提供请求/响应拦截器、token 自动管理、分页查询、文件下载等能力 | 前端 | 项目自有 |

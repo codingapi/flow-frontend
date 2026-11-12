@@ -37,7 +37,9 @@ export const SameOperatorAuditStrategy:React.FC = () => {
                     render={({field: {value, onChange}}: FieldRenderProps<any>) => {
                         return (
                             <Select
-                                value={value}
+                                // 未配置时后端按「手动审批」处理（issue #224 已将默认策略移除），
+                                // 这里同样以手动审批作为默认展示，避免下拉框空白造成误解
+                                value={value ?? 'MANUAL_PASS'}
                                 onChange={onChange}
                                 options={[
                                     {
