@@ -369,6 +369,8 @@ export interface FlowContent {
     createOperator: FlowOperator;
     // 当前流程
     currentOperator: FlowOperator;
+    // 当前节点待审批人员（不含当前操作人），减签等动作的候选人来源；按单条流程记录计算
+    currentNodeOperators?: FlowOperator[];
     // 流程状态
     flowState: number;
     // 记录状态

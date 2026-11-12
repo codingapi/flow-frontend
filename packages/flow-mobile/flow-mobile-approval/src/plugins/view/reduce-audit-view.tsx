@@ -7,8 +7,8 @@ import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
 /**
  * 减签人员选择视图
  *
- * 默认实现只提供占位选项，真实项目应通过 ViewBindPlugin 注册视图，
- * 列出当前节点的待审批人（不含当前审批人）。
+ * 默认实现列出当前节点的待审批人（服务端 detail 响应的 currentNodeOperators，
+ * 已排除当前审批人，含顺序审批尚未激活的隐藏记录）；真实项目可通过 ViewBindPlugin 覆盖。
  */
 export const ReduceAuditView: React.FC<ReduceAuditViewPlugin> = (props) => {
     const ReduceAuditViewComponent = ViewBindPlugin.getInstance().get(ReduceAuditViewPluginKey);
@@ -26,14 +26,12 @@ export const ReduceAuditView: React.FC<ReduceAuditViewPlugin> = (props) => {
         return [];
     },[props.value]);
 
-    const createOperator = state.flow?.createOperator;
+    const operators = state.flow?.currentNodeOperators || [];
 
-    const options = createOperator?[
-        {
-            label:createOperator.name,
-            value:createOperator.id + '',
-        }
-    ]:[];
+    const options = operators.map(operator => ({
+        label: operator.name,
+        value: operator.id + '',
+    }));
 
     if (ReduceAuditViewComponent) {
         return (
