@@ -81,7 +81,7 @@ app-mobile (依赖 flow-mobile-ui + flow-mobile-approval)
 - 设计器插件体系通过此机制注册节点视图组件（ConditionViewPlugin、RouterViewPlugin 等）
 
 **ActionFactory** — 动作工厂（flow-pc-approval、flow-mobile-approval、flow-design 各有一份）：
-- 单例模式，按 ActionType（PASS/REJECT/SAVE/ADD_AUDIT/DELEGATE/RETURN/TRANSFER/CUSTOM）注册对应 React 组件
+- 单例模式，按 ActionType（PASS/REJECT/SAVE/ADD_AUDIT/REDUCE_AUDIT/DELEGATE/RETURN/TRANSFER/CUSTOM）注册对应 React 组件
 - PC 端和移动端各自实现不同的组件
 
 **FlowNodeRegistry** — 节点注册机制（flow-design）：

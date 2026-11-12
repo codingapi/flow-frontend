@@ -249,6 +249,7 @@ const MyApprovalForm = () => {
 - `REJECT` - 拒绝
 - `SAVE` - 保存
 - `ADD_AUDIT` - 加签
+- `REDUCE_AUDIT` - 减签（仅循序/并签节点，不支持合并批量）
 - `DELEGATE` - 委托
 - `RETURN` - 退回
 - `TRANSFER` - 转交

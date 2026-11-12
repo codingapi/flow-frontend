@@ -55,7 +55,7 @@ pnpm run dev
 
 - `FlowAction` - 动作基础类型
 - `ActionType` - 动作类型枚举
-- 动作具体类型：`PassAction`, `RejectAction`, `SaveAction`, `AddAuditAction`, `DelegateAction`, `ReturnAction`, `TransferAction`, `CustomAction`
+- 动作具体类型：`PassAction`, `RejectAction`, `SaveAction`, `AddAuditAction`, `ReduceAuditAction`, `DelegateAction`, `ReturnAction`, `TransferAction`, `CustomAction`
 
 ### 表单类型
 
