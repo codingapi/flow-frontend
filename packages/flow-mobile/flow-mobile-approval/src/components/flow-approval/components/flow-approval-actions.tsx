@@ -7,7 +7,7 @@ import { RevokeAction } from "@/components/flow-approval/components/action/revok
 import { UrgeAction } from "@/components/flow-approval/components/action/urge";
 import { ActionFactory } from "@/components/flow-approval/components/action/factory";
 import { dispatchApprovalFrontEvent } from "@/components/flow-approval/components/action-front-event";
-import { EventBus, ObjectUtils, FlowMessageKey, FlowMessageRegistry } from "@coding-flow/flow-core";
+import { EventBus, FlowMessageKey, FlowMessageRegistry } from "@coding-flow/flow-core";
 import { useApprovalContext } from "@coding-flow/flow-approval-presenter";
 
 export const FlowApprovalActions = () => {
@@ -23,10 +23,12 @@ export const FlowApprovalActions = () => {
 
     const handlerAction = (id: string) => {
         const action = actionPresenter.getAction(id);
+        // 合并待办必须先显式选择要处理的流程记录，不能以「表单已有数据」代替选择
+        // （未选择时提交会落到默认记录上，issue-72 测试反馈）
         if (state.flow?.mergeable) {
+            const todoCount = state.flow?.todos?.length ?? 0;
             const selectRecordIds = actionPresenter.getSubmitRecordIds();
-            const currentFormData = actionPresenter.getCurrentFormData();
-            if (ObjectUtils.isEmptyObject(currentFormData) && selectRecordIds.length == 0) {
+            if (todoCount > 1 && selectRecordIds.length == 0) {
                 Toast.show(FlowMessageRegistry.getInstance().get(FlowMessageKey.APPROVAL_NO_SELECTED))
                 return;
             }
