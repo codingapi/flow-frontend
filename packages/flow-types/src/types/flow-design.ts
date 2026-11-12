@@ -53,6 +53,8 @@ export type ActionType =
     'REJECT'|
     // 加签，指定给其他人一块审批，以会签模式来处理
     'ADD_AUDIT'|
+    // 减签，把指定审批人从当前节点撤下，流程继续流转（仅循序/并签多人审批节点）
+    'REDUCE_AUDIT'|
     // 委派，委派给其他人员来审批，当人员审批完成以后再流程给自己审批
     'DELEGATE'|
     // 退回，退回时需要设置退回的节点
@@ -68,6 +70,7 @@ export const actionOptions = [
     {label: '通过', value: 'PASS'},
     {label: '拒绝', value: 'REJECT'},
     {label: '加签', value: 'ADD_AUDIT'},
+    {label: '减签', value: 'REDUCE_AUDIT'},
     {label: '委派', value: 'DELEGATE'},
     {label: '退回', value: 'RETURN'},
     {label: '转办', value: 'TRANSFER'},
