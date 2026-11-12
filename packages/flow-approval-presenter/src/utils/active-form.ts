@@ -16,11 +16,11 @@ export const VIEW_FORM_ACTION_KEY = 'view-form';
  * 避免提交空 formData 被服务端以必填校验拒绝。
  */
 export interface ApprovalFormItem {
-    /** 表单实例 */
+    /** 表单实例（validateFields 在部分表单实例类型定义中未声明，运行时存在） */
     form: {
-        getFieldsValue(): Record<string, any>;
+        getFieldsValue(): any;
 
-        validateFields(): Promise<Record<string, any>>;
+        validateFields?(): Promise<any>;
     };
     /** 记录对应的表单初始数据 */
     values: Record<string, any>;
@@ -100,6 +100,10 @@ export class ActiveFormAction {
         const item = this.current;
         if (!item) {
             return Promise.resolve({});
+        }
+        if (!item.form.validateFields) {
+            // 表单实例类型未声明校验方法时退化为直接提交当前数据
+            return Promise.resolve(this.save());
         }
         return item.form.validateFields()
             .then(values => ({...item.values, ...values}));

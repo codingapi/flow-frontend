@@ -1,13 +1,24 @@
 import React from "react";
-import { ActiveFormAction, useApprovalContext, useMockContext } from "@coding-flow/flow-approval-presenter";
+import {
+    ActiveFormAction,
+    useApprovalContext,
+    useMockContext,
+    type ApprovalFormItem,
+} from "@coding-flow/flow-approval-presenter";
 import { ViewBindPlugin } from "@coding-flow/flow-core";
 import { FlowFormView } from "@coding-flow/flow-mobile-form";
 import { createFormInstance } from "@coding-form/form-engine";
 import { detail } from "@/api/record";
-import type { FlowContent, FlowTodo } from "@coding-flow/flow-types";
+import type { FlowContent, FlowTodo, FormInstance } from "@coding-flow/flow-types";
 
 interface FormViewComponentProps {
     onValuesChange?: (values: any) => void;
+}
+
+/** 合并审批中一条待办记录对应的表单实例 */
+interface MergeFormItem extends ApprovalFormItem {
+    form: FormInstance;
+    data?: FlowTodo;
 }
 
 export const FormViewComponent: React.FC<FormViewComponentProps> = (props) => {
@@ -28,28 +39,38 @@ export const FormViewComponent: React.FC<FormViewComponentProps> = (props) => {
     const todos = state.flow?.todos || [];
 
     /**
-     * 每条待办记录对应一个表单实例。
+     * 每条待办记录对应一个表单实例（合并审批可逐条查看）。
      *
-     * 必须按待办记录记忆化：合并审批查看单条流程会刷新按钮/候选人并触发重渲染，
-     * 若每次渲染都重建表单实例，被查看记录的表单初始数据会丢失（初始值只写入一次），
-     * 提交时取到的是空表单。
+     * 注意：createFormInstance 内部执行 Form.useForm()，本质是 hook 工厂，每次调用都会向当前
+     * 组件注册 hook（useRef/useMemo 等）。因此每次渲染必须按相同顺序、相同次数调用，
+     * 不能用 useMemo 缓存或跳过调用，否则 hook 数量变化会抛
+     * `Cannot read properties of undefined (reading 'length')`（areHookInputsEqual）。
+     * 这里每次渲染都按待办记录调用一次，仅保留首次创建的实例，保证实例身份稳定
+     * （合并审批查看单条时的编辑值与校验都依赖同一个实例）。
      */
-    const formList = React.useMemo(() => {
-        const createItem = (item?: FlowTodo) => {
-            const values = {
-                ...context.getInitData(),
-                ...item?.data,
-                recordId: item?.recordId,
-            };
-            return {
-                form: createFormInstance(flowForm as any),
-                data: item,
-                values,
-                initialized: false,
-            }
+    const formItemCache = React.useRef<Map<number | undefined, MergeFormItem>>(new Map());
+    const formList: MergeFormItem[] = (todos.length > 0 ? todos : [undefined]).map(item => {
+        // 占位调用：维持 hook 调用次数（实例命中缓存时该实例不会被使用）
+        const createdForm = createFormInstance(flowForm as any);
+        const recordId = item?.recordId;
+        const cached = formItemCache.current.get(recordId);
+        if (cached) {
+            return cached;
         }
-        return todos.length > 0 ? todos.map(item => createItem(item)) : [createItem(undefined)];
-    }, [flowForm, todos]);
+        const values = {
+            ...context.getInitData(),
+            ...item?.data,
+            recordId,
+        };
+        createdForm.setFieldsValue(values);
+        const formItem: MergeFormItem = {
+            form: createdForm,
+            data: item,
+            values,
+        };
+        formItemCache.current.set(recordId, formItem);
+        return formItem;
+    });
 
     /**
      * 表单动作（保存/校验）跟随「当前查看或提交的记录」。
@@ -68,14 +89,6 @@ export const FormViewComponent: React.FC<FormViewComponentProps> = (props) => {
     }, []);
 
     React.useEffect(() => {
-        formList.forEach(item => {
-            if (item.initialized) {
-                return;
-            }
-            item.initialized = true;
-            item.form.resetFields();
-            item.form.setFieldsValue(item.values);
-        });
         // 默认提交「打开详情的那条记录」；合并审批查看单条流程时由 handleMergeRecordView 切换
         activeForm.current?.switchTo(
             formList.find(item => item.data?.recordId === state.flow?.recordId) || formList[0]
