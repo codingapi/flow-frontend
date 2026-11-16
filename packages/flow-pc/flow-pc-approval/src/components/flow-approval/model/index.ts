@@ -1,5 +1,5 @@
 import {FlowApprovalApi} from "@coding-flow/flow-approval-presenter";
-import {action as actionRecord, create as createRecord, processNodes as postProcessNodes,revoke as revokeRecord,urge as urgeRecord,resetSubProcess as resetSubProcessRecord} from "@/api/record";
+import {action as actionRecord, create as createRecord, processNodes as postProcessNodes,revoke as revokeRecord,urge as urgeRecord,resetSubProcess as resetSubProcessRecord,reissue as reissueRecord} from "@/api/record";
 
 export class FlowApprovalApiImpl implements FlowApprovalApi {
 
@@ -32,6 +32,10 @@ export class FlowApprovalApiImpl implements FlowApprovalApi {
 
     resetSubProcess =async (body:Record<string, any>,mockKey:string)=> {
         return await resetSubProcessRecord(body,mockKey);
+    }
+
+    reissue =async (body:Record<string, any>,mockKey:string)=> {
+        return await reissueRecord(body,mockKey);
     }
 
 }

@@ -1,5 +1,5 @@
 import { ApprovalState, FlowApprovalApi } from "@/typings";
-import { FormActionContext, FlowAction, FlowSubProcessResetRequest } from "@coding-flow/flow-types";
+import { FormActionContext, FlowAction, FlowReissueRequest, FlowSubProcessResetRequest } from "@coding-flow/flow-types";
 import {
     ActionInterceptor,
     ActionInterceptorManager,
@@ -443,6 +443,28 @@ export class FlowActionPresenter {
             if (recordId) {
                 const body: FlowSubProcessResetRequest = { recordId, resetInstanceProcessIds, advice };
                 return await this.api.resetSubProcess(body, this.mockKey);
+            }
+        } finally {
+            this.setLoading(false);
+        }
+    }
+
+    /**
+     * 已完成流程二次发起（独立能力，非审批动作）。
+     *
+     * 仅当详情数据 `reissue` 标识为 true 时可调用：复制当前已完成流程的表单数据
+     * 创建一条新流程，新流程停在开始节点成为发起人的待办，源流程记录不做改写。
+     *
+     * @param advice 二次发起说明（可选）
+     * @param formData 覆盖复制的表单数据（可选，缺省时复制源流程数据）
+     */
+    public async reissue(advice?: string, formData?: Record<string, any>) {
+        this.setLoading(true);
+        try {
+            const recordId = this.state.flow?.recordId;
+            if (recordId) {
+                const body: FlowReissueRequest = { sourceRecordId: recordId, advice, formData };
+                return await this.api.reissue(body, this.mockKey);
             }
         } finally {
             this.setLoading(false);

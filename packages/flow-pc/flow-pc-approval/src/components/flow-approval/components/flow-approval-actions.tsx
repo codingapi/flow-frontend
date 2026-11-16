@@ -5,6 +5,7 @@ import {FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 import {ActionFactory} from "@/components/flow-approval/components/action/factory";
 import {UrgeAction} from "@/components/flow-approval/components/action/urge";
 import {RevokeAction} from "@/components/flow-approval/components/action/revoke";
+import {ReissueAction} from "@/components/flow-approval/components/action/reissue";
 import {CloseAction} from "@/components/flow-approval/components/action/close";
 
 export const FlowApprovalActions = () => {
@@ -67,6 +68,7 @@ export const FlowApprovalActions = () => {
 
             <UrgeAction/>
             <RevokeAction/>
+            <ReissueAction/>
             <CloseAction/>
 
         </Space>
