@@ -18,6 +18,8 @@
   - @coding-flow/flow-icons@0.2.21
   - @coding-flow/flow-pc-ui@0.2.21
 
+- feat: 已办详情支持已完成流程「重新发起」按钮，由 `reissue` 标识驱动并支持 `APPROVAL_ACTION_REISSUE_KEY` 插件替换（issue #272）
+
 ## 0.2.20
 
 ### Patch Changes

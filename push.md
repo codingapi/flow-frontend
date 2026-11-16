@@ -15,10 +15,10 @@
   │
   └─ ④ 发版
        ├─ 方式 A（推荐）：CI 自动 —— push 到 main 后由 GitHub Actions 发版
-       └─ 方式 B（手动）：pnpm push —— 本地 version + build + publish，随后补提交版本号
+       └─ 方式 B（手动）：pnpm push —— 本地 build + publish，版本号固定由人工维护
 ```
 
-> 关键点：**`changeset` 必须在提交代码的同一批（或之前）执行**，生成的 `.changeset/*.md` 要随代码一起进 git。发版动作（version + publish）发生在变更已合入 main 之后。
+> 关键点：本项目采用**固定版本发布**——版本号由人工在 `package.json` 中维护，`pnpm push` 只做 `build + publish`，**不再执行 `changeset version` 动态升版本**。
 
 ---
 
@@ -112,27 +112,26 @@ git push origin <你的分支>
 
 > 前提：GitHub 仓库 Settings → Secrets 已配置 `NPM_TOKEN`。
 
-### 方式 B：本地手动发版 `pnpm push`
+### 方式 B：本地手动发版 `pnpm push`（固定版本）
 
-适合没有 CI token、或需要立即发布的场景。**先确认在 main 分支且已拉取最新**：
+适合没有 CI token、或需要立即发布的场景。**先确认在 main 分支且已拉取最新**。
+
+固定版本模式下，版本号完全由人工维护（Fixed 模式要求 11 个 `@coding-flow/*` 包版本一致），`pnpm push` = `build + changeset publish`：
 
 ```bash
 git switch main && git pull origin main
 
-# 预检：确认 changeset 能识别到待升级的包和版本
-pnpm changeset status
+# 预检：确认全组包版本一致，且为本次目标版本（如 0.2.21）
+pnpm -r --filter "@coding-flow/*" exec node -p "require('./package.json').name + '@' + require('./package.json').version"
 
-# 一条命令：version（消费 changeset → 升版本 + 生成 CHANGELOG）→ build → publish
+# 固定版本发布：build + publish（不改版本号、不消费 changeset）
 pnpm push
-
-# version 不会自动提交（config commit:false），发布成功后补一个版本提交
-git add -A
-git commit -m "chore: release <新版本号>"
-git push origin main
 
 # 验证发布结果
 npm info @coding-flow/flow-core version
 ```
+
+需要调整版本号时，单独提交一次人工改动（把各包 `package.json` 的 `version` 与对应 CHANGELOG 段落改成目标值），再执行发布。
 
 ---
 
@@ -142,10 +141,8 @@ npm info @coding-flow/flow-core version
 |------|------|
 | `pnpm changeset` | 记录一次变更（交互式选包 + 选级别 + 写描述） |
 | `pnpm changeset status` | 查看当前待发布的变更与目标版本 |
-| `pnpm version-packages` | 仅消费 changesets、bump 版本号（不发布） |
-| `pnpm push` / `pnpm release` | version + build + publish 一条龙 |
-| `pnpm changeset pre enter beta` | 进入 beta 预发布模式（版本如 0.2.0-beta.0） |
-| `pnpm changeset pre exit` | 退出预发布模式 |
+| `pnpm version-packages` | 仅消费 changesets、bump 版本号（不发布，固定版本流程下一般不用） |
+| `pnpm push` / `pnpm release` | build + publish（固定版本，不改版本号） |
 | `npm info @coding-flow/<pkg> version` | 查询 npm 上已发布的版本 |
 
 ---
@@ -153,7 +150,8 @@ npm info @coding-flow/flow-core version
 ## 七、注意事项 / FAQ
 
 - **changeset 文件丢了怎么办？** 没提交进 git 的 changeset 文件不会被 CI/其他机器看到。务必随代码提交；丢失则重新 `pnpm changeset`。
-- **为什么 `pnpm push` 没有升版本？** `changeset version` 只消费 `.changeset/` 里的变更文件。如果没有任何 changeset 文件，版本原地不动、publish 全部跳过（提示 `already published`）。先执行第 ① 步。
+- **`pnpm push` 会改版本号吗？** 不会。固定版本发布只执行 `build + changeset publish`，版本号取 `package.json` 中的值；npm 上已存在同版本时该包会被跳过（提示 `already published`）。
+- **想发新版本怎么办？** 人工把各包 `package.json` 的 `version` 改成目标值（Fixed 模式下 11 个包必须一致）并补 CHANGELOG，提交后再 `pnpm push`。
 - **publish 会不会被 git 状态拦截？** `baseBranch` 为 `main`，且 `.npmrc` 已设 `git-checks=false`，不会被拦。但建议在干净的工作区、main 分支上发布。
-- **`pnpm push` 中途失败怎么办？** `changeset version` 可能已改动部分 `package.json`/CHANGELOG。用 `git status` 查看，必要时 `git checkout -- packages` 回退后重跑。
-- **预发布（beta/alpha）怎么发？** `pnpm changeset pre enter beta` → 正常记录 changeset → `pnpm push`，版本会是 `x.y.z-beta.N`；结束后 `pnpm changeset pre exit`。
+- **`pnpm push` 中途失败怎么办？** 失败点通常是 build 或 publish，`package.json` 不会被改动；修复后直接重跑即可，已发布的包会自动跳过。
+- **预发布（beta/alpha）怎么发？** 直接把版本写成 `x.y.z-beta.N` 后执行 `pnpm push`。
