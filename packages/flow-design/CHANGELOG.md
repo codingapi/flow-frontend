@@ -1,5 +1,15 @@
 # @coding-flow/flow-design
 
+## 0.2.21
+
+### Patch Changes
+
+- Updated dependencies [0b9b8d6]
+  - @coding-flow/flow-types@0.2.21
+  - @coding-flow/flow-core@0.2.21
+  - @coding-flow/flow-icons@0.2.21
+  - @coding-flow/flow-pc-ui@0.2.21
+
 ## 0.2.20
 
 ### Patch Changes

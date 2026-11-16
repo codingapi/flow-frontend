@@ -6,4 +6,5 @@ export * from '@/hooks';
 export * from '@/interceptor';
 export * from '@/utils/operator-count';
 export * from '@/utils/active-form';
+export * from '@/utils/return-nodes';
 export { FlowActionPresenter } from '@/presenters/action';

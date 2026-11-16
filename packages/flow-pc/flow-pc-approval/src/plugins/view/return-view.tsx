@@ -1,5 +1,9 @@
 import React from "react";
-import {ReturnViewPlugin, ReturnViewPluginKey} from "@coding-flow/flow-approval-presenter";
+import {
+    buildReturnNodeOptions,
+    ReturnViewPlugin,
+    ReturnViewPluginKey
+} from "@coding-flow/flow-approval-presenter";
 import {ViewBindPlugin} from "@coding-flow/flow-core";
 import {Select} from "antd";
 import {useApprovalContext} from "@coding-flow/flow-approval-presenter";
@@ -9,23 +13,10 @@ export const ReturnView: React.FC<ReturnViewPlugin> = (props) => {
 
     const {state} = useApprovalContext();
 
+    /** 候选节点由后端按执行历史下发（最近优先），不在前端从流程定义节点中截取 */
     const nodeOptions = React.useMemo(() => {
-        const nodes = state.flow?.nodes || [];
-        const currentId = state.flow?.nodeId || '';
-        const options:any[] = [];
-        for (const node of nodes) {
-            if (currentId === node.id) {
-                break;
-            }
-            if(node.display) {
-                options.push({
-                    label: node.name,
-                    value: node.id,
-                })
-            }
-        }
-        return options;
-    }, [state.flow?.nodes])
+        return buildReturnNodeOptions(state.flow);
+    }, [state.flow?.backNodes, state.flow?.nodes, state.flow?.nodeId])
 
 
     if (ReturnViewComponent) {

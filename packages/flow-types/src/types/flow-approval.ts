@@ -379,6 +379,9 @@ export interface FlowContent {
     histories: History[];
     // 所有节点
     nodes: NodeOption[];
+    // 可退回节点：仅包含当前记录真实执行过的历史节点，按最近优先排序；
+    // 为空或缺失表示没有可退回节点（如开始节点），缺省时前端可回退到自行计算
+    backNodes?: NodeOption[];
     // 支持撤销
     revoke: boolean;
     // 支持催办
