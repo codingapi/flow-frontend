@@ -14,6 +14,8 @@
   - @coding-flow/flow-types@0.2.21
   - @coding-flow/flow-core@0.2.21
 
+- feat: presenter 新增 `reissue()`，封装已完成流程二次发起接口并补充单测（issue #272）
+
 ## 0.2.20
 
 ### Patch Changes

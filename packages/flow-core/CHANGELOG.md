@@ -2,6 +2,10 @@
 
 ## 0.2.21
 
+### Patch Changes
+
+- feat: 新增「重新发起」提示文案 `APPROVAL_REISSUE`（issue #272）
+
 ## 0.2.20
 
 ### Patch Changes

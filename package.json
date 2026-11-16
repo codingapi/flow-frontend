@@ -1,6 +1,6 @@
 {
   "name": "@coding-flow/root",
-  "version": "0.1.0",
+  "version": "0.2.21",
   "description": "flow-engine root",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,7 @@
     "build": "pnpm run build:flow-core && pnpm run build:flow-types && pnpm run build:flow-icons && pnpm run build:flow-approval-presenter && pnpm run build:flow-pc && pnpm run build:flow-mobile && pnpm run build:flow-design",
     "build:app-pc": "pnpm -F @flow-example/app-pc build",
     "build:app-mobile": "pnpm -F @flow-example/app-mobile build",
-    "push": "changeset version && pnpm run build && changeset publish",
+    "push": "pnpm run build && changeset publish",
     "dev:app-pc": "pnpm -F @flow-example/app-pc dev",
     "dev:app-mobile": "pnpm -F @flow-example/app-mobile dev",
     "watch:flow-core": "pnpm -F @coding-flow/flow-core dev",

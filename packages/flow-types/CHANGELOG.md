@@ -11,6 +11,8 @@
   - 兼容旧版后端：缺少 `backNodes` 字段时回退到原有按定义顺序截取的逻辑。
   - @coding-flow/flow-core@0.2.21
 
+- feat: 已办详情支持已完成流程「重新发起」（issue #272）：`FlowContent` 新增 `reissue` 标识，新增 `FlowReissueRequest` 请求类型
+
 ## 0.2.20
 
 ### Patch Changes
