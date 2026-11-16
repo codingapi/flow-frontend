@@ -68,4 +68,11 @@ export interface FlowApprovalApi {
      * 请求体为 FlowSubProcessResetRequest（recordId + resetInstanceProcessIds + advice）。
      */
     resetSubProcess(body: Record<string, any>, mockKey: string): Promise<any>;
+
+    /**
+     * 已完成流程二次发起（独立接口，不属于常规审批动作）。
+     * 仅当详情数据 reissue 标识为 true 时可调用，
+     * 请求体为 FlowReissueRequest（sourceRecordId + 可选的 formData / advice）。
+     */
+    reissue(body: Record<string, any>, mockKey: string): Promise<any>;
 }

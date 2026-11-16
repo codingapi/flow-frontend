@@ -35,6 +35,11 @@ export const resetSubProcess = (body:any,mockKey?:string) => {
     return httpClient.post('/api/cmd/record/subProcess/reset?mockKey='+key,body);
 }
 
+export const reissue = (body:any,mockKey?:string) => {
+    const key = mockKey?mockKey:'';
+    return httpClient.post('/api/cmd/record/reissue?mockKey='+key,body);
+}
+
 export const list = (request: any,mockKey?:string) => {
     const key = mockKey?mockKey:'';
     return httpClient.page('/api/query/record/list?mockKey='+key, request, {}, {}, []);

@@ -34,6 +34,8 @@ export const FlowMessageKey = {
   APPROVAL_RETURN: 'approval.return',
   APPROVAL_REVOKE: 'approval.revoke',
   APPROVAL_URGE: 'approval.urge',
+  /** 已完成流程二次发起（复制流程重新执行） */
+  APPROVAL_REISSUE: 'approval.reissue',
   APPROVAL_CUSTOM: 'approval.custom',
   /** 保存 — 上下文包含 isStartNode，下游可自行区分 */
   APPROVAL_SAVE: 'approval.save',
@@ -149,6 +151,7 @@ function getDefaultMessages(): Record<string, MessageTemplate> {
     [FlowMessageKey.APPROVAL_RETURN]: '操作成功',
     [FlowMessageKey.APPROVAL_REVOKE]: '流程已撤回',
     [FlowMessageKey.APPROVAL_URGE]: '已发送催办提醒.',
+    [FlowMessageKey.APPROVAL_REISSUE]: '已重新发起，新流程已回到发起人待办',
     [FlowMessageKey.APPROVAL_CUSTOM]: '操作成功',
     [FlowMessageKey.APPROVAL_NO_SELECTED]: '请先选择审批流程.',
 

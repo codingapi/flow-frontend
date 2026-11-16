@@ -390,6 +390,10 @@ export interface FlowContent {
     // 当前待办位于开启重置能力、且已汇聚完成的子流程的锁定合并节点上时为 true，
     // 可据此调用 /api/cmd/record/subProcess/reset 接口，呈现方式由使用方自行决定
     resetSubProcess: boolean;
+    // 支持二次发起（独立能力，非审批动作）：
+    // 当前记录已正常完成、且当前操作人为流程管理员时为 true，
+    // 可据此调用 /api/cmd/record/reissue 接口复制该流程重新发起
+    reissue: boolean;
 }
 
 /**
@@ -401,5 +405,20 @@ export interface FlowSubProcessResetRequest {
     // 选中重建的子流程实例流程id列表（须同属一个已放行且未取代的聚合组）
     resetInstanceProcessIds: string[];
     // 重置说明（可选，记录在被作废的当前记录上供审计追溯）
+    advice?: string;
+}
+
+/**
+ * 已完成流程二次发起请求（独立接口，不属于常规审批动作）
+ *
+ * 复制源流程的表单数据创建一条新流程，新流程停在开始节点成为发起人的待办，
+ * 源流程记录不做任何改写。
+ */
+export interface FlowReissueRequest {
+    // 被二次发起的源流程记录id（必须是已正常完成的流程记录）
+    sourceRecordId: number;
+    // 二次发起时使用的表单数据（可选，缺省时复制源流程记录的表单数据）
+    formData?: Record<string, any>;
+    // 二次发起说明（可选）
     advice?: string;
 }

@@ -4,6 +4,7 @@ import { CustomStyleButton } from "@/components/flow-approval/components/custom-
 import { useLayoutPresenter } from "@/components/flow-approval/layout/hooks/use-layout-presenter";
 import { ActionSheet, Button, Space, Toast } from "antd-mobile";
 import { RevokeAction } from "@/components/flow-approval/components/action/revoke";
+import { ReissueAction } from "@/components/flow-approval/components/action/reissue";
 import { UrgeAction } from "@/components/flow-approval/components/action/urge";
 import { ActionFactory } from "@/components/flow-approval/components/action/factory";
 import { dispatchApprovalFrontEvent } from "@/components/flow-approval/components/action-front-event";
@@ -109,6 +110,7 @@ export const FlowApprovalActions = () => {
 
 
             <RevokeAction />
+            <ReissueAction />
             <UrgeAction />
 
             <ActionSheet
