@@ -2,8 +2,8 @@ import {Table, type TableProps} from "@coding-flow/flow-pc-ui";
 import {type ActionType} from "@coding-flow/flow-core";
 import React from "react";
 import {Button, message, Popconfirm, Space} from "antd";
-import {DesignImport, DesignPanel} from "@coding-flow/flow-design";
-import {changeState, list, remove} from "@/api/workflow.ts";
+import {DesignImport, DesignPanel, DesignSyncInstance} from "@coding-flow/flow-design";
+import {changeState, forceSyncPermission, list, remove} from "@/api/workflow.ts";
 import dayjs from "dayjs";
 import { FlowMessageKey, FlowMessageRegistry } from "@coding-flow/flow-core";
 
@@ -13,6 +13,16 @@ export const WorkflowList = () => {
     const [currentId, setCurrentId] = React.useState<string>('');
     const [editable, setEditable] = React.useState<boolean>(false);
     const [importVisible, setImportVisible] = React.useState<boolean>(false);
+    const [syncVisible, setSyncVisible] = React.useState<boolean>(false);
+    const [syncWorkCode, setSyncWorkCode] = React.useState<string>('');
+    // 强制同步属于流程管理员的干预操作，非管理员不展示该操作
+    const [canForceSync, setCanForceSync] = React.useState<boolean>(false);
+
+    React.useEffect(() => {
+        forceSyncPermission().then(res => {
+            setCanForceSync(!!res.data);
+        })
+    }, []);
 
 
     const handleChangeState = (id: any) => {
@@ -108,6 +118,14 @@ export const WorkflowList = () => {
                             setCurrentId(record.id);
                             setEditable(true);
                         }}>编辑</a>
+                        {
+                            canForceSync && (
+                                <a onClick={() => {
+                                    setSyncWorkCode(record.code);
+                                    setSyncVisible(true);
+                                }}>强制同步</a>
+                            )
+                        }
                         <Popconfirm
                             title={"确认要删除该流程吗？"}
                             onConfirm={() => {
@@ -175,6 +193,14 @@ export const WorkflowList = () => {
                 onClose={()=>{
                     setImportVisible(false);
                     actionType.current?.reload();
+                }}
+            />
+
+            <DesignSyncInstance
+                open={syncVisible}
+                workCode={syncWorkCode}
+                onClose={() => {
+                    setSyncVisible(false);
                 }}
             />
         </div>
