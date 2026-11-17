@@ -2,10 +2,11 @@ import React from "react";
 import {Button, Divider, Form, Input, message, Popover, Space, Tabs} from "antd";
 import {LayoutHeaderHeight, TabPanelType} from "../types";
 import {useDesignContext} from "../hooks/use-design-context";
-import {CloseOutlined, ExportOutlined, ImportOutlined, SaveOutlined} from "@ant-design/icons";
+import {CloseOutlined, ExportOutlined, ImportOutlined, SaveOutlined, SyncOutlined} from "@ant-design/icons";
 import {EventBus, FlowMessageKey, FlowMessageRegistry} from "@coding-flow/flow-core";
 import {exportWorkflow} from "@/api/workflow";
 import {DesignImport} from "@/components/design-import";
+import {DesignSyncInstance} from "@/components/design-sync-instance";
 
 const Left = () => {
     return (
@@ -103,6 +104,7 @@ const SaveAsButton = () => {
 const Right = () => {
     const {state,context} = useDesignContext();
     const [resetImportVisible, setResetImportVisible] = React.useState(false);
+    const [syncInstanceVisible, setSyncInstanceVisible] = React.useState(false);
 
     return (
         <>
@@ -122,6 +124,12 @@ const Right = () => {
                     setResetImportVisible(true);
                 }}
             >重置流程</Button>
+            <Button
+                icon={<SyncOutlined />}
+                onClick={() => {
+                    setSyncInstanceVisible(true);
+                }}
+            >强制同步</Button>
             <Divider type="vertical" />
             <Button
                 icon={<SaveOutlined/>}
@@ -152,6 +160,13 @@ const Right = () => {
                 }}
                 onClose={() => {
                     setResetImportVisible(false);
+                }}
+            />
+            <DesignSyncInstance
+                open={syncInstanceVisible}
+                workCode={state.workflow.code}
+                onClose={() => {
+                    setSyncInstanceVisible(false);
                 }}
             />
         </>

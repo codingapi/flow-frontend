@@ -73,3 +73,49 @@ export const importWorkflow = (request: WorkflowImportRequest) => {
 export const workflowCodeExists = (code: string) => {
     return httpClient.get('/api/cmd/workflow/exists', {code});
 }
+
+/**
+ * 运行中的流程实例（以开始节点记录代表一个实例），用于强制同步时选择范围
+ */
+export interface RunningInstanceQuery {
+    workCode: string;
+    current: number;
+    pageSize: number;
+}
+
+export interface RunningInstanceItem {
+    processId: string;
+    recordId: number;
+    title?: string;
+    workTitle?: string;
+    workCode?: string;
+    nodeName?: string;
+    createOperatorId?: number;
+    createOperatorName?: string;
+    createTime?: number;
+    workflowRuntimeId?: number;
+}
+
+export const runningInstances = (request: RunningInstanceQuery) => {
+    return httpClient.page('/api/query/record/running', request, {}, {}, []);
+}
+
+export interface ForceSyncRequest {
+    workCode: string;
+    /** 选中同步的流程实例，未选中的实例不会被修改 */
+    processIds: string[];
+}
+
+export interface ForceSyncResult {
+    workflowRuntimeId: number;
+    workVersion: number;
+    syncedProcessIds: string[];
+    skippedProcessIds: string[];
+}
+
+/**
+ * 运行中流程实例强制同步最新流程设计
+ */
+export const forceSync = (request: ForceSyncRequest) => {
+    return httpClient.post('/api/cmd/record/forceSync', request);
+}
