@@ -53,10 +53,6 @@ export const FlowMessageKey = {
   DESIGN_SCRIPT_COMPILE_ERROR: 'design.script_compile_error',
   DESIGN_VIEW_CODE_SAVE_SUCCESS: 'design.view_code_save_success',
   DESIGN_GROOVY_META_FAILED: 'design.groovy_meta_failed',
-  /** 运行中实例强制同步成功 */
-  DESIGN_FORCE_SYNC_SUCCESS: 'design.force_sync_success',
-  /** 运行中实例强制同步未选择实例 */
-  DESIGN_FORCE_SYNC_NO_SELECTED: 'design.force_sync_no_selected',
 
   // ---- App 层 ----
   APP_LOGIN_SUCCESS: 'app.login_success',
@@ -171,9 +167,6 @@ function getDefaultMessages(): Record<string, MessageTemplate> {
     [FlowMessageKey.DESIGN_SCRIPT_COMPILE_ERROR]: '脚本编译请求失败',
     [FlowMessageKey.DESIGN_VIEW_CODE_SAVE_SUCCESS]: '保存成功',
     [FlowMessageKey.DESIGN_GROOVY_META_FAILED]: '获取脚本元数据失败',
-    [FlowMessageKey.DESIGN_FORCE_SYNC_SUCCESS]: (data: any) =>
-      `已同步 ${data?.count ?? 0} 条流程实例，跳过 ${data?.skipped ?? 0} 条已是最新配置的实例`,
-    [FlowMessageKey.DESIGN_FORCE_SYNC_NO_SELECTED]: '请先选择需要同步的流程实例',
 
     // App 层
     [FlowMessageKey.APP_LOGIN_SUCCESS]: 'login success',

@@ -1,8 +1,9 @@
 import React from "react";
 import { done, list, notify, todo } from "@/api/record.ts";
+import { forceSync, forceSyncPermission, type ForceSyncResult } from "@/api/workflow.ts";
 import { ApprovalPanelDrawer, FlowTitle, WorkflowSelectModal } from "@coding-flow/flow-pc-approval";
 import { Table, type TableProps } from "@coding-flow/flow-pc-ui";
-import { Button, Space, Tabs, type TabsProps } from "antd";
+import { Button, message, Popconfirm, Space, Tabs, type TabsProps } from "antd";
 import dayjs from "dayjs";
 import { EventBus, type ActionType } from "@coding-flow/flow-core";
 
@@ -19,6 +20,34 @@ const TodoPage: React.FC = () => {
     const [workflowCode, setWorkflowCode] = React.useState<string>('');
     const [currentRecordId, setCurrentRecordId] = React.useState<string>('');
     const [currentTab, setCurrentTab] = React.useState<string>('todo');
+    // 同步流程属于流程管理员的干预操作，非管理员不展示该操作
+    const [canForceSync, setCanForceSync] = React.useState<boolean>(false);
+
+    React.useEffect(() => {
+        forceSyncPermission().then(res => {
+            setCanForceSync(!!res.data);
+        })
+    }, []);
+
+    /**
+     * 把该流程实例的配置同步为最新流程设计（仅未完成的流程允许操作）
+     */
+    const handleForceSync = (record: any) => {
+        forceSync({
+            workCode: record.workCode,
+            processIds: [record.processId],
+        }).then(res => {
+            if (res.success) {
+                const result = res.data as ForceSyncResult | undefined;
+                if ((result?.syncedProcessIds?.length ?? 0) > 0) {
+                    message.success('同步成功');
+                } else {
+                    message.info('该流程已是最新设计，无需同步');
+                }
+                actionAll.current?.reload();
+            }
+        })
+    }
 
     const columns: TableProps<any>['columns'] = [
         {
@@ -84,6 +113,31 @@ const TodoPage: React.FC = () => {
                                     setApprovalVisible(true);
                                 }}
                             >办理</a>
+                        </Space>
+                    )
+                } else if (currentTab === 'all') {
+                    return (
+                        <Space>
+                            <a
+                                onClick={() => {
+                                    setCurrentRecordId(record.recordId);
+                                    setReviewVisible(true);
+                                    setApprovalVisible(true);
+                                }}
+                            >详情</a>
+                            {
+                                // 仅未完成的流程（flowState=0 运行中）允许把配置同步为最新设计
+                                canForceSync && record.flowState === 0 && (
+                                    <Popconfirm
+                                        title={"确认将该流程的配置同步为最新流程设计吗？"}
+                                        onConfirm={() => {
+                                            handleForceSync(record);
+                                        }}
+                                    >
+                                        <a>同步流程</a>
+                                    </Popconfirm>
+                                )
+                            }
                         </Space>
                     )
                 } else {
