@@ -1,5 +1,11 @@
 # @coding-flow/flow-mobile-approval
 
+## 0.2.22
+
+### Patch Changes
+
+- 版本号升级至 0.2.22（配合后端版本升级，本包无对外功能变更）
+
 ## 0.2.21
 
 ### Patch Changes
