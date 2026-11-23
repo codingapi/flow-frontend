@@ -1,5 +1,16 @@
 # @coding-flow/flow-types
 
+## 0.3.0
+
+### Minor Changes
+
+- feat: 支持操作者身份标识（issue #288）
+
+  - `FlowOperator`、`ProcessNodeOperator` 新增可选字段 `identity`：同一人员的不同身份是不同的参与人（例如同时隶属两个部门），由后端按 `(id, identity)` 区分。
+  - `identity` 取值由业务侧定义（部门id、岗位编码等），框架只透传、不解释语义；空串或字段缺省表示默认身份，0.3.0 之前的后端响应不含该字段。
+  - 展示仍使用 `name`，不冻结身份名称；需要区分身份时由宿主自行渲染（后端详情/列表响应同步下发 `identity`）。
+  - @coding-flow/flow-types@0.3.0
+
 ## 0.2.22
 
 ### Patch Changes

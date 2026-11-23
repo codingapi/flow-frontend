@@ -135,6 +135,14 @@ export interface FlowOperator {
     id: number;
     // 人员名称
     name: string;
+    /**
+     * 身份标识（issue #288）。
+     *
+     * 同一人员可能以不同身份参与流程（例如同时隶属两个部门），后端按 (id, identity) 区分参与人。
+     * 该值由业务侧定义语义（部门id、岗位编码等），框架只透传、不解释；空串/缺省表示默认身份。
+     * 是否为默认身份请联系后端版本判断：0.3.0 之前的响应不含此字段。
+     */
+    identity?: string;
 }
 
 /**
@@ -147,6 +155,13 @@ export interface ProcessNodeOperator {
     name: string;
     // 是否流程管理员
     flowManager: boolean;
+    /**
+     * 身份标识（issue #288）：同一人员的不同身份是不同的参与人。
+     *
+     * 取值由业务侧定义（部门id、岗位编码等），框架只透传不解释；空串/缺省表示默认身份。
+     * 展示仍使用 `name`，需要区分身份时由宿主自行渲染（本包不冻结身份名称）。
+     */
+    identity?: string;
     // 其他属性
     [key: string]: any;
 }

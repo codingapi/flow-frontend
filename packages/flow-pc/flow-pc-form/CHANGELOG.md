@@ -1,5 +1,11 @@
 # @coding-flow/flow-pc-form
 
+## 0.3.0
+
+### Minor Changes
+
+- 版本号升级至 0.3.0（配合后端 0.3.0「操作者身份标识」issue #288，本包无对外功能变更）
+
 ## 0.2.22
 
 ### Patch Changes
